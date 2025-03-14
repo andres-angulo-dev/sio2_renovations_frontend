@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../components/my_app_bar.dart';
-import '../components/nav_items.dart';
+import '../components/drawer_component.dart';
 
 class ProjectsScreen extends StatelessWidget {
   const ProjectsScreen({super.key});
@@ -14,12 +14,8 @@ class ProjectsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: MyAppBar(),
-      drawer: mobile ?
-        Drawer(
-          child: ListView(
-            children: const [NavItems(color: Colors.black, isHorizontal: false,)],
-          ),
-        )
+      endDrawer: mobile ?
+        DrawerComponent()
         :
         null,
       body: Text('IMPOSIBLE'),

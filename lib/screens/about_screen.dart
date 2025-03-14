@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../components/my_app_bar.dart';
-import '../components/nav_items.dart';
+import '../components/drawer_component.dart';
 
 class AboutScreen extends StatefulWidget {
   const AboutScreen({super.key});
@@ -19,12 +19,8 @@ class AboutScreenState extends State<AboutScreen> {
 
     return Scaffold(
       appBar: MyAppBar(),
-      drawer: mobile ? 
-        Drawer(
-          child: ListView(
-            children: const [NavItems(color: Colors.black, isHorizontal: false,)],
-        )
-        )
+      endDrawer: mobile ? 
+        DrawerComponent()
         :
         null,
       body: Text('Mais si'),
