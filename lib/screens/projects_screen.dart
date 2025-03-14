@@ -1,11 +1,28 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../components/my_app_bar.dart';
+import '../components/nav_items.dart';
 
 class ProjectsScreen extends StatelessWidget {
   const ProjectsScreen({super.key});
 
+  final bool mobile = false;
+
   @override
   Widget build(BuildContext context) {
-    return Text('YESS');
+
+    final mobile = MediaQuery.of(context).size.width > 768 ? false : true;
+
+    return Scaffold(
+      appBar: MyAppBar(),
+      drawer: mobile ?
+        Drawer(
+          child: ListView(
+            children: const [NavItems(color: Colors.black, isHorizontal: false,)],
+          ),
+        )
+        :
+        null,
+      body: Text('IMPOSIBLE'),
+    );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import './screens/landing_screen.dart';
 import './screens/about_screen.dart';
 import './screens/contact_screen.dart';
