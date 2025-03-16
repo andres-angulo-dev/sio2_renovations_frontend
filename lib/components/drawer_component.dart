@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../components/nav_items.dart';
+import 'drawer_items.dart';
 import '../utils/global_colors.dart';
 
 class DrawerComponent extends StatelessWidget {
@@ -8,9 +8,10 @@ class DrawerComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Colors.white,
       child: ListView(
         padding: EdgeInsets.zero,
-        children: const[NavItems(defaultColor: Colors.black, hoverColor: GlobalColors.navItemsHover, isHorizontal: false)],
+        children: const[drawerItems(defaultColor: Colors.black, hoverColor: GlobalColors.navItemsHover, isHorizontal: false)],
       ),
     );
   }

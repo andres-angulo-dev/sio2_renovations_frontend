@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../components/my_app_bar.dart';
+import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
+import '../utils/global_colors.dart';
 
 class LandingScreen extends StatelessWidget {
   const LandingScreen({super.key});
@@ -18,6 +19,7 @@ class LandingScreen extends StatelessWidget {
         DrawerComponent()
         : 
         null,
+      backgroundColor: GlobalColors.primaryColor,
       body: Center(
         child: Text('SLT'),
       ),

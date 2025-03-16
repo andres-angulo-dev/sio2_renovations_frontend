@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../components/my_app_bar.dart';
+import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
-
+import '../utils/global_colors.dart';
 
 class ContactScreen extends StatelessWidget {
   const ContactScreen({super.key});
@@ -19,6 +19,7 @@ class ContactScreen extends StatelessWidget {
         DrawerComponent()
         :
         null,
+      backgroundColor: GlobalColors.primaryColor,
       body: Text('NOOOO!'),
     );
   }

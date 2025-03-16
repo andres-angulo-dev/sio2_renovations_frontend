@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../components/nav_items.dart';
+import 'drawer_items.dart';
 import '../utils/global_colors.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -15,6 +15,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       toolbarHeight: mobile ? 250 : 300,
       leadingWidth: mobile ? 150 : 200,
+      backgroundColor: Colors.white,
       leading: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
@@ -28,7 +29,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           ) 
         ),
       ),
-      actions: mobile ? null : const [NavItems(defaultColor: Colors.black, hoverColor: GlobalColors.navItemsHover, isHorizontal: true)],
+      actions: mobile ? null : const [drawerItems(defaultColor: Colors.black, hoverColor: GlobalColors.navItemsHover, isHorizontal: true)],
     );
   }
 

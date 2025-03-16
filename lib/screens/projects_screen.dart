@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../components/my_app_bar.dart';
+import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
+import '../utils/global_colors.dart';
 
 class ProjectsScreen extends StatelessWidget {
   const ProjectsScreen({super.key});
@@ -18,6 +19,7 @@ class ProjectsScreen extends StatelessWidget {
         DrawerComponent()
         :
         null,
+      backgroundColor: GlobalColors.primaryColor,
       body: Text('IMPOSIBLE'),
     );
   }

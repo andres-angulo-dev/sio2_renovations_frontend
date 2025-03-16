@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../components/my_app_bar.dart';
+import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
+import '../utils/global_colors.dart';
 
 class AboutScreen extends StatefulWidget {
   const AboutScreen({super.key});
@@ -23,6 +24,7 @@ class AboutScreenState extends State<AboutScreen> {
         DrawerComponent()
         :
         null,
+      backgroundColor: GlobalColors.primaryColor,
       body: Text('Mais si'),
     );
   }
