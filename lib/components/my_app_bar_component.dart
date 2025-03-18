@@ -15,7 +15,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       toolbarHeight: mobile ? 250 : 300,
       leadingWidth: mobile ? 150 : 200,
-      backgroundColor: Colors.white,
+      backgroundColor: GlobalColors.primaryColor,
       leading: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
@@ -23,13 +23,13 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),  
             child: Image.asset(
-              'assets/Black.png',
+              'assets/black.png',
               fit: BoxFit.contain,
             ),
           ) 
         ),
       ),
-      actions: mobile ? null : const [drawerItems(defaultColor: Colors.black, hoverColor: GlobalColors.navItemsHover, isHorizontal: true)],
+      // actions: mobile ? null : const [DrawerItems(defaultColor: Colors.black, hoverColor: GlobalColors.navItemsHover, isHorizontal: true)],
     );
   }
 

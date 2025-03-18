@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import '../utils/global_colors.dart';
 
-class drawerItems extends StatelessWidget {
-  const drawerItems({super.key, required this.defaultColor, required this.hoverColor, this.isHorizontal = true});
+class DrawerItems extends StatelessWidget {
+  const DrawerItems({super.key, required this.defaultColor, required this.hoverColor, this.isHorizontal = true});
 
   final Color defaultColor;
   final Color hoverColor;
@@ -23,7 +24,7 @@ class drawerItems extends StatelessWidget {
       Text('|', style: TextStyle(color: defaultColor, fontSize: 18)) 
       : 
       Divider(
-        color: const Color.fromARGB(255, 197, 193, 193),
+        color: GlobalColors.dividerColor,
         thickness: 1.0,
         indent: 20.0,
         endIndent: 20.0
@@ -40,7 +41,7 @@ class drawerItems extends StatelessWidget {
       Text('|', style: TextStyle(color: defaultColor, fontSize: 18)) 
       : 
       Divider(
-        color: const Color.fromARGB(255, 197, 193, 193),
+        color: GlobalColors.dividerColor,
         thickness: 1.0,
         indent: 20.0,
         endIndent: 20.0
@@ -57,7 +58,7 @@ class drawerItems extends StatelessWidget {
       Text('|', style: TextStyle(color: defaultColor, fontSize: 18)) 
       : 
       Divider(
-        color: const Color.fromARGB(255, 197, 193, 193),
+        color: GlobalColors.dividerColor,
         thickness: 1.0,
         indent: 20.0,
         endIndent: 20.0
@@ -74,7 +75,7 @@ class drawerItems extends StatelessWidget {
       Text('|', style: TextStyle(color: defaultColor, fontSize: 18)) 
       : 
       Divider(
-        color: const Color.fromARGB(255, 197, 193, 193),
+        color: GlobalColors.dividerColor,
         thickness: 1.0,
         indent: 20.0,
         endIndent: 20.0
@@ -89,11 +90,12 @@ class drawerItems extends StatelessWidget {
       ),
     ];
 
+    // Choose the layout: horizontal row or vertical column.
     return isHorizontal
       ? Row(children: drawerItems)
       : Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: drawerItems.where((item) => item is! Text).toList());
+          children: drawerItems.where((item) => item is! Text).toList()); // Exclude horizontal separators for vertical layout
   }
 }
 
@@ -122,14 +124,17 @@ class CustomdrawerItemstate extends State<CustomNavItem> with SingleTickerProvid
     super.initState();
     _textColor = widget.defaultColor;
     _backgroundColor = Colors.transparent;
+
+    // Animation controller for the slide-in animation
     _controller = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this
     );
 
+    // Slide animation (starts offscreen and moves to position)
     _slideAnimation = Tween<Offset> (
-      begin: const Offset(9.0, 0.0),
-      end: Offset.zero,
+      begin: const Offset(9.0, 0.0), // Start position (off-screen to the right)
+      end: Offset.zero, // End position (default location)
     ).animate(CurvedAnimation(
       parent: _controller, 
       curve: Curves.easeInOut,
@@ -137,18 +142,17 @@ class CustomdrawerItemstate extends State<CustomNavItem> with SingleTickerProvid
 
     Future.delayed(widget.animationDelay, () {
       if (mounted) {
-        _controller.forward();
+        _controller.forward(); // Run the animation
       }
     });
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller.dispose(); // Dispose of animation controller to free memory
     super.dispose();
   }
   
-
   @override
   Widget build(BuildContext context) {
     bool mobile768 = MediaQuery.of(context).size.width > 768 ? false : true;
@@ -162,14 +166,14 @@ class CustomdrawerItemstate extends State<CustomNavItem> with SingleTickerProvid
       child: MouseRegion(
         onEnter: (_) {
           setState(() {
-            _textColor = widget.hoverColor;
-            _backgroundColor = const Color.fromARGB(255, 241, 237, 237);
+            _textColor = widget.hoverColor; // Change text color on hover
+            _backgroundColor = const Color.fromARGB(255, 241, 237, 237); // Add background on hover
           });
         }, 
         onExit: (_) {
           setState(() {
-            _textColor = widget.defaultColor;
-            _backgroundColor = Colors.transparent;
+            _textColor = widget.defaultColor; // Reset text color
+            _backgroundColor = Colors.transparent; // Remove background
           });
         },
         child: mobile768 ? 

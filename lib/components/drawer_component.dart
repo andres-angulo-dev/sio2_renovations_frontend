@@ -8,10 +8,15 @@ class DrawerComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.white,
+      backgroundColor: GlobalColors.primaryColor,
       child: ListView(
-        padding: EdgeInsets.zero,
-        children: const[drawerItems(defaultColor: Colors.black, hoverColor: GlobalColors.navItemsHover, isHorizontal: false)],
+        padding: EdgeInsets.zero, // Removes default padding for the ListView.
+        children: [
+          DrawerItems(
+            defaultColor: Colors.black, 
+            hoverColor: GlobalColors.navItemsHover, 
+            isHorizontal: false
+            )],
       ),
     );
   }
