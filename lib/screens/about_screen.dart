@@ -20,10 +20,7 @@ class AboutScreenState extends State<AboutScreen> {
 
     return Scaffold(
       appBar: MyAppBar(),
-      endDrawer: mobile ? 
-        DrawerComponent()
-        :
-        null,
+      endDrawer: mobile ? DrawerComponent() : null,
       backgroundColor: GlobalColors.primaryColor,
       body: Text('Mais si'),
     );

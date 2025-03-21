@@ -16,7 +16,8 @@ class DrawerComponent extends StatelessWidget {
             defaultColor: Colors.black, 
             hoverColor: GlobalColors.navItemsHover, 
             isHorizontal: false
-            )],
+          )
+        ],
       ),
     );
   }
