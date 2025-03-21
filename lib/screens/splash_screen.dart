@@ -40,7 +40,7 @@ class SplashScreenState extends State<SplashScreen> {
 
     // Check if the widget is still mounted (exists in the widget tree) to ensure context is valid.
     if (mounted) {
-      await precacheImage(const AssetImage('assets/immeubles.jpeg'), context); // Preloading the background image.
+      await precacheImage(const AssetImage(GlobalImages.backgroundLanding), context); // Preloading the background image.
     }
   }
 

@@ -7,5 +7,7 @@ class GlobalImages {
   static const String image6 = 'assets/images/image6.jpeg';
   static const String image7 = 'assets/images/image7.jpeg';
   static const String image8 = 'assets/images/image8.jpeg';
+  static const String backgroundLanding = 'assets/immeuble.jpeg';
   static const String logoSplash = 'assets/rive/sio2_renovations_splash.riv';
+  static const String logoWebsiteInProgress = 'assets/rive/work_in_progress.riv';
 }
