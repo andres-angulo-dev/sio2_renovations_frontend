@@ -116,8 +116,12 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
                           if (show)
                             Flexible(
                               flex: 3, // Occupies 3/10ths of the available space.
-                              child: RiveAnimation.asset(
-                                GlobalImages.logoWebsiteInProgress,
+                              child: AnimatedOpacity(
+                              opacity: show ? 1.0 : 0.0, 
+                              duration: const Duration(seconds: 3),
+                                child: RiveAnimation.asset(
+                                  GlobalImages.logoWebsiteInProgress,
+                                ), 
                               ),
                             ),
                           Flexible(
@@ -138,16 +142,32 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
                             ),
                           ),
                           Expanded(child: SizedBox()), // Adds flexible empty space.
-                          AnimatedOpacity(
-                            opacity: show ? 1.0 : 0.0, 
-                            duration: const Duration(seconds: 2), 
-                            child: show
-                                ? Flexible(
-                                    flex: 10, // Occupies 10/10ths of the space for the carousel.
-                                    child: CarouselSliderComponent(), // Custom carousel component.
-                                  )
-                                : const SizedBox(), // Placeholder widget before the carousel appears.
-                          ),
+                          // AnimatedOpacity(
+                          //   opacity: show ? 1.0 : 0.0, 
+                          //   duration: const Duration(seconds: 2), 
+                          //   child: Column(
+                          //     children: [
+                          //       show
+                          //       ? Flexible(
+                          //           flex: 10, // Occupies 10/10ths of the space for the carousel.
+                          //           child: CarouselSliderComponent(), // Custom carousel component.
+                          //         )
+                          //       : const SizedBox(), // Placeholder widget before the carousel appears.
+                          //     ],
+                          //   ) 
+                          // ),
+                          // Flexible(
+                          //   flex: 10, // Occupies 10/10ths of the space for the carousel.
+                          //   child: CarouselSliderComponent(), // Custom carousel component.
+                          // )
+                          Flexible(
+                            flex: 10, // Occupies 10/10ths of the space for the carousel.
+                            child: AnimatedOpacity(
+                              opacity: show ? 1.0 : 0.0, 
+                              duration: const Duration(seconds: 3),
+                              child: CarouselSliderComponent(), // Custom carousel component. 
+                            ),
+                          )
                         ],
                       ),
                     ),
