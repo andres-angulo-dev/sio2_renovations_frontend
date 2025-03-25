@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rive/rive.dart';
 import 'package:sio2_renovations_frontend/utils/global_images.dart';
 import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
 import '../utils/global_colors.dart';
 import '../components/carousel_slider_component.dart';
+import '../components/cookies_consent_banner.dart';
+import '../components/image_icon_button.dart';
 import 'dart:ui'; // Import for the blur effect.
 
 class LandingScreen extends StatefulWidget {
@@ -26,10 +29,13 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
 
   final bool mobile = false; // Checks if the device is mobile or not.
   bool show = false; // Controls the visibility of the components (e.g., carousel).
+  bool? cookiesAccepted; // State to track cookies consent.
+  bool isBannerVisible = false;
 
   @override
   void initState() {
     super.initState();
+    isBannerVisible = cookiesAccepted == null;
 
     // Initialize AnimationController with a 1.5-second duration.
     _animationController = AnimationController(
@@ -65,6 +71,28 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
     });
   }
 
+  void _handleCookiesConsent(bool? consent) {
+    setState(() {
+      cookiesAccepted = consent;
+      isBannerVisible = false;
+    });
+  }
+
+  void _handleLoadedConsent(bool? consent) {
+    if (cookiesAccepted == null) {
+      setState(() {
+        cookiesAccepted = consent;
+        isBannerVisible = consent == null;
+      });
+    }
+  }
+
+  void _toggleBannerVisibility() {
+    setState(() {
+      isBannerVisible = !isBannerVisible;
+    });
+  }
+
   @override
   void dispose() {
     _animationController.dispose(); // Disposes of the animation controller to prevent memory leaks.
@@ -75,7 +103,6 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final mobile = MediaQuery.of(context).size.width > 768 ? false : true;
-
     return Scaffold(
       appBar: MyAppBar(), 
       // endDrawer: mobile ? DrawerComponent() : null,
@@ -142,24 +169,6 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
                             ),
                           ),
                           Expanded(child: SizedBox()), // Adds flexible empty space.
-                          // AnimatedOpacity(
-                          //   opacity: show ? 1.0 : 0.0, 
-                          //   duration: const Duration(seconds: 2), 
-                          //   child: Column(
-                          //     children: [
-                          //       show
-                          //       ? Flexible(
-                          //           flex: 10, // Occupies 10/10ths of the space for the carousel.
-                          //           child: CarouselSliderComponent(), // Custom carousel component.
-                          //         )
-                          //       : const SizedBox(), // Placeholder widget before the carousel appears.
-                          //     ],
-                          //   ) 
-                          // ),
-                          // Flexible(
-                          //   flex: 10, // Occupies 10/10ths of the space for the carousel.
-                          //   child: CarouselSliderComponent(), // Custom carousel component.
-                          // )
                           Flexible(
                             flex: 10, // Occupies 10/10ths of the space for the carousel.
                             child: AnimatedOpacity(
@@ -167,10 +176,26 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
                               duration: const Duration(seconds: 3),
                               child: CarouselSliderComponent(), // Custom carousel component. 
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
+                    if (isBannerVisible)// || cookiesAccepted == null)
+                    CookiesConsentBanner(
+                      onConsentGiven: _handleCookiesConsent,
+                      onConsentLoaded: _handleLoadedConsent,
+                      toggleVisibility: _toggleBannerVisibility,
+                    ),
+                    if (!isBannerVisible && cookiesAccepted == true)
+                    Positioned(
+                      bottom: 20,
+                      left: 20,
+                      child: ImageIconButton(
+                        onPressed: _toggleBannerVisibility,
+                        imagePath: 'assets/button.png', 
+                        icon: FontAwesomeIcons.cookieBite,
+                      )
+                    )
                   ],
                 ),
               ],
