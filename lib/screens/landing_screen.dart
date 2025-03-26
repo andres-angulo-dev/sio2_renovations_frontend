@@ -4,10 +4,10 @@ import 'package:rive/rive.dart';
 import 'package:sio2_renovations_frontend/utils/global_images.dart';
 import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
-import '../utils/global_colors.dart';
 import '../components/carousel_slider_component.dart';
 import '../components/cookies_consent_banner.dart';
 import '../components/image_icon_button.dart';
+import '../utils/global_colors.dart';
 import 'dart:ui'; // Import for the blur effect.
 
 class LandingScreen extends StatefulWidget {
@@ -25,7 +25,7 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
   late Animation<Offset> _slideAnimation;
 
   // Animation<double>: Handles the fade-in effect for text (controls opacity).
-  late Animation<double> _opacityAnimation;
+  late Animation<double> _fadeAnimation;
 
   final bool mobile = false; // Checks if the device is mobile or not.
   bool show = false; // Controls the visibility of the components (e.g., carousel).
@@ -54,7 +54,7 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
     ));
 
     // Creates the fade-in effect for the text (opacity from 0 to 1).
-    _opacityAnimation = Tween<double>(
+    _fadeAnimation = Tween<double>(
       begin: 0.0, // Invisible at the start.
       end: 1.0, // Fully visible at the end.
     ).animate(CurvedAnimation(
@@ -74,7 +74,13 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
   void _handleCookiesConsent(bool? consent) {
     setState(() {
       cookiesAccepted = consent;
-      isBannerVisible = false;
+      if (isBannerVisible) {
+        _animationController.reverse().then((_) {
+          setState(() {
+            isBannerVisible = false; // Hide banner after animation
+          });
+        });
+      }
     });
   }
 
@@ -88,9 +94,18 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
   }
 
   void _toggleBannerVisibility() {
-    setState(() {
-      isBannerVisible = !isBannerVisible;
-    });
+    if (isBannerVisible) {
+      _animationController.reverse().then((_) {
+        setState(() {
+          isBannerVisible = false; // Hide banner after animation
+        });
+      });
+    } else {
+      setState(() {
+        isBannerVisible = true;
+        _animationController.forward();
+      });
+    }
   }
 
   @override
@@ -154,7 +169,7 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
                           Flexible(
                             flex: 1, // Occupies 1/10th of the available space.
                             child: FadeTransition(
-                              opacity: _opacityAnimation,
+                              opacity: _fadeAnimation,
                               child: SlideTransition(
                                 position: _slideAnimation,
                                 child: Text(
@@ -180,7 +195,7 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
                         ],
                       ),
                     ),
-                    if (isBannerVisible)// || cookiesAccepted == null)
+                    if (isBannerVisible)
                     CookiesConsentBanner(
                       onConsentGiven: _handleCookiesConsent,
                       onConsentLoaded: _handleLoadedConsent,
@@ -190,10 +205,14 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
                     Positioned(
                       bottom: 20,
                       left: 20,
-                      child: ImageIconButton(
-                        onPressed: _toggleBannerVisibility,
-                        imagePath: 'assets/button.png', 
-                        icon: FontAwesomeIcons.cookieBite,
+                      child: AnimatedOpacity(
+                        opacity: show ? 1.0 : 0.0, 
+                        duration: const Duration(seconds: 2),
+                        child: ImageIconButton(
+                          onPressed: _toggleBannerVisibility,
+                          imagePath: 'assets/button.svg', 
+                          iconPath: 'assets/icon_button.svg',
+                      )
                       )
                     )
                   ],

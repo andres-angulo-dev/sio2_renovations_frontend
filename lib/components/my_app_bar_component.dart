@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'drawer_items.dart';
 import '../utils/global_colors.dart';
 
@@ -22,8 +23,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           onTap: () => Navigator.pushNamed(context, '/landing'),
           child: Padding(
             padding: const EdgeInsets.all(8.0),  
-            child: Image.asset(
-              'assets/black.png',
+            child: SvgPicture.asset(
+              'assets/black.svg',
+              semanticsLabel: 'Circular orange logo with the text "SIO2 Rénovations" displayed to its right',
               fit: BoxFit.contain,
             ),
           ) 
