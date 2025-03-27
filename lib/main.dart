@@ -4,7 +4,8 @@ import './screens/about_screen.dart';
 import './screens/contact_screen.dart';
 import './screens/splash_screen.dart';
 import './screens/projects_screen.dart';
-import 'screens/legal_montion_screen.dart';
+import './screens/legal_montion_screen.dart';
+import './screens/privacy_policy_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         '/contact': (context) => ContactScreen(),
         '/about': (context) => AboutScreen(),
         '/legalMontions': (context) => LegalMontionScreen(),
+        '/privacyPolicy': (context) => PrivacyPolicyScreen(),
 
       }
     );

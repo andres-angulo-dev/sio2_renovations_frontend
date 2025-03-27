@@ -88,6 +88,23 @@ class DrawerItems extends StatelessWidget {
         hoverColor: hoverColor,
         animationDelay: const Duration(milliseconds: 500),
       ),
+      isHorizontal ? 
+      Text('|', style: TextStyle(color: defaultColor, fontSize: 18)) 
+      : 
+      Divider(
+        color: GlobalColors.dividerColor1,
+        thickness: 1.0,
+        indent: 20.0,
+        endIndent: 20.0
+      ),   
+      CustomNavItem(
+        icon: Icons.shield, 
+        label: 'Politique de confidentialité', 
+        onPressed: () => Navigator.pushNamed(context, '/privacyPolicy'), 
+        defaultColor: defaultColor, 
+        hoverColor: hoverColor, 
+        animationDelay: const Duration(milliseconds: 400),
+      ),
     ];
 
     // Choose the layout: horizontal row or vertical column.

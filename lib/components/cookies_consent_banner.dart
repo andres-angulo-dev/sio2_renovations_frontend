@@ -204,14 +204,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
                       _hovering = false; // Reverts hover state on exit.
                     }),
                     child: GestureDetector(
-                      onTap: () async {
-                        const url = 'https://www.sio2renovations.com/';
-                        try {
-                          await launchUrl(Uri.parse(url));
-                        } catch (error) {
-                          throw 'Could not launch $url, error: $error';
-                        }
-                      },
+                      onTap: () => Navigator.pushNamed(context, '/privacyPolicy'),
                       child: Text(
                         "En savoir plus",
                         style: TextStyle(

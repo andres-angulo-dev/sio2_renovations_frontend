@@ -1,330 +1,18 @@
-// import 'package:flutter/material.dart';
-// import '../components/my_app_bar_component.dart';
-// import '../components/drawer_component.dart';
-// import '../utils/global_colors.dart';
-
-// class LegalMontionScreen extends StatelessWidget {
-//   const LegalMontionScreen({super.key});
-
-//   // This variable becomes dynamic within build(), so we don't use a constant here.
-//   // final bool mobile = false;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     // Determine if the device is mobile or not, based on screen width.
-//     final bool mobile = MediaQuery.of(context).size.width > 768 ? false : true;
-
-//     return Scaffold(
-//       appBar: MyAppBar(),
-//       // Shows endDrawer on mobile devices only.
-//       endDrawer: mobile ? DrawerComponent() : null,
-//       backgroundColor: GlobalColors.primaryColor,
-//       body: SingleChildScrollView(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             // Title
-//             Text(
-//               'Mentions Légales',
-//               style: TextStyle(
-//                 fontSize: mobile ? 24.0 : 28.0,
-//                 fontWeight: FontWeight.bold,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 16.0),
-//             // Section 1: Présentation du site et de l'éditeur
-//             Text(
-//               '1. Présentation du Site',
-//               style: TextStyle(
-//                 fontSize: mobile ? 18.0 : 20.0,
-//                 fontWeight: FontWeight.bold,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 8.0),
-//             Text(
-//               'Conformément à l’article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique, nous informons les utilisateurs du site de l’identité des intervenants impliqués dans sa conception et sa gestion.',
-//               style: TextStyle(
-//                 fontSize: mobile ? 14.0 : 16.0,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 12.0),
-//             Text(
-//               'ÉDITEUR:\n'
-//               'SIO2 Rénovations\n'
-//               'Entrepreneur individuel – German Holguin\n'
-//               '3 ter Avenue Théodore Rousseau, 75007 Paris\n'
-//               'Tél.: +(33) 6 46 34 12 03\n'
-//               'Mail: contact@sio2renovations.com\n'
-//               'Site Web: www.sio2renovations.com\n'
-//               'Siret: 38886382100038',
-//               style: TextStyle(
-//                 fontSize: mobile ? 14.0 : 16.0,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 12.0),
-//             Text(
-//               'Concepteur et Responsable du Contenu du Site:\n'
-//               'Andrés Angulo - www.andres-angulo.com',
-//               style: TextStyle(
-//                 fontSize: mobile ? 14.0 : 16.0,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 16.0),
-//             // Section 2: Hébergement
-//             Text(
-//               '2. Hébergement',
-//               style: TextStyle(
-//                 fontSize: mobile ? 18.0 : 20.0,
-//                 fontWeight: FontWeight.bold,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 8.0),
-//             Text(
-//               'Le site est hébergé par OVH SAS\n'
-//               '2 rue Kellermann\n'
-//               '59100 Roubaix, France',
-//               style: TextStyle(
-//                 fontSize: mobile ? 14.0 : 16.0,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 16.0),
-//             // Section 3: Conditions Générales d'Utilisation
-//             Text(
-//               '3. Conditions Générales d’Utilisation',
-//               style: TextStyle(
-//                 fontSize: mobile ? 18.0 : 20.0,
-//                 fontWeight: FontWeight.bold,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 8.0),
-//             Text(
-//               "Le site est accessible en continu, sous réserve d'interruptions pour maintenance technique. Les présentes mentions légales peuvent être modifiées et il est conseillé à l'utilisateur de les consulter régulièrement.",
-//               style: TextStyle(
-//                 fontSize: mobile ? 14.0 : 16.0,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 16.0),
-//             // Section 4: Description des Services
-//             Text(
-//               '4. Description des Services',
-//               style: TextStyle(
-//                 fontSize: mobile ? 18.0 : 20.0,
-//                 fontWeight: FontWeight.bold,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 8.0),
-//             Text(
-//               "Le site vise à fournir des informations sur l'ensemble des activités de SIO2 Rénovations. Les données affichées sont fournies à titre indicatif et peuvent être modifiées sans préavis.",
-//               style: TextStyle(
-//                 fontSize: mobile ? 14.0 : 16.0,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 16.0),
-//             // Section 5: Propriété Intellectuelle
-//             Text(
-//               '5. Propriété Intellectuelle',
-//               style: TextStyle(
-//                 fontSize: mobile ? 18.0 : 20.0,
-//                 fontWeight: FontWeight.bold,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 8.0),
-//             Text(
-//               "Tous les contenus présents sur ce site (textes, images, logos, etc.) sont protégés par le droit d'auteur. Toute reproduction est strictement interdite sans autorisation préalable.",
-//               style: TextStyle(
-//                 fontSize: mobile ? 14.0 : 16.0,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 16.0),
-//             // Section 6: Limitation de Responsabilité
-//             Text(
-//               '6. Limitation de Responsabilité',
-//               style: TextStyle(
-//                 fontSize: mobile ? 18.0 : 20.0,
-//                 fontWeight: FontWeight.bold,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 8.0),
-//             Text(
-//               "SIO2 Rénovations ne saura être tenu responsable des dommages directs ou indirects résultant de l'utilisation du site ou de l'impossibilité d'y accéder en cas de maintenance ou d'interruptions involontaires.",
-//               style: TextStyle(
-//                 fontSize: mobile ? 14.0 : 16.0,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 16.0),
-//             // Section 7: Données Personnelles
-//             Text(
-//               '7. Gestion des Données Personnelles',
-//               style: TextStyle(
-//                 fontSize: mobile ? 18.0 : 20.0,
-//                 fontWeight: FontWeight.bold,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 8.0),
-//             Text(
-//               "Les données personnelles sont collectées dans le strict cadre des services offerts sur ce site. L'utilisateur dispose d'un droit d'accès, de modification et de suppression des données le concernant. Aucune information personnelle n'est transférée à des tiers sans consentement.",
-//               style: TextStyle(
-//                 fontSize: mobile ? 14.0 : 16.0,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 16.0),
-//             // Section 8: Liens Hypertextes et Cookies
-//             Text(
-//               '8. Liens Hypertextes et Cookies',
-//               style: TextStyle(
-//                 fontSize: mobile ? 18.0 : 20.0,
-//                 fontWeight: FontWeight.bold,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 8.0),
-//             Text(
-//               "Le site contient des liens vers d'autres pages et sites. La navigation sur le site peut entraîner l'installation de cookies pour faciliter l'expérience utilisateur. Le refus des cookies peut réduire l'accès à certaines fonctionnalités.",
-//               style: TextStyle(
-//                 fontSize: mobile ? 14.0 : 16.0,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 16.0),
-//             // Section 9: Droit Applicable et Juridiction
-//             Text(
-//               '9. Droit Applicable et Juridiction',
-//               style: TextStyle(
-//                 fontSize: mobile ? 18.0 : 20.0,
-//                 fontWeight: FontWeight.bold,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 8.0),
-//             Text(
-//               "Tout litige relatif à l'utilisation de ce site est soumis au droit français. Les tribunaux compétents de Paris auront compétence exclusive en cas de litige.",
-//               style: TextStyle(
-//                 fontSize: mobile ? 14.0 : 16.0,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 16.0),
-//             // Section 10: Cadre Légal
-//             Text(
-//               '10. Cadre Légal',
-//               style: TextStyle(
-//                 fontSize: mobile ? 18.0 : 20.0,
-//                 fontWeight: FontWeight.bold,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 8.0),
-//             Text(
-//               "Ce site est régi par la loi n° 78-17 du 6 janvier 1978 relative à l’informatique, aux fichiers et aux libertés, ainsi que par la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique.",
-//               style: TextStyle(
-//                 fontSize: mobile ? 14.0 : 16.0,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 16.0),
-//             // Section 11: Lexique
-//             Text(
-//               '11. Lexique',
-//               style: TextStyle(
-//                 fontSize: mobile ? 18.0 : 20.0,
-//                 fontWeight: FontWeight.bold,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 8.0),
-//             Text(
-//               "Utilisateur : Toute personne accédant et naviguant sur le site.\nInformations personnelles : Les données permettant l'identification directe ou indirecte d'une personne.",
-//               style: TextStyle(
-//                 fontSize: mobile ? 14.0 : 16.0,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 16.0),
-//             // Section 12: Coordonnées de l'Éditeur
-//             Text(
-//               '12. Coordonnées de l\'Éditeur',
-//               style: TextStyle(
-//                 fontSize: mobile ? 18.0 : 20.0,
-//                 fontWeight: FontWeight.bold,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 8.0),
-//             Text(
-//               "SIO2 Rénovations – Entrepreneur individuel – German Holguin\n3 ter Avenue Théodore Rousseau, 75007 Paris\nTél. : +(33) 6 46 34 12 03\nMail : contact@sio2renovations.com\nSite Web : www.sio2renovations.com\nSiret : 38886382100038",
-//               style: TextStyle(
-//                 fontSize: mobile ? 14.0 : 16.0,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 16.0),
-//             // Section 13: Concepteur et Responsable du Contenu
-//             Text(
-//               '13. Concepteur et Responsable du Contenu',
-//               style: TextStyle(
-//                 fontSize: mobile ? 18.0 : 20.0,
-//                 fontWeight: FontWeight.bold,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 8.0),
-//             Text(
-//               "Andrés Angulo – www.andres-angulo.com",
-//               style: TextStyle(
-//                 fontSize: mobile ? 14.0 : 16.0,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 16.0),
-//             // Section 14: Hébergement
-//             Text(
-//               '14. Hébergement',
-//               style: TextStyle(
-//                 fontSize: mobile ? 18.0 : 20.0,
-//                 fontWeight: FontWeight.bold,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//             const SizedBox(height: 8.0),
-//             Text(
-//               "OVH SAS\n2 rue Kellermann\n59100 Roubaix, France",
-//               style: TextStyle(
-//                 fontSize: mobile ? 14.0 : 16.0,
-//                 color: GlobalColors.secondaryColor,
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
 import '../utils/global_colors.dart';
 
-class LegalMontionScreen extends StatelessWidget {
+class LegalMontionScreen extends StatefulWidget {
   const LegalMontionScreen({super.key});
+
+  @override  
+  LegalMontionScreenState createState() => LegalMontionScreenState();
+}
+
+class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTickerProviderStateMixin {
+  bool _hovering = false;
 
   @override
   Widget build(BuildContext context) {
@@ -442,12 +130,50 @@ class LegalMontionScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8.0),
-                Text(
-                  "Le site a été conçu par Andrés Angulo Site Web: www.andres-angulo.com",
-                  style: TextStyle(
-                    fontSize: mobile ? 14.0 : 16.0,
-                    color: GlobalColors.secondaryColor,
-                  ),
+                RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      color: GlobalColors.secondaryColor,
+                      fontSize: mobile ? 14.0 : 16.0,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: 'Le site a été conçu par Andrés Angulo Site Web:',
+                      ),
+                      TextSpan(text: " "),
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.baseline,
+                        baseline: TextBaseline.alphabetic,
+                        child: MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          onEnter: (_) => setState(() {
+                            _hovering = true;
+                          }),
+                          onExit: (_) => setState(() {
+                            _hovering = false;
+                          }),
+                          child: GestureDetector(
+                            onTap: () async {
+                              const url = 'https://www.andres-angulo.com/';
+                              try {
+                                await launchUrl(Uri.parse(url));
+                              } catch (error) {
+                                throw 'Could not launch $url, error: $error';
+                              }
+                            },
+                            child: Text(
+                              "www.andres-angulo.com",
+                              style : TextStyle(
+                                fontSize: mobile ? 14.0 : 16.0,
+                                color: _hovering ? GlobalColors.hoverHyperLinkColor : GlobalColors.hyperLinkColor
+                              )
+                            )
+                          )
+                        )
+                      ),
+                      TextSpan(text: "."),
+                    ]
+                  )
                 ),
                 const SizedBox(height: 30.0),
 
@@ -636,12 +362,44 @@ class LegalMontionScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8.0),
-                Text(
-                  "La navigation sur ce site peut entraîner l'installation de cookies sur l'ordinateur de l'utilisateur. Ces cookies facilitent la navigation et permettent de mesurer la fréquentation. Le refus des cookies peut limiter l'accès à certaines fonctionnalités du site. L'utilisateur peut configurer son navigateur pour refuser les cookies.",
-                  style: TextStyle(
-                    fontSize: mobile ? 14.0 : 16.0,
-                    color: GlobalColors.secondaryColor,
-                  ),
+                RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: mobile ? 14.0 : 16.0,
+                      color: GlobalColors.secondaryColor,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: "La navigation sur ce site peut entraîner l'installation de cookies sur l'ordinateur de l'utilisateur. Certains cookies permettent la navigation et d'autres de mesurer la fréquentation par exemple. Le refus des cookies peut limiter l'accès à certaines fonctionnalités du site. L'utilisateur peut configurer et refuser les cookies. Pour en savoir plus, veuillez consulter notre page de ",
+                      ),
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.baseline,
+                        baseline: TextBaseline.alphabetic,
+                        child: MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          onEnter: (_) => setState(() {
+                            _hovering = true;
+                          }),
+                          onExit: (_) => setState(() {
+                            _hovering = false;
+                          }),
+                          child: GestureDetector(
+                            onTap:() => Navigator.pushNamed(context, '/privacyPolicy'),
+                            child: Text(
+                              'politique de confidentialité',
+                              style: TextStyle(
+                                fontSize: mobile ? 14.0 : 16.0,
+                                color: _hovering ? GlobalColors.hoverHyperLinkColor : GlobalColors.hyperLinkColor,
+                              )
+                            ),
+                          )
+                        )
+                      ),
+                      TextSpan(
+                        text: '.',
+                      )
+                    ]
+                  )
                 ),
                 const SizedBox(height: 30.0),
 
@@ -656,7 +414,7 @@ class LegalMontionScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8.0),
                 Text(
-                  "Tout litige relatif à l'utilisation de ce site est soumis au droit français. Les tribunaux compétents de Paris sont exclusivement responsables de tout différend.",                  style: TextStyle(
+                  'Tout litige relatif à l\'utilisation du Site sera soumis au droit français. Les tribunaux compétents de Paris auront juridiction exclusive.\nClause d’arbitrage : Tout différend sera réglé selon une procédure d\'arbitrage convenue par les parties.',                  style: TextStyle(
                     fontSize: mobile ? 14.0 : 16.0,
                     color: GlobalColors.secondaryColor,
                   ),
@@ -699,6 +457,18 @@ class LegalMontionScreen extends StatelessWidget {
                     fontSize: mobile ? 14.0 : 16.0,
                     color: GlobalColors.secondaryColor,
                   ),
+                ),
+                const SizedBox(height: 30.0),
+                Text(
+                  'Il est strictement interdit de reproduire, copier, distribuer ou modifier tout contenu de ce site sans l’accord préalable et écrit de SIO2 Rénovations. '
+                  'Cela inclut textes, photographies, images, icônes, illustrations, logo ect..\n'
+                  'Toute utilisation non autorisée de ces éléments fera l’objet de poursuites judiciaires.\n\n'
+                  'Ce site a été optimisé pour les tablettes, les mobiles et les smartphones et ordinateur de bureau.',
+                  style: TextStyle(
+                    fontSize: mobile ? 14.0 : 16.0,
+                    color: GlobalColors.secondaryColor,
+                    fontStyle: FontStyle.italic,
+                  )
                 ),
                 const SizedBox(height: 30.0),
               ],
