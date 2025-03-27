@@ -124,7 +124,7 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
 
     return Scaffold(
       appBar: MyAppBar(), 
-      // endDrawer: _mobile ? DrawerComponent() : null,
+      endDrawer: _mobile ? DrawerComponent() : null,
       backgroundColor: GlobalColors.primaryColor, 
       body: LayoutBuilder( // LayoutBuilder dynamically adapts widgets based on parent constraints, enabling responsive design.
         builder: (context, constraints) {
@@ -157,52 +157,52 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
                         ),
                       ),
                     ),
-                    Positioned.fill(
-                      child: Column(
-                        children: [
-                          // Animated logo component.
-                          if (_show)
-                            Flexible(
-                              flex: 3, // Occupies 3/10ths of the available space.
-                              child: AnimatedOpacity(
-                              opacity: _show ? 1.0 : 0.0, 
-                              duration: const Duration(seconds: 3),
-                                child: RiveAnimation.asset(
-                                  GlobalOthers.logoWebsiteInProgress,
-                                ), 
-                              ),
-                            ),
-                          // Animated text component with slide and fade effects.
-                          Flexible(
-                            flex: 1, // Occupies 1/10th of the available space.
-                            child: FadeTransition(
-                              opacity: _fadeAnimation,
-                              child: SlideTransition(
-                                position: _slideAnimation,
-                                child: Text(
-                                  'EN CONSTRUCTION !',
-                                  style: TextStyle(
-                                    fontSize: _mobile ? 24.0 : 34.0,
-                                    color: Colors.grey.shade800, 
-                                    fontWeight: FontWeight.bold, 
-                                  ),
-                                ),
-                              ),  
-                            ),
-                          ),
-                          Expanded(child: SizedBox()), // Adds flexible empty space.
-                          // Animated carousel component.
-                          Flexible(
-                            flex: 10, // Occupies 10/10ths of the space for the carousel.
-                            child: AnimatedOpacity(
-                              opacity: _show ? 1.0 : 0.0, 
-                              duration: const Duration(seconds: 3),
-                              child: CarouselSliderComponent(), // Custom carousel component. 
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Positioned.fill(
+                    //   child: Column(
+                    //     children: [
+                    //       // Animated logo component.
+                    //       if (_show)
+                    //         Flexible(
+                    //           flex: 3, // Occupies 3/10ths of the available space.
+                    //           child: AnimatedOpacity(
+                    //           opacity: _show ? 1.0 : 0.0, 
+                    //           duration: const Duration(seconds: 3),
+                    //             child: RiveAnimation.asset(
+                    //               GlobalOthers.logoWebsiteInProgress,
+                    //             ), 
+                    //           ),
+                    //         ),
+                    //       // Animated text component with slide and fade effects.
+                    //       Flexible(
+                    //         flex: 1, // Occupies 1/10th of the available space.
+                    //         child: FadeTransition(
+                    //           opacity: _fadeAnimation,
+                    //           child: SlideTransition(
+                    //             position: _slideAnimation,
+                    //             child: Text(
+                    //               'EN CONSTRUCTION !',
+                    //               style: TextStyle(
+                    //                 fontSize: _mobile ? 24.0 : 34.0,
+                    //                 color: Colors.grey.shade800, 
+                    //                 fontWeight: FontWeight.bold, 
+                    //               ),
+                    //             ),
+                    //           ),  
+                    //         ),
+                    //       ),
+                    //       Expanded(child: SizedBox()), // Adds flexible empty space.
+                    //       // Animated carousel component.
+                    //       Flexible(
+                    //         flex: 10, // Occupies 10/10ths of the space for the carousel.
+                    //         child: AnimatedOpacity(
+                    //           opacity: _show ? 1.0 : 0.0, 
+                    //           duration: const Duration(seconds: 3),
+                    //           child: CarouselSliderComponent(), // Custom carousel component. 
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     // Cookie consent banner appears when banner visibility i
                     if (_isBannerVisible)
                     CookiesConsentBanner(

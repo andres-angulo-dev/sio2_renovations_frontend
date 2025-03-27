@@ -31,7 +31,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           ) 
         ),
       ),
-      // actions: mobile ? null : const [DrawerItems(defaultColor: Colors.black, hoverColor: GlobalColors.navItemsHover, isHorizontal: true)],
+      actions: mobile ? null : const [DrawerItems(defaultColor: Colors.black, hoverColor: GlobalColors.orangeColor, isHorizontal: true)],
     );
   }
 
