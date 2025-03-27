@@ -24,7 +24,7 @@ class DrawerItems extends StatelessWidget {
       Text('|', style: TextStyle(color: defaultColor, fontSize: 18)) 
       : 
       Divider(
-        color: GlobalColors.dividerColor,
+        color: GlobalColors.dividerColor1,
         thickness: 1.0,
         indent: 20.0,
         endIndent: 20.0
@@ -41,7 +41,7 @@ class DrawerItems extends StatelessWidget {
       Text('|', style: TextStyle(color: defaultColor, fontSize: 18)) 
       : 
       Divider(
-        color: GlobalColors.dividerColor,
+        color: GlobalColors.dividerColor1,
         thickness: 1.0,
         indent: 20.0,
         endIndent: 20.0
@@ -58,7 +58,7 @@ class DrawerItems extends StatelessWidget {
       Text('|', style: TextStyle(color: defaultColor, fontSize: 18)) 
       : 
       Divider(
-        color: GlobalColors.dividerColor,
+        color: GlobalColors.dividerColor1,
         thickness: 1.0,
         indent: 20.0,
         endIndent: 20.0
@@ -75,7 +75,7 @@ class DrawerItems extends StatelessWidget {
       Text('|', style: TextStyle(color: defaultColor, fontSize: 18)) 
       : 
       Divider(
-        color: GlobalColors.dividerColor,
+        color: GlobalColors.dividerColor1,
         thickness: 1.0,
         indent: 20.0,
         endIndent: 20.0

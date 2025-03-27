@@ -50,7 +50,7 @@ import 'package:rive/rive.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
 import './landing_screen.dart';
-import '../utils/global_images.dart';
+import '../utils/global_others.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -108,7 +108,7 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
           width: 600,
           height: 600,
           child: RiveAnimation.asset(
-            GlobalImages.logoSplash, // Animation Rive as the splash logo.
+            GlobalOthers.logoSplash, // Animation Rive as the splash logo.
           ),
         ),
       ),

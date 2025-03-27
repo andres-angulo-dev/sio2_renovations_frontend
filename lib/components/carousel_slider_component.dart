@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import '../utils/global_images.dart';
+import '../utils/global_others.dart';
 
 class CarouselSliderComponent extends StatelessWidget {
   const CarouselSliderComponent({super.key});
@@ -9,14 +9,14 @@ class CarouselSliderComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     // List of image paths for the carousel, dynamically provided from GlobalImages utility
     final List<String> imagePaths = [
-      GlobalImages.image1,
-      GlobalImages.image2,
-      GlobalImages.image3,
-      GlobalImages.image4,
-      GlobalImages.image5,
-      GlobalImages.image6,
-      GlobalImages.image7,
-      GlobalImages.image8,
+      GlobalOthers.image1,
+      GlobalOthers.image2,
+      GlobalOthers.image3,
+      GlobalOthers.image4,
+      GlobalOthers.image5,
+      GlobalOthers.image6,
+      GlobalOthers.image7,
+      GlobalOthers.image8,
     ];
 
     return CarouselSlider(

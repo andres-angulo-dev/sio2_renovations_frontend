@@ -1,4 +1,4 @@
-class GlobalImages {
+class GlobalOthers {
   static const String image1 = 'assets/images/image1.jpeg';
   static const String image2 = 'assets/images/image2.jpeg';
   static const String image3 = 'assets/images/image3.jpeg';
@@ -10,4 +10,6 @@ class GlobalImages {
   static const String backgroundLanding = 'assets/immeuble.jpeg';
   static const String logoSplash = 'assets/rive/sio2_renovations_splash.riv';
   static const String logoWebsiteInProgress = 'assets/rive/work_in_progress.riv';
+  static const String cookiesButton = 'assets/button.svg';
+  static const String iconCookieButton = 'assets/icon_button.svg';
 }

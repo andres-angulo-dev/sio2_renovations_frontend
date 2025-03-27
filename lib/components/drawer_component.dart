@@ -14,7 +14,7 @@ class DrawerComponent extends StatelessWidget {
         children: [
           DrawerItems(
             defaultColor: Colors.black, 
-            hoverColor: GlobalColors.navItemsHover, 
+            hoverColor: GlobalColors.orangeColor, 
             isHorizontal: false
           )
         ],

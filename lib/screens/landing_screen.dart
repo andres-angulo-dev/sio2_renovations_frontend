@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rive/rive.dart';
-import 'package:sio2_renovations_frontend/utils/global_images.dart';
 import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
 import '../components/carousel_slider_component.dart';
 import '../components/cookies_consent_banner.dart';
 import '../components/image_icon_button.dart';
 import '../utils/global_colors.dart';
+import '../utils/global_others.dart';
 import 'dart:ui'; // Import for the blur effect.
 
 class LandingScreen extends StatefulWidget {
@@ -27,15 +27,15 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
   // Animation<double>: Handles the fade-in effect for text (controls opacity).
   late Animation<double> _fadeAnimation;
 
-  final bool mobile = false; // Checks if the device is mobile or not.
-  bool show = false; // Controls the visibility of the components (e.g., carousel).
-  bool? cookiesAccepted; // State to track cookies consent.
-  bool isBannerVisible = false;
+  bool _mobile = false; 
+  bool _show = false;
+  bool? _cookiesAccepted; // State to track cookies consent.
+  bool _isBannerVisible = false;
 
   @override
   void initState() {
     super.initState();
-    isBannerVisible = cookiesAccepted == null;
+    _isBannerVisible = _cookiesAccepted == null;
 
     // Initialize AnimationController with a 1.5-second duration.
     _animationController = AnimationController(
@@ -65,44 +65,47 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
     // Starts the animation after a 100ms delay and displays on the screen.
     Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
-        show = true;
+        _show = true;
       });
       _animationController.forward(); // Triggers the sliding and fade-in animations.
     });
   }
 
+  // Handles user consent for cookies and manages the visibility of the cookie consent banner.
   void _handleCookiesConsent(bool? consent) {
     setState(() {
-      cookiesAccepted = consent;
-      if (isBannerVisible) {
+      _cookiesAccepted = consent;
+      if (_isBannerVisible) {
         _animationController.reverse().then((_) {
           setState(() {
-            isBannerVisible = false; // Hide banner after animation
+            _isBannerVisible = false; // Hide banner after animation
           });
         });
       }
     });
   }
 
+  // Loads previously saved cookie consent state and updates the banner visibility accordingly.
   void _handleLoadedConsent(bool? consent) {
-    if (cookiesAccepted == null) {
+    if (_cookiesAccepted == null) {
       setState(() {
-        cookiesAccepted = consent;
-        isBannerVisible = consent == null;
+        _cookiesAccepted = consent;
+        _isBannerVisible = consent == null;
       });
     }
   }
 
+  // Toggles the visibility of the cookie consent banner (with animations).
   void _toggleBannerVisibility() {
-    if (isBannerVisible) {
+    if (_isBannerVisible) {
       _animationController.reverse().then((_) {
         setState(() {
-          isBannerVisible = false; // Hide banner after animation
+          _isBannerVisible = false; // Hide banner after animation
         });
       });
     } else {
       setState(() {
-        isBannerVisible = true;
+        _isBannerVisible = true;
         _animationController.forward();
       });
     }
@@ -117,12 +120,13 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final mobile = MediaQuery.of(context).size.width > 768 ? false : true;
+    _mobile = MediaQuery.of(context).size.width > 768 ? false : true;
+
     return Scaffold(
       appBar: MyAppBar(), 
-      // endDrawer: mobile ? DrawerComponent() : null,
+      // endDrawer: _mobile ? DrawerComponent() : null,
       backgroundColor: GlobalColors.primaryColor, 
-      body: LayoutBuilder(
+      body: LayoutBuilder( // LayoutBuilder dynamically adapts widgets based on parent constraints, enabling responsive design.
         builder: (context, constraints) {
           final availableHeight = constraints.maxHeight;
 
@@ -131,12 +135,13 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
               children: [
                 Stack(
                   children: [
+                    // Background image with blur effect.
                     Container(
                       height: availableHeight,
                       width: screenWidth,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage(GlobalImages.backgroundLanding),
+                          image: AssetImage(GlobalOthers.backgroundLanding),
                           fit: BoxFit.cover, 
                         ),
                       ),
@@ -155,17 +160,19 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
                     Positioned.fill(
                       child: Column(
                         children: [
-                          if (show)
+                          // Animated logo component.
+                          if (_show)
                             Flexible(
                               flex: 3, // Occupies 3/10ths of the available space.
                               child: AnimatedOpacity(
-                              opacity: show ? 1.0 : 0.0, 
+                              opacity: _show ? 1.0 : 0.0, 
                               duration: const Duration(seconds: 3),
                                 child: RiveAnimation.asset(
-                                  GlobalImages.logoWebsiteInProgress,
+                                  GlobalOthers.logoWebsiteInProgress,
                                 ), 
                               ),
                             ),
+                          // Animated text component with slide and fade effects.
                           Flexible(
                             flex: 1, // Occupies 1/10th of the available space.
                             child: FadeTransition(
@@ -175,7 +182,7 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
                                 child: Text(
                                   'EN CONSTRUCTION !',
                                   style: TextStyle(
-                                    fontSize: mobile ? 24.0 : 34.0,
+                                    fontSize: _mobile ? 24.0 : 34.0,
                                     color: Colors.grey.shade800, 
                                     fontWeight: FontWeight.bold, 
                                   ),
@@ -184,10 +191,11 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
                             ),
                           ),
                           Expanded(child: SizedBox()), // Adds flexible empty space.
+                          // Animated carousel component.
                           Flexible(
                             flex: 10, // Occupies 10/10ths of the space for the carousel.
                             child: AnimatedOpacity(
-                              opacity: show ? 1.0 : 0.0, 
+                              opacity: _show ? 1.0 : 0.0, 
                               duration: const Duration(seconds: 3),
                               child: CarouselSliderComponent(), // Custom carousel component. 
                             ),
@@ -195,23 +203,25 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
                         ],
                       ),
                     ),
-                    if (isBannerVisible)
+                    // Cookie consent banner appears when banner visibility i
+                    if (_isBannerVisible)
                     CookiesConsentBanner(
                       onConsentGiven: _handleCookiesConsent,
                       onConsentLoaded: _handleLoadedConsent,
                       toggleVisibility: _toggleBannerVisibility,
                     ),
-                    if (!isBannerVisible && cookiesAccepted == true)
+                    // Image button appears after cookie consent is accepted.                    
+                    if (!_isBannerVisible && _cookiesAccepted == true)
                     Positioned(
                       bottom: 20,
                       left: 20,
                       child: AnimatedOpacity(
-                        opacity: show ? 1.0 : 0.0, 
+                        opacity: _show ? 1.0 : 0.0, 
                         duration: const Duration(seconds: 2),
                         child: ImageIconButton(
                           onPressed: _toggleBannerVisibility,
-                          imagePath: 'assets/button.svg', 
-                          iconPath: 'assets/icon_button.svg',
+                          imagePath: GlobalOthers.cookiesButton, 
+                          iconPath: GlobalOthers.iconCookieButton,
                       )
                       )
                     )
