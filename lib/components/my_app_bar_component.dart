@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'drawer_items.dart';
 import '../utils/global_colors.dart';
+import '../utils/global_others.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({super.key});
@@ -16,6 +17,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       toolbarHeight: mobile ? 250 : 300,
       leadingWidth: mobile ? 150 : 200,
+      scrolledUnderElevation: 0.0, // Disables the effect of change caused by scrolling.
       backgroundColor: GlobalColors.primaryColor,
       leading: MouseRegion(
         cursor: SystemMouseCursors.click,
@@ -24,7 +26,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),  
             child: SvgPicture.asset(
-              'assets/black.svg',
+              GlobalLogo.blackLogo,
               semanticsLabel: 'Circular orange logo with the text "SIO2 Rénovations" displayed to its right',
               fit: BoxFit.contain,
             ),

@@ -9,14 +9,14 @@ class CarouselSliderComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     // List of image paths for the carousel, dynamically provided from GlobalImages utility
     final List<String> imagePaths = [
-      GlobalOthers.image1,
-      GlobalOthers.image2,
-      GlobalOthers.image3,
-      GlobalOthers.image4,
-      GlobalOthers.image5,
-      GlobalOthers.image6,
-      GlobalOthers.image7,
-      GlobalOthers.image8,
+      GlobalImages.image1,
+      GlobalImages.image2,
+      GlobalImages.image3,
+      GlobalImages.image4,
+      GlobalImages.image5,
+      GlobalImages.image6,
+      GlobalImages.image7,
+      GlobalImages.image8,
     ];
 
     return CarouselSlider(

@@ -108,7 +108,7 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
           width: 600,
           height: 600,
           child: RiveAnimation.asset(
-            GlobalOthers.logoSplash, // Animation Rive as the splash logo.
+            GlobalLogo.logoSplash, // Animation Rive as the splash logo.
           ),
         ),
       ),

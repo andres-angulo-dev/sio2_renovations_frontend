@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../components/my_hover_route_navigator.dart';
 import '../utils/global_colors.dart'; 
+import '../utils/global_others.dart';
 
 class CookiesConsentBanner extends StatefulWidget {
   const CookiesConsentBanner({
@@ -31,7 +32,6 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
   bool _preferencesCookies = false; 
   bool _statisticsCookies = false; 
   bool _marketingCookies = false;
-  bool _hovering = false; // Tracks hover state for the "Learn More" link.
 
   @override
   void initState() {
@@ -160,7 +160,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
                 children: [
                    const Text(
                     "Ce site utilise",
-                    style: TextStyle(fontSize: 14.0, color: GlobalColors.secondaryColor),
+                    style: TextStyle(fontSize: GlobalSize.mobileSize, color: GlobalColors.secondaryColor),
                   ),
                   const Text(
                     "des Cookies",
@@ -187,7 +187,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
             text: TextSpan(
               text: "Sio2 Rénovations utilise des cookies pour améliorer la navigation sur son site web, pour vous proposer une expérience plus personnalisée, des publicités ciblées et pour recueillir des données afin de vous offrir un réel suivi. Pour en savoir plus sur les différents types de cookies utilisés, consultez la politique relative à la protection des données. ",
               style: const TextStyle(
-                fontSize: 14.0,
+                fontSize: GlobalSize.mobileSize,
                 color: GlobalColors.secondaryColor,
                 height: 1.5, // Line spacing for readability.
               ),
@@ -195,25 +195,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
                 WidgetSpan(
                   alignment: PlaceholderAlignment.baseline, // Aligns with the main text baseline.
                   baseline: TextBaseline.alphabetic,
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.click, // Displays a "pointer" cursor on hover.
-                    onEnter: (_) => setState(() {
-                      _hovering = true; // Changes hover state on entry.
-                    }),
-                    onExit: (_) => setState(() {
-                      _hovering = false; // Reverts hover state on exit.
-                    }),
-                    child: GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, '/privacyPolicy'),
-                      child: Text(
-                        "En savoir plus",
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          color: !_hovering ? GlobalColors.hyperLinkColor : GlobalColors.hoverHyperLinkColor,
-                        ),
-                      ),
-                    ),
-                  ),
+                  child: MyHoverRouteNavigator(routeName: '/privacyPolicy', text: 'En savoir plus')
                 ),
               ],
             ),
@@ -282,7 +264,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
           const Text(
             "Choisissez comment nous collectons et utilisons vos données pour une meilleure expérience de navigation sur notre site. Votre vie privée est primordiale et vous avez le plein contrôle ici.",
             style: TextStyle(
-              fontSize: 14.0,
+              fontSize: GlobalSize.mobileSize,
               color: GlobalColors.secondaryColor,
               height: 1.5,
             ),

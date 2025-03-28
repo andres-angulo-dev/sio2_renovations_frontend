@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/global_colors.dart';
 import './screens/landing_screen.dart';
 import './screens/about_screen.dart';
 import './screens/contact_screen.dart';
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
       title: 'SIO2 Rénovations',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        canvasColor: GlobalColors.primaryColor,
       ),
       initialRoute: '/',
       routes: {

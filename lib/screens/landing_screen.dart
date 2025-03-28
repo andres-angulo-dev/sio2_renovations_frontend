@@ -141,7 +141,7 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
                       width: screenWidth,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage(GlobalOthers.backgroundLanding),
+                          image: AssetImage(GlobalImages.backgroundLanding),
                           fit: BoxFit.cover, 
                         ),
                       ),
@@ -220,8 +220,8 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
                         duration: const Duration(seconds: 2),
                         child: ImageIconButton(
                           onPressed: _toggleBannerVisibility,
-                          imagePath: GlobalOthers.cookiesButton, 
-                          iconPath: GlobalOthers.iconCookieButton,
+                          imagePath: GlobalButtonsAndIcons.cookiesButton, 
+                          iconPath: GlobalButtonsAndIcons.iconCookieButton,
                       )
                       )
                     )
