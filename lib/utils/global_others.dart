@@ -28,8 +28,12 @@ class GlobalSize {
   static const double webTitle = 28.0; 
   static const double mobileSubTitle = 18.0; 
   static const double webSubTitle = 20.0; 
+  static const double footerMobileTitle = 22.0; 
   static const double footerWebTitle = 24.0; 
+  static const double footerMobileSubTitle = 12.0; 
   static const double footerWebSubTitle = 14.0; 
+  static const double footerMobileText = 16.0;
   static const double footerWebText = 18.0;
+  static const double footerMobileCopyright = 12.0;
   static const double footerWebCopyright = 14.0;
 }

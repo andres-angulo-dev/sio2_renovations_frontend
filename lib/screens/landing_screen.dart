@@ -6,6 +6,7 @@ import '../components/drawer_component.dart';
 import '../components/carousel_slider_component.dart';
 import '../components/cookies_consent_banner.dart';
 import '../components/image_icon_button.dart';
+import '../components/footer.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import 'dart:ui'; // Import for the blur effect.
@@ -227,6 +228,7 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
                     )
                   ],
                 ),
+                FooterComponent(),
               ],
             ),
           );

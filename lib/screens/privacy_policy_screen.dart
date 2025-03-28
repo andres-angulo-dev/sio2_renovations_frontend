@@ -67,7 +67,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                             text: "L’adresse de notre site Web est : https://www.sio2renovations.com.\n",
                           ),
                           TextSpan(
-                            text: "Consultez les ",
+                            text: "Consultez les",
                           ),
                           TextSpan(
                             text: " ",
