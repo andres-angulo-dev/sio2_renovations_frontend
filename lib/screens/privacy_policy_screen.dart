@@ -16,13 +16,29 @@ class PrivacyPolicyScreen extends StatefulWidget {
 
 class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTickerProviderStateMixin {
 
+  String currentItem = 'Politique de confidentialité';
+
+  void updateCurrentItem(String newItem) {
+    setState(() {
+      currentItem = newItem;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final bool mobile = MediaQuery.of(context).size.width > 768 ? false : true;
 
     return Scaffold(
-      appBar: const MyAppBar(),
-      endDrawer: mobile ? const DrawerComponent() : null,
+      appBar: MyAppBar(
+        currentItem: currentItem,
+        onItemSelected: updateCurrentItem,
+      ),
+      endDrawer: mobile 
+        ? DrawerComponent(
+          currentItem: currentItem,
+          onItemSelected: updateCurrentItem,
+        ) 
+        : null,
       backgroundColor: GlobalColors.primaryColor,
       body: SingleChildScrollView(
         child: Column(

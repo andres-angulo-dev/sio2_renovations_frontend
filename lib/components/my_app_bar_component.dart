@@ -5,9 +5,14 @@ import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MyAppBar({super.key});
+  const MyAppBar({super.key,
+  required this.currentItem,
+  required this.onItemSelected,
+  });
 
   final bool mobile = false;
+  final String currentItem;  // The currently active menu item
+  final Function(String) onItemSelected;  // Callback to notify the parent when a menu item is selected
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +38,16 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           ) 
         ),
       ),
-      actions: mobile ? null : const [DrawerItems(defaultColor: Colors.black, hoverColor: GlobalColors.orangeColor, isHorizontal: true)],
+      actions: mobile 
+      ? null 
+      : [ DrawerItems(
+        defaultColor: Colors.black, 
+        hoverColor: GlobalColors.orangeColor, 
+        isHorizontal: true,
+        currentItem: currentItem, // Pass the active item
+        onItemSelected: onItemSelected, // Pass the callback
+        )
+      ],
     );
   }
 

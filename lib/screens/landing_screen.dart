@@ -32,6 +32,15 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
   bool _show = false;
   bool? _cookiesAccepted; // State to track cookies consent.
   bool _isBannerVisible = false;
+  String currentItem = "Accueil"; // Holds the currently selected menu item to change text color
+  
+  // Function to update the current item when a new one is selected to change text color
+  void updateCurrentItem(String newItem) {
+    setState(() {
+      currentItem = newItem;
+    });
+  }
+
 
   @override
   void initState() {
@@ -124,8 +133,16 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
     _mobile = MediaQuery.of(context).size.width > 768 ? false : true;
 
     return Scaffold(
-      appBar: MyAppBar(), 
-      endDrawer: _mobile ? DrawerComponent() : null,
+      appBar: MyAppBar(
+        currentItem: currentItem,
+        onItemSelected: updateCurrentItem,
+      ), 
+      endDrawer: _mobile ? 
+      DrawerComponent(
+        currentItem: currentItem,
+        onItemSelected: updateCurrentItem,
+      ) 
+      : null,
       backgroundColor: GlobalColors.primaryColor, 
       body: LayoutBuilder( // LayoutBuilder dynamically adapts widgets based on parent constraints, enabling responsive design.
         builder: (context, constraints) {

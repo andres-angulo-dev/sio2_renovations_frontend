@@ -12,6 +12,13 @@ class AboutScreen extends StatefulWidget {
 
 class AboutScreenState extends State<AboutScreen> {
   final bool moibile = false;
+  String currentItem = 'À propos de nous';
+
+  void updateCurrentItem(String newItem) {
+    setState(() {
+      currentItem = newItem;
+    });
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -19,10 +26,18 @@ class AboutScreenState extends State<AboutScreen> {
     final mobile = MediaQuery.of(context).size.width > 768 ? false : true;
 
     return Scaffold(
-      appBar: MyAppBar(),
-      endDrawer: mobile ? DrawerComponent() : null,
+      appBar: MyAppBar(
+        currentItem: currentItem,
+        onItemSelected: updateCurrentItem,
+      ),
+      endDrawer: mobile 
+        ? DrawerComponent(
+          currentItem: currentItem,
+          onItemSelected: updateCurrentItem,
+        ) 
+        : null,
       backgroundColor: GlobalColors.primaryColor,
-      body: Text('Mais si'),
+      body: Text('Mais si !'),
     );
   }
 }

@@ -2,11 +2,19 @@ import 'package:flutter/material.dart';
 import '../utils/global_colors.dart';
 
 class DrawerItems extends StatelessWidget {
-  const DrawerItems({super.key, required this.defaultColor, required this.hoverColor, this.isHorizontal = true});
+  const DrawerItems({super.key, 
+  required this.defaultColor, 
+  required this.hoverColor, 
+  this.isHorizontal = true,
+  required this.currentItem,
+  required this.onItemSelected,
+  });
 
   final Color defaultColor;
   final Color hoverColor;
-  final bool isHorizontal;
+  final bool isHorizontal; // Whether the menu is displayed horizontally
+  final String currentItem; // The currently active menu item
+  final Function(String) onItemSelected; // Callback to notify the parent when a menu item is selected
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +23,11 @@ class DrawerItems extends StatelessWidget {
       CustomNavItem(
         icon: Icons.dashboard,
         label: 'Accueil',
-        onPressed: () => Navigator.pushNamed(context, '/landing'), 
+        isActive: currentItem == 'Accueil', // Check if this item is active, true if it's the same
+        onPressed: () {
+          onItemSelected('Acceuil'); // Notify the parent of the selection
+          Navigator.pushNamed(context, '/landing');
+        }, 
         defaultColor: defaultColor,
         hoverColor: hoverColor,
         animationDelay: const Duration(milliseconds: 100),
@@ -30,9 +42,34 @@ class DrawerItems extends StatelessWidget {
         endIndent: 20.0
       ),
       CustomNavItem(
+        icon: Icons.info,
+        label: 'À propos de nous',
+        isActive: currentItem == 'À propos de nous',
+        onPressed: () {
+          onItemSelected('À propos de nous');
+          Navigator.pushNamed(context, '/about');
+        }, 
+        defaultColor: defaultColor,
+        hoverColor: hoverColor,
+        animationDelay: const Duration(milliseconds: 300),
+      ),
+      isHorizontal ? 
+      Text('|', style: TextStyle(color: defaultColor, fontSize: 18)) 
+      : 
+      Divider(
+        color: GlobalColors.dividerColor1,
+        thickness: 1.0,
+        indent: 20.0,
+        endIndent: 20.0
+      ),
+      CustomNavItem(
         icon: Icons.folder_open,
         label: 'Projets',
-        onPressed: () => Navigator.pushNamed(context, '/projects'), 
+        isActive: currentItem == 'Projets',
+        onPressed: () {
+          onItemSelected('Projets');
+          Navigator.pushNamed(context, '/projects'); 
+        }, 
         defaultColor: defaultColor,
         hoverColor: hoverColor,
         animationDelay: const Duration(milliseconds: 200),
@@ -47,26 +84,13 @@ class DrawerItems extends StatelessWidget {
         endIndent: 20.0
       ),      
       CustomNavItem(
-        icon: Icons.info,
-        label: 'À propos de nous',
-        onPressed: () => Navigator.pushNamed(context, '/about'),
-        defaultColor: defaultColor,
-        hoverColor: hoverColor,
-        animationDelay: const Duration(milliseconds: 300),
-      ),
-      isHorizontal ? 
-      Text('|', style: TextStyle(color: defaultColor, fontSize: 18)) 
-      : 
-      Divider(
-        color: GlobalColors.dividerColor1,
-        thickness: 1.0,
-        indent: 20.0,
-        endIndent: 20.0
-      ),      
-      CustomNavItem(
         icon: Icons.contact_mail,
         label: 'Contact',
-        onPressed: () => Navigator.pushNamed(context, '/contact'),
+        isActive: currentItem == 'Contact',
+        onPressed: () {
+          onItemSelected('Contact');
+          Navigator.pushNamed(context, '/contact');
+        }, 
         defaultColor: defaultColor,
         hoverColor: hoverColor,
         animationDelay: const Duration(milliseconds: 400),
@@ -83,7 +107,11 @@ class DrawerItems extends StatelessWidget {
       // CustomNavItem(
       //   icon: Icons.article,
       //   label: 'Mentions légales',
-      //   onPressed: () => Navigator.pushNamed(context, '/legalMontions'), 
+      //   isActive: currentItem == 'Mentions légales',
+      //   onPressed: () {
+      //     onItemSelected('Mentions légales');
+      //     Navigator.pushNamed(context, '/legalMontions');
+      //   }, 
       //   defaultColor: defaultColor,
       //   hoverColor: hoverColor,
       //   animationDelay: const Duration(milliseconds: 500),
@@ -100,7 +128,11 @@ class DrawerItems extends StatelessWidget {
       // CustomNavItem(
       //   icon: Icons.shield, 
       //   label: 'Politique de confidentialité', 
-      //   onPressed: () => Navigator.pushNamed(context, '/privacyPolicy'), 
+      //   isActive: currentItem == 'Politique de confidentialité',
+      //   onPressed: () {
+      //     onItemSelected('Politique de confidentialité');
+      //     Navigator.pushNamed(context, '/privacyPolicy'); 
+      //   },
       //   defaultColor: defaultColor, 
       //   hoverColor: hoverColor, 
       //   animationDelay: const Duration(milliseconds: 400),
@@ -117,7 +149,15 @@ class DrawerItems extends StatelessWidget {
 }
 
 class CustomNavItem extends StatefulWidget {
-  const CustomNavItem({super.key, required this.icon, required this.label, required this.onPressed, required this.defaultColor, required this.hoverColor, required this.animationDelay});
+  const CustomNavItem({super.key, 
+  required this.icon, 
+  required this.label, 
+  required this.onPressed, 
+  required this.defaultColor, 
+  required this.hoverColor, 
+  required this.animationDelay,
+  required this.isActive,
+  });
 
   final IconData icon;
   final String label; 
@@ -125,6 +165,7 @@ class CustomNavItem extends StatefulWidget {
   final Color defaultColor;
   final Color hoverColor;
   final Duration animationDelay;
+  final bool isActive;
 
   @override
   CustomdrawerItemstate createState() => CustomdrawerItemstate();
@@ -176,10 +217,9 @@ class CustomdrawerItemstate extends State<CustomNavItem> with SingleTickerProvid
     bool mobile954 = MediaQuery.of(context).size.width > 954 ? false : true;
  
     return Padding(
-      padding: mobile768 ? 
-        EdgeInsets.symmetric(vertical: 4.0, horizontal: 20.0) 
-        : 
-        EdgeInsets.all(mobile954 ? 15.0 : 30.0),
+      padding: mobile768 
+        ? EdgeInsets.symmetric(vertical: 4.0, horizontal: 20.0) 
+        : EdgeInsets.all(mobile954 ? 15.0 : 30.0),
       child: MouseRegion(
         onEnter: (_) {
           setState(() {
@@ -193,8 +233,9 @@ class CustomdrawerItemstate extends State<CustomNavItem> with SingleTickerProvid
             _backgroundColor = Colors.transparent; // Remove background
           });
         },
-        child: mobile768 ? 
-        SlideTransition(
+        child: mobile768 
+        // Mobile navigation menu
+        ? SlideTransition(
           position: _slideAnimation,
           child: GestureDetector(
             onTap: widget.onPressed,
@@ -205,13 +246,13 @@ class CustomdrawerItemstate extends State<CustomNavItem> with SingleTickerProvid
                 children: [
                   Icon(
                     widget.icon,
-                    color: _textColor,
+                    color: widget.isActive ? GlobalColors.orangeColor : _textColor, // logic for the color change depending on the page you are on
                   ),
                   const SizedBox(width: 8.0,),
                   Text(
                    widget.label,
                    style: TextStyle(
-                     color: _textColor,
+                      color: widget.isActive ? GlobalColors.orangeColor : _textColor, // logic for the color change depending on the page you are on
                      fontSize: mobile954 ? 16.0 : 18.0,
                    ),
                   ),
@@ -219,18 +260,21 @@ class CustomdrawerItemstate extends State<CustomNavItem> with SingleTickerProvid
               ) 
             ) 
           ),
-        ) 
-        : 
-        GestureDetector(
-          onTap: widget.onPressed,
-          child: Text(
-            widget.label,
-            style: TextStyle(
-              color: _textColor,
-              fontSize: mobile954 ? 16.0 : 18.0,
+        )
+        // Web navigation menu
+        : MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: widget.onPressed,
+            child: Text(
+              widget.label,
+              style: TextStyle(
+                color: widget.isActive ? GlobalColors.orangeColor : _textColor, // logic for the color change depending on the page you are on
+                fontSize: mobile954 ? 16.0 : 18.0,
+              ),
             ),
           ),
-        ),
+        ) 
       ),
     );
   }
