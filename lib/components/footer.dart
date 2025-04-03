@@ -14,7 +14,7 @@ class FooterComponent extends StatelessWidget {
     
     return Container(
       width: double.infinity,
-      color: const Color.fromARGB(255, 165, 127, 78),
+      color: GlobalColors.tertiaryColor,
       padding: const EdgeInsets.all(16.0),
       child: !mobile ? Column(
         children: [

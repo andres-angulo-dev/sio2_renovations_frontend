@@ -13,12 +13,17 @@ class GlobalImages {
 class GlobalLogo {
   static const String blackLogo = 'assets/black.svg';
   static const String logoSplash = 'assets/rive/sio2_renovations_splash.riv';
+}
+
+class GlobalAnimations{
   static const String logoWebsiteInProgress = 'assets/rive/work_in_progress.riv';
+  static const String engagementAnimation = 'assets/rive/engagement.riv';
 }
 
 class GlobalButtonsAndIcons {
   static const String cookiesButton = 'assets/button.svg';
   static const String iconCookieButton = 'assets/icon_button.svg';
+  static const String contactButton = 'assets/rive/contact_button.riv';
 }
 
 class GlobalSize {
@@ -28,6 +33,8 @@ class GlobalSize {
   static const double webTitle = 28.0; 
   static const double mobileSubTitle = 18.0; 
   static const double webSubTitle = 20.0; 
+  // static const double 
+  // Footer
   static const double footerMobileTitle = 22.0; 
   static const double footerWebTitle = 24.0; 
   static const double footerMobileSubTitle = 12.0; 

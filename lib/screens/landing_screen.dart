@@ -5,7 +5,7 @@ import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
 import '../components/carousel_slider_component.dart';
 import '../components/cookies_consent_banner.dart';
-import '../components/image_icon_button.dart';
+import '../components/my_button.dart';
 import '../components/footer.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
@@ -236,10 +236,10 @@ class LandingScreenState extends State<LandingScreen> with SingleTickerProviderS
                       child: AnimatedOpacity(
                         opacity: _show ? 1.0 : 0.0, 
                         duration: const Duration(seconds: 2),
-                        child: ImageIconButton(
+                        child: MyButton(
                           onPressed: _toggleBannerVisibility,
-                          imagePath: GlobalButtonsAndIcons.cookiesButton, 
-                          iconPath: GlobalButtonsAndIcons.iconCookieButton,
+                          buttonPath: GlobalButtonsAndIcons.cookiesButton, 
+                          foregroundPath: GlobalButtonsAndIcons.iconCookieButton,
                       )
                       )
                     )

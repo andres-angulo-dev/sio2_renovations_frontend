@@ -4,6 +4,7 @@ class GlobalColors {
   static const Color orangeColor = Colors.orange;
   static const Color primaryColor = Colors.white;
   static const Color secondaryColor = Colors.black;
+  static const Color tertiaryColor = Color.fromARGB(255, 165, 127, 78);
   static const Color dividerColor1 = Color.fromARGB(255, 197, 193, 193);
   static Color dividerColor2 = Colors.grey[100]!;
   static Color dividerColor3 = Colors.grey[200]!;

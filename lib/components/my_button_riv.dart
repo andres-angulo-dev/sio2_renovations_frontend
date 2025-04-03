@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:rive/rive.dart';
 
-class ImageIconButton extends StatefulWidget {
-  const ImageIconButton({super.key, required this.onPressed, required this.imagePath, required this.iconPath});
+class MyButtonRive extends StatefulWidget {
+  const MyButtonRive({super.key, 
+  required this.onPressed, 
+  required this.buttonPath,
+
+  });
 
   final VoidCallback onPressed;
-  final String imagePath;
-  final String iconPath;
+  final String buttonPath;
+  // final String? buttonLabel;
 
   @override  
-  ImageIconButtonState createState() => ImageIconButtonState(); 
+  MyButtonRiveState createState() => MyButtonRiveState(); 
 }
 
-class ImageIconButtonState extends State<ImageIconButton> {
+class MyButtonRiveState extends State<MyButtonRive> {
   double _scale = 1.0;
 
   @override   
@@ -37,17 +41,12 @@ class ImageIconButtonState extends State<ImageIconButton> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              SvgPicture.asset(
-                widget.imagePath,
-                width: 60,
-                height: 60,
-                semanticsLabel: 'Handle cookies button',
-              ),
-              SvgPicture.asset(
-                widget.iconPath,
-                width: 40,
-                height: 40,
-                semanticsLabel: 'A cookie icon over the button',
+              SizedBox(
+                height: 100,
+                width: 150,
+                child: RiveAnimation.asset(
+                  widget.buttonPath,
+                ),
               ),
             ],
           ),

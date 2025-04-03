@@ -21,6 +21,7 @@ dependencies:
   shared_preferences: ^2.5.2
   font_awesome_flutter: ^10.8.0
   flutter_svg: ^2.0.17
+  visibility_detector: ^0.4.0+2
 
 dev_dependencies:
   flutter_test:
@@ -35,3 +36,13 @@ flutter:
     - assets/images/
     - assets/rive/
 
+  fonts:
+    - family: DancingScript
+      fonts: 
+        - asset: assets/fonts/DancingScript-Regular.ttf
+        - asset: assets/fonts/DancingScript-Bold.ttf
+          weight: 700
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Light.ttf
+        - asset: assets/fonts/Roboto-Regular.ttf

@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:sio2_renovations_frontend/components/footer.dart';
 import 'package:sio2_renovations_frontend/components/my_hover_route_navigator.dart';
 import 'package:sio2_renovations_frontend/components/my_hover_url_navigator.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
 import '../utils/global_colors.dart';
