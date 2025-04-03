@@ -7,6 +7,7 @@ import '../components/footer.dart';
 import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
 import '../components/my_button.dart';
+import '../components/my_rive_button.dart';
 import '../utils/global_colors.dart';
 
 class AboutScreen extends StatefulWidget {
@@ -620,9 +621,9 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                                 height: 100, // Taille fixe pour permettre la détection de visibilité
                                 width: 150,  // Correspond à la taille de votre MyButtonRive
                                 child: _showContactButtonSection 
-                                  ? MyButtonRive(
+                                  ? MyRiveButton(
                                       onPressed: () => Navigator.pushNamed(context, ('/contact')), 
-                                      buttonPath: GlobalButtonsAndIcons.contactButton, 
+                                      buttonPath: GlobalButtonsAndIcons.contactButtonWithReverse, 
                                     ) 
                                   : Container(color: Colors.transparent), // Widget vide visible
                               ),

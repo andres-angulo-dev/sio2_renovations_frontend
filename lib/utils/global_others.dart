@@ -24,6 +24,7 @@ class GlobalButtonsAndIcons {
   static const String cookiesButton = 'assets/button.svg';
   static const String iconCookieButton = 'assets/icon_button.svg';
   static const String contactButton = 'assets/rive/contact_button.riv';
+  static const String contactButtonWithReverse = 'assets/rive/contact_button _with_reverse.riv';
 }
 
 class GlobalSize {
