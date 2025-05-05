@@ -13,6 +13,10 @@ class GlobalImages {
 class GlobalLogo {
   static const String blackLogo = 'assets/black.svg';
   static const String logoSplash = 'assets/rive/sio2_renovations_splash.riv';
+  static const String logoEngagement = 'assets/engagement.svg';
+  static const String logoCall = 'assets/call.svg';
+  static const String logoStructured = 'assets/structured.svg';
+  static const String logoCustomer = 'assets/customer.svg';
 }
 
 class GlobalAnimations{

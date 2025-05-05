@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
-import 'package:sio2_renovations_frontend/components/my_button_riv.dart';
-import 'package:sio2_renovations_frontend/utils/global_others.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../components/footer.dart';
 import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
-import '../components/my_button.dart';
 import '../components/my_rive_button.dart';
+import '../utils/global_others.dart';
 import '../utils/global_colors.dart';
 
 class AboutScreen extends StatefulWidget {
@@ -169,7 +167,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                         width: screenWidth,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage('assets/images/immeuble.jpeg'), // Replace with your image path
+                            image: AssetImage('assets/images/immeuble.jpeg'), 
                             fit: BoxFit.cover, // Cover the entire space
                           )
                         ),
@@ -618,14 +616,14 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                                 }
                               },
                               child: SizedBox(
-                                height: 100, // Taille fixe pour permettre la détection de visibilité
-                                width: 150,  // Correspond à la taille de votre MyButtonRive
+                                height: 100, // Fixed size to allow visibility detection
+                                width: 150,  // Corresponds to the size of the MyButtonRive
                                 child: _showContactButtonSection 
                                   ? MyRiveButton(
                                       onPressed: () => Navigator.pushNamed(context, ('/contact')), 
                                       buttonPath: GlobalButtonsAndIcons.contactButtonWithReverse, 
                                     ) 
-                                  : Container(color: Colors.transparent), // Widget vide visible
+                                  : Container(color: Colors.transparent), // Empty widget visible
                               ),
                             )                          
                           ],
