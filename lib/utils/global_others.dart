@@ -8,6 +8,7 @@ class GlobalImages {
   static const String image7 = 'assets/images/image7.jpeg';
   static const String image8 = 'assets/images/image8.jpeg';
   static const String backgroundLanding = 'assets/images/immeuble.jpeg';
+  static const String customGoogleMarker = 'assets/images/customGoogleMarker.png';
 }
 
 class GlobalLogo {

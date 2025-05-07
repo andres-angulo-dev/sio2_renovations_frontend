@@ -1,0 +1,178 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../utils/global_others.dart';
+
+final List<Map<String, dynamic>> data = [
+  {
+    "id": "1",
+    "position": LatLng(48.8696, 2.3070),
+    "title": "Appartement Haussmannien - Champs-Élysées",
+    "description": "Rénovation complète avec modernisation des pièces et restauration des moulures.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  {
+    "id": "2",
+    "position": LatLng(48.8575, 2.3522),
+    "title": "Appartement Quai de Seine",
+    "description": "Modernisation complète avec matériaux nobles et conception sur mesure.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  {
+    "id": "3",
+    "position": LatLng(48.8574, 2.3500),
+    "title": "Appartement Rue de Rivoli",
+    "description": "Réfection complète des salles de bain et cuisine avec finitions haut de gamme.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  {
+    "id": "4",
+    "position": LatLng(48.8515, 2.3700),
+    "title": "Appartement rénové - Bastille",
+    "description": "Travaux d’isolation et rénovation du parquet avec finitions modernes.",
+    "image": GlobalImages.backgroundLanding,
+  },
+
+  // 🏠 Focus sur le 13ème arrondissement
+  {
+    "id": "5",
+    "position": LatLng(48.8383, 2.3488),
+    "title": "Appartement contemporain - 13ème arrondissement",
+    "description": "Optimisation de l’espace et décoration minimaliste.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  {
+    "id": "6",
+    "position": LatLng(48.8315, 2.3570),
+    "title": "Appartement familial - Olympiades",
+    "description": "Rénovation de la cuisine et modernisation des pièces à vivre.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  {
+    "id": "7",
+    "position": LatLng(48.8278, 2.3545),
+    "title": "Studio rénové - Tolbiac",
+    "description": "Réorganisation des volumes intérieurs avec éclairage optimisé.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  {
+    "id": "8",
+    "position": LatLng(48.8325, 2.3432),
+    "title": "Loft moderne - Bibliothèque François Mitterrand",
+    "description": "Modernisation complète avec matériaux haut de gamme.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  
+  // 🏠 Focus sur le 14ème arrondissement
+  {
+    "id": "9",
+    "position": LatLng(48.8285, 2.3283),
+    "title": "Studio moderne - 14ème arrondissement",
+    "description": "Rénovation complète et réagencement.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  {
+    "id": "10",
+    "position": LatLng(48.8220, 2.3150),
+    "title": "Appartement lumineux - Porte d’Orléans",
+    "description": "Optimisation thermique et décoration contemporaine.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  {
+    "id": "11",
+    "position": LatLng(48.8255, 2.3241),
+    "title": "Appartement rénové - Parc Montsouris",
+    "description": "Rénovation des pièces à vivre avec finitions élégantes.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  {
+    "id": "12",
+    "position": LatLng(48.8762, 2.3139),
+    "title": "Appartement rénové - Batignolles",
+    "description": "Rénovation complète avec matériaux nobles.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  {
+    "id": "13",
+    "position": LatLng(48.8561, 2.2871),
+    "title": "Appartement cosy - Passy",
+    "description": "Aménagement moderne et décoration chaleureuse.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  {
+    "id": "14",
+    "position": LatLng(48.8485, 2.3330),
+    "title": "Studio - Quartier Latin",
+    "description": "Travaux de mise aux normes et finitions haut de gamme.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  {
+    "id": "15",
+    "position": LatLng(48.8429, 2.3445),
+    "title": "Loft rénové - Saint-Michel",
+    "description": "Transformation complète avec verrière et design moderne.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  {
+    "id": "16",
+    "position": LatLng(48.8352, 2.3114),
+    "title": "Studio étudiant - Place d’Italie",
+    "description": "Optimisation des petits espaces et mobilier fonctionnel.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  {
+    "id": "17",
+    "position": LatLng(48.8872, 2.3531),
+    "title": "Appartement lumineux - Montmartre",
+    "description": "Mise en valeur des poutres apparentes et finitions élégantes.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  // close to Paris
+  {
+    "id": "18",
+    "position": LatLng(48.8841, 2.2651),
+    "title": "Maison à Neuilly-sur-Seine",
+    "description": "Rénovation de la cuisine et modernisation des espaces de vie.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  {
+    "id": "19",
+    "position": LatLng(48.8471, 2.4332),
+    "title": "Loft à Vincennes",
+    "description": "Réorganisation des volumes intérieurs avec éclairage naturel optimisé.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  {
+    "id": "20",
+    "position": LatLng(48.8386, 2.2399),
+    "title": "Appartement à Boulogne-Billancourt",
+    "description": "Rénovation des pièces à vivre avec finitions élégantes et modernes.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  {
+    "id": "21",
+    "position": LatLng(48.9362, 2.3569),
+    "title": "Appartement à Saint-Denis",
+    "description": "Travaux d’optimisation thermique et décoration contemporaine.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  {
+    "id": "22",
+    "position": LatLng(48.866667, 2.333333),
+    "title": "Duplex rue Pigalle",
+    "description": "Travaux de peinture suite à dégâts des eaux.",
+    "image": GlobalImages.backgroundLanding,
+  },  
+  {
+    "id": "23",
+    "position": LatLng(48.866667, 2.333333),
+    "title": "Rénovation complète rue Pigalle",
+    "description": "Rénovation complète du sol au plafond.",
+    "image": GlobalImages.backgroundLanding,
+  },
+  {
+    "id": "24",
+    "position": LatLng(48.86395, 2.37251),
+    "title": "Studio - rue de la Folie Mericourt",
+    "description": "Petits travaux divers",
+    "image": GlobalImages.backgroundLanding,
+  },
+];

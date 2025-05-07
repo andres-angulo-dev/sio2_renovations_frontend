@@ -9,6 +9,7 @@ import '../components/carousel_slider_component.dart';
 import '../components/cookies_consent_banner.dart';
 import '../components/my_button.dart';
 import '../components/footer.dart';
+import '../components/my_google_map.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import 'dart:ui'; // Import for the blur effect.
@@ -356,7 +357,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                                           Text(
                                             "DE L’IDÉE À LA RÉALISATION, VOTRE PROJET DE RÉNOVATION ENTRE DES MAINS EXPERTES !",
                                             style: TextStyle(
-                                              fontSize: 30.0, // Adjust font size
+                                              fontSize: 30.0,
                                               fontWeight: FontWeight.bold,
                                               color: GlobalColors.tertiaryColor,
                                             ),
@@ -522,7 +523,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                                           Text(
                                             "NOS SERVICES DE RÉNOVATIONS",
                                             style: TextStyle(
-                                              fontSize: 30.0, // Adjust font size
+                                              fontSize: 30.0,
                                               fontWeight: FontWeight.bold,
                                               color: GlobalColors.tertiaryColor,
                                             ),
@@ -531,9 +532,9 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                                           const SizedBox(height: 20), // Space between
                                           Text(
                                             "Que vous souhaitiez rénover votre électricité, plomberie, peinture, poser du carrelage, du parquet, ou bien plus encore, SIO2 Rénovations est là pour vous offrir des conseils personnalisés, une expertise éprouvée et un service clé en main."
-                                            "Le succès de chaque projet de rénovation repose sur une organisation solide. C/’est pourquoi nous vous accompagnons à chaque étape, de la planification à la livraison, à Paris et en l/’Île-de-France. Notre objectif : transformer votre intérieur en un espace unique, moderne et chaleureux."
-                                            "Nous mettons un point d/’honneur à confier vos travaux à nos équipes sélectionnées pour leur sérieux et leur souci du détail. En restant agiles face aux imprévus de chantier, nous assurons un service au juste prix et dans le respect des délais."
-                                            "Enfin, nous proposons à nos clients un compte rendu d/’activité régulier pour avertir en temps réel des avancées de l/’ensemble des travaux de rénovation réalisés ou en cours de réalisation.",
+                                            "Le succès de chaque projet de rénovation repose sur une organisation solide. C’est pourquoi nous vous accompagnons à chaque étape, de la planification à la livraison, à Paris et en l’Île-de-France. Notre objectif : transformer votre intérieur en un espace unique, moderne et chaleureux."
+                                            "Nous mettons un point d’honneur à confier vos travaux à nos équipes sélectionnées pour leur sérieux et leur souci du détail. En restant agiles face aux imprévus de chantier, nous assurons un service au juste prix et dans le respect des délais."
+                                            "Enfin, nous proposons à nos clients un compte rendu d’activité régulier pour avertir en temps réel des avancées de l’ensemble des travaux de rénovation réalisés ou en cours de réalisation.",
                                             style: TextStyle(
                                               fontSize: 16.0,
                                               color: Colors.black87,
@@ -566,426 +567,121 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                             _startValuesAnimation(); // Start animations sequentially
                           }
                         },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            // section title with fade effect
-                            AnimatedOpacity(
-                              opacity: _showValuesSection ? 1.0 : 0.0,
-                              duration: const Duration(milliseconds: 1000),
-                              child: Text(
-                                "NOS VALEURS",
-                                style: TextStyle(
-                                  fontSize: 30.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: GlobalColors.tertiaryColor,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            const SizedBox(height: 60.0),
-                            // row containing animated columns
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: List.generate(4, (index) => Expanded(
-                                child: AnimatedBuilder(
-                                  animation: _valuesAnimationControllers[index], // use separate controller for each column
-                                  builder: (context, child) {
-                                    return FadeTransition(
-                                      opacity: _valuesFadeAnimations[index], // individual fade animation
-                                      child: ScaleTransition(
-                                        scale: _valuesScaleAnimations[index], // individual scale animation
-                                        child: child,
-                                      ),
-                                    );
-                                  },
-                                  child: Column(
-                                    children: [
-                                      // dinamic icons
-                                      SvgPicture.asset(
-                                        [
-                                          GlobalLogo.logoEngagement,
-                                          GlobalLogo.logoCall,
-                                          GlobalLogo.logoStructured,
-                                          GlobalLogo.logoCustomer
-                                        ][index],
-                                        width: 100,
-                                        height: 100,
-                                        semanticsLabel: [
-                                          'A handshake symbol, representing partnership and commitment.', 
-                                          'A bust silhouette wearing a headset, with an internet globe symbol below, representing communication and global connectivity.', 
-                                          'An organizational chart-like structure with bust silhouettes and a gear icon at the top, symbolizing the organizational structure and efficiency of the company', 
-                                          'An open hand containing a comment represented by wavy lines inside a circle and five stars forming a semicircle above, representing customer feedback and satisfaction.'
-                                        ][index],
-                                      ),
-                                      const SizedBox(height: 30.0),
-                                      // dynamic title
-                                      Text(
-                                        ["Engagement", "Écoute", "Savoir-faire", "Confiance"][index],
-                                        style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      const SizedBox(height: 30.0),
-                                      // dynamic description
-                                      Text(
-                                        [
-                                          "Nous croyons en une collaboration sans surprise, portée par un engagement total. Chaque détail est anticipé et maîtrisé. De l’offre chiffrée aux mises à jour en temps réel, nous assurons un suivi précis et rigoureux à chaque étape de votre projet.",
-                                          "Nous sommes à vos côtés pour vous guider et vous conseiller. Un interlocuteur unique vous accompagne tout au long des travaux, avec disponibilité et réactivité pour vous assurer une expérience sereine et sans stress.",
-                                          "Grâce à notre expertise et à une équipe structurée, nous réalisons chaque projet avec rigueur et excellence. Une organisation méthodique et des compétences maîtrisées garantissent des travaux de haute qualité, dans le respect des normes et des délais.",
-                                          "La satisfaction client et au cœur de notre démarche. Plus qu’un simple projet, nous construisons une relation de confiance durable, où vos recommandations sont la plus belle preuve de notre engagement et de la qualité de notre travail."
-                                        ][index],
-                                        style: const TextStyle(fontSize: 16.0),
-                                        textAlign: TextAlign.justify,
-                                      ),
-                                    ],
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              // section title with fade effect
+                              AnimatedOpacity(
+                                opacity: _showValuesSection ? 1.0 : 0.0,
+                                duration: const Duration(milliseconds: 1000),
+                                child: Text(
+                                  "NOS VALEURS",
+                                  style: TextStyle(
+                                    fontSize: 30.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: GlobalColors.tertiaryColor,
                                   ),
+                                  textAlign: TextAlign.center,
                                 ),
-                              )).expand((widget) => [widget, const SizedBox(width: 50.0)]).toList(),
-                            ),
-                          ],
-                        ),
+                              ),
+                              const SizedBox(height: 60.0),
+                              // row containing animated columns
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: List.generate(4, (index) => Expanded(
+                                  child: AnimatedBuilder(
+                                    animation: _valuesAnimationControllers[index], // use separate controller for each column
+                                    builder: (context, child) {
+                                      return FadeTransition(
+                                        opacity: _valuesFadeAnimations[index], // individual fade animation
+                                        child: ScaleTransition(
+                                          scale: _valuesScaleAnimations[index], // individual scale animation
+                                          child: child,
+                                        ),
+                                      );
+                                    },
+                                    child: Column(
+                                      children: [
+                                        // dinamic icons
+                                        SvgPicture.asset(
+                                          [
+                                            GlobalLogo.logoEngagement,
+                                            GlobalLogo.logoCall,
+                                            GlobalLogo.logoStructured,
+                                            GlobalLogo.logoCustomer
+                                          ][index],
+                                          width: 100,
+                                          height: 100,
+                                          semanticsLabel: [
+                                            'A handshake symbol, representing partnership and commitment.', 
+                                            'A bust silhouette wearing a headset, with an internet globe symbol below, representing communication and global connectivity.', 
+                                            'An organizational chart-like structure with bust silhouettes and a gear icon at the top, symbolizing the organizational structure and efficiency of the company', 
+                                            'An open hand containing a comment represented by wavy lines inside a circle and five stars forming a semicircle above, representing customer feedback and satisfaction.'
+                                          ][index],
+                                        ),
+                                        const SizedBox(height: 30.0),
+                                        // dynamic title
+                                        Text(
+                                          ["Engagement", "Écoute", "Savoir-faire", "Confiance"][index],
+                                          style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        const SizedBox(height: 30.0),
+                                        // dynamic description
+                                        Text(
+                                          [
+                                            "Nous croyons en une collaboration sans surprise, portée par un engagement total. Chaque détail est anticipé et maîtrisé. De l’offre chiffrée aux mises à jour en temps réel, nous assurons un suivi précis et rigoureux à chaque étape de votre projet.",
+                                            "Nous sommes à vos côtés pour vous guider et vous conseiller. Un interlocuteur unique vous accompagne tout au long des travaux, avec disponibilité et réactivité pour vous assurer une expérience sereine et sans stress.",
+                                            "Grâce à notre expertise et à une équipe structurée, nous réalisons chaque projet avec rigueur et excellence. Une organisation méthodique et des compétences maîtrisées garantissent des travaux de haute qualité, dans le respect des normes et des délais.",
+                                            "La satisfaction client et au cœur de notre démarche. Plus qu’un simple projet, nous construisons une relation de confiance durable, où vos recommandations sont la plus belle preuve de notre engagement et de la qualité de notre travail."
+                                          ][index],
+                                          style: const TextStyle(fontSize: 16.0),
+                                          textAlign: TextAlign.justify,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )).expand((widget) => [widget, const SizedBox(width: 50.0)]).toList(),
+                              ),
+                            ],
+                          ),
+                        )
                       ),
                     ),
-
-
-                    // SizedBox(
-                    //   height: 600.0,
-                    //   width: screenWidth * 0.7,
-                    //   child: VisibilityDetector(
-                    //     key: const Key("section_values"), 
-                    //     onVisibilityChanged: (info) {
-                    //       if (info.visibleFraction > 0.5) {
-                    //         setState(() {
-                    //           _valuesAnimationController.forward();
-                    //           _showValuesSection = true;
-                    //         });
-                    //       }
-                    //     },
-                    //     child: Column(
-                    //       mainAxisAlignment: MainAxisAlignment.start,
-                    //       children: [
-                    //         // Title with fade effect
-                    //         AnimatedOpacity(
-                    //           opacity: _showValuesSection ? 1.0 : 0.0, 
-                    //           duration: const Duration(milliseconds: 1000),
-                    //           child: Text(
-                    //             "NOS VALEURS",
-                    //             style: TextStyle(
-                    //               fontSize: 30.0, // Adjust font size
-                    //               fontWeight: FontWeight.bold,
-                    //               color: GlobalColors.tertiaryColor,
-                    //             ),
-                    //             textAlign: TextAlign.center,
-                    //           ),
-                    //         ),
-                    //         const SizedBox(height: 60.0),
-                    //         AnimatedBuilder(
-                    //           animation: _valuesAnimationController,
-                    //           builder: (context, child) {
-                    //             return FadeTransition(
-                    //               opacity: _valuesFadeAnimation,
-                    //               child: ScaleTransition(
-                    //                 scale: _valuesScaleAnimation,
-                    //                 child: child,
-                    //               )
-                    //             );
-                    //           },
-                    //           child: Row(
-                    //             crossAxisAlignment: CrossAxisAlignment.start,
-                    //             children: [
-                    //               Expanded(
-                    //                 child: Column(
-                    //                  children: [
-                    //                   SvgPicture.asset(
-                    //                     GlobalLogo.logoEngagement,
-                    //                     width: 100,
-                    //                     height: 100,
-                    //                     semanticsLabel: 'A handshake icon',
-                    //                   ),
-                    //                   SizedBox(height: 30.0),
-                    //                   Text(
-                    //                     "Engagement",
-                    //                     style: TextStyle(
-                    //                       fontSize: 18.0,
-                    //                       fontWeight: FontWeight.bold,
-                    //                     ),
-                    //                     textAlign: TextAlign.center,
-                    //                   ),
-                    //                   SizedBox(height: 30.0),
-                    //                   Text(
-                    //                     "Nous croyons en une collaboration sans surprise, portée par un engagement total. Chaque détail est anticipé et maîtrisé. De l’offre chiffrée aux mises à jour en temps réel, nous assurons un suivi précis et rigoureux à chaque étape de votre projet.",
-                    //                     style: TextStyle(
-                    //                       fontSize: 16.0,
-                    //                     ),
-                    //                     textAlign: TextAlign.justify,
-                    //                   )
-                    //                  ] 
-                    //                 ),
-                    //               ),
-                    //               SizedBox(width: 50.0),
-                    //               Expanded(
-                    //                 child: Column(
-                    //                  children: [
-                    //                   SvgPicture.asset(
-                    //                     GlobalLogo.logoCall,
-                    //                     width: 100,
-                    //                     height: 100,
-                    //                     semanticsLabel: 'A handshake icon',
-                    //                   ),
-                    //                   SizedBox(height: 30.0),
-                    //                   Text(
-                    //                     "Écoute",
-                    //                     style: TextStyle(
-                    //                       fontSize: 18.0,
-                    //                       fontWeight: FontWeight.bold,
-                    //                     ),
-                    //                     textAlign: TextAlign.center,
-                    //                   ),
-                    //                   SizedBox(height: 30.0),
-                    //                   Text(
-                    //                     "Nous sommes à vos côtés pour vous guider et vous conseiller. Un interlocuteur unique vous accompagne tout au long des travaux, avec disponibilité et réactivité pour vous assurer une expérience sereine et sans stress.",
-                    //                     style: TextStyle(
-                    //                       fontSize: 16.0,
-                    //                     ),
-                    //                     textAlign: TextAlign.justify,
-                    //                   )
-                    //                  ] 
-                    //                 ),
-                    //               ),
-                    //               SizedBox(width: 50.0),
-                    //               Expanded(
-                    //                 child: Column(
-                    //                  children: [
-                    //                   SvgPicture.asset(
-                    //                     GlobalLogo.logoStructured,
-                    //                     width: 100,
-                    //                     height: 100,
-                    //                     semanticsLabel: 'A handshake icon',
-                    //                   ),
-                    //                   SizedBox(height: 30.0),
-                    //                   Text(
-                    //                     "Savoire-faire",
-                    //                     style: TextStyle(
-                    //                       fontSize: 18.0,
-                    //                       fontWeight: FontWeight.bold,
-                    //                     ),
-                    //                     textAlign: TextAlign.center,
-                    //                   ),
-                    //                   SizedBox(height: 30.0),
-                    //                   Text(
-                    //                     "Grâce à notre expertise et à une équipe structurée, nous réalisons chaque projet avec rigueur et excellence. Une organisation méthodique et des compétences maîtrisées garantissent des travaux de haute qualité, dans le respect des normes et des délais.",
-                    //                     style: TextStyle(
-                    //                       fontSize: 16.0,
-                    //                     ),
-                    //                     textAlign: TextAlign.justify,
-                    //                   )
-                    //                  ] 
-                    //                 ),
-                    //               ),
-                    //               SizedBox(width: 50.0),
-                    //               Expanded(
-                    //                 child: Column(
-                    //                  children: [
-                    //                   SvgPicture.asset(
-                    //                     GlobalLogo.logoCustomer,
-                    //                     width: 100,
-                    //                     height: 100,
-                    //                     semanticsLabel: 'A handshake icon',
-                    //                   ),
-                    //                   SizedBox(height: 30.0),
-                    //                   Text(
-                    //                     "Confiance",
-                    //                     style: TextStyle(
-                    //                       fontSize: 18.0,
-                    //                       fontWeight: FontWeight.bold,
-                    //                     ),
-                    //                     textAlign: TextAlign.center,
-                    //                   ),
-                    //                   SizedBox(height: 30.0),
-                    //                   Text(
-                    //                     "La satisfaction client est au cœur de notre démarche. Plus qu’un simple projet, nous construisons une relation de confiance durable, où vos recommandations sont la plus belle preuve de notre engagement et de la qualité de notre travail.",
-                    //                     style: TextStyle(
-                    //                       fontSize: 16.0,
-                    //                     ),
-                    //                     textAlign: TextAlign.justify,
-                    //                   )
-                    //                  ] 
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     )    
-                    //   ) 
-                    // ),
-
-
-                    // SizedBox(
-                    //   height: 600.0,
-                    //   width: screenWidth * 0.7,
-                    //   child: VisibilityDetector(
-                    //     key: const Key("section_values"), 
-                    //     onVisibilityChanged: (info) {
-                    //       if (info.visibleFraction > 0.5) {
-                    //         setState(() {
-                    //           _valuesAnimationController.forward();
-                    //         });
-                    //       }
-                    //     },
-                    //     child: AnimatedBuilder(
-                    //       animation: _valuesAnimationController,
-                    //       builder: (context, child) {
-                    //         return FadeTransition(
-                    //           opacity: _valuesFadeAnimation,
-                    //           child: ScaleTransition(
-                    //             scale: _valuesScaleAnimation,
-                    //             child: child,
-                    //           )
-                    //         );
-                    //       },
-                    //       child: Column(
-                    //         mainAxisAlignment: MainAxisAlignment.start,
-                    //         children: [
-                    //           Text(
-                    //             "NOS VALEURS",
-                    //             style: TextStyle(
-                    //               fontSize: 30.0, // Adjust font size
-                    //               fontWeight: FontWeight.bold,
-                    //               color: GlobalColors.tertiaryColor,
-                    //             ),
-                    //             textAlign: TextAlign.center,
-                    //           ),
-                    //           const SizedBox(height: 60.0),
-                    //           Row(
-                    //             crossAxisAlignment: CrossAxisAlignment.start,
-                    //             children: [
-                    //               Expanded(
-                    //                 child: Column(
-                    //                  children: [
-                    //                   SvgPicture.asset(
-                    //                     GlobalLogo.logoEngagement,
-                    //                     width: 100,
-                    //                     height: 100,
-                    //                     semanticsLabel: 'A handshake icon',
-                    //                   ),
-                    //                   SizedBox(height: 30.0),
-                    //                   Text(
-                    //                     "Engagement",
-                    //                     style: TextStyle(
-                    //                       fontSize: 18.0,
-                    //                       fontWeight: FontWeight.bold,
-                    //                     ),
-                    //                     textAlign: TextAlign.center,
-                    //                   ),
-                    //                   SizedBox(height: 30.0),
-                    //                   Text(
-                    //                     "Nous croyons en une collaboration sans surprise, portée par un engagement total. Chaque détail est anticipé et maîtrisé. De l’offre chiffrée aux mises à jour en temps réel, nous assurons un suivi précis et rigoureux à chaque étape de votre projet.",
-                    //                     style: TextStyle(
-                    //                       fontSize: 16.0,
-                    //                     ),
-                    //                     textAlign: TextAlign.justify,
-                    //                   )
-                    //                  ] 
-                    //                 ),
-                    //               ),
-                    //               SizedBox(width: 50.0),
-                    //               Expanded(
-                    //                 child: Column(
-                    //                  children: [
-                    //                   SvgPicture.asset(
-                    //                     GlobalLogo.logoCall,
-                    //                     width: 100,
-                    //                     height: 100,
-                    //                     semanticsLabel: 'A handshake icon',
-                    //                   ),
-                    //                   SizedBox(height: 30.0),
-                    //                   Text(
-                    //                     "Écoute",
-                    //                     style: TextStyle(
-                    //                       fontSize: 18.0,
-                    //                       fontWeight: FontWeight.bold,
-                    //                     ),
-                    //                     textAlign: TextAlign.center,
-                    //                   ),
-                    //                   SizedBox(height: 30.0),
-                    //                   Text(
-                    //                     "Nous sommes à vos côtés pour vous guider et vous conseiller. Un interlocuteur unique vous accompagne tout au long des travaux, avec disponibilité et réactivité pour vous assurer une expérience sereine et sans stress.",
-                    //                     style: TextStyle(
-                    //                       fontSize: 16.0,
-                    //                     ),
-                    //                     textAlign: TextAlign.justify,
-                    //                   )
-                    //                  ] 
-                    //                 ),
-                    //               ),
-                    //               SizedBox(width: 50.0),
-                    //               Expanded(
-                    //                 child: Column(
-                    //                  children: [
-                    //                   SvgPicture.asset(
-                    //                     GlobalLogo.logoStructured,
-                    //                     width: 100,
-                    //                     height: 100,
-                    //                     semanticsLabel: 'A handshake icon',
-                    //                   ),
-                    //                   SizedBox(height: 30.0),
-                    //                   Text(
-                    //                     "Savoire-faire",
-                    //                     style: TextStyle(
-                    //                       fontSize: 18.0,
-                    //                       fontWeight: FontWeight.bold,
-                    //                     ),
-                    //                     textAlign: TextAlign.center,
-                    //                   ),
-                    //                   SizedBox(height: 30.0),
-                    //                   Text(
-                    //                     "Grâce à notre expertise et à une équipe structurée, nous réalisons chaque projet avec rigueur et excellence. Une organisation méthodique et des compétences maîtrisées garantissent des travaux de haute qualité, dans le respect des normes et des délais.",
-                    //                     style: TextStyle(
-                    //                       fontSize: 16.0,
-                    //                     ),
-                    //                     textAlign: TextAlign.justify,
-                    //                   )
-                    //                  ] 
-                    //                 ),
-                    //               ),
-                    //               SizedBox(width: 50.0),
-                    //               Expanded(
-                    //                 child: Column(
-                    //                  children: [
-                    //                   SvgPicture.asset(
-                    //                     GlobalLogo.logoCustomer,
-                    //                     width: 100,
-                    //                     height: 100,
-                    //                     semanticsLabel: 'A handshake icon',
-                    //                   ),
-                    //                   SizedBox(height: 30.0),
-                    //                   Text(
-                    //                     "Confiance",
-                    //                     style: TextStyle(
-                    //                       fontSize: 18.0,
-                    //                       fontWeight: FontWeight.bold,
-                    //                     ),
-                    //                     textAlign: TextAlign.center,
-                    //                   ),
-                    //                   SizedBox(height: 30.0),
-                    //                   Text(
-                    //                     "La satisfaction client est au cœur de notre démarche. Plus qu’un simple projet, nous construisons une relation de confiance durable, où vos recommandations sont la plus belle preuve de notre engagement et de la qualité de notre travail.",
-                    //                     style: TextStyle(
-                    //                       fontSize: 16.0,
-                    //                     ),
-                    //                     textAlign: TextAlign.justify,
-                    //                   )
-                    //                  ] 
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ],
-                    //       )
-                    //     ) 
-                    //   ) 
-                    // ),
+                    SizedBox(height: 100.0),
+                    SizedBox(
+                      width: 600.0,
+                      child: Column(
+                        children: [
+                          Text(
+                            "NOS DERNIÉRES RÉALISATIONS",
+                            style: TextStyle(
+                              fontSize: 30.0,
+                              fontWeight: FontWeight.bold,
+                              color: GlobalColors.tertiaryColor,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 20.0),
+                          Text(
+                            "Découvrez nos projets récents, où expertise et exigence se conjuguent pour donner vie à des rénovations sur mesure./n" 
+                            "Chaque chantier reflète notre savoir-faire, notre engagement et notre professionnalisme.",
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.black87,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 30.0),
+                          SizedBox(
+                            height: 600.0,
+                            width: 600.0,
+                            child: MyGoogleMap(),
+                          )
+                        ],
+                      )
+                    ),
                     SizedBox(height: 100.0),
                     FooterComponent(),
                   ],

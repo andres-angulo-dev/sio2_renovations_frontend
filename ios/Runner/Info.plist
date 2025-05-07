@@ -45,5 +45,13 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<!-- Permission to use location when the app is running -->
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need your location to show nearby construction sites.</string>
+    <!-- Permission to use location always (if required) -->
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Allow this app to track location for displaying construction sites.</string>
+	<key>GMSApiKey</key>
+	<string>${GOOGLE_MAPS_API_KEY}</string>
 </dict>
 </plist>

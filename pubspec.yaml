@@ -22,6 +22,9 @@ dependencies:
   font_awesome_flutter: ^10.8.0
   flutter_svg: ^2.0.17
   visibility_detector: ^0.4.0+2
+  google_maps_flutter: ^2.12.1
+  google_maps_flutter_web: ^0.5.12
+  flutter_dotenv: ^5.2.1
 
 dev_dependencies:
   flutter_test:
@@ -35,6 +38,7 @@ flutter:
     - assets/
     - assets/images/
     - assets/rive/
+    - local.env
 
   fonts:
     - family: DancingScript
