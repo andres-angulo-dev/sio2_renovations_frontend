@@ -10,6 +10,7 @@ import '../components/cookies_consent_banner.dart';
 import '../components/my_button.dart';
 import '../components/footer.dart';
 import '../components/my_google_map.dart';
+import '../components/customer_feedback_section.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import 'dart:ui'; // Import for the blur effect.
@@ -555,7 +556,6 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                     SizedBox(height: 100.0),
                     // section 4
                     SizedBox(
-                      height: 600.0,
                       width: screenWidth * 0.7,
                       child: VisibilityDetector(
                         key: const Key("section_values"),
@@ -665,7 +665,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                           ),
                           const SizedBox(height: 20.0),
                           Text(
-                            "Découvrez nos projets récents, où expertise et exigence se conjuguent pour donner vie à des rénovations sur mesure./n" 
+                            "Découvrez nos projets récents, où expertise et exigence se conjuguent pour donner vie à des rénovations sur mesure.\n\n" 
                             "Chaque chantier reflète notre savoir-faire, notre engagement et notre professionnalisme.",
                             style: TextStyle(
                               fontSize: 16.0,
@@ -678,10 +678,17 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                             height: 600.0,
                             width: 600.0,
                             child: MyGoogleMap(),
-                          )
+                          ),
                         ],
                       )
                     ),
+                    SizedBox(height: 100.0),
+                    // SizedBox(
+                    //   height: 1600.0,
+                    //   width: 600.0,
+                    //   child: CustomerFeedbackSection(),
+                    // ),
+                    CustomerFeedbackSection(),
                     SizedBox(height: 100.0),
                     FooterComponent(),
                   ],

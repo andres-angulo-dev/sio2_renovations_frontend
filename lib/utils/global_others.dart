@@ -9,6 +9,7 @@ class GlobalImages {
   static const String image8 = 'assets/images/image8.jpeg';
   static const String backgroundLanding = 'assets/images/immeuble.jpeg';
   static const String customGoogleMarker = 'assets/images/customGoogleMarker.png';
+  static const String backgroundFeedbackSection = 'assets/images/backgroundFeedbackSection.png';
 }
 
 class GlobalLogo {
@@ -18,6 +19,7 @@ class GlobalLogo {
   static const String logoCall = 'assets/call.svg';
   static const String logoStructured = 'assets/structured.svg';
   static const String logoCustomer = 'assets/customer.svg';
+  static const String logoDots = 'assets/dots.svg';
 }
 
 class GlobalAnimations{
@@ -39,7 +41,6 @@ class GlobalSize {
   static const double webTitle = 28.0; 
   static const double mobileSubTitle = 18.0; 
   static const double webSubTitle = 20.0; 
-  // static const double 
   // Footer
   static const double footerMobileTitle = 22.0; 
   static const double footerWebTitle = 24.0; 
