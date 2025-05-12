@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sio2_renovations_frontend/components/website_under_construction.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:rive/rive.dart';
 import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
-import '../components/carousel_slider_component.dart';
+import '../components/section_why_choose_us.dart';
+import '../components/section_key_figures.dart';
 import '../components/cookies_consent_banner.dart';
 import '../components/my_button.dart';
 import '../components/footer.dart';
-import '../components/my_google_map.dart';
-import '../components/customer_feedback_section.dart';
+import '../components/section_customer_feedback.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import 'dart:ui'; // Import for the blur effect.
@@ -29,14 +29,12 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
   late List<AnimationController> _valuesAnimationControllers;
 
   // Animation<Offset>: Handles the slide effect for text (moves it vertically effect).
-  late Animation<Offset> _slideAnimation;
   late Animation<Offset> _servicesSlideAnimation;
   
   // Animation<double>: Handles the fade-in effect for text (controls scale effect.
   late List<Animation<double>> _valuesScaleAnimations;
 
   // Animation<double>: Handles the fade-in effect for text (controls opacity effect).
-  late Animation<double> _fadeAnimation;
   late Animation<double> _servicesFadeAnimation;
   late List<Animation<double>> _valuesFadeAnimations;
 
@@ -76,25 +74,6 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
       vsync: this, // Links the animation to the widget lifecycle for efficiency.
       duration: const Duration(milliseconds: 1500),
     );
-
-    // Creates the sliding animation for the text, starting from off-screen (above)
-    // and ending at its normal position.
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, -1), // Start position: from top to bottom.
-      end: Offset.zero // End position: Default screen location.
-    ).animate(CurvedAnimation(
-      parent: _animationController, // Links the animation to the controller.
-      curve: Curves.easeInOut, // Eases in at the start, then slows down at the end.
-    ));
-
-    // Creates the fade-in effect for the text (opacity from 0 to 1).
-    _fadeAnimation = Tween<double>(
-      begin: 0.0, // Invisible at the start.
-      end: 1.0, // Fully visible at the end.
-    ).animate(CurvedAnimation(
-      parent: _animationController, 
-      curve: Curves.easeInOut, // Syncs with the sliding animation curve.
-    ));
 
     // handle animation in services section
    _servicesAnimationController = AnimationController(
@@ -258,74 +237,6 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                             ),
                           ),
                         ),
-                        // Positioned.fill(
-                        //   child: Column(
-                        //     children: [
-                        //       // Animated logo component.
-                        //       if (_show)
-                        //         Flexible(
-                        //           flex: 3, // Occupies 3/10ths of the available space.
-                        //           child: AnimatedOpacity(
-                        //           opacity: _show ? 1.0 : 0.0, 
-                        //           duration: const Duration(seconds: 3),
-                        //             child: RiveAnimation.asset(
-                        //               GlobalOthers.logoWebsiteInProgress,
-                        //             ), 
-                        //           ),
-                        //         ),
-                        //       // Animated text component with slide and fade effects.
-                        //       Flexible(
-                        //         flex: 1, // Occupies 1/10th of the available space.
-                        //         child: FadeTransition(
-                        //           opacity: _fadeAnimation,
-                        //           child: SlideTransition(
-                        //             position: _slideAnimation,
-                        //             child: Text(
-                        //               'EN CONSTRUCTION !',
-                        //               style: TextStyle(
-                        //                 fontSize: _m.0obile ? 24.0 : 34.0,
-                        //                 color: Colors.grey.shade800, 
-                        //                 fontWeight: FontWeight.bold, 
-                        //               ),
-                        //             ),
-                        //           ),  
-                        //         ),
-                        //       ),
-                        //       Expanded(child: SizedBox()), // Adds flexible empty space.
-                        //       // Animated carousel component.
-                        //       Flexible(
-                        //         flex: 10, // Occupies 10/10ths of the space for the carousel.
-                        //         child: AnimatedOpacity(
-                        //           opacity: _show ? 1.0 : 0.0, 
-                        //           duration: const Duration(seconds: 3),
-                        //           child: CarouselSliderComponent(), // Custom carousel component. 
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                        // Cookie consent banner appears when banner visibility i
-                        // if (_isBannerVisible)
-                        // CookiesConsentBanner(
-                        //   onConsentGiven: _handleCookiesConsent,
-                        //   onConsentLoaded: _handleLoadedConsent,
-                        //   toggleVisibility: _toggleBannerVisibility,
-                        // ),
-                        // // Image button appears after cookie consent is accepted.                    
-                        // if (!_isBannerVisible && _cookiesAccepted == true)
-                        // Positioned(
-                        //   bottom: 20,
-                        //   left: 20,
-                        //   child: AnimatedOpacity(
-                        //     opacity: _show ? 1.0 : 0.0, 
-                        //     duration: const Duration(seconds: 2),
-                        //     child: MyButton(
-                        //       onPressed: _toggleBannerVisibility,
-                        //       buttonPath: GlobalButtonsAndIcons.cookiesButton, 
-                        //       foregroundPath: GlobalButtonsAndIcons.iconCookieButton,
-                        //   )
-                        //   )
-                        // )
                       ],
                     ),
                     SizedBox(height: 100.0),
@@ -650,44 +561,8 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                       ),
                     ),
                     SizedBox(height: 100.0),
-                    SizedBox(
-                      width: 600.0,
-                      child: Column(
-                        children: [
-                          Text(
-                            "NOS DERNIÉRES RÉALISATIONS",
-                            style: TextStyle(
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold,
-                              color: GlobalColors.tertiaryColor,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 20.0),
-                          Text(
-                            "Découvrez nos projets récents, où expertise et exigence se conjuguent pour donner vie à des rénovations sur mesure.\n\n" 
-                            "Chaque chantier reflète notre savoir-faire, notre engagement et notre professionnalisme.",
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.black87,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 30.0),
-                          SizedBox(
-                            height: 600.0,
-                            width: 600.0,
-                            child: MyGoogleMap(),
-                          ),
-                        ],
-                      )
-                    ),
+                    KeyFiguresSection(),
                     SizedBox(height: 100.0),
-                    // SizedBox(
-                    //   height: 1600.0,
-                    //   width: 600.0,
-                    //   child: CustomerFeedbackSection(),
-                    // ),
                     CustomerFeedbackSection(),
                     SizedBox(height: 100.0),
                     FooterComponent(),

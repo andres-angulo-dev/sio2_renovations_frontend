@@ -116,7 +116,7 @@ class MyGoogleMapState extends State<MyGoogleMap> {
                   // Displays all content inside the InfoWindow
                   Image.asset(_infoWindowImage, width: 180, height: 100, fit: BoxFit.cover),
                   SizedBox(height: 10.0),
-                  Text(_infoWindowTitle, style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text(_infoWindowTitle, style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
                   SizedBox(height: 10.0),
                   Text(_infoWindowDescription, textAlign: TextAlign.justify,),
                   SizedBox(height: 10.0),
