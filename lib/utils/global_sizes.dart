@@ -16,5 +16,9 @@ class GlobalSizes {
   static bool isSmallScreen(BuildContext context) {
     return screenWidth(context) < 1000;
   }
+
+  static bool isCustomServicesSection(BuildContext context) {
+    return screenWidth(context) < 1879;
+  }
 }
 

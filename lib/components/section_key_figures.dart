@@ -49,83 +49,86 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
     return VisibilityDetector(
       key: const Key("key_figures_section"), 
       onVisibilityChanged: (info) {
-        if (info.visibleFraction > 0.5 && !_isVisible) {
+        if (info.visibleFraction > 0.3 && !_isVisible) {
           setState(() {
             _isVisible = true; // Animation starts only when 50% of the section is visible
           });
         } 
       },
-      child: SizedBox(
-        width: 1400.0,
-        child: Column(
-          children: [
-            Text(
-              "SIO2 RÉNOVATIONS EN QUELQUES CHIFFRES",
-              style: TextStyle(
-                fontSize: 30.0,
-                fontWeight: FontWeight.bold,
-                color: GlobalColors.thirdColor,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 50.0),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildAnimatedStat(
-                        10, 
-                        "Corps de métier réunis", 
-                        "Des artisans qualifiés : électriciens, plombiers, chauffagistes, carreleurs, plaquistes, peintres, maçons…"
-                      ),
-                      _buildAnimatedStat(
-                        30, 
-                        "Ans d'expérience", 
-                        "Une solide expérience en rénovation, avec des équipes formées pour intervenir efficacement sur l’ensemble de l’Île-de-France."
-                      ),
-                      _buildAnimatedStat(
-                        48, 
-                        "Projets réalisés depuis le début d'année", 
-                        "Chaque chantier est une nouvelle opportunité de satisfaire nos clients et d’améliorer leur espace de vie."
-                      ),
-                      _buildAnimatedStat(
-                        3360, 
-                        "m² rénovés ces derniers mois", 
-                        "Des surfaces transformées avec soin et professionnalisme pour des habitats modernisés et fonctionnels."
-                      ),
-                    ],
-                  )
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 22.0),
+          child: SizedBox(
+          width: 1400.0,
+          child: Column(
+            children: [
+              Text(
+                "SIO2 RÉNOVATIONS EN QUELQUES CHIFFRES",
+                style: TextStyle(
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.bold,
+                  color: GlobalColors.thirdColor,
                 ),
-                const SizedBox(width: 50.0),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Découvrez en un coup d'oeil, nos dernières réalisations",
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.black87,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 50.0),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildAnimatedStat(
+                          10, 
+                          "Corps de métier réunis", 
+                          "Des artisans qualifiés : électriciens, plombiers, chauffagistes, carreleurs, plaquistes, peintres, maçons…"
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 30.0),
-                      SizedBox(
-                        height: 600.0,
-                        width: 600.0,
-                        child: MyGoogleMap(),
-                      )
-                    ],
+                        _buildAnimatedStat(
+                          30, 
+                          "Ans d'expérience", 
+                          "Une solide expérience en rénovation, avec des équipes formées pour intervenir efficacement sur l’ensemble de l’Île-de-France."
+                        ),
+                        _buildAnimatedStat(
+                          48, 
+                          "Projets réalisés depuis le début d'année", 
+                          "Chaque chantier est une nouvelle opportunité de satisfaire nos clients et d’améliorer leur espace de vie."
+                        ),
+                        _buildAnimatedStat(
+                          3360, 
+                          "m² rénovés ces derniers mois", 
+                          "Des surfaces transformées avec soin et professionnalisme pour des habitats modernisés et fonctionnels."
+                        ),
+                      ],
+                    )
+                  ),
+                  const SizedBox(width: 50.0),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Découvrez en un coup d'oeil, nos dernières réalisations",
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.black87,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 30.0),
+                        SizedBox(
+                          height: 600.0,
+                          width: 600.0,
+                          child: MyGoogleMap(),
+                        )
+                      ],
+                    )
                   )
-                )
-              ],
-            )
-          ],
-        )
-      ) 
+                ],
+              )
+            ],
+          )
+        ) 
+      )
     );
   }
 }

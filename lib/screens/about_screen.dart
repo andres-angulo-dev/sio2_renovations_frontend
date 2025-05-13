@@ -305,7 +305,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                         child: VisibilityDetector(
                           key: const Key('section_history'), 
                           onVisibilityChanged: (info) {
-                            if (info.visibleFraction > 0.5) {
+                            if (info.visibleFraction > 0.3) {
                               setState(() {
                                 _showHistorySection = true;
                               });
@@ -354,7 +354,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                 VisibilityDetector(
                   key: const Key('section_services'), 
                   onVisibilityChanged: (info) {
-                    if (info.visibleFraction > 0.5 && !_showServicesSection) {
+                    if (info.visibleFraction > 0.3 && !_showServicesSection) {
                       setState(() {
                         _showServicesSection = true;
                       });
@@ -442,7 +442,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                       VisibilityDetector(
                         key: const Key('engagement_section'), 
                         onVisibilityChanged: (info) {
-                          if (info.visibleFraction > 0.5 && !_showEngagementSection) {
+                          if (info.visibleFraction > 0.3 && !_showEngagementSection) {
                             setState(() {
                               _showEngagementSection = true;
                             });
@@ -555,7 +555,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                             VisibilityDetector(
                               key: const Key('section_contact'), 
                               onVisibilityChanged: (info) {
-                                if (info.visibleFraction > 0.5) {
+                                if (info.visibleFraction > 0.3) {
                                   _contactAnimationController.forward();
                                 }
                               },
@@ -609,7 +609,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                             VisibilityDetector(
                               key: const Key('section_contactButton'), 
                               onVisibilityChanged: (info) {
-                                if (info.visibleFraction > 0.5 && !_showContactButtonSection) {
+                                if (info.visibleFraction > 0.3 && !_showContactButtonSection) {
                                   setState(() {
                                     _showContactButtonSection = true;
                                   });

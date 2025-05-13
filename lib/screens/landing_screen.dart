@@ -7,6 +7,7 @@ import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
 import '../components/section_why_choose_us.dart';
 import '../components/section_key_figures.dart';
+import '../components/section_services.dart';
 import '../components/cookies_consent_banner.dart';
 import '../components/my_button.dart';
 import '../components/footer.dart';
@@ -251,7 +252,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                             child: VisibilityDetector(
                               key: const Key('section_about'), 
                               onVisibilityChanged: (info) {
-                                if (info.visibleFraction > 0.5) {
+                                if (info.visibleFraction > 0.3) {
                                   setState(() {
                                     _showAboutSection = true;
                                   });
@@ -319,7 +320,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                       child: VisibilityDetector(
                         key: const Key("section_values"),
                         onVisibilityChanged: (info) {
-                          if (info.visibleFraction > 0.5 && !_showValuesSection) {
+                          if (info.visibleFraction > 0.3 && !_showValuesSection) {
                             setState(() {
                               _showValuesSection = true;
                             });
@@ -408,90 +409,9 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                         )
                       ),
                     ),
-                    SizedBox(height: 100.0),
+                    SizedBox(height: 150.0),
                     // section 3
-                    SizedBox(
-                      height: 600.0,
-                      width: screenWidth * 0.9,
-                      child: Row(
-                        children: [
-                          Flexible(
-                              child: Center(
-                                child: Container(
-                                  width: 1500.0,
-                                  height: 600.0,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage('assets/images/immeuble.jpeg'),
-                                      fit: BoxFit.cover,
-                                    )
-                                  ),
-                                )
-                              )
-                            // )
-                          ),
-                          SizedBox(width: 50.0),
-                          Flexible(
-                            fit: FlexFit.loose,
-                            child: VisibilityDetector(
-                              key: const Key('section_services'), 
-                              onVisibilityChanged: (info) {
-                                if (info.visibleFraction > 0.5) {
-                                  setState(() {
-                                    _servicesAnimationController.forward();
-                                  });
-                                }
-                              },
-                              child: AnimatedBuilder(
-                                animation: _servicesAnimationController, 
-                                builder: (context, child) {
-                                  return FadeTransition(
-                                    opacity: _servicesFadeAnimation,
-                                    child: SlideTransition(
-                                      position: _servicesSlideAnimation,
-                                      child: child,
-                                    )
-                                  );
-                                },
-                                child: Center(
-                                  child: Container(
-                                    width: 700.0,
-                                    padding: EdgeInsets.all(16.0),
-                                    child: SingleChildScrollView(
-                                     child: Column(
-                                        children: [
-                                          Text(
-                                            "NOS SERVICES DE RÉNOVATIONS",
-                                            style: TextStyle(
-                                              fontSize: 30.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: GlobalColors.thirdColor,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          const SizedBox(height: 20), // Space between
-                                          Text(
-                                            "Que vous souhaitiez rénover votre électricité, plomberie, peinture, poser du carrelage, du parquet, ou bien plus encore, SIO2 Rénovations est là pour vous offrir des conseils personnalisés, une expertise éprouvée et un service clé en main."
-                                            "Le succès de chaque projet de rénovation repose sur une organisation solide. C’est pourquoi nous vous accompagnons à chaque étape, de la planification à la livraison, à Paris et en l’Île-de-France. Notre objectif : transformer votre intérieur en un espace unique, moderne et chaleureux."
-                                            "Nous mettons un point d’honneur à confier vos travaux à nos équipes sélectionnées pour leur sérieux et leur souci du détail. En restant agiles face aux imprévus de chantier, nous assurons un service au juste prix et dans le respect des délais."
-                                            "Enfin, nous proposons à nos clients un compte rendu d’activité régulier pour avertir en temps réel des avancées de l’ensemble des travaux de rénovation réalisés ou en cours de réalisation.",
-                                            style: TextStyle(
-                                              fontSize: 16.0,
-                                              color: Colors.black87,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ),
-                                ) 
-                              ), 
-                            ), 
-                          ),
-                        ]
-                      ),
-                    ),
+                    ServicesSection(),
                     SizedBox(height: 100.0),
                     // section 4
                     WhyChooseUsSection(),

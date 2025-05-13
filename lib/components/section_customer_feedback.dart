@@ -345,7 +345,7 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [BoxShadow(
-                      color: Colors.black87, 
+                      color: Colors.black26, 
                       blurRadius: 6
                     )],
                   ),
