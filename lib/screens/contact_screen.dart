@@ -36,7 +36,7 @@ class ContactScreenState extends State<ContactScreen> {
           onItemSelected: updateCurrentItem,
         ) 
         : null,
-      backgroundColor: GlobalColors.primaryColor,
+      backgroundColor: GlobalColors.firstColor,
       body: Text('NOOOO!'),
     );
   }

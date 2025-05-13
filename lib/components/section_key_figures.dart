@@ -31,7 +31,7 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
             builder: (context, value, child) {
               return Text(
                 finalValue == 95 ? "$value%" : "$value", // Adds % for satisfaction rate
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: GlobalColors.tertiaryColor),
+                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: GlobalColors.thirdColor),
               );
             },
           ),
@@ -64,7 +64,7 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
               style: TextStyle(
                 fontSize: 30.0,
                 fontWeight: FontWeight.bold,
-                color: GlobalColors.tertiaryColor,
+                color: GlobalColors.thirdColor,
               ),
               textAlign: TextAlign.center,
             ),
@@ -79,11 +79,11 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
                       _buildAnimatedStat(
                         10, 
                         "Corps de métier réunis", 
-                        "Des artisans qualifiés : électriciens, plombiers, chauffagistes, carreleurs, charpentiers, couvreurs, plaquistes, peintres, maçons…"
+                        "Des artisans qualifiés : électriciens, plombiers, chauffagistes, carreleurs, plaquistes, peintres, maçons…"
                       ),
                       _buildAnimatedStat(
                         30, 
-                        "Ans d'expertise", 
+                        "Ans d'expérience", 
                         "Une solide expérience en rénovation, avec des équipes formées pour intervenir efficacement sur l’ensemble de l’Île-de-France."
                       ),
                       _buildAnimatedStat(
@@ -105,7 +105,7 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Découvrez nos projets récents, où expertise et exigence se conjuguent pour donner vie à des rénovations sur mesure.",
+                        "Découvrez en un coup d'oeil, nos dernières réalisations",
                         style: TextStyle(
                           fontSize: 16.0,
                           color: Colors.black87,

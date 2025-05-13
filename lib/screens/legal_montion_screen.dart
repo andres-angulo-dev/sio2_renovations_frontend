@@ -39,7 +39,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
           onItemSelected: updateCurrentItem,
         ) 
         : null, // Drawer visible on mobile devices only.
-      backgroundColor: GlobalColors.primaryColor, 
+      backgroundColor: GlobalColors.firstColor, 
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -72,7 +72,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 8.0), // Spacing between title and content.
@@ -81,7 +81,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "1.1 Identité de l'Éditeur",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -98,7 +98,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "Siret: 38886382100038",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 24.0),
@@ -107,7 +107,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "1.2 Directeur de Publication",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -118,7 +118,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "Tél.: +(33) 6 46 34 12 03",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 24.0),
@@ -127,7 +127,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "1.3 Hébergement",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -136,7 +136,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "Le site est hébergé par OVH SAS 2, rue Kellermann 59100 Roubaix, France",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 24.0),
@@ -145,7 +145,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "1.4 Conception du Site",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -153,7 +153,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       RichText(
                         text: TextSpan(
                           style: TextStyle(
-                            color: GlobalColors.secondaryColor,
+                            color: GlobalColors.secondColor,
                             fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
                           ),
                           children: [
@@ -178,7 +178,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 8.0),
@@ -187,7 +187,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "L'éditeur se réserve le droit de modifier ces mentions légales à tout moment. Il est recommandé à l'utilisateur de consulter régulièrement cette page.",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 30.0),
@@ -198,7 +198,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 8.0),
@@ -208,7 +208,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "L'éditeur s'efforce de garantir la précision des données, sans pouvoir être tenu responsable des omissions ou erreurs.",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 30.0),
@@ -219,7 +219,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 8.0),
@@ -227,7 +227,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "4.1 Données Techniques",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -236,7 +236,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "Le site utilise la technologie JavaScript pour son fonctionnement. L'éditeur décline toute responsabilité pour tout dommage matériel lié à l'utilisation du site, notamment en cas d'utilisation d'équipements obsolètes ou non sécurisés.",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 24.0),
@@ -245,7 +245,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "4.2 Responsabilité de l'Éditeur",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -254,7 +254,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "SIO2 Rénovations ne pourra être tenu responsable des dommages directs ou indirects, incluant la perte de marché ou d'opportunités, résultant de l'utilisation ou de l'impossibilité d'accéder au site.",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 30.0),
@@ -265,7 +265,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 8.0),
@@ -275,7 +275,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "Toute exploitation non autorisée sera poursuivie conformément aux dispositions légales en vigueur.",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 30.0),
@@ -286,7 +286,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 8.0),
@@ -295,7 +295,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "L'éditeur décline toute responsabilité concernant d'éventuels bugs, incompatibilités ou erreurs de contenu sur le site.",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 30.0),
@@ -306,7 +306,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 8.0),
@@ -316,7 +316,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "qu'il peut exercer en adressant une demande écrite à l'éditeur accompagnée d'une pièce d'identité.",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 30.0),
@@ -327,7 +327,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 8.0),
@@ -335,7 +335,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "8.1 Liens Hypertextes",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -344,7 +344,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "Le site peut contenir des liens vers d'autres sites externes. SIO2 Rénovations n'exerce aucun contrôle sur le contenu de ces sites et décline toute responsabilité en cas de contenu illicite ou inapproprié.",                  
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 24.0),
@@ -353,7 +353,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "8.2 Gestion des Cookies",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -362,7 +362,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         text: TextSpan(
                           style: TextStyle(
                             fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                            color: GlobalColors.secondaryColor,
+                            color: GlobalColors.secondColor,
                           ),
                           children: [
                             TextSpan(
@@ -387,14 +387,14 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 8.0),
                       Text(
                         'Tout litige relatif à l\'utilisation du Site sera soumis au droit français. Les tribunaux compétents de Paris auront juridiction exclusive.\nClause d’arbitrage : Tout différend sera réglé selon une procédure d\'arbitrage convenue par les parties.',                  style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 30.0),
@@ -405,7 +405,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 8.0),
@@ -413,7 +413,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "Ce site est régi par la loi n° 78-17 du 6 janvier 1978 relative à l’informatique, aux fichiers et aux libertés, ainsi que par la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique.",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 30.0),
@@ -424,7 +424,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 8.0),
@@ -433,7 +433,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "Informations personnelles : Les données permettant d'identifier directement ou indirectement un individu.",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 30.0),
@@ -444,7 +444,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         'Ce site a été optimisé pour les tablettes, les mobiles et les smartphones et ordinateur de bureau.',
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.mobileSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                           fontStyle: FontStyle.italic,
                         )
                       ),

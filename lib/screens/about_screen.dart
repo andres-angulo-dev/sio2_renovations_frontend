@@ -149,7 +149,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
           onItemSelected: updateCurrentItem,
         ) 
         : null,
-      backgroundColor: GlobalColors.primaryColor,
+      backgroundColor: GlobalColors.firstColor,
       body: LayoutBuilder(
         builder: (context, contraints) {
           final availableHeight = contraints.maxHeight;
@@ -189,7 +189,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                             child: Container(
                               padding: EdgeInsets.all(40.0),
                               width: mobile ? screenWidth : screenWidth *0.32,
-                              color: GlobalColors.primaryColor.withValues(alpha: 0.4),
+                              color: GlobalColors.firstColor.withValues(alpha: 0.4),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -253,7 +253,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                                     style: TextStyle(
                                       fontSize: 30, // Adjust font size
                                       fontWeight: FontWeight.bold,
-                                      color: GlobalColors.tertiaryColor,
+                                      color: GlobalColors.thirdColor,
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -327,7 +327,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                                       style: TextStyle(
                                         fontSize: 30, // Adjust font size
                                         fontWeight: FontWeight.bold,
-                                        color: GlobalColors.tertiaryColor,
+                                        color: GlobalColors.thirdColor,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
@@ -387,7 +387,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                             style: TextStyle(
                               fontSize: 30, // Adjust font size
                               fontWeight: FontWeight.bold,
-                              color: GlobalColors.tertiaryColor,
+                              color: GlobalColors.thirdColor,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -434,7 +434,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                         style: TextStyle(
                           fontSize: 30, // Adjust font size
                           fontWeight: FontWeight.bold,
-                          color: GlobalColors.tertiaryColor,
+                          color: GlobalColors.thirdColor,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -583,7 +583,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                                           style: TextStyle(
                                             fontSize: 30, // Adjust font size
                                             fontWeight: FontWeight.bold,
-                                            color: GlobalColors.tertiaryColor,
+                                            color: GlobalColors.thirdColor,
                                           ),
                                           textAlign: TextAlign.center,
                                         ),

@@ -137,7 +137,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
       width: 400, 
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: GlobalColors.primaryColor, 
+        color: GlobalColors.firstColor, 
         borderRadius: BorderRadius.circular(10.0),
         boxShadow: [
           BoxShadow(
@@ -160,11 +160,11 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
                 children: [
                    const Text(
                     "Ce site utilise",
-                    style: TextStyle(fontSize: GlobalSize.mobileSize, color: GlobalColors.secondaryColor),
+                    style: TextStyle(fontSize: GlobalSize.mobileSize, color: GlobalColors.secondColor),
                   ),
                   const Text(
                     "des Cookies",
-                    style: TextStyle(fontSize: 18.0, color: GlobalColors.secondaryColor, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18.0, color: GlobalColors.secondColor, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),    
@@ -188,7 +188,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
               text: "Sio2 Rénovations utilise des cookies pour améliorer la navigation sur son site web, pour vous proposer une expérience plus personnalisée, des publicités ciblées et pour recueillir des données afin de vous offrir un réel suivi. Pour en savoir plus sur les différents types de cookies utilisés, consultez la politique relative à la protection des données. ",
               style: const TextStyle(
                 fontSize: GlobalSize.mobileSize,
-                color: GlobalColors.secondaryColor,
+                color: GlobalColors.secondColor,
                 height: 1.5, // Line spacing for readability.
               ),
               children: [
@@ -227,7 +227,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: GlobalColors.orangeColor,
-                  foregroundColor: GlobalColors.primaryColor,
+                  foregroundColor: GlobalColors.firstColor,
                 ),
                 child: const Text('J\'ai compris et j\'accepte'),
               ),
@@ -244,7 +244,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
       width: 600,
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: GlobalColors.primaryColor, 
+        color: GlobalColors.firstColor, 
         borderRadius: BorderRadius.circular(10.0),
         boxShadow: [
           BoxShadow(
@@ -259,13 +259,13 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
         children: [
           const Text(
             "Gérer vos préférences de cookies",
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: GlobalColors.secondaryColor),
+            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: GlobalColors.secondColor),
           ),
           const Text(
             "Choisissez comment nous collectons et utilisons vos données pour une meilleure expérience de navigation sur notre site. Votre vie privée est primordiale et vous avez le plein contrôle ici.",
             style: TextStyle(
               fontSize: GlobalSize.mobileSize,
-              color: GlobalColors.secondaryColor,
+              color: GlobalColors.secondColor,
               height: 1.5,
             ),
             textAlign: TextAlign.justify,
@@ -281,7 +281,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
               "Tout sélectionner",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            activeColor: GlobalColors.secondaryColor,
+            activeColor: GlobalColors.secondColor,
             value: _globalConsentCookies,
             onChanged: (bool? value) {
               setState(() {
@@ -384,7 +384,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: GlobalColors.orangeColor,
-                  foregroundColor: GlobalColors.primaryColor, 
+                  foregroundColor: GlobalColors.firstColor, 
                 ),
                 child: const Text("Enregistrer"),
               ),
@@ -410,7 +410,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
           fontWeight: FontWeight.bold,
         ),
       ),
-      activeColor: GlobalColors.secondaryColor,
+      activeColor: GlobalColors.secondColor,
       subtitle: Text(
         subtitle,
         textAlign: TextAlign.justify,

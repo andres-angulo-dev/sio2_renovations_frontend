@@ -10,6 +10,7 @@ class GlobalImages {
   static const String backgroundLanding = 'assets/images/immeuble.jpeg';
   static const String customGoogleMarker = 'assets/images/customGoogleMarker.png';
   static const String backgroundFeedbackSection = 'assets/images/backgroundFeedbackSection.png';
+  static const String backgroundWhyChooseUsSection = 'assets/images/backgroundWhyChooseUs.png';
 }
 
 class GlobalLogo {

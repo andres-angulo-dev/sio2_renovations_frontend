@@ -23,7 +23,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       toolbarHeight: mobile ? 250 : 300,
       leadingWidth: mobile ? 150 : 200,
       scrolledUnderElevation: 0.0, // Disables the effect of change caused by scrolling.
-      backgroundColor: GlobalColors.primaryColor,
+      backgroundColor: GlobalColors.firstColor,
       leading: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: GestureDetector(

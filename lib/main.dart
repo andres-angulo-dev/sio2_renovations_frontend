@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        canvasColor: GlobalColors.primaryColor,
+        canvasColor: GlobalColors.firstColor,
       ),
       initialRoute: '/',
       routes: {

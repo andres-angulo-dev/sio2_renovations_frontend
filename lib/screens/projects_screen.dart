@@ -37,7 +37,7 @@ class ProjectsScreenState extends State<ProjectsScreen> {
         onItemSelected: updateCurrentItem,
       ) 
       : null,
-      backgroundColor: GlobalColors.primaryColor,
+      backgroundColor: GlobalColors.firstColor,
       body: Text('IMPOSIBLE'),
     );
   }

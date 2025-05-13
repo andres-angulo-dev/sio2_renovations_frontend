@@ -73,7 +73,7 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
           style: TextStyle(
             fontSize: 30.0,
             fontWeight: FontWeight.bold,
-            color: GlobalColors.tertiaryColor,
+            color: GlobalColors.thirdColor,
           ),
           textAlign: TextAlign.center,
         ),
@@ -88,7 +88,7 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                   image: AssetImage(
                     GlobalImages.backgroundFeedbackSection
                   ),
-                  fit: BoxFit.cover
+                  fit: BoxFit.fitHeight
                 )
               ),
               child: GlobalSizes.isSmallScreen(context) ? Column(
@@ -98,10 +98,10 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                       child: SizedBox(
                         width: 400.0,
                         child: Text(
-                          "Notre engagement et notre exigence nous valent la reconnaissance de nos clients et partenaires. Vos recommandations sont la meilleure preuve de notre sérieux et de la qualité de notre travail.",
+                          "La confiance de nos clients et partenaires est notre plus belle récompense. Vos recommandations témoignent de notre engagement et de la qualité de notre travail",
                           style: TextStyle(
                             fontSize: 16.0,
-                            color: Colors.white,
+                            color: Colors.black87,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -117,7 +117,7 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: [BoxShadow(
-                          color: Colors.black26, 
+                          color: Colors.black87, 
                           blurRadius: 6
                         )],
                       ),
@@ -156,10 +156,11 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                       child: SizedBox(
                         width: 400.0,
                         child: Text(
-                          "Notre engagement et notre exigence nous valent la reconnaissance de nos clients et partenaires. Vos recommandations sont la meilleure preuve de notre sérieux et de la qualité de notre travail.",
+                          "Notre engagement et notre exigence nous valent la reconnaissance de nos clients et partenaires.\n"
+                          "Vos recommandations sont la meilleure preuve de notre sérieux et de la qualité de notre travail.",
                           style: TextStyle(
                             fontSize: 16.0,
-                            color: Colors.white,
+                            color: Colors.black87,
                           ),
                           textAlign: TextAlign.center,
                         ),

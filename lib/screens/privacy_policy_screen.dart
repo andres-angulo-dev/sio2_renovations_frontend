@@ -39,7 +39,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
           onItemSelected: updateCurrentItem,
         ) 
         : null,
-      backgroundColor: GlobalColors.primaryColor,
+      backgroundColor: GlobalColors.firstColor,
       body: SingleChildScrollView(
         child: Column(
         children: [
@@ -68,7 +68,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                         fontWeight: FontWeight.bold,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -76,7 +76,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       text: TextSpan(
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
-                          color: GlobalColors.secondaryColor
+                          color: GlobalColors.secondColor
                         ),
                         children: [
                           const TextSpan(
@@ -91,7 +91,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                           WidgetSpan(
                             alignment: PlaceholderAlignment.baseline,
                             baseline: TextBaseline.alphabetic,
-                            child: MyHoverRouteNavigator(routeName: '/legalMontions', text: 'mentions légales', mobile: mobile)
+                            child: MyHoverRouteNavigator(routeName: '/legalMontions', text: 'mentions légales')
                           ),
                           TextSpan(
                             text: " ",
@@ -110,7 +110,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                         fontWeight: FontWeight.bold,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -120,7 +120,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       "L’Utilisateur : La personne utilisant le Site et ses services.",
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 30.0)   ,
@@ -131,7 +131,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                         fontWeight: FontWeight.bold,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -139,7 +139,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       "La consultation du Site s'effectue librement, sans inscription préalable. Aucune donnée nominative (nom, prénom, adresse, etc.) n'est collectée lors de la simple consultation du Site.",
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 30.0)   ,
@@ -150,7 +150,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                         fontWeight: FontWeight.bold,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -162,7 +162,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       style: TextStyle(
                       fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
 
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 30.0)   ,
@@ -173,7 +173,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                         fontWeight: FontWeight.bold,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -181,7 +181,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       "Les informations saisies dans le formulaire de contact servent uniquement à répondre à vos demandes. Elles ne sont enregistrées que si l'Utilisateur utilise expressément les services proposés par le Site, et ce, conformément à votre acceptation préalable.",
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 30.0)   ,
@@ -192,7 +192,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                         fontWeight: FontWeight.bold,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -201,7 +201,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       "Les témoignages sont soumis à modération et seront publiés sans limitation de temps, sauf si vous demandez leur retrait via le formulaire de contact.",
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 30.0)   ,
@@ -212,7 +212,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                         fontWeight: FontWeight.bold,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -223,7 +223,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       "veuillez consulter la section \"Gestion des cookies\" ci-dessous.",
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 30.0)   ,
@@ -234,7 +234,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                         fontWeight: FontWeight.bold,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -242,7 +242,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       text: TextSpan(
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
-                          color: GlobalColors.secondaryColor,
+                          color: GlobalColors.secondColor,
                         ),
                         children: [
                           // Introductory text
@@ -259,7 +259,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                                 "•",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: GlobalColors.secondaryColor,
+                                  color: GlobalColors.secondColor,
                                 ),
                               ),
                             ),
@@ -278,7 +278,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                                 "•",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: GlobalColors.secondaryColor,
+                                  color: GlobalColors.secondColor,
                                 ),
                               ),
                             ),
@@ -297,7 +297,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                                 "•",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: GlobalColors.secondaryColor,
+                                  color: GlobalColors.secondColor,
                                 ),
                               ),
                             ),
@@ -316,7 +316,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                                 "•",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: GlobalColors.secondaryColor,
+                                  color: GlobalColors.secondColor,
                                 ),
                               ),
                             ),
@@ -336,7 +336,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                         fontWeight: FontWeight.bold,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -344,7 +344,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       "Conformément aux recommandations de la CNIL, les cookies sont conservés pour un maximum de 13 mois après leur dépôt initial.",
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 30.0)   ,
@@ -355,7 +355,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                         fontWeight: FontWeight.bold,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -363,7 +363,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       "Lors de l'accès au Site, votre consentement est demandé pour l'installation des cookies. Si vous refusez, seuls les cookies strictement nécessaires seront générés.",
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 30.0)   ,
@@ -374,7 +374,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                         fontWeight: FontWeight.bold,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -382,7 +382,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       "Les articles du Site peuvent inclure des contenus intégrés (vidéos, images, articles, etc.) provenant d'autres sites. Ces contenus se comportent comme si vous visitiez ces sites directement. Toutefois, certains contenus (comme les vidéos YouTube en mode confidentialité avancée) n'installent pas de cookies sur le Site.",
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 30.0)   ,
@@ -393,7 +393,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                         fontWeight: FontWeight.bold,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -401,7 +401,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       "Les données techniques sont conservées pour la durée strictement nécessaire à l'accomplissement des finalités décrites ci-dessus.",
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 30.0)   ,
@@ -412,7 +412,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                         fontWeight: FontWeight.bold,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -420,7 +420,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       "Aucune donnée personnelle ne sera communiquée à des tiers, sauf obligation légale. Les données pourront être divulguées en application d'une loi, d'un règlement, ou suite à une décision d'une autorité compétente.",
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 30.0)   ,
@@ -431,7 +431,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                         fontWeight: FontWeight.bold,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -439,7 +439,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       "En cas de modification substantielle des présentes conditions, l'éditeur s'engage à en informer les utilisateurs avant la mise en ligne.",
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 30.0)   ,
@@ -450,7 +450,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                         fontWeight: FontWeight.bold,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -458,7 +458,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       "Informations personnelles: Données qui permettent d'identifier directement ou indirectement un individu.",
                       style: TextStyle(
                         fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
-                        color: GlobalColors.secondaryColor,
+                        color: GlobalColors.secondColor,
                       ),
                     ),
                     const SizedBox(height: 30.0),

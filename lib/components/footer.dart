@@ -14,7 +14,7 @@ class FooterComponent extends StatelessWidget {
     
     return Container(
       width: double.infinity,
-      color: GlobalColors.tertiaryColor,
+      color: GlobalColors.thirdColor,
       padding: const EdgeInsets.all(16.0),
       child: !mobile ? Column(
         children: [
@@ -94,7 +94,7 @@ class FooterComponent extends StatelessWidget {
                                 routeName: '/contact', 
                                 text: 'Demande de devis',
                                 hoverColor: GlobalColors.orangeColor,
-                                color: GlobalColors.primaryColor,
+                                color: GlobalColors.firstColor,
                                 webSize: GlobalSize.footerWebText,
                               ),
                             ],
@@ -128,7 +128,7 @@ class FooterComponent extends StatelessWidget {
                               MyHoverRouteNavigator(
                                 routeName: '/legalMontions', 
                                 text: "Mentions légales",
-                                color: GlobalColors.primaryColor,
+                                color: GlobalColors.firstColor,
                                 hoverColor: GlobalColors.orangeColor,
                                 webSize: GlobalSize.footerWebText,
                               ),
@@ -137,7 +137,7 @@ class FooterComponent extends StatelessWidget {
                                 routeName: '/privacyPolicy', 
                                 text: "Politique de confidentialité",
                                 hoverColor: GlobalColors.orangeColor,
-                                color: GlobalColors.primaryColor,
+                                color: GlobalColors.firstColor,
                                 webSize: GlobalSize.footerWebText,
                               ),
                             ],
@@ -173,7 +173,7 @@ class FooterComponent extends StatelessWidget {
                     url: 'https://www.andres-angulo.com', 
                     text: 'Andrés Angulo',
                     hoverColor: GlobalColors.orangeColor,
-                    color: GlobalColors.primaryColor,
+                    color: GlobalColors.firstColor,
                     webSize: GlobalSize.footerWebCopyright,
                     )
                   ),
@@ -253,7 +253,7 @@ class FooterComponent extends StatelessWidget {
                   routeName: '/contact', 
                   text: 'Demande de devis',
                   hoverColor: GlobalColors.orangeColor,
-                  color: GlobalColors.primaryColor,
+                  color: GlobalColors.firstColor,
                   mobileSize: GlobalSize.footerMobileText,
                 ),
               ],
@@ -285,7 +285,7 @@ class FooterComponent extends StatelessWidget {
                 MyHoverRouteNavigator(
                   routeName: '/legalMontions', 
                   text: "Mentions légales",
-                  color: GlobalColors.primaryColor,
+                  color: GlobalColors.firstColor,
                   hoverColor: GlobalColors.orangeColor,
                   mobileSize: GlobalSize.footerMobileText,
                 ),
@@ -294,7 +294,7 @@ class FooterComponent extends StatelessWidget {
                   routeName: '/privacyPolicy', 
                   text: "Politique de confidentialité",
                   hoverColor: GlobalColors.orangeColor,
-                  color: GlobalColors.primaryColor,
+                  color: GlobalColors.firstColor,
                   mobileSize: GlobalSize.footerMobileText,
                 ),
               ],
@@ -323,7 +323,7 @@ class FooterComponent extends StatelessWidget {
                     url: 'https://www.andres-angulo.com', 
                     text: 'Andrés Angulo',
                     hoverColor: GlobalColors.orangeColor,
-                    color: GlobalColors.primaryColor,
+                    color: GlobalColors.firstColor,
                     webSize: GlobalSize.footerMobileCopyright,
                     )
                   ),

@@ -20,7 +20,7 @@ class DrawerComponentState extends State<DrawerComponent> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: GlobalColors.primaryColor,
+      backgroundColor: GlobalColors.firstColor,
       child: ListView(
         padding: EdgeInsets.zero, // Removes default padding for the ListView.
         children: [
