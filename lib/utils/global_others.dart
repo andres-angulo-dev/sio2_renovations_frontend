@@ -33,6 +33,7 @@ class GlobalButtonsAndIcons {
   static const String iconCookieButton = 'assets/icon_button.svg';
   static const String contactButton = 'assets/rive/contact_button.riv';
   static const String contactButtonWithReverse = 'assets/rive/contact_button _with_reverse.riv';
+  static const String contactButtonWithReverseV2 = 'assets/rive/contact_button_with_reverse_v2.riv';
 }
 
 class GlobalSize {

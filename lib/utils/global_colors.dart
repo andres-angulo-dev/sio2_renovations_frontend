@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class GlobalColors {
-  static const Color orangeColor = Colors.orange;
+  static const Color orangeColor = Color.fromARGB(255, 243, 146, 32);
   static const Color firstColor = Colors.white;
   static const Color secondColor = Colors.black;
   static const Color thirdColor = Color.fromARGB(255, 165, 127, 78);

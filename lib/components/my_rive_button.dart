@@ -4,15 +4,13 @@ import 'package:rive/rive.dart';
 
 class MyRiveButton extends StatefulWidget {
   const MyRiveButton({
-    super.key,
+  super.key,
   required this.onPressed, 
   required this.buttonPath,
   });
 
   final VoidCallback onPressed; // Callback for the button tap event
   final String buttonPath; // Path to the Rive animation file
-
-
 
   @override
   MyRiveButtonState createState() => MyRiveButtonState();

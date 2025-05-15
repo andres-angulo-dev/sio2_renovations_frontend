@@ -8,6 +8,7 @@ import '../components/drawer_component.dart';
 import '../components/section_why_choose_us.dart';
 import '../components/section_key_figures.dart';
 import '../components/section_services.dart';
+import '../components/section_steps.dart';
 import '../components/cookies_consent_banner.dart';
 import '../components/my_button.dart';
 import '../components/footer.dart';
@@ -415,9 +416,9 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                     SizedBox(height: 100.0),
                     // section 4
                     WhyChooseUsSection(),
-                    SizedBox(height: 100.0),
+                    SizedBox(height: 50.0),
                     // section 5
-                    KeyFiguresSection(),
+                    StepsSection(),
                     SizedBox(height: 100.0),
                     // section 6
                     SizedBox(
@@ -485,7 +486,10 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                           ),
                         ]
                       ),
-                    ),                
+                    ),   
+                    SizedBox(height: 100.0),             
+                    // section 7
+                    KeyFiguresSection(),
                     SizedBox(height: 100.0),
                     // section 7
                     CustomerFeedbackSection(),

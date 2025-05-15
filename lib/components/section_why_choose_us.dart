@@ -11,7 +11,6 @@ class WhyChooseUsSection extends StatefulWidget {
 
 class WhyChooseUsSectionState extends State<WhyChooseUsSection> with SingleTickerProviderStateMixin {
   late AnimationController _whyChooseUsController;
-  // late Animation<Offset> _whyChooseUsSlideAnimation;
   late Animation<double> _whyChooseUsFadeAnimation;
 
   @override  
@@ -22,14 +21,6 @@ class WhyChooseUsSectionState extends State<WhyChooseUsSection> with SingleTicke
       vsync: this,
       duration: const Duration(milliseconds: 1000),  
     );
-
-    // _whyChooseUsSlideAnimation = Tween<Offset>(
-    //   begin: const Offset(1, 0),
-    //   end: Offset.zero,
-    // ).animate(CurvedAnimation(
-    //   parent: _whyChooseUsController,
-    //   curve: Curves.easeInOut,
-    // ));
 
     _whyChooseUsFadeAnimation = Tween<double>(
       begin: 0.0,
@@ -45,8 +36,6 @@ class WhyChooseUsSectionState extends State<WhyChooseUsSection> with SingleTicke
     _whyChooseUsController.dispose();
     super.dispose();
   }
-
-  bool _isVisible = false;
   
   @override
   Widget build(BuildContext context) {
@@ -55,7 +44,6 @@ class WhyChooseUsSectionState extends State<WhyChooseUsSection> with SingleTicke
       key: const Key("why_choose_us_section"), 
       onVisibilityChanged: (info) {
         if (info.visibleFraction > 0.3) {
-          _isVisible = true;
           _whyChooseUsController.forward();
         }
       },

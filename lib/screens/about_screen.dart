@@ -121,15 +121,14 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
         parent: _contactAnimationController, 
         curve: Curves.easeInOut,
       ));
+  }
 
-      @override   
-      void dispose() {
-        _historyAnimationController.dispose();
-        _servicesAnimationController.dispose();
-        _contactAnimationController.dispose();
-        super.dispose();
-      }
-
+  @override   
+  void dispose() {
+    _historyAnimationController.dispose();
+    _servicesAnimationController.dispose();
+    _contactAnimationController.dispose();
+    super.dispose();
   }
   
   @override
@@ -618,12 +617,11 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                               child: SizedBox(
                                 height: 100, // Fixed size to allow visibility detection
                                 width: 150,  // Corresponds to the size of the MyButtonRive
-                                child: _showContactButtonSection 
-                                  ? MyRiveButton(
-                                      onPressed: () => Navigator.pushNamed(context, ('/contact')), 
-                                      buttonPath: GlobalButtonsAndIcons.contactButtonWithReverse, 
-                                    ) 
-                                  : Container(color: Colors.transparent), // Empty widget visible
+                                child: _showContactButtonSection ? MyRiveButton(
+                                  onPressed: () => Navigator.pushNamed(context, ('/contact')), 
+                                  buttonPath: GlobalButtonsAndIcons.contactButtonWithReverse, 
+                                ) 
+                                : Container(color: Colors.transparent), // Empty widget visible
                               ),
                             )                          
                           ],
