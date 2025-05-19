@@ -26,7 +26,7 @@ class ContactScreenState extends State<ContactScreen> {
     final mobile = MediaQuery.of(context).size.width > 768 ? false : true;
 
     return Scaffold(
-      appBar: MyAppBar(
+      appBar: MyAppBarComponent(
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
       ),

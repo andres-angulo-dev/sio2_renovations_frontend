@@ -6,7 +6,7 @@ class GlobalSizes {
   }
 
   static bool isMobileScreen(BuildContext context) {
-    return screenWidth(context) < 768;
+    return screenWidth(context) < 803;
   }
 
   static bool isExtraSmallScreen(BuildContext context) {
@@ -14,7 +14,7 @@ class GlobalSizes {
   }
 
   static bool isSmallScreen(BuildContext context) {
-    return screenWidth(context) < 1000;
+    return screenWidth(context) < 1021;
   }
 
   static bool isCustomServicesSection(BuildContext context) {

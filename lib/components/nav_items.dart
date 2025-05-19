@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import '../utils/global_colors.dart';
+import '../utils/global_sizes.dart';
 
-class DrawerItems extends StatelessWidget {
-  const DrawerItems({super.key, 
+class NavItems extends StatelessWidget {
+  const NavItems({super.key, 
   required this.defaultColor, 
   required this.hoverColor, 
   this.isHorizontal = true,
@@ -18,133 +19,51 @@ class DrawerItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final drawerItems = [
-      SizedBox(height: 40.0),
-      CustomNavItem(
-        icon: Icons.dashboard,
-        label: 'Accueil',
-        isActive: currentItem == 'Accueil', // Check if this item is active, true if it's the same
-        onPressed: () {
-          onItemSelected('Acceuil'); // Notify the parent of the selection
-          Navigator.pushNamed(context, '/landing');
-        }, 
-        defaultColor: defaultColor,
-        hoverColor: hoverColor,
-        animationDelay: const Duration(milliseconds: 100),
-      ),
-      isHorizontal ? 
-      Text('|', style: TextStyle(color: defaultColor, fontSize: 18)) 
-      : 
-      Divider(
-        color: GlobalColors.dividerColor1,
-        thickness: 1.0,
-        indent: 20.0,
-        endIndent: 20.0
-      ),
-      CustomNavItem(
-        icon: Icons.info,
-        label: 'À propos de nous',
-        isActive: currentItem == 'À propos de nous',
-        onPressed: () {
-          onItemSelected('À propos de nous');
-          Navigator.pushNamed(context, '/about');
-        }, 
-        defaultColor: defaultColor,
-        hoverColor: hoverColor,
-        animationDelay: const Duration(milliseconds: 300),
-      ),
-      isHorizontal ? 
-      Text('|', style: TextStyle(color: defaultColor, fontSize: 18)) 
-      : 
-      Divider(
-        color: GlobalColors.dividerColor1,
-        thickness: 1.0,
-        indent: 20.0,
-        endIndent: 20.0
-      ),
-      CustomNavItem(
-        icon: Icons.folder_open,
-        label: 'Projets',
-        isActive: currentItem == 'Projets',
-        onPressed: () {
-          onItemSelected('Projets');
-          Navigator.pushNamed(context, '/projects'); 
-        }, 
-        defaultColor: defaultColor,
-        hoverColor: hoverColor,
-        animationDelay: const Duration(milliseconds: 200),
-      ),
-      isHorizontal ? 
-      Text('|', style: TextStyle(color: defaultColor, fontSize: 18)) 
-      : 
-      Divider(
-        color: GlobalColors.dividerColor1,
-        thickness: 1.0,
-        indent: 20.0,
-        endIndent: 20.0
-      ),      
-      CustomNavItem(
-        icon: Icons.contact_mail,
-        label: 'Contact',
-        isActive: currentItem == 'Contact',
-        onPressed: () {
-          onItemSelected('Contact');
-          Navigator.pushNamed(context, '/contact');
-        }, 
-        defaultColor: defaultColor,
-        hoverColor: hoverColor,
-        animationDelay: const Duration(milliseconds: 400),
-      ),
-      // isHorizontal ? 
-      // Text('|', style: TextStyle(color: defaultColor, fontSize: 18)) 
-      // : 
-      // Divider(
-      //   color: GlobalColors.dividerColor1,
-      //   thickness: 1.0,
-      //   indent: 20.0,
-      //   endIndent: 20.0
-      // ),      
-      // CustomNavItem(
-      //   icon: Icons.article,
-      //   label: 'Mentions légales',
-      //   isActive: currentItem == 'Mentions légales',
-      //   onPressed: () {
-      //     onItemSelected('Mentions légales');
-      //     Navigator.pushNamed(context, '/legalMontions');
-      //   }, 
-      //   defaultColor: defaultColor,
-      //   hoverColor: hoverColor,
-      //   animationDelay: const Duration(milliseconds: 500),
-      // ),
-      // isHorizontal ? 
-      // Text('|', style: TextStyle(color: defaultColor, fontSize: 18)) 
-      // : 
-      // Divider(
-      //   color: GlobalColors.dividerColor1,
-      //   thickness: 1.0,
-      //   indent: 20.0,
-      //   endIndent: 20.0
-      // ),   
-      // CustomNavItem(
-      //   icon: Icons.shield, 
-      //   label: 'Politique de confidentialité', 
-      //   isActive: currentItem == 'Politique de confidentialité',
-      //   onPressed: () {
-      //     onItemSelected('Politique de confidentialité');
-      //     Navigator.pushNamed(context, '/privacyPolicy'); 
-      //   },
-      //   defaultColor: defaultColor, 
-      //   hoverColor: hoverColor, 
-      //   animationDelay: const Duration(milliseconds: 400),
-      // ),
+    final List<Map<String, dynamic>> navItemsData = [
+      {'icon': Icons.dashboard, 'label': 'Accueil', 'route': '/landing'},
+      {'icon': Icons.info, 'label': 'À propos de nous', 'route': '/about'},
+      {'icon': Icons.folder_open, 'label': 'Projets', 'route': '/projects'},
+      {'icon': Icons.contact_mail, 'label': 'Contact', 'route': '/contact'},
+      {'icon': Icons.article, 'label': 'Mentions légales', 'route': '/legalMontions'},
     ];
+
+  final layoutItems = List.generate(navItemsData.length * 2 - 1, (index) {
+    if (index.isEven) { // Index even → menu item
+      final item = navItemsData[index ~/ 2]; // Access the correct element
+      return AnimatedSwitcher( // Animation: Smooth transition of color change
+        duration: const Duration(milliseconds: 300),
+        child: CustomNavItem( 
+          key: ValueKey(defaultColor), // Trigger animation on color change
+          icon: item['icon'],
+          label: item['label'],
+          isActive: currentItem == item['label'],
+          onPressed: () {
+            onItemSelected(item['label']);
+            Navigator.pushNamed(context, item['route']);
+          },
+          defaultColor: defaultColor,
+          hoverColor: hoverColor,
+          animationDelay: Duration(milliseconds: (index ~/ 2 + 1) * 200),
+        )
+      );
+    } else { // ✅ Index odd → divider
+      return isHorizontal
+        ? Text('|', style: TextStyle(color: defaultColor, fontSize: 18))
+        : Divider(
+            color: GlobalColors.dividerColor1,
+            thickness: 1.0,
+            indent: 20.0,
+            endIndent: 20.0,
+          );
+    }
+  });
 
     // Choose the layout: horizontal row or vertical column.
     return isHorizontal
-      ? Row(children: drawerItems)
+      ? Row(children: layoutItems)
       : Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: drawerItems.where((item) => item is! Text).toList()); // Exclude horizontal separators for vertical layout
+          children: layoutItems.where((item) => item is! Text).toList()); // Exclude horizontal separators for vertical layout
   }
 }
 
@@ -205,6 +124,19 @@ class CustomdrawerItemstate extends State<CustomNavItem> with SingleTickerProvid
     });
   }
 
+  // Automatically update _textColor when widget.defaultColor changes.
+  @override
+  void didUpdateWidget(CustomNavItem oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // Comparison between old color and new
+    if (widget.defaultColor != oldWidget.defaultColor) {
+      setState(() {
+        _textColor = widget.defaultColor; // Automatically update _textColor
+      });
+    }
+  }
+
   @override
   void dispose() {
     _controller.dispose(); // Dispose of animation controller to free memory
@@ -213,13 +145,13 @@ class CustomdrawerItemstate extends State<CustomNavItem> with SingleTickerProvid
   
   @override
   Widget build(BuildContext context) {
-    bool mobile768 = MediaQuery.of(context).size.width > 768 ? false : true;
-    bool mobile954 = MediaQuery.of(context).size.width > 954 ? false : true;
- 
+    bool mobile = GlobalSizes.isMobileScreen(context);
+    bool isSmallScreen = GlobalSizes.isSmallScreen(context);
+
     return Padding(
-      padding: mobile768 
+      padding: mobile 
         ? EdgeInsets.symmetric(vertical: 4.0, horizontal: 20.0) 
-        : EdgeInsets.all(mobile954 ? 15.0 : 30.0),
+        : EdgeInsets.all(isSmallScreen ? 15.0 : 30.0),
       child: MouseRegion(
         onEnter: (_) {
           setState(() {
@@ -233,7 +165,7 @@ class CustomdrawerItemstate extends State<CustomNavItem> with SingleTickerProvid
             _backgroundColor = Colors.transparent; // Remove background
           });
         },
-        child: mobile768 
+        child: mobile 
         // Mobile navigation menu
         ? SlideTransition(
           position: _slideAnimation,
@@ -253,7 +185,7 @@ class CustomdrawerItemstate extends State<CustomNavItem> with SingleTickerProvid
                    widget.label,
                    style: TextStyle(
                       color: widget.isActive ? GlobalColors.orangeColor : _textColor, // logic for the color change depending on the page you are on
-                     fontSize: mobile954 ? 16.0 : 18.0,
+                     fontSize: isSmallScreen ? 16.0 : 18.0,
                    ),
                   ),
                 ],
@@ -270,7 +202,7 @@ class CustomdrawerItemstate extends State<CustomNavItem> with SingleTickerProvid
               widget.label,
               style: TextStyle(
                 color: widget.isActive ? GlobalColors.orangeColor : _textColor, // logic for the color change depending on the page you are on
-                fontSize: mobile954 ? 16.0 : 18.0,
+                fontSize: isSmallScreen ? 16.0 : 18.0,
               ),
             ),
           ),

@@ -138,7 +138,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: MyAppBar(
+      appBar: MyAppBarComponent(
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
       ),

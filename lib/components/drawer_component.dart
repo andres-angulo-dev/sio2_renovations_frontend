@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'drawer_items.dart';
+import 'nav_items.dart';
 import '../utils/global_colors.dart';
 
 class DrawerComponent extends StatefulWidget{
@@ -24,7 +24,7 @@ class DrawerComponentState extends State<DrawerComponent> {
       child: ListView(
         padding: EdgeInsets.zero, // Removes default padding for the ListView.
         children: [
-          DrawerItems(
+          NavItems(
             defaultColor: Colors.black, 
             hoverColor: GlobalColors.orangeColor, 
             isHorizontal: false, // Display menu items vertically

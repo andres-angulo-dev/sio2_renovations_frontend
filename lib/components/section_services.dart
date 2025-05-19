@@ -256,7 +256,12 @@ class ServiceTitleState extends State<ServiceTitle> {
           children: [
             // Image with hover scale effect
             ClipRRect(
-              borderRadius: BorderRadius.circular(8), // Rounded corners for aesthetics
+              // borderRadius: BorderRadius.circular(8), // Rounded corners for aesthetics
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(32),
+                topRight: Radius.circular(32),
+                bottomLeft: Radius.circular(32),
+              ),
               child: Image.asset(
                 widget.services["image"]!, 
                 width: 200,
@@ -273,8 +278,7 @@ class ServiceTitleState extends State<ServiceTitle> {
               right: 0,
               child: ClipRRect(
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(8),
-                  bottomRight: Radius.circular(8),
+                  bottomLeft: Radius.circular(32),
                 ), // Rounded corners only at the bottom
                 child: Container(
                   height: 30,
