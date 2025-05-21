@@ -5,11 +5,13 @@ import 'package:rive/rive.dart';
 class MyRiveButton extends StatefulWidget {
   const MyRiveButton({
   super.key,
-  required this.onPressed, 
+  this.enableCursor = true,
+  this.onPressed, 
   required this.buttonPath,
   });
 
-  final VoidCallback onPressed; // Callback for the button tap event
+  final bool enableCursor; // enable cursor click 
+  final VoidCallback? onPressed; // Callback for the button tap event
   final String buttonPath; // Path to the Rive animation file
 
   @override
@@ -61,6 +63,7 @@ class MyRiveButtonState extends State<MyRiveButton> {
     }
 
     return MouseRegion(
+      cursor: widget.enableCursor ? SystemMouseCursors.click : MouseCursor.defer,
       // Triggered when the mouse enters the button area
       onEnter: (_) {
         setState(() {

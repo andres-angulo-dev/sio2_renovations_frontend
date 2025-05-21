@@ -1,3 +1,4 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "cmake.sourceDirectory": "C:/Users/La Production/Desktop/Sio2 Renovations/Site/sio2_renovations_frontend/linux"
 }

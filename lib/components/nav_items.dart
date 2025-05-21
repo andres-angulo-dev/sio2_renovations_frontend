@@ -28,22 +28,35 @@ class NavItems extends StatelessWidget {
     ];
 
   final layoutItems = List.generate(navItemsData.length * 2 - 1, (index) {
+    bool mobile = GlobalSizes.isMobileScreen(context);
+    bool isSmallScreen = GlobalSizes.isSmallScreen(context);
+
     if (index.isEven) { // Index even → menu item
       final item = navItemsData[index ~/ 2]; // Access the correct element
+      final bool isLastItem = index ~/ 2 == navItemsData.length - 1; // Check if it is the last element
+      
       return AnimatedSwitcher( // Animation: Smooth transition of color change
         duration: const Duration(milliseconds: 300),
-        child: CustomNavItem( 
-          key: ValueKey(defaultColor), // Trigger animation on color change
-          icon: item['icon'],
-          label: item['label'],
-          isActive: currentItem == item['label'],
-          onPressed: () {
-            onItemSelected(item['label']);
-            Navigator.pushNamed(context, item['route']);
-          },
-          defaultColor: defaultColor,
-          hoverColor: hoverColor,
-          animationDelay: Duration(milliseconds: (index ~/ 2 + 1) * 200),
+        child: Padding(
+          padding: mobile 
+          ? EdgeInsets.symmetric(vertical: 4.0, horizontal: 20.0) 
+          : EdgeInsets.only(
+            left: isSmallScreen ? 15.0 : 30.0, 
+            right: isSmallScreen ? 15.0 : (isLastItem ? 0.0 : 30.0), // If it's the last one, don't put padding on the left
+          ),
+          child: CustomNavItem( 
+            key: ValueKey(defaultColor), // Trigger animation on color change
+            icon: item['icon'],
+            label: item['label'],
+            isActive: currentItem == item['label'],
+            onPressed: () {
+              onItemSelected(item['label']);
+              Navigator.pushNamed(context, item['route']);
+            },
+            defaultColor: defaultColor,
+            hoverColor: hoverColor,
+            animationDelay: Duration(milliseconds: (index ~/ 2 + 1) * 200),
+          )
         )
       );
     } else { // ✅ Index odd → divider
@@ -58,12 +71,12 @@ class NavItems extends StatelessWidget {
     }
   });
 
-    // Choose the layout: horizontal row or vertical column.
-    return isHorizontal
-      ? Row(children: layoutItems)
-      : Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: layoutItems.where((item) => item is! Text).toList()); // Exclude horizontal separators for vertical layout
+  // Choose the layout: horizontal row or vertical column.
+  return isHorizontal
+    ? Row(children: layoutItems)
+    : Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: layoutItems);//.where((item) => item is! Text).toList()); // Exclude horizontal separators for vertical layout
   }
 }
 
@@ -148,66 +161,61 @@ class CustomdrawerItemstate extends State<CustomNavItem> with SingleTickerProvid
     bool mobile = GlobalSizes.isMobileScreen(context);
     bool isSmallScreen = GlobalSizes.isSmallScreen(context);
 
-    return Padding(
-      padding: mobile 
-        ? EdgeInsets.symmetric(vertical: 4.0, horizontal: 20.0) 
-        : EdgeInsets.all(isSmallScreen ? 15.0 : 30.0),
-      child: MouseRegion(
-        onEnter: (_) {
-          setState(() {
-            _textColor = widget.hoverColor; // Change text color on hover
-            _backgroundColor = const Color.fromARGB(255, 241, 237, 237); // Add background on hover
-          });
-        }, 
-        onExit: (_) {
-          setState(() {
-            _textColor = widget.defaultColor; // Reset text color
-            _backgroundColor = Colors.transparent; // Remove background
-          });
-        },
-        child: mobile 
-        // Mobile navigation menu
-        ? SlideTransition(
-          position: _slideAnimation,
-          child: GestureDetector(
-            onTap: widget.onPressed,
-            child: Container(
-              color:  _backgroundColor,
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
-              child: Row(
-                children: [
-                  Icon(
-                    widget.icon,
+    return MouseRegion(
+      onEnter: (_) {
+        setState(() {
+          _textColor = widget.hoverColor; // Change text color on hover
+          _backgroundColor = const Color.fromARGB(255, 241, 237, 237); // Add background on hover
+        });
+      }, 
+      onExit: (_) {
+        setState(() {
+          _textColor = widget.defaultColor; // Reset text color
+          _backgroundColor = Colors.transparent; // Remove background
+        });
+      },
+      child: mobile 
+      // Mobile navigation menu
+      ? SlideTransition(
+        position: _slideAnimation,
+        child: GestureDetector(
+          onTap: widget.onPressed,
+          child: Container(
+            color:  _backgroundColor,
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+            child: Row(
+              children: [
+                Icon(
+                  widget.icon,
+                  color: widget.isActive ? GlobalColors.orangeColor : _textColor, // logic for the color change depending on the page you are on
+                ),
+                const SizedBox(width: 8.0,),
+                Text(
+                 widget.label,
+                 style: TextStyle(
                     color: widget.isActive ? GlobalColors.orangeColor : _textColor, // logic for the color change depending on the page you are on
-                  ),
-                  const SizedBox(width: 8.0,),
-                  Text(
-                   widget.label,
-                   style: TextStyle(
-                      color: widget.isActive ? GlobalColors.orangeColor : _textColor, // logic for the color change depending on the page you are on
-                     fontSize: isSmallScreen ? 16.0 : 18.0,
-                   ),
-                  ),
-                ],
-              ) 
+                   fontSize: isSmallScreen ? 16.0 : 18.0,
+                 ),
+                ),
+              ],
             ) 
-          ),
-        )
-        // Web navigation menu
-        : MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: widget.onPressed,
-            child: Text(
-              widget.label,
-              style: TextStyle(
-                color: widget.isActive ? GlobalColors.orangeColor : _textColor, // logic for the color change depending on the page you are on
-                fontSize: isSmallScreen ? 16.0 : 18.0,
-              ),
+          ) 
+        ),
+      )
+      // Web navigation menu
+      : MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: widget.onPressed,
+          child: Text(
+            widget.label,
+            style: TextStyle(
+              color: widget.isActive ? GlobalColors.orangeColor : _textColor, // logic for the color change depending on the page you are on
+              fontSize: isSmallScreen ? 16.0 : 18.0,
             ),
           ),
-        ) 
-      ),
+        ),
+      ) 
     );
   }
 }

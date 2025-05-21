@@ -796,7 +796,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                   children: [
                     Stack(
                       children: [
-                        // Background image with blur effect.
+                        // Background image with shadow effect.
                         Positioned.fill(
                           child: Container(
                             height: MediaQuery.of(context).size.height,
@@ -818,24 +818,14 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                             ),
                           )
                         ),
-                        // Positioned(
-                        //   top: MediaQuery.of(context).padding.top,
-                        //   left: 0,
-                        //   right: 0,
-                        //   child: SafeArea(
-                        //     top: false, // ✅ Évite le padding automatique en haut sur certains appareils
-                        //     child: MyAppBarComponent(
-                        //       currentItem: currentItem,
-                        //       onItemSelected: updateCurrentItem,
-                        //     ),
-                        //   ),
-                        // ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height,
                           width: screenWidth,
                           child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
+                          alignment: Alignment.center,
+                          child: Container(
+                            width: screenWidth * 0.9,
+                            // color: Colors.red,
                             padding: EdgeInsets.all(32.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -863,13 +853,32 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                                   ],
                                 ),
                                 ),
-                                SizedBox(
-                                  width: 150,
-                                  height: 50,
-                                  child: MyRiveButton(
-                                    onPressed: () => Navigator.pushNamed(context, '/contact'), 
-                                    buttonPath: GlobalButtonsAndIcons.contactButtonWithReverse
-                                  ),
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 150,
+                                      height: 50,
+                                      child: MyRiveButton(
+                                        enableCursor: false,
+                                        buttonPath: GlobalButtonsAndIcons.callUsButton
+                                      ),
+                                    ),
+                                    SizedBox(width: 20.0),
+                                    Container(
+                                      height: 50.0,
+                                      width: 3.0,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(width: 20.0),
+                                    SizedBox(
+                                      width: 150,
+                                      height: 50,
+                                      child: MyRiveButton(
+                                        onPressed: () => Navigator.pushNamed(context, '/contact'), 
+                                        buttonPath: GlobalButtonsAndIcons.freeQuoteButton
+                                      ),
+                                    ),
+                                  ],
                                 )
                               ]),
                             )                             
