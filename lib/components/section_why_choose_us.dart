@@ -43,7 +43,7 @@ class WhyChooseUsSectionState extends State<WhyChooseUsSection> with SingleTicke
     return VisibilityDetector(
       key: const Key("why_choose_us_section"), 
       onVisibilityChanged: (info) {
-        if (info.visibleFraction > 0.3) {
+        if (info.visibleFraction > 0.5) {
           _whyChooseUsController.forward();
         }
       },

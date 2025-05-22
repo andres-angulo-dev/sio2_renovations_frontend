@@ -4,7 +4,7 @@ import '../utils/global_others.dart';
 
 class MyHoverRouteNavigator extends StatefulWidget{
   const MyHoverRouteNavigator({super.key,
-  required this.routeName,
+  this.routeName,
   required this.text,
   this.arguments,
   this.mobile = false,
@@ -12,9 +12,10 @@ class MyHoverRouteNavigator extends StatefulWidget{
   this.color,
   this.mobileSize,
   this.webSize,
+  this.boldText = false,
   });
 
-  final String routeName;
+  final String? routeName;
   final String text;
   final Object? arguments;
   final bool mobile;
@@ -22,6 +23,7 @@ class MyHoverRouteNavigator extends StatefulWidget{
   final Color? color;
   final double? mobileSize;
   final double? webSize;
+  final bool boldText;
 
   @override   
   MyHoverRouteNavigatorState createState() => MyHoverRouteNavigatorState();
@@ -41,12 +43,13 @@ class MyHoverRouteNavigatorState extends State<MyHoverRouteNavigator>  with Sing
         _hovering = false;
       }),
       child: GestureDetector(
-        onTap: () => Navigator.pushNamed(context, widget.routeName, arguments: widget.arguments),
+        onTap: () => Navigator.pushNamed(context, widget.routeName!, arguments: widget.arguments),
         child: Text(
           widget.text,
           style: TextStyle(
             color: _hovering ? (widget.hoverColor ?? GlobalColors.hoverHyperLinkColor) : (widget.color ?? GlobalColors.hyperLinkColor),
             fontSize: widget.mobile ? (widget.mobileSize ?? GlobalSize.mobileSize) : (widget.webSize ?? GlobalSize.mobileSize),
+            fontWeight: widget.boldText ? FontWeight.bold : null,
           )
         )
       ),

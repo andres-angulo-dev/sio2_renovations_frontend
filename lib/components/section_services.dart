@@ -63,7 +63,8 @@ class ServicesSectionState extends State<ServicesSection> with SingleTickerProvi
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.7,
-      child: GlobalSizes.isCustomServicesSection(context) ? Column(
+      child: GlobalSizes.isCustomServicesSection(context) 
+      ? Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // First part: Presentation text of the services
@@ -93,7 +94,7 @@ class ServicesSectionState extends State<ServicesSection> with SingleTickerProvi
                    child: Column(
                       children: [
                         Text(
-                          "NOTRE EXPERTISE EN RÉNOVATION",
+                          "UNE ENTREPRISE TOUS CORPS D’ÉTAT",
                           style: TextStyle(
                             fontSize: 30.0,
                             fontWeight: FontWeight.bold,
@@ -185,7 +186,7 @@ class ServicesSectionState extends State<ServicesSection> with SingleTickerProvi
                      child: Column(
                         children: [
                           Text(
-                            "NOTRE EXPERTISE EN RÉNOVATION",
+                            "UNE ENTREPRISE TOUS CORPS D’ÉTAT",
                             style: TextStyle(
                               fontSize: 30.0,
                               fontWeight: FontWeight.bold,

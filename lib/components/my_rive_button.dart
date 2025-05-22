@@ -90,10 +90,6 @@ class MyRiveButtonState extends State<MyRiveButton> {
   }
 }
 
-
-
-
-
 // // Interactive Hover and Tap Button with Rive Animation and Dynamic Scaling in Flutter
 // import 'package:flutter/material.dart';
 // import 'package:rive/rive.dart';
