@@ -29,18 +29,19 @@ class MyRiveButtonState extends State<MyRiveButton> {
     _loadRiveFile(); // Loads the Rive file and configures the State Machine
   }
 
-  void _loadRiveFile() {
-    rootBundle.load(widget.buttonPath).then((data) {
+  Future<void> _loadRiveFile() async {
+    try {
+      await RiveFile.initialize();
+      ByteData data = await rootBundle.load(widget.buttonPath);
       // Import the Rive file from assets
-      final file = RiveFile.import(data);
+      final riveFile = RiveFile.import(data);
       // Get the main Artboard from the imported file
-      final artboard = file.mainArtboard;
+      final artboard = riveFile.mainArtboard;
       // Initialize the State Machine Controller using the State Machine name
       final tempController = StateMachineController.fromArtboard(
         artboard,
         'StateMachine1', // Name of State Machine
       );
-
       // Verif if the controller was created
       if (tempController != null) {
         // Assign the controller and add it to the Artboard
@@ -52,6 +53,11 @@ class MyRiveButtonState extends State<MyRiveButton> {
           _isLoaded = true; // Mark as loaded and ready
         });
       }
+    } catch (e) {
+      debugPrint("Error loading Rive file : $e");
+    }
+    rootBundle.load(widget.buttonPath).then((data) {
+
     });
   }
 
@@ -89,6 +95,9 @@ class MyRiveButtonState extends State<MyRiveButton> {
     );
   }
 }
+
+
+
 
 // // Interactive Hover and Tap Button with Rive Animation and Dynamic Scaling in Flutter
 // import 'package:flutter/material.dart';
