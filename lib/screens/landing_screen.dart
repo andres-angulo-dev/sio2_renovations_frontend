@@ -208,7 +208,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
       ) 
       : null,
       extendBodyBehindAppBar: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       body: Stack(
             children: [
               SingleChildScrollView(

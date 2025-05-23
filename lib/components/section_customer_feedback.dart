@@ -1,236 +1,8 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
-// import 'dart:async';
-// import '../utils/global_colors.dart';
-// import '../utils/global_others.dart';
-// import '../utils/global_sizes.dart';
-
-// class CustomerFeedbackSection extends StatefulWidget {
-//   const CustomerFeedbackSection({super.key});
-
-//   @override
-//   CustomerFeedbackSectionState createState() => CustomerFeedbackSectionState();
-// }
-
-// class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
-//     // Controls the page scrolling automatic effect for testimonials
-//   final PageController _pageController = PageController(viewportFraction: 1);
-//   late Timer _timer;
-//   int _currentIndex = 0;
-  
-//   // List of customer testimonials with comment, author, and project title
-//   final List<Map<String, String>> feedbacks = [
-//     {
-//       "comment": "\"Excellente exécution d’un chantier portant sur la rénovation totale d’un appartement. Respect du cahier des charges, des engagements et des quelques aménagements décidés lors de la réalisation. Beau travail et belle équipe.\"",
-//       "author": "M. & Mme T. ",
-//       "title": "",
-//     },
-//     {
-//       "comment": "\"Travail impeccable et équipe très professionnelle. Mon appartement a été transformé avec beaucoup d’élégance.\"",
-//       "author": "Mme B. ",
-//       "title": "Rénovation d'un appartement familial - 13ème arrondissement",
-//     },
-//     {
-//       "comment": "\"Un vrai plaisir de voir mon projet réalisé avec autant de soin et de précision ! Bravo à toute l’équipe.\"",
-//       "author": "M. D. ",
-//       "title": "Modernisation complète d’un loft à République",
-//     },
-//   ];
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     // Automatically scroll to the next testimonial every XX seconds
-//     _timer = Timer.periodic(Duration(seconds: 15), (Timer timer) {
-//       if (_currentIndex < feedbacks.length - 1) {
-//         _currentIndex++; // Move to the next testimonial
-//       } else {
-//         _currentIndex = 0; // Return to the first testimonial after the last one
-//       }
-//       // Animate transition between testimonials with a smooth effect
-//       _pageController.animateToPage(
-//         _currentIndex,
-//         duration: Duration(milliseconds: 500),
-//         curve: Curves.easeInOut,
-//       );
-//     });
-//   }
-
-//   @override
-//   void dispose() {
-//     // Cancel the timer when the widget is removed to prevent memory leaks
-//     _timer.cancel();
-//     _pageController.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: [
-//         Text(
-//           "LE TEMOIGNAGE DE NOS CLIENTS",
-//           style: TextStyle(
-//             fontSize: 30.0,
-//             fontWeight: FontWeight.bold,
-//             color: GlobalColors.thirdColor,
-//           ),
-//           textAlign: TextAlign.center,
-//         ),
-//         const SizedBox(height: 20.0),
-//         Stack(
-//           children: [
-//             Container(
-//               height: 600.0,
-//               decoration: BoxDecoration(
-//                 image: DecorationImage(
-//                   alignment: Alignment.centerLeft,
-//                   image: AssetImage(
-//                     GlobalImages.backgroundFeedbackSection
-//                   ),
-//                   fit: BoxFit.fitHeight
-//                 )
-//               ),
-//               child: GlobalSizes.isSmallScreen(context) ? Column(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   Center(
-//                       child: SizedBox(
-//                         width: 400.0,
-//                         child: Text(
-//                           "La confiance de nos clients et partenaires est notre plus belle récompense. Vos recommandations témoignent de notre engagement et de la qualité de notre travail",
-//                           style: TextStyle(
-//                             fontSize: 16.0,
-//                             color: Colors.black87,
-//                           ),
-//                           textAlign: TextAlign.center,
-//                         ),
-//                       )
-//                     ),
-//                   const SizedBox(height: 20.0),
-//                   Center(
-//                     child: Container(
-//                       width: 550.0,
-//                       height: 450.0,
-//                       padding: EdgeInsets.all(20),
-//                       decoration: BoxDecoration(
-//                         color: Colors.white,
-//                         borderRadius: BorderRadius.circular(12),
-//                         boxShadow: [BoxShadow(
-//                           color: Colors.black87, 
-//                           blurRadius: 6
-//                         )],
-//                       ),
-//                       child: SizedBox(
-//                         child: PageView.builder(
-//                           controller: _pageController,
-//                           itemCount: feedbacks.length,
-//                           itemBuilder: (context, index) {
-//                             return Column(
-//                               mainAxisAlignment: MainAxisAlignment.center,
-//                               children: [
-//                                 Text(
-//                                   feedbacks[index]["comment"]!,
-//                                   style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
-//                                   textAlign: TextAlign.center,
-//                                 ),
-//                                 SizedBox(height: 10),
-//                                 Text(
-//                                   "- ${feedbacks[index]["author"]}, ${feedbacks[index]["title"]}",
-//                                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.grey),
-//                                   textAlign: TextAlign.center,
-//                                 ),
-//                               ],
-//                             );
-//                           },
-//                         ),
-//                       ),
-//                     ),
-//                   )
-//                 ],
-//               )
-//               : Row(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   Center(
-//                       child: SizedBox(
-//                         width: 400.0,
-//                         child: Text(
-//                           "Notre engagement et notre exigence nous valent la reconnaissance de nos clients et partenaires.\n"
-//                           "Vos recommandations sont la meilleure preuve de notre sérieux et de la qualité de notre travail.",
-//                           style: TextStyle(
-//                             fontSize: 16.0,
-//                             color: Colors.black87,
-//                           ),
-//                           textAlign: TextAlign.center,
-//                         ),
-//                       )
-//                     ),
-//                   const SizedBox(width: 50.0),
-//                   Center(
-//                     child: Container(
-//                       width: 550.0,
-//                       height: 450.0,
-//                       padding: EdgeInsets.all(20),
-//                       decoration: BoxDecoration(
-//                         color: Colors.white,
-//                         borderRadius: BorderRadius.circular(12),
-//                         boxShadow: [BoxShadow(
-//                           color: Colors.black26, 
-//                           blurRadius: 6
-//                         )],
-//                       ),
-//                       child: SizedBox(
-//                         child: PageView.builder(
-//                           controller: _pageController,
-//                           itemCount: feedbacks.length,
-//                           itemBuilder: (context, index) {
-//                             return Column(
-//                               mainAxisAlignment: MainAxisAlignment.center,
-//                               children: [
-//                                 Text(
-//                                   feedbacks[index]["comment"]!,
-//                                   style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
-//                                   textAlign: TextAlign.center,
-//                                 ),
-//                                 SizedBox(height: 10),
-//                                 Text(
-//                                   "- ${feedbacks[index]["author"]}, ${feedbacks[index]["title"]}",
-//                                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.grey),
-//                                   textAlign: TextAlign.center,
-//                                 ),
-//                               ],
-//                             );
-//                           },
-//                         ),
-//                       ),
-//                     ),
-//                   )
-//                 ],
-//               )
-//             ),
-//             GlobalSizes.isExtraSmallScreen(context) ? SizedBox.shrink()
-//             : Positioned(
-//               top: 0.0,
-//               child: Padding(
-//                 padding: GlobalSizes.isSmallScreen(context) ? EdgeInsets.all(16.0) : EdgeInsets.all(32.0),
-//                 child: SvgPicture.asset(
-//                   GlobalLogo.logoDots,
-//                   width: 100,
-//                   height: 100,
-//                 )
-//               )
-//             )
-//           ],
-//         )
-//       ],
-//     );
-//   }
-// }
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:async';
+import 'dart:math';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_sizes.dart';
@@ -243,10 +15,12 @@ class CustomerFeedbackSection extends StatefulWidget {
 }
 
 class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
-    // Controls the page scrolling automatic effect for testimonials
-  final PageController _pageController = PageController(viewportFraction: 1);
+  // Controls the page scrolling automatic effect for testimonials
+  PageController _pageController = PageController(viewportFraction: 1.0); // Property that allows the display of part of the following comment
   late Timer _timer;
   int _currentIndex = 0;
+  bool _userInteracted = false;
+  bool _isHovered = false;
   
   // List of customer testimonials with comment, author, and project title
   final List<Map<String, String>> feedbacks = [
@@ -270,19 +44,63 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
   @override
   void initState() {
     super.initState();
-    // Automatically scroll to the next testimonial every XX seconds
-    _timer = Timer.periodic(Duration(seconds: 15), (Timer timer) {
-      if (_currentIndex < feedbacks.length - 1) {
-        _currentIndex++; // Move to the next testimonial
-      } else {
-        _currentIndex = 0; // Return to the first testimonial after the last one
-      }
+    _currentIndex = Random().nextInt(feedbacks.length); // Random selection of a comment at the start
+    _pageController = PageController(initialPage: _currentIndex); // Sets the starting comment
+    _startAutoScroll();
+  }
+
+ // Random : automatically scroll to the next testimonial every XX seconds
+  void _startAutoScroll() {
+    _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+      if (!_userInteracted) {
+        _nextFeedBack();
+      }  
+    });
+  }
+
+  // Generates a random index, different from the current one
+  int _getRandomIndex() {
+    int nextIndex;
+    do {
+      nextIndex = Random().nextInt(feedbacks.length); // Random choice of the next testimony
+    } while (nextIndex == _currentIndex); // Avoid choosing the same as the previous one
+    return nextIndex; // Move to the next testimonial
+  }
+
+  void _nextFeedBack() {
+    setState(() {
+      _currentIndex = _getRandomIndex(); // Move to the next testimonial
+
       // Animate transition between testimonials with a smooth effect
       _pageController.animateToPage(
-        _currentIndex,
-        duration: Duration(milliseconds: 500),
+        _currentIndex, 
+        duration: const Duration(milliseconds: 500), 
+        curve: Curves.easeInOut
+      );
+
+      _restartAutoScroll(); // Restart auto-scroll after interaction
+    });
+  }
+
+  void _previousFeedBack() {
+    setState(() {
+      _currentIndex = (_currentIndex - 1 + feedbacks.length) % feedbacks.length; // Manage the limits
+      _pageController.animateToPage(
+        _currentIndex, 
+        duration: const Duration(milliseconds: 500), 
         curve: Curves.easeInOut,
       );
+      _restartAutoScroll(); // Restart auto-scroll after interaction
+    });
+  }
+
+  // Resets auto-scroll after interaction
+  void _restartAutoScroll() {
+    _userInteracted = true;
+    _timer.cancel(); // Stop the old timer
+    _timer = Timer(const Duration(seconds: 10), () { // Time before reactivating auto-scroll
+      _userInteracted = false;
+      _startAutoScroll(); // Restarts automatic scrolling
     });
   }
 
@@ -319,7 +137,8 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
               fit: BoxFit.fitHeight
             )
           ),
-          child: GlobalSizes.isSmallScreen(context) ? Column(
+          child: GlobalSizes.isSmallScreen(context) 
+            ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Center(
@@ -395,73 +214,170 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
           : Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Center(
+              SizedBox(
+                width: 750.0,
+                child: Align(
+                  alignment: Alignment.centerRight,
                   child: SizedBox(
-                    width: 400.0,
-                    child: Text(
-                      "La confiance de nos clients et partenaires est notre plus belle récompense. Vos recommandations témoignent de notre engagement et de la qualité de notre travail",
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.black87,
-                      ),
-                      textAlign: TextAlign.center,
+                  width: 400.0,
+                  child: Text(
+                    "La confiance de nos clients et partenaires est notre plus belle récompense. Vos recommandations témoignent de notre engagement et de la qualité de notre travail",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.black87,
                     ),
-                  )
-                ),
-              const SizedBox(width: 50.0),
-              Center(
-                child: Container(
-                  width: 550.0,
-                  height: 450.0,
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [BoxShadow(
-                      color: Colors.black26, 
-                      blurRadius: 6
-                    )],
+                    textAlign: TextAlign.center,
                   ),
-                  child: Stack(
-                    children: [
-                      SizedBox(
-                        child: PageView.builder(
-                          controller: _pageController,
-                          itemCount: feedbacks.length,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  feedbacks[index]["comment"]!,
-                                  style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  "- ${feedbacks[index]["author"]}, ${feedbacks[index]["title"]}",
-                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.grey),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                      Positioned(
-                        top: 0.0,
-                        child: Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: SvgPicture.asset(
-                            GlobalLogo.logoDots,
-                            width: 100,
-                            height: 100,
+                )
+              )
+              ),
+              const SizedBox(width: 50.0),
+              SizedBox(
+                width: 750,
+                height: 600,
+                child: Stack(
+                  children: [
+                    Positioned( // Top square
+                      top: 20.0,
+                      right: 100.0,
+                      child: Container(
+                        width: 200.0,
+                        height: 200.0,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: GlobalColors.thirdColor.withValues(alpha: 0.9),
+                            width: 10.0,
                           )
-                        )
+                        ),
                       )
-                    ],
-                  ) 
-                ),
+                    ),
+                    Positioned( // Middle square
+                      top: 180.0,
+                      right: 50.0,
+                      child: Container(
+                        width: 100.0,
+                        height: 100.0,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: GlobalColors.thirdColor.withValues(alpha: 0.6),
+                            width: 10.0,
+                          )
+                        ),
+                      )
+                    ),
+                    Positioned( // Bottom square
+                      right: 0.0,
+                      bottom: 0.0,
+                      child: Container(
+                        width: 350.0,
+                        height: 350.0,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: GlobalColors.thirdColor.withValues(alpha: 0.75),
+                            width: 10.0,
+                          )
+                        ),
+                      )
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        width: 550.0,
+                        height: 450.0,
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [BoxShadow(
+                            color: Colors.black26, 
+                            blurRadius: 6
+                          )],
+                        ),
+                        child: MouseRegion(
+                          onEnter: (_) => setState(() {
+                            _isHovered = true;
+                          }),
+                          onExit: (_) => setState(() {
+                            _isHovered = false;
+                          }),
+                          child: Stack(
+                            children: [
+                              SizedBox(
+                                child: PageView.builder(
+                                  controller: _pageController,
+                                  itemCount: feedbacks.length,
+                                  itemBuilder: (context, index) {
+                                    return Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        // Previous arrow
+                                        AnimatedOpacity(
+                                          opacity: _isHovered ? 1.0 : 0.0,
+                                          duration: const Duration(milliseconds: 500),
+                                          child: IconButton(
+                                            icon: Icon(Icons.arrow_back_ios),
+                                            onPressed: () {
+                                              _previousFeedBack();
+                                            },
+                                          )
+                                        ),
+                                        // Feeback
+                                        Align(
+                                          alignment: Alignment.center,
+                                          child: SizedBox(
+                                          width: 430,
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  feedbacks[index]["comment"]!,
+                                                  style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                SizedBox(height: 10),
+                                                Text(
+                                                  "- ${feedbacks[index]["author"]}, ${feedbacks[index]["title"]}",
+                                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.grey),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ],
+                                            )
+                                          ),
+                                        ),
+                                        // Next arrow
+                                        AnimatedOpacity(
+                                          opacity: _isHovered ? 1.0 : 0.0,
+                                          duration: const Duration(milliseconds: 500),
+                                          child: IconButton( 
+                                            icon: Icon(Icons.arrow_forward_ios),
+                                            onPressed: () {
+                                              _previousFeedBack();
+                                            },
+                                          )
+                                        ),
+                                      ]
+                                    );
+                                  },
+                                ),
+                              ),
+                              Positioned(
+                                top: 0.0,
+                                child: Padding(
+                                  padding: EdgeInsets.all(16.0),
+                                  child: SvgPicture.asset(
+                                    GlobalLogo.logoDots,
+                                    width: 100,
+                                    height: 100,
+                                  )
+                                )
+                              ),
+                            ],
+                          ) 
+                        )
+                      ),
+                    ),
+                  ],
+                )
               )
             ],
           )
