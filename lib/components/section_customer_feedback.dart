@@ -137,7 +137,7 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
               fit: BoxFit.fitHeight
             )
           ),
-          child: GlobalSizes.isSmallScreen(context) 
+          child: GlobalSizes.isCustomSize(context, 1550) // Responsive
             ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

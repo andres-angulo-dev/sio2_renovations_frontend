@@ -17,8 +17,8 @@ class GlobalSizes {
     return screenWidth(context) < 1021;
   }
 
-  static bool isCustomServicesSection(BuildContext context) {
-    return screenWidth(context) < 1879;
+  static bool isCustomSize(BuildContext context, double size) {
+    return screenWidth(context) < size;
   }
 }
 

@@ -63,7 +63,7 @@ class ServicesSectionState extends State<ServicesSection> with SingleTickerProvi
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.7,
-      child: GlobalSizes.isCustomServicesSection(context) 
+      child: GlobalSizes.isCustomSize(context, 1879) 
       ? Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
