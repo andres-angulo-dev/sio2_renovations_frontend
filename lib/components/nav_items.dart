@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utils/global_colors.dart';
-import '../utils/global_sizes.dart';
+import '../utils/global_screen_sizes.dart';
 
 class NavItems extends StatelessWidget {
   const NavItems({super.key, 
@@ -28,8 +28,8 @@ class NavItems extends StatelessWidget {
     ];
 
   final layoutItems = List.generate(navItemsData.length * 2 - 1, (index) {
-    bool mobile = GlobalSizes.isMobileScreen(context);
-    bool isSmallScreen = GlobalSizes.isSmallScreen(context);
+    bool mobile = GlobalScreenSizes.isMobileScreen(context);
+    bool isSmallScreen = GlobalScreenSizes.isSmallScreen(context);
 
     if (index.isEven) { // Index even → menu item
       final item = navItemsData[index ~/ 2]; // Access the correct element
@@ -158,8 +158,8 @@ class CustomdrawerItemstate extends State<CustomNavItem> with SingleTickerProvid
   
   @override
   Widget build(BuildContext context) {
-    bool mobile = GlobalSizes.isMobileScreen(context);
-    bool isSmallScreen = GlobalSizes.isSmallScreen(context);
+    bool mobile = GlobalScreenSizes.isMobileScreen(context);
+    bool isSmallScreen = GlobalScreenSizes.isSmallScreen(context);
 
     return MouseRegion(
       onEnter: (_) {

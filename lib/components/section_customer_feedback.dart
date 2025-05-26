@@ -5,7 +5,7 @@ import 'dart:async';
 import 'dart:math';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
-import '../utils/global_sizes.dart';
+import '../utils/global_screen_sizes.dart';
 
 class CustomerFeedbackSection extends StatefulWidget {
   const CustomerFeedbackSection({super.key});
@@ -137,7 +137,7 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
               fit: BoxFit.fitHeight
             )
           ),
-          child: GlobalSizes.isCustomSize(context, 1550) // Responsive
+          child: GlobalScreenSizes.isCustomSize(context, 1550) // Responsive
             ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

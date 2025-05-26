@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sio2_renovations_frontend/utils/global_others.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../utils/global_colors.dart';
-import '../utils/global_sizes.dart';
+import '../utils/global_screen_sizes.dart';
 
 class ServicesSection extends StatefulWidget {
   const ServicesSection({super.key});
@@ -63,7 +63,7 @@ class ServicesSectionState extends State<ServicesSection> with SingleTickerProvi
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.7,
-      child: GlobalSizes.isCustomSize(context, 1879) 
+      child: GlobalScreenSizes.isCustomSize(context, 1879) 
       ? Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

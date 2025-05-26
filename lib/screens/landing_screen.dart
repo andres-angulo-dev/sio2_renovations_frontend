@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sio2_renovations_frontend/utils/global_sizes.dart';
+import 'package:sio2_renovations_frontend/utils/global_screen_sizes.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../components/my_app_bar_component.dart';
@@ -193,7 +193,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    _mobile = GlobalSizes.isMobileScreen(context);
+    _mobile = GlobalScreenSizes.isMobileScreen(context);
 
     return Scaffold(
       appBar: MyAppBarComponent(
@@ -250,13 +250,13 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                             padding: EdgeInsets.all(32.0),
                             child: Wrap(
                               crossAxisAlignment: WrapCrossAlignment.center,
-                              alignment : GlobalSizes.isMobileScreen(context) ? WrapAlignment.center : WrapAlignment.spaceBetween,
+                              alignment : GlobalScreenSizes.isMobileScreen(context) ? WrapAlignment.center : WrapAlignment.spaceBetween,
                               spacing: 10.0,
                               runSpacing: 30.0,
                               children: [
                                 SizedBox(
                                   child: Column(
-                                    crossAxisAlignment: GlobalSizes.isMobileScreen(context) ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+                                    crossAxisAlignment: GlobalScreenSizes.isMobileScreen(context) ? CrossAxisAlignment.center : CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(

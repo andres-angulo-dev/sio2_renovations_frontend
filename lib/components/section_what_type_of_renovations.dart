@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../components/my_hover_route_navigator.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
-import '../utils/global_sizes.dart';
+import '../utils/global_screen_sizes.dart';
 
 class WhatTypeOfRenovationsSection extends StatefulWidget {
   const WhatTypeOfRenovationsSection({super.key});
@@ -56,7 +56,7 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
               onExit: (_) => setState(() => isHoveredList[index] = false),
               child: SizedBox(
                 width: 400.0, // Static container
-                height: GlobalSizes.isMobileScreen(context) ? 500.0 : 700.0,
+                height: GlobalScreenSizes.isMobileScreen(context) ? 500.0 : 700.0,
                 child: ClipRRect( // Allows you to make invisible what is larger than the parent container
                   child: Stack(
                     children: [
@@ -97,7 +97,7 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
                           hoverColor: GlobalColors.orangeColor,
                           mobileSize: 20.0,
                           webSize: 24.0,
-                          mobile: GlobalSizes.isMobileScreen(context),
+                          mobile: GlobalScreenSizes.isMobileScreen(context),
                           boldText: true,
                         )
                         : Text( // text only
@@ -105,7 +105,7 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: GlobalColors.firstColor,
-                            fontSize: GlobalSizes.isMobileScreen(context) ? 20.0 : 24.0,
+                            fontSize: GlobalScreenSizes.isMobileScreen(context) ? 20.0 : 24.0,
                             fontWeight: FontWeight.bold,
                           ),
                         )

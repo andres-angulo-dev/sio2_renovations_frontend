@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import '../components/carousel_slider_component.dart';
 import '../utils/global_others.dart';
-import '../utils/global_sizes.dart';
+import '../utils/global_screen_sizes.dart';
 
 class WebsiteUnderConstruction extends StatefulWidget{
   const WebsiteUnderConstruction({super.key});
@@ -93,7 +93,7 @@ class WebsiteUnderConstructionState extends State<WebsiteUnderConstruction> with
                 child: Text(
                   'EN CONSTRUCTION !',
                   style: TextStyle(
-                    fontSize: GlobalSizes.isMobileScreen(context) ? 24.0 : 34.0,
+                    fontSize: GlobalScreenSizes.isMobileScreen(context) ? 24.0 : 34.0,
                     color: Colors.grey.shade800, 
                     fontWeight: FontWeight.bold, 
                   ),
