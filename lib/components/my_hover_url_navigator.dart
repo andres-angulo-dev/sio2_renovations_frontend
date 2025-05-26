@@ -54,7 +54,7 @@ class MyHoverUrlNavigatorState extends State<MyHoverUrlNavigator>  with SingleTi
           widget.text,
           style: TextStyle(
             color: _hovering ? (widget.hoverColor ?? GlobalColors.hoverHyperLinkColor) : (widget.color ?? GlobalColors.hyperLinkColor),
-            fontSize: widget.mobile ? (widget.mobileSize ?? GlobalSize.mobileSize) : (widget.webSize ?? GlobalSize.webSize),
+            fontSize: widget.mobile ? (widget.mobileSize ?? GlobalSize.mobileSizeText) : (widget.webSize ?? GlobalSize.webSizeText),
           )
         )
       ),

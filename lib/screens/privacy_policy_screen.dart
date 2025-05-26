@@ -75,7 +75,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                     RichText(
                       text: TextSpan(
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
+                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor
                         ),
                         children: [
@@ -119,7 +119,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       "Le Site : L’ensemble des pages Internet et services en ligne proposés par l’Éditeur.\n"
                       "L’Utilisateur : La personne utilisant le Site et ses services.",
                       style: TextStyle(
-                        fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
+                        fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                         color: GlobalColors.secondColor,
                       ),
                     ),
@@ -138,7 +138,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                     Text(
                       "La consultation du Site s'effectue librement, sans inscription préalable. Aucune donnée nominative (nom, prénom, adresse, etc.) n'est collectée lors de la simple consultation du Site.",
                       style: TextStyle(
-                        fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
+                        fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                         color: GlobalColors.secondColor,
                       ),
                     ),
@@ -160,7 +160,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       "- Des informations pour Google Analytics pour des mesures statistiques.\n"
                       "- Les avis et témoignages que vous déposez sur le site.",
                       style: TextStyle(
-                      fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
+                      fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
 
                         color: GlobalColors.secondColor,
                       ),
@@ -180,7 +180,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                     Text(
                       "Les informations saisies dans le formulaire de contact servent uniquement à répondre à vos demandes. Elles ne sont enregistrées que si l'Utilisateur utilise expressément les services proposés par le Site, et ce, conformément à votre acceptation préalable.",
                       style: TextStyle(
-                        fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
+                        fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                         color: GlobalColors.secondColor,
                       ),
                     ),
@@ -200,7 +200,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       "Si vous déposez un témoignage, seuls votre nom (ou pseudo) et le texte de votre message seront enregistrés. "
                       "Les témoignages sont soumis à modération et seront publiés sans limitation de temps, sauf si vous demandez leur retrait via le formulaire de contact.",
                       style: TextStyle(
-                        fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
+                        fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                         color: GlobalColors.secondColor,
                       ),
                     ),
@@ -222,7 +222,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                       "indispensables pour un suivi précis des performances du site. Pour en savoir plus sur les différents types de cookies utilisés,\n" 
                       "veuillez consulter la section \"Gestion des cookies\" ci-dessous.",
                       style: TextStyle(
-                        fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
+                        fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                         color: GlobalColors.secondColor,
                       ),
                     ),
@@ -241,7 +241,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                     RichText(
                       text: TextSpan(
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
+                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                         children: [
@@ -343,7 +343,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                     Text(
                       "Conformément aux recommandations de la CNIL, les cookies sont conservés pour un maximum de 13 mois après leur dépôt initial.",
                       style: TextStyle(
-                        fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
+                        fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                         color: GlobalColors.secondColor,
                       ),
                     ),
@@ -362,7 +362,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                     Text(
                       "Lors de l'accès au Site, votre consentement est demandé pour l'installation des cookies. Si vous refusez, seuls les cookies strictement nécessaires seront générés.",
                       style: TextStyle(
-                        fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
+                        fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                         color: GlobalColors.secondColor,
                       ),
                     ),
@@ -381,7 +381,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                     Text(
                       "Les articles du Site peuvent inclure des contenus intégrés (vidéos, images, articles, etc.) provenant d'autres sites. Ces contenus se comportent comme si vous visitiez ces sites directement. Toutefois, certains contenus (comme les vidéos YouTube en mode confidentialité avancée) n'installent pas de cookies sur le Site.",
                       style: TextStyle(
-                        fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
+                        fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                         color: GlobalColors.secondColor,
                       ),
                     ),
@@ -400,7 +400,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                     Text(
                       "Les données techniques sont conservées pour la durée strictement nécessaire à l'accomplissement des finalités décrites ci-dessus.",
                       style: TextStyle(
-                        fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
+                        fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                         color: GlobalColors.secondColor,
                       ),
                     ),
@@ -419,7 +419,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                     Text(
                       "Aucune donnée personnelle ne sera communiquée à des tiers, sauf obligation légale. Les données pourront être divulguées en application d'une loi, d'un règlement, ou suite à une décision d'une autorité compétente.",
                       style: TextStyle(
-                        fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
+                        fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                         color: GlobalColors.secondColor,
                       ),
                     ),
@@ -438,7 +438,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                     Text(
                       "En cas de modification substantielle des présentes conditions, l'éditeur s'engage à en informer les utilisateurs avant la mise en ligne.",
                       style: TextStyle(
-                        fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
+                        fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                         color: GlobalColors.secondColor,
                       ),
                     ),
@@ -457,7 +457,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
                     Text(
                       "Informations personnelles: Données qui permettent d'identifier directement ou indirectement un individu.",
                       style: TextStyle(
-                        fontSize: mobile ? GlobalSize.mobileSize : GlobalSize.webSize,
+                        fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                         color: GlobalColors.secondColor,
                       ),
                     ),

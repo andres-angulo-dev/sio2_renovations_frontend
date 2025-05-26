@@ -48,7 +48,7 @@ class MyHoverRouteNavigatorState extends State<MyHoverRouteNavigator>  with Sing
           widget.text,
           style: TextStyle(
             color: _hovering ? (widget.hoverColor ?? GlobalColors.hoverHyperLinkColor) : (widget.color ?? GlobalColors.hyperLinkColor),
-            fontSize: widget.mobile ? (widget.mobileSize ?? GlobalSize.mobileSize) : (widget.webSize ?? GlobalSize.mobileSize),
+            fontSize: widget.mobile ? (widget.mobileSize ?? GlobalSize.mobileSizeText) : (widget.webSize ?? GlobalSize.mobileSizeText),
             fontWeight: widget.boldText ? FontWeight.bold : null,
           )
         )

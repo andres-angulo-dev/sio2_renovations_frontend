@@ -22,3 +22,5 @@ class GlobalScreenSizes {
   }
 }
 
+double screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
+

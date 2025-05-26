@@ -40,12 +40,12 @@ class GlobalButtonsAndIcons {
 }
 
 class GlobalSize {
-  static const double mobileSize = 14.0; 
-  static const double webSize = 16.0; 
   static const double mobileTitle = 24.0; 
-  static const double webTitle = 28.0; 
+  static const double webTitle = 30.0; 
   static const double mobileSubTitle = 18.0; 
   static const double webSubTitle = 20.0; 
+  static const double mobileSizeText = 14.0; 
+  static const double webSizeText = 16.0; 
   // Footer
   static const double footerMobileTitle = 18.0; 
   static const double footerWebTitle = 20.0; 

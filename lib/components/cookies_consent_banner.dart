@@ -160,7 +160,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
                 children: [
                    const Text(
                     "Ce site utilise",
-                    style: TextStyle(fontSize: GlobalSize.mobileSize, color: GlobalColors.secondColor),
+                    style: TextStyle(fontSize: GlobalSize.mobileSizeText, color: GlobalColors.secondColor),
                   ),
                   const Text(
                     "des Cookies",
@@ -187,7 +187,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
             text: TextSpan(
               text: "Sio2 Rénovations utilise des cookies pour améliorer la navigation sur son site web, pour vous proposer une expérience plus personnalisée, des publicités ciblées et pour recueillir des données afin de vous offrir un réel suivi. Pour en savoir plus sur les différents types de cookies utilisés, consultez la politique relative à la protection des données. ",
               style: const TextStyle(
-                fontSize: GlobalSize.mobileSize,
+                fontSize: GlobalSize.mobileSizeText,
                 color: GlobalColors.secondColor,
                 height: 1.5, // Line spacing for readability.
               ),
@@ -264,7 +264,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
           const Text(
             "Choisissez comment nous collectons et utilisons vos données pour une meilleure expérience de navigation sur notre site. Votre vie privée est primordiale et vous avez le plein contrôle ici.",
             style: TextStyle(
-              fontSize: GlobalSize.mobileSize,
+              fontSize: GlobalSize.mobileSizeText,
               color: GlobalColors.secondColor,
               height: 1.5,
             ),

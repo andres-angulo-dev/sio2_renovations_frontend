@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sio2_renovations_frontend/sections/company_profile_section.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../components/my_app_bar_component.dart';
@@ -244,81 +245,12 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                     ),
                     SizedBox(height: 100.0),
                     // section 1
-                    SizedBox(
-                      height: 600.0,
-                      width: screenWidth * 0.5,
-                      child: Row(
-                        children: [
-                          Flexible(
-                            fit: FlexFit.loose,
-                            child: VisibilityDetector(
-                              key: const Key('section_about'), 
-                              onVisibilityChanged: (info) {
-                                if (info.visibleFraction > 0.3) {
-                                  setState(() {
-                                    _showAboutSection = true;
-                                  });
-                                }
-                              },
-                              child: AnimatedOpacity(
-                                opacity: _showAboutSection ? 1.0 : 0.0, 
-                                duration: const Duration(milliseconds: 1500),
-                                child: Center(
-                                  child: Container(
-                                    padding: EdgeInsets.all(16.0),
-                                    child: SingleChildScrollView(
-                                     child: Column(
-                                        children: [
-                                          Text(
-                                            "VOTRE PROJET DE RÉNOVATION ENTRE DES MAINS EXPERTES !",
-                                            style: TextStyle(
-                                              fontSize: 30.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: GlobalColors.thirdColor,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          const SizedBox(height: 20.0), // Space between
-                                          Text(
-                                            "Fruit d’un savoir-faire transmis de génération en génération, notre entreprise générale de bâtiment en Île-de-France incarne la passion et l’excellence du travail bien fait. Forts de cette tradition familiale, nous avons développé une expertise solide qui nous permet d’orchestrer chaque projet avec une approche globale. De la rénovation complète aux ajustements spécifiques, nous transformons vos idées en réalité en conjuguant esthétique, savoir-faire technique et respect des normes actuelles.\n\n" 
-                                            "Votre patrimoine mérite le meilleur, et c’est notre mission de l’honorer.",
-                                            style: TextStyle(
-                                              fontSize: 16.0,
-                                              color: Colors.black87,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ),
-                                ) 
-                              ), 
-                            ), 
-                          ),
-                          SizedBox(width: 50.0),
-                          Flexible(
-                              child: Center(
-                                child: Container(
-                                  width: 1500.0,
-                                  height: 600.0,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage('assets/images/immeuble.jpeg'),
-                                      fit: BoxFit.cover,
-                                    )
-                                  ),
-                                )
-                              )
-                            // )
-                          ),
-                        ]
-                      ),
-                    ),
-                    SizedBox(height: 150.0),
-                    WhatTypeOfRenovationsSection(),
+                    CompanyProfileSection(),
                     SizedBox(height: 150.0),
                     // section 2
+                    WhatTypeOfRenovationsSection(),
+                    SizedBox(height: 150.0),
+                    // section 3
                     SizedBox(
                       width: screenWidth * 0.7,
                       child: VisibilityDetector(
