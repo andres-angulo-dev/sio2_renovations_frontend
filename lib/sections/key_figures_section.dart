@@ -3,8 +3,7 @@ import 'package:visibility_detector/visibility_detector.dart';
 import '../components/my_google_map.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
-import '../utils/global_colors.dart';
-import '../utils/global_sizes.dart';
+import '../utils/global_screen_sizes.dart';
 
 class KeyFiguresSection extends StatefulWidget {
   const KeyFiguresSection({super.key});

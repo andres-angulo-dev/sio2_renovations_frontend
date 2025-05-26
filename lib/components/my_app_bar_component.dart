@@ -56,7 +56,8 @@ class MyAppBarComponentState extends State<MyAppBarComponent> {
           scrolledUnderElevation: 0.0, // Disables the effect of change caused by scrolling.
           backgroundColor: color, // Change dynamiquement en fonction du scroll
           iconTheme: IconThemeData( // Change the color of the DrawerComponent icon
-            color: widget.currentItem == "Accueil" ? GlobalColors.firstColor : GlobalColors.secondColor,
+            color: widget.currentItem == "Accueil" ?  color == GlobalColors.firstColor ? GlobalColors.secondColor : GlobalColors.firstColor   : GlobalColors.secondColor,
+            // color: widget.currentItem == "Accueil" ? GlobalColors.firstColor : GlobalColors.secondColor,
           ),
           flexibleSpace: widget.currentItem == "Accueil" // Change the background color of the appbar
             ? ClipRect(

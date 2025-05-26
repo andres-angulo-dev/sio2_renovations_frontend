@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sio2_renovations_frontend/utils/global_screen_sizes.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
-import '../components/section_why_choose_us.dart';
-import '../components/section_key_figures.dart';
-import '../components/section_services.dart';
-import '../components/section_steps.dart';
-import '../components/section_what_type_of_renovations.dart';
+import '../sections/welcome_section.dart';
+import '../sections/why_choose_us_section.dart';
+import '../sections/key_figures_section.dart';
+import '../sections/services_section.dart';
+import '../sections/steps_section.dart';
+import '../sections/what_type_of_renovations_section.dart';
 import '../components/cookies_consent_banner.dart';
 import '../components/my_button.dart';
+import '../sections/customer_feedback_section.dart';
 import '../components/footer.dart';
-import '../components/section_customer_feedback.dart';
-import '../components/my_rive_button.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
+import '../utils/global_screen_sizes.dart';
 
 class LandingScreen extends StatefulWidget {
   const LandingScreen({super.key});
@@ -240,80 +239,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                             ),
                           )
                         ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height,
-                          width: screenWidth,
-                          child: Align(
-                          alignment: Alignment.center,
-                          child: Container(
-                            width: screenWidth * 0.9,
-                            padding: EdgeInsets.all(32.0),
-                            child: Wrap(
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              alignment : GlobalScreenSizes.isMobileScreen(context) ? WrapAlignment.center : WrapAlignment.spaceBetween,
-                              spacing: 10.0,
-                              runSpacing: 30.0,
-                              children: [
-                                SizedBox(
-                                  child: Column(
-                                    crossAxisAlignment: GlobalScreenSizes.isMobileScreen(context) ? CrossAxisAlignment.center : CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "SIO2 RÉNOVATIONS",
-                                        style: TextStyle(
-                                          color: GlobalColors.firstColor,
-                                          fontSize: 32.0,
-                                          fontWeight: FontWeight.bold
-                                        )
-                                      ),
-                                      Text(
-                                        "Donner une nouvelle vie à votre espace, c’est notre métier.",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: GlobalColors.firstColor,
-                                          fontSize: 22.0,
-                                        )
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 341.0,
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      SizedBox(
-                                        width: 150,
-                                        height: 50,
-                                        child: MyRiveButton(
-                                          enableCursor: false,
-                                          buttonPath: GlobalButtonsAndIcons.callUsButton
-                                        ),
-                                      ),
-                                      SizedBox(width: 20.0),
-                                      Container(
-                                        height: 60.0,
-                                        width: 1.0,
-                                        color: Colors.white,
-                                      ),
-                                      SizedBox(width: 20.0),
-                                      SizedBox(
-                                        width: 150,
-                                        height: 50,
-                                        child: MyRiveButton(
-                                          onPressed: () => Navigator.pushNamed(context, '/contact'), 
-                                          buttonPath: GlobalButtonsAndIcons.freeQuoteButton
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                )
-                              ]),
-                            )                             
-                          )
-                        ),
+                        WelcomeSection(),
                       ]
                     ),
                     SizedBox(height: 100.0),
