@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:sio2_renovations_frontend/sections/company_profile_section.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
 import '../sections/welcome_section.dart';
+import '../sections/company_profile_section.dart';
+import '../sections/values_section.dart';
 import '../sections/why_choose_us_section.dart';
 import '../sections/key_figures_section.dart';
 import '../sections/services_section.dart';
@@ -31,14 +32,11 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
   late AnimationController _servicesAnimationController;
   late List<AnimationController> _valuesAnimationControllers;
 
-  // Animation<Offset>: Handles the slide effect for text (moves it vertically effect).
-  late Animation<Offset> _servicesSlideAnimation;
   
   // Animation<double>: Handles the fade-in effect for text (controls scale effect.
   late List<Animation<double>> _valuesScaleAnimations;
 
   // Animation<double>: Handles the fade-in effect for text (controls opacity effect).
-  late Animation<double> _servicesFadeAnimation;
   late List<Animation<double>> _valuesFadeAnimations;
 
   final ScrollController _scrollController = ScrollController(); // Scroll controller for the appBar
@@ -47,8 +45,6 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
   bool _show = false;
   bool? _cookiesAccepted; // State to track cookies consent.
   bool _isBannerVisible = false;
-  bool _showAboutSection = false;
-  bool _showValuesSection = false;
   String currentItem = "Accueil"; // Holds the currently selected menu item to change text color
 
   @override
@@ -76,60 +72,9 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
     duration: const Duration(milliseconds: 1000),
     );
 
-    _servicesSlideAnimation = Tween<Offset>(
-      begin: const Offset(1, 0), // Start position: from right to left
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _servicesAnimationController,
-      curve: Curves.easeInOut,
-    ));
-
-    _servicesFadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _servicesAnimationController, 
-      curve: Curves.easeInOut,
-    ));
-
-    _initializeValuesAnimations();
   }
 
-  // handle animation in values section
-  void _initializeValuesAnimations() {
-    _valuesAnimationControllers = List.generate(4, (index) => AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 600),
-    ));
 
-    _valuesFadeAnimations = _valuesAnimationControllers.map((controller) =>  Tween<double>(
-      begin: 0.0,
-      end: 1.0, 
-    ).animate(CurvedAnimation(
-      parent: controller, 
-      curve: Curves.easeInOut,
-    ))).toList();
-
-    _valuesScaleAnimations = _valuesAnimationControllers.map((controller) => Tween<double>(
-      begin: 1.4,
-      end: 1.0
-    ).animate(CurvedAnimation(
-      parent: controller,
-      curve: Curves.easeInCirc,
-    ))).toList();    
-  }
-
-  void _startValuesAnimation() {
-    for (int i=0; i < _valuesAnimationControllers.length; i++) {
-      Future.delayed(Duration(milliseconds: i * 600), () {
-        if (mounted) {
-          setState(() {
-            _valuesAnimationControllers[i].forward();
-          });
-        }
-      });
-    }
-  }
 
   // Handles user consent for cookies and manages the visibility of the cookie consent banner.
   void _handleCookiesConsent(bool? consent) {
@@ -184,9 +129,6 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
     _animationController.dispose(); 
     _servicesAnimationController.dispose();
     _scrollController.dispose();
-    for (var controller in _valuesAnimationControllers) {
-      controller.dispose();
-    }
     super.dispose();
   }
 
@@ -251,100 +193,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                     WhatTypeOfRenovationsSection(),
                     SizedBox(height: 150.0),
                     // section 3
-                    SizedBox(
-                      width: screenWidth * 0.7,
-                      child: VisibilityDetector(
-                        key: const Key("section_values"),
-                        onVisibilityChanged: (info) {
-                          if (info.visibleFraction > 0.3 && !_showValuesSection) {
-                            setState(() {
-                              _showValuesSection = true;
-                            });
-                            _startValuesAnimation(); // Start animations sequentially
-                          }
-                        },
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              // section title with fade effect
-                              AnimatedOpacity(
-                                opacity: _showValuesSection ? 1.0 : 0.0,
-                                duration: const Duration(milliseconds: 1000),
-                                child: Text(
-                                  "NOS VALEURS",
-                                  style: TextStyle(
-                                    fontSize: 30.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: GlobalColors.thirdColor,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              const SizedBox(height: 60.0),
-                              // row containing animated columns
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: List.generate(4, (index) => Expanded(
-                                  child: AnimatedBuilder(
-                                    animation: _valuesAnimationControllers[index], // use separate controller for each column
-                                    builder: (context, child) {
-                                      return FadeTransition(
-                                        opacity: _valuesFadeAnimations[index], // individual fade animation
-                                        child: ScaleTransition(
-                                          scale: _valuesScaleAnimations[index], // individual scale animation
-                                          child: child,
-                                        ),
-                                      );
-                                    },
-                                    child: Column(
-                                      children: [
-                                        // dinamic icons
-                                        SvgPicture.asset(
-                                          [
-                                            GlobalLogo.logoEngagement,
-                                            GlobalLogo.logoCall,
-                                            GlobalLogo.logoStructured,
-                                            GlobalLogo.logoCustomer
-                                          ][index],
-                                          width: 100,
-                                          height: 100,
-                                          semanticsLabel: [
-                                            'A handshake symbol, representing partnership and commitment.', 
-                                            'A bust silhouette wearing a headset, with an internet globe symbol below, representing communication and global connectivity.', 
-                                            'An organizational chart-like structure with bust silhouettes and a gear icon at the top, symbolizing the organizational structure and efficiency of the company', 
-                                            'An open hand containing a comment represented by wavy lines inside a circle and five stars forming a semicircle above, representing customer feedback and satisfaction.'
-                                          ][index],
-                                        ),
-                                        const SizedBox(height: 30.0),
-                                        // dynamic title
-                                        Text(
-                                          ["Engagement", "Écoute", "Savoir-faire", "Confiance"][index],
-                                          style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        const SizedBox(height: 30.0),
-                                        // dynamic description
-                                        Text(
-                                          [
-                                            "Nous croyons en une collaboration sans surprise, portée par un engagement total. Chaque détail est anticipé et maîtrisé. De l’offre chiffrée aux mises à jour en temps réel, nous assurons un suivi précis et rigoureux à chaque étape de votre projet.",
-                                            "Nous sommes à vos côtés pour vous guider et vous conseiller. Un interlocuteur unique vous accompagne tout au long des travaux, avec disponibilité et réactivité pour vous assurer une expérience sereine et sans stress.",
-                                            "Grâce à notre expertise et à une équipe structurée, nous réalisons chaque projet avec rigueur et excellence. Une organisation méthodique et des compétences maîtrisées garantissent des travaux de haute qualité, dans le respect des normes et des délais.",
-                                            "La satisfaction client et au cœur de notre démarche. Plus qu’un simple projet, nous construisons une relation de confiance durable, où vos recommandations sont la plus belle preuve de notre engagement et de la qualité de notre travail."
-                                          ][index],
-                                          style: const TextStyle(fontSize: 16.0),
-                                          textAlign: TextAlign.justify,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )).expand((widget) => [widget, const SizedBox(width: 50.0)]).toList(),
-                              ),
-                            ],
-                          ),
-                        )
-                      ),
-                    ),
+                    ValuesSection(),
                     SizedBox(height: 150.0),
                     // section 3
                     WhyChooseUsSection(),

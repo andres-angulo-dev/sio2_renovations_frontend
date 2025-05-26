@@ -42,8 +42,8 @@ class GlobalButtonsAndIcons {
 class GlobalSize {
   static const double mobileTitle = 24.0; 
   static const double webTitle = 30.0; 
-  static const double mobileSubTitle = 18.0; 
-  static const double webSubTitle = 20.0; 
+  static const double mobileSubTitle = 16.0; 
+  static const double webSubTitle = 18.0; 
   static const double mobileSizeText = 14.0; 
   static const double webSizeText = 16.0; 
   // Footer
