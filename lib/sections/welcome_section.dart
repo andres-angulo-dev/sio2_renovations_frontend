@@ -51,11 +51,6 @@ class WelcomeSection extends StatelessWidget {
                         totalRepeatCount: 1, // Play the animation only once
                         pause: Duration(milliseconds: 1000), // Pause between texts
                         animatedTexts: [
-                          // TypewriterAnimatedText( // Typewriter effect
-                          //   "Bienvenue", 
-                          //   speed: Duration(milliseconds: 150),
-                          //   textAlign: TextAlign.center,
-                          // ), 
                           TypewriterAnimatedText( // Displaying the slogan
                             "Donner une nouvelle vie à votre espace, c’est notre métier.", 
                             speed: Duration(milliseconds: 90),
@@ -67,10 +62,11 @@ class WelcomeSection extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(width: 20.0),
               SizedBox(
                 child: Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
+                  alignment: WrapAlignment.center,
+                  runAlignment: WrapAlignment.center,
                   spacing: 20.0,
                   runSpacing: 10.0,
                   children: [

@@ -27,6 +27,7 @@ dependencies:
   flutter_dotenv: ^5.2.1
   fade_out_particle: ^1.2.2
   animated_text_kit: ^4.2.3
+  carousel_slider_plus: ^7.1.0
 
 dev_dependencies:
   flutter_test:
