@@ -200,7 +200,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                     SizedBox(height: 100.0),
                     // section 4
                     ServicesSection(),
-                    SizedBox(height: 200.0),
+                    SizedBox(height: 150.0),
                     // section 5
                     StepsSection(),
                     SizedBox(height: 150.0),

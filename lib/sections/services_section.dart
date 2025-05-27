@@ -15,6 +15,7 @@ class ServicesSectionState extends State<ServicesSection> with SingleTickerProvi
   late AnimationController _servicesAnimationController;
   late Animation<Offset> _servicesSlideAnimation;
   late Animation<double> _servicesFadeAnimation;
+  bool showAllServices = false;
 
   @override
   void initState() {
@@ -49,18 +50,20 @@ class ServicesSectionState extends State<ServicesSection> with SingleTickerProvi
   }
 
   final List<Map<String, String>> servicesData = const [
+    {"title": "Peintre", "image": GlobalImages.backgroundLanding},
+    {"title": "Plaquiste", "image": GlobalImages.backgroundLanding},
+    {"title": "Menuisier", "image": GlobalImages.backgroundLanding},
+    {"title": "Carreleur", "image": GlobalImages.backgroundLanding},
     {"title": "Électricien", "image": GlobalImages.backgroundLanding},
     {"title": "Plombier", "image": GlobalImages.backgroundLanding},
     {"title": "Chauffagiste", "image": GlobalImages.backgroundLanding},
-    {"title": "Carreleur", "image": GlobalImages.backgroundLanding},
-    {"title": "Plaquiste", "image": GlobalImages.backgroundLanding},
-    {"title": "Peintre", "image": GlobalImages.backgroundLanding},
     {"title": "Maçon", "image": GlobalImages.backgroundLanding},
-    {"title": "Menuisier", "image": GlobalImages.backgroundLanding},
   ];
 
   @override
   Widget build(BuildContext context) {
+    final int initialItemCount = 4;
+
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.7,
       child: GlobalScreenSizes.isCustomSize(context, 1879) 
@@ -130,14 +133,58 @@ class ServicesSectionState extends State<ServicesSection> with SingleTickerProvi
           ), 
           const SizedBox(height: 50),
           // Second part: Photos of the services
-          SizedBox(
-            child: Wrap(
-              spacing: 16,
-              runSpacing: 16,
-              alignment: WrapAlignment.center,
-              children: servicesData.map((services) => ServiceTitle(services)).toList(),
+          AnimatedSwitcher( // Transition animation
+            duration: Duration(milliseconds: 500),
+            transitionBuilder: (Widget child, Animation<double> animation) {
+              return FadeTransition(
+                opacity: animation, // Added a fade animation
+                child: SizeTransition(
+                  sizeFactor: animation, // Progressive enlargement
+                  child: child,
+                ),
+              );
+            },
+            child: 
+            Container(
+              padding: EdgeInsets.all(15.0),
+              key: ValueKey<bool>(showAllServices), // Allows you to force the rebuilding of the widget so that the animation starts
+              child: 
+                Align(
+                  alignment: Alignment.center,
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 16,
+                    runSpacing: 16,
+                    children: servicesData.take(showAllServices ? servicesData.length : initialItemCount) // Allows to limit the number of items to display
+                      .map((services) => ServiceTitle(services)).toList(),
+                  ), 
+                ),
+              
             ),
           ),
+          if (servicesData.length > initialItemCount) // Manage the display of the button
+          Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: TextButton(
+              onPressed: () {
+                setState(() {
+                  showAllServices = !showAllServices; // Toggles between true and false
+                });
+              }, 
+              style: TextButton.styleFrom(
+                backgroundColor: GlobalColors.fourthColor,
+                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+              ),
+              child: Text(
+                showAllServices ? "Réduire" :  "Afficher plus", // Switch between different texts
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: GlobalColors.thirdColor,
+                  fontWeight: FontWeight.bold,
+                )
+              )
+            ),
+          )
         ]
       )
       : Row(
@@ -252,37 +299,31 @@ class ServiceTitleState extends State<ServiceTitle> {
             child: child,
           );
         },
-        child: Stack(
-          alignment: Alignment.bottomCenter, // Positions overlay at the bottom
-          children: [
-            // Image with hover scale effect
-            ClipRRect(
-              // borderRadius: BorderRadius.circular(8), // Rounded corners for aesthetics
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(32),
-                topRight: Radius.circular(32),
-                bottomLeft: Radius.circular(32),
-              ),
-              child: Image.asset(
+        child: SizedBox(
+          width: 200.0,
+          height: 300.0,
+          child: ClipRRect( // Allows you to make invisible what is larger than the parent container
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(32),
+              topRight: Radius.circular(32),
+              bottomLeft: Radius.circular(32),
+            ),
+            child: Stack(
+            children: [
+              // Image with hover scale effect                
+              Image.asset(
                 widget.services["image"]!, 
-                width: 200,
-                height: 300,
+                width: 200.0,
+                height: 300.0,
                 fit: BoxFit.cover,
               ),
-            ),
-
-            // Bottom overlay with profession title appearing on hover
-            AnimatedPositioned(
-              duration: Duration(milliseconds: 300), // Smooth slide-up animation
-              bottom: isHovered ? 0 : -30, // Moves up when hovered
-              left: 0,
-              right: 0,
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(32),
-                ), // Rounded corners only at the bottom
+              // Bottom overlay with profession title appearing on hover
+              AnimatedPositioned(
+                width: 200.0,
+                duration: Duration(milliseconds: 300), // Smooth slide-up animation
+                bottom: isHovered ? 0.0 : -30.0, // Moves up when hovered
                 child: Container(
-                  height: 30,
+                  height: 30.0,
                   color: GlobalColors.fourthColor, 
                   alignment: Alignment.center, 
                   child: Text(
@@ -294,512 +335,12 @@ class ServiceTitleState extends State<ServiceTitle> {
                     ),
                   ),
                 ),
-              ),
-            ),
-          ],
-        ),
+              )
+            ],
+          ),
+          )
+        ) 
       ),
     );
   }
 }
-
-
-
-// import 'package:flutter/material.dart';
-// import '../utils/global_others.dart';
-// import '../utils/global_colors.dart';
-
-// class ServicesSection extends StatefulWidget {
-//   const ServicesSection({super.key});
-
-//   @override
-//   ServicesSectionState createState() => ServicesSectionState();
-// }
-
-// class ServicesSectionState extends State<ServicesSection> {
-//   final List<Map<String, String>> servicesData = const [
-//     {"title": "Électricien", "image": GlobalImages.backgroundLanding},
-//     {"title": "Plombier", "image": GlobalImages.backgroundLanding},
-//     {"title": "Chauffagiste", "image": GlobalImages.backgroundLanding},
-//     {"title": "Carreleur", "image": GlobalImages.backgroundLanding},
-//     {"title": "Plaquiste", "image": GlobalImages.backgroundLanding},
-//     {"title": "Peintre", "image": GlobalImages.backgroundLanding},
-//     {"title": "Maçon", "image": GlobalImages.backgroundLanding},
-//     {"title": "Menuisier", "image": GlobalImages.backgroundLanding},
-//   ];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 60),
-//       child: Row(
-//         children: [
-//           // 🔹 Partie gauche : Photos interactives
-//           Expanded(
-//             child: Wrap(
-//               spacing: 8,
-//               runSpacing: 8,
-//               children: servicesData.map((services) => _buildServiceTitle(services)).toList(),
-//             ),
-//           ),
-//           const SizedBox(width: 50),
-
-//           // 🔹 Partie droite : Texte de présentation
-//           Expanded(
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Text(
-//                   "NOS SERVICES DE RÉNOVATIONS",
-//                   style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: GlobalColors.thirdColor),
-//                 ),
-//                 const SizedBox(height: 20),
-//                 Text(
-//                   "Que vous souhaitiez rénover votre électricité, plomberie, peinture, poser du carrelage, du parquet, ou bien plus encore, SIO2 Rénovations est là pour vous offrir un service clé en main.",
-//                   style: TextStyle(fontSize: 16, color: Colors.black87),
-//                   textAlign: TextAlign.start,
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   // ✅ Widget avec effet hover interactif
-//   Widget _buildServiceTitle(Map<String, String> services) {
-//     return StatefulBuilder(
-//       builder: (context, setState) {
-//         bool isHovered = false;
-//         return MouseRegion(
-//           onEnter: (_) => setState(() => isHovered = true),
-//           onExit: (_) => setState(() => isHovered = false),
-//           child: Stack(
-//             alignment: Alignment.bottomCenter,
-//             children: [
-//               // 📌 Image avec effet de scale
-//               AnimatedContainer(
-//                 duration: Duration(milliseconds: 300),
-//                 // transform: isHovered == true ? Matrix4.identity()..scale(1.1) : Matrix4.identity(),
-//                 // transform: isHovered == true ? Matrix4.diagonal3Values(1.1, 1.1, 1.1) : Matrix4.identity(),
-//                 // transform: isHovered == true ? Matrix4.identity().scaled(1.1, 1.1, 1.0) : Matrix4.identity(),
-//                 // transform: isHovered == true ? Matrix4.translationValues(0, 0, 0)..scale(1.1, 1.1, 1.0) : Matrix4.translationValues(0, 0, 0),
-//                 child: ClipRRect(
-//                   borderRadius: BorderRadius.circular(8),
-//                   child: Image.asset(
-//                     services["image"]!,
-//                     width: 100,
-//                     height: 100,
-//                     fit: BoxFit.cover,
-//                   ),
-//                 ),
-//               ),
-//               // Transform.scale(
-//               //   scale: 1.1, // ✅ Applique l'effet de zoom
-//               //   child: ClipRRect(
-//               //     borderRadius: BorderRadius.circular(8),
-//               //     child: Image.asset(
-//               //       services["image"]!,
-//               //       width: 100,
-//               //       height: 100,
-//               //       fit: BoxFit.cover,
-//               //     ),
-//               //   ),
-//               // ),
-
-
-//               // 📌 Rectangle doré avec le titre du métier
-//               AnimatedPositioned(
-//                 duration: Duration(milliseconds: 300),
-//                 bottom: -30, // Effet d'apparition
-//                 child: Container(
-//                   width: 100,
-//                   height: 30,
-//                   color: GlobalColors.thirdColor, // ✅ Couleur dorée
-//                   alignment: Alignment.center,
-//                   child: Text(
-//                     services["title"]!,
-//                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
-
-
-
-
-
-// import 'package:flutter/material.dart';
-// import 'package:flutter/foundation.dart';
-// import '../utils/global_others.dart';
-// import '../utils/global_colors.dart';
-
-// class ServicesSection extends StatefulWidget {
-//   const ServicesSection({super.key});
-
-//   @override
-//   ServicesSectionState createState() => ServicesSectionState();
-// }
-
-// class ServicesSectionState extends State<ServicesSection> {
-//   OverlayEntry? _overlayEntry;
-
-//   final List<Map<String, String>> servicesData = const [
-//     {"title": "Électricien", "image": GlobalImages.backgroundLanding},
-//     {"title": "Plombier", "image": GlobalImages.backgroundLanding},
-//     {"title": "Chauffagiste", "image": GlobalImages.backgroundLanding},
-//     {"title": "Carreleur", "image": GlobalImages.backgroundLanding},
-//     {"title": "Plaquiste", "image": GlobalImages.backgroundLanding},
-//     {"title": "Peintre", "image": GlobalImages.backgroundLanding},
-//     {"title": "Maçon", "image": GlobalImages.backgroundLanding},
-//     {"title": "Menuisier", "image": GlobalImages.backgroundLanding},
-//   ];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 60),
-//       child: Row(
-//         children: [
-//           // 🔹 Partie gauche : Images interactives
-//           Expanded(
-//             child: Wrap(
-//               spacing: 8,
-//               runSpacing: 8,
-//               children: servicesData.map((services) => _buildServiceTitle(services)).toList(),
-//             ),
-//           ),
-//           const SizedBox(width: 50),
-//           // 🔹 Partie droite : Présentation des services
-//           Expanded(
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Text(
-//                   "NOS SERVICES DE RÉNOVATIONS",
-//                   style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: GlobalColors.thirdColor),
-//                 ),
-//                 const SizedBox(height: 20),
-//                 Text(
-//                   "SIO2 Rénovations vous accompagne dans tous vos projets de rénovation : électricité, plomberie, carrelage, peinture et bien plus encore.",
-//                   style: TextStyle(fontSize: 16, color: Colors.black87),
-//                   textAlign: TextAlign.start,
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   // ✅ Widget avec effet hover (Scale + rectangle doré)
-//   // Widget _buildServiceTitle(Map<String, String> services) {
-//   //   return StatefulBuilder(
-//   //     builder: (context, setState) {
-//   //       bool isHovered = false;
-//   //       return MouseRegion(
-//   //         onEnter: (event) {
-//   //           setState(() => isHovered = true);
-//   //           _showTitleOverlay(event, services);
-//   //         },
-//   //         onExit: (_) {
-//   //           setState(() => isHovered = false);
-//   //           _hideTitleOverlay();
-//   //         },
-//   //         child: TweenAnimationBuilder(
-//   //           duration: Duration(milliseconds: 300),
-//   //           tween: Tween<double>(begin: 1.0, end: isHovered == true ? 1.8 : 1.2),
-//   //           builder: (context, double scale, child) {
-//   //             return Transform.scale(
-//   //               scale: scale,
-//   //               child: child,
-//   //             );
-//   //           },
-//   //           child: ClipRRect(
-//   //             borderRadius: BorderRadius.circular(8),
-//   //             child: Image.asset(
-//   //               services["image"]!,
-//   //               width: 100,
-//   //               height: 100,
-//   //               fit: BoxFit.cover,
-//   //             ),
-//   //           ),
-//   //         ),
-//   //       );
-//   //     },
-//   //   );
-//   // }
-//   Widget _buildServiceTitle(Map<String, String> services) {
-//   return StatefulBuilder(
-//     builder: (context, setState) {
-//       bool isHovered = false;
-//       return MouseRegion(
-//         onEnter: (_) => setState(() => isHovered = true),
-//         onExit: (_) => setState(() => isHovered = false),
-//         child: Stack(
-//           alignment: Alignment.bottomCenter,
-//           children: [
-//             // 📌 Image avec effet de scale au survol
-//             AnimatedContainer(
-//               duration: Duration(milliseconds: 300),
-//               curve: Curves.easeInOut,
-//               transform: isHovered ? Matrix4.identity()..scale(1.1) : Matrix4.identity(),
-//               child: ClipRRect(
-//                 borderRadius: BorderRadius.circular(8),
-//                 child: Image.asset(
-//                   services["image"]!,
-//                   width: 100,
-//                   height: 100,
-//                   fit: BoxFit.cover,
-//                 ),
-//               ),
-//             ),
-
-//             // 📌 Rectangle doré avec effet de montée
-//             AnimatedPositioned(
-//               duration: Duration(milliseconds: 300),
-//               bottom: isHovered ? 0 : -30, // ✅ Effet de montée fluide
-//               left: 0,
-//               right: 0,
-//               child: Container(
-//                 height: 30,
-//                 color: GlobalColors.goldColor,
-//                 alignment: Alignment.center,
-//                 child: Text(
-//                   services["title"]!,
-//                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       );
-//     },
-//   );
-// }
-
-
-//   // ✅ Affichage du titre du métier en overlay
-//   void _showTitleOverlay(PointerEvent event, Map<String, String> services) {
-//     final overlay = Overlay.of(context);
-//     _overlayEntry = OverlayEntry(
-//       builder: (context) => Positioned(
-//         left: event.position.dx - 50,
-//         top: event.position.dy - 30,
-//         child: Material(
-//           color: Colors.transparent,
-//           child: AnimatedOpacity(
-//             opacity: 1.0,
-//             duration: Duration(milliseconds: 200),
-//             child: Container(
-//               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-//               decoration: BoxDecoration(
-//                 color: GlobalColors.fourthColor,
-//                 borderRadius: BorderRadius.circular(8),
-//               ),
-//               child: Text(
-//                 services["title"]!,
-//                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
-//               ),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//     overlay.insert(_overlayEntry!);
-//   }
-
-//   // ✅ Suppression du titre en overlay lorsque la souris quitte
-//   void _hideTitleOverlay() {
-//     _overlayEntry?.remove();
-//   }
-// }
-
-
-
-
-// // CA MARCHEEEEE
-// import 'package:flutter/material.dart';
-// import 'package:sio2_renovations_frontend/utils/global_colors.dart';
-// import '../utils/global_others.dart'; 
-
-// class ServicesSection extends StatefulWidget {
-//   const ServicesSection({super.key});
-
-//   @override
-//   ServicesSectionState createState() => ServicesSectionState();
-// }
-
-// class ServicesSectionState extends State<ServicesSection> {
-//   bool isHovered = false; // ✅ Variable to track hover state
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MouseRegion(
-//       onEnter: (_) => setState(() => isHovered = true),
-//       onExit: (_) => setState(() => isHovered = false),
-//       child: Stack(
-//         alignment: Alignment.bottomCenter,
-//         children: [
-//           // Image with scale effect on hover
-//           AnimatedContainer(
-//             duration: Duration(milliseconds: 300),
-//             curve: Curves.easeInOut,
-//             width: isHovered ? 220 : 200, 
-//             height: isHovered ? 420 : 400,
-//             child: ClipRRect(
-//               borderRadius: BorderRadius.circular(8),
-//               child: Image.asset(
-//                 GlobalImages.backgroundLanding,
-//                 fit: BoxFit.cover,
-//               ),
-//             ),
-//           ),
-
-//           // Red rectangle appearing at the bottom with rounded edges
-//           AnimatedPositioned(
-//             duration: Duration(milliseconds: 300),
-//             bottom: isHovered ? 0 : -30, // ✅ Smooth slide-up effect
-//             left: 0,
-//             right: 0,
-//             child: ClipRRect(
-//               borderRadius: BorderRadius.only(
-//                 bottomLeft: Radius.circular(8),
-//                 bottomRight: Radius.circular(8),
-//               ), // ✅ Rounded edges only at the bottom
-//               child: Container(
-//                 height: 30,
-//                 color: GlobalColors.orangeColor, // ✅ Background color
-//                 alignment: Alignment.center,
-//                 child: Text(
-//                   "PLOMBIER",
-//                   style: TextStyle(
-//                     color: GlobalColors.secondColor,
-//                     fontSize: 16.0,
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-
-
-// import 'package:flutter/material.dart';
-// import '../utils/global_colors.dart';
-// import '../utils/global_others.dart';
-
-// class ServicesSection extends StatelessWidget {
-//   const ServicesSection({super.key});
-
-//   final List<Map<String, String>> servicesData = const [
-//     {"title": "Électricien", "image": GlobalImages.backgroundLanding},
-//     {"title": "Plombier", "image": GlobalImages.backgroundLanding},
-//     {"title": "Chauffagiste", "image": GlobalImages.backgroundLanding},
-//     {"title": "Carreleur", "image": GlobalImages.backgroundLanding},
-//     {"title": "Plaquiste", "image": GlobalImages.backgroundLanding},
-//     {"title": "Peintre", "image": GlobalImages.backgroundLanding},
-//     {"title": "Maçon", "image": GlobalImages.backgroundLanding},
-//     {"title": "Menuisier", "image": GlobalImages.backgroundLanding},
-//   ];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 60),
-//       child: Wrap(
-//         alignment: WrapAlignment.center,
-//         spacing: 16, // ✅ Horizontal spacing between elements
-//         runSpacing: 16, // ✅ Vertical spacing between rows
-//         children: servicesData.map((services) => ServiceTitle(services)).toList(),
-//       ),
-//     );
-//   }
-// }
-
-// // Stateful widget to handle hover effect per image
-// class ServiceTitle extends StatefulWidget {
-//   final Map<String, String> services;
-//   const ServiceTitle(this.services, {super.key});
-
-//   @override
-//   ServiceTitleState createState() => ServiceTitleState();
-// }
-
-// class ServiceTitleState extends State<ServiceTitle> {
-//   bool isHovered = false; 
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MouseRegion(
-//       onEnter: (_) => setState(() => isHovered = true), 
-//       onExit: (_) => setState(() => isHovered = false), 
-//       child: TweenAnimationBuilder(
-//         duration: Duration(milliseconds: 300), // Smooth animation duration
-//         tween: Tween<double>(begin: 1.0, end: isHovered ? 1.1 : 1.0), // Scale transition effect
-//         builder: (context, double scale, child) {
-//           return Transform.scale(
-//             scale: scale, // Applies scale effect dynamically
-//             child: child,
-//           );
-//         },
-//         child: Stack(
-//           alignment: Alignment.bottomCenter, // Positions overlay at the bottom
-//           children: [
-//             // Image with hover scale effect
-//             ClipRRect(
-//               borderRadius: BorderRadius.circular(8), // Rounded corners for aesthetics
-//               child: Image.asset(
-//                 widget.services["image"]!, 
-//                 width: 200,
-//                 height: 400,
-//                 fit: BoxFit.cover,
-//               ),
-//             ),
-
-//             // Bottom overlay with profession title appearing on hover
-//             AnimatedPositioned(
-//               duration: Duration(milliseconds: 300), // Smooth slide-up animation
-//               bottom: isHovered ? 0 : -30, // Moves up when hovered
-//               left: 0,
-//               right: 0,
-//               child: ClipRRect(
-//                 borderRadius: BorderRadius.only(
-//                   bottomLeft: Radius.circular(8),
-//                   bottomRight: Radius.circular(8),
-//                 ), // Rounded corners only at the bottom
-//                 child: Container(
-//                   height: 30,
-//                   color: GlobalColors.fourthColor, 
-//                   alignment: Alignment.center, 
-//                   child: Text(
-//                     widget.services["title"]!,
-//                     style: TextStyle(
-//                       color: GlobalColors.thirdColor,
-//                       fontSize: 16.0,
-//                       fontWeight: FontWeight.bold,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
