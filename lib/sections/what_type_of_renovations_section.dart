@@ -13,9 +13,12 @@ class WhatTypeOfRenovationsSection extends StatefulWidget {
   WhatTypeOfRenovationsSectionState createState() => WhatTypeOfRenovationsSectionState();
 }
 
-class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSection> {
-  final CarouselSliderController _carouselController = CarouselSliderController(); // controller added to go to image on button click
+class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSection> with TickerProviderStateMixin {
+  late List<AnimationController> _animationController;
+  late List<Animation<Offset>> _slideAnimation;
   late List<bool> isHoveredList;
+
+  final CarouselSliderController _carouselController = CarouselSliderController(); // controller added to go to image on button click
   int _currentIndex = 0;
 
   final List<Map<String, String?>> typeOfRenovationData =  [
@@ -30,11 +33,45 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
   void initState() {
     super.initState();
     isHoveredList = List.generate(typeOfRenovationData.length, (_) => false); // Generating each element to be displayed
+
+    _initializeSlideAnimation();
+  }
+
+  void _initializeSlideAnimation() {
+    _animationController = List.generate(typeOfRenovationData.length, (index) => AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 600),
+    ));
+
+    _slideAnimation = _animationController.map((controller) => Tween<Offset>(
+      begin: const Offset(0, 1),
+      end: const Offset(0, 0),
+    ).animate(CurvedAnimation(
+      parent: controller, 
+      curve: Curves.easeInOut,
+    ))).toList();
+  }
+
+  void startAnimation(int index) {
+    _animationController[index].forward();
+  }
+
+  void resetAnimation(int index) {
+    _animationController[index].reverse();
+  }
+
+  @override
+  void dispose() {
+    for (var controller in _animationController) {
+      controller.dispose();
+    }
+    super.dispose();
   }
 
   @override 
   Widget build(BuildContext context) {
     final isMobile = GlobalScreenSizes.isMobileScreen(context);
+    double activeCarouselSlider = 1560;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,7 +89,8 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
           ),
         ),
         SizedBox(height: 50),
-        CarouselSlider(
+        GlobalScreenSizes.isCustomSize(context, activeCarouselSlider) // Web and mobile 
+        ? CarouselSlider( // Carousel activated if screen < 1560
           controller: _carouselController, // Added controller in widget,
           options: CarouselOptions(
             height: isMobile ? 500.0 : 700.0,
@@ -67,24 +105,158 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
             },
           ),
           items: typeOfRenovationData.map((item) {
+            int index = typeOfRenovationData.indexOf(item);
+
             return MouseRegion(
-              onEnter: (_) => setState(() => isHoveredList[typeOfRenovationData.indexOf(item)] = true),
-              onExit: (_) => setState(() => isHoveredList[typeOfRenovationData.indexOf(item)] = false),
+              cursor: item["routePath"] == null ? SystemMouseCursors.basic : SystemMouseCursors.click,
+              onEnter: (_) => {
+                setState(() => isHoveredList[index] = true),
+                startAnimation(index),
+              },
+              onExit: (_) => {
+                setState(() => isHoveredList[index] = false),
+                resetAnimation(index),
+              },
               child: Builder(
                 builder: (BuildContext context) {
-                  return SizedBox(
-                    width: GlobalScreenSizes.isMobileScreen(context) ? null : 400.0, // Static container
-                    child: ClipRRect( // Allows you to make invisible what is larger than the parent container
-                      child: Stack(
-                        children: [
-                          OverflowBox( // Allows the image to be much larger without being cropped
+                  return GestureDetector(
+                    onTap: () => {
+                      if (item["routePath"] != null)
+                      Navigator.pushNamed(context, item["routePath"]!)
+                    },
+                    child: SizedBox(
+                      width: GlobalScreenSizes.isMobileScreen(context) ? null : 400.0, // Static container
+                      child: ClipRRect( // Allows you to make invisible what is larger than the parent container
+                        child: Stack(
+                          children: [
+                            OverflowBox( // Allows the image to be much larger without being cropped
+                            maxWidth: double.infinity,
+                            maxHeight: double.infinity,
+                            child: TweenAnimationBuilder<double>( // Animation zoom and zoom out works with ClipRRect + Stack + Overflow
+                              duration: Duration(milliseconds: 300),
+                              tween: Tween<double>(
+                                begin: 1.0, 
+                                end: isHoveredList[index] ? 0.90 : 1.0, // Zoom out of image only when is Hovered
+                              ),
+                              curve: Curves.easeInOut,
+                              builder: (context, scale, child) {
+                                return Transform.scale(
+                                  scale: scale,
+                                  child: Image.asset(
+                                    item["image"]!,
+                                    width: 600.0, // Image much larger than the parent container
+                                    height: 1000.0, // Image much larger than the parent container
+                                    fit: BoxFit.cover,
+                                  )
+                                );
+                              },
+                            ),
+                            ),
+                            GlobalScreenSizes.isMobileScreen(context) // Mobile no animation on hover
+                            ? Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              color: Colors.black.withValues(alpha: 0.2),
+                              alignment: Alignment.center,
+                              child: item["routePath"] != null  
+                                ? MyHoverRouteNavigator( // Animation hover text
+                                routeName: item["routePath"]!, 
+                                text: item["title"]!,
+                                color: GlobalColors.firstColor,
+                                hoverColor: GlobalColors.orangeColor,
+                                mobileSize: 20.0,
+                                webSize: 24.0,
+                                mobile: isMobile,
+                                boldText: true,
+                              )
+                              : Text( // Text only
+                                item["title"]!,
+                                style: TextStyle(
+                                  color: GlobalColors.firstColor,
+                                  fontSize: isMobile ? 20.0 : 24.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ) 
+                            : isHoveredList[index] ? // Web active animation on hover
+                            Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              color: Colors.black.withValues(alpha: 0.5),
+                              alignment: Alignment.center,
+                              child: ClipRect(
+                                child: SlideTransition(
+                                  position: _slideAnimation[index],
+                                  child: item["routePath"] != null  
+                                    ? MyHoverRouteNavigator( // Animation hover text if routePath isn't empty
+                                    routeName: item["routePath"]!, 
+                                    text: item["title"]!,
+                                    color: GlobalColors.firstColor,
+                                    hoverColor: GlobalColors.orangeColor,
+                                    mobileSize: 20.0,
+                                    webSize: 24.0,
+                                    mobile: isMobile,
+                                    boldText: true,
+                                  )
+                                  : Text( // Text only
+                                    item["title"]!,
+                                    style: TextStyle(
+                                      color: GlobalColors.firstColor,
+                                      fontSize: isMobile ? 20.0 : 24.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              )
+                            )
+                            : SizedBox.shrink(),
+                          ],
+                        ),
+                      )
+                    )
+                  );
+                },
+              ),
+            );
+          }).toList(),
+        )
+        : Row( // Web
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 15.0,
+          children: List.generate(typeOfRenovationData.length, (index) { // Generating each element to be displayed
+            final item = typeOfRenovationData[index]; // Each element
+
+            return MouseRegion(
+              cursor: item["routePath"] == null ? SystemMouseCursors.basic : SystemMouseCursors.click,
+              onEnter: (_) => {
+                setState(() => isHoveredList[index] = true),
+                startAnimation(index),
+              },
+              onExit: (_) => {
+                setState(() => isHoveredList[index] = false),
+                resetAnimation(index),
+              },
+              child: GestureDetector(
+                onTap: () => {
+                  if (item["routePath"] != null) 
+                  Navigator.pushNamed(context, item["routePath"]!)
+                },
+                child: SizedBox(
+                  width: GlobalScreenSizes.isCustomSize(context, 1810) ? 300.0 : 350.0, // Static container
+                  height: GlobalScreenSizes.isMobileScreen(context) ? 500.0 : 700.0,
+                  child: ClipRRect( // Allows you to make invisible what is larger than the parent container
+                    child: Stack(
+                      children: [
+                        OverflowBox( // Allows the image to be much larger without being cropped
                           maxWidth: double.infinity,
                           maxHeight: double.infinity,
-                          child: TweenAnimationBuilder<double>( // Animation zoom and zoom out works with ClipRRect + Stack + Overflow
+                          child: TweenAnimationBuilder<double>( // Animation zoom and zoom out
                             duration: Duration(milliseconds: 300),
                             tween: Tween<double>(
                               begin: 1.0, 
-                              end: isHoveredList[typeOfRenovationData.indexOf(item)] ? 0.90 : 1.0, // Zoom out of image only when is Hovered
+                              end: isHoveredList[index] ? 0.9 : 1.0, // Zoom out of image only when is Hovered
                             ),
                             curve: Curves.easeInOut,
                             builder: (context, scale, child) {
@@ -94,77 +266,55 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
                                   item["image"]!,
                                   width: 600.0, // Image much larger than the parent container
                                   height: 1000.0, // Image much larger than the parent container
-                                  fit: BoxFit.cover,
-                                )
+                                  fit: BoxFit.cover, // 
+                                ),
                               );
                             },
                           ),
-                          ),
-                          GlobalScreenSizes.isMobileScreen(context) // Mobile no animation on hover
-                          ? Container(
-                            width: double.infinity,
-                            height: double.infinity,
-                            color: Colors.black.withValues(alpha: 0.2),
-                            alignment: Alignment.center,
-                            child: item["routePath"] != null  
+                        ),
+                        if (isHoveredList[index]) // Animation Dark effect
+                        Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          color: Colors.black.withValues(alpha: 0.5),
+                          alignment: Alignment.center,
+                          child: ClipRect(
+                            child: SlideTransition(
+                              position: _slideAnimation[index],
+                              child: item["routePath"] != null  
                               ? MyHoverRouteNavigator( // Animation hover text
-                              routeName: item["routePath"]!, 
-                              text: item["title"]!,
-                              color: GlobalColors.firstColor,
-                              hoverColor: GlobalColors.orangeColor,
-                              mobileSize: 20.0,
-                              webSize: 24.0,
-                              mobile: isMobile,
-                              boldText: true,
-                            )
-                            : Text( // Text only
-                              item["title"]!,
-                              style: TextStyle(
+                                routeName: item["routePath"]!, 
+                                text: item["title"]!,
                                 color: GlobalColors.firstColor,
-                                fontSize: isMobile ? 20.0 : 24.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ) 
-                          : isHoveredList[typeOfRenovationData.indexOf(item)] ? // Web active animation on hover
-                          Container(
-                            width: double.infinity,
-                            height: double.infinity,
-                            color: Colors.black.withValues(alpha: 0.5),
-                            alignment: Alignment.center,
-                            child: item["routePath"] != null  
-                              ? MyHoverRouteNavigator( // Animation hover text if routePath isn't empty
-                              routeName: item["routePath"]!, 
-                              text: item["title"]!,
-                              color: GlobalColors.firstColor,
-                              hoverColor: GlobalColors.orangeColor,
-                              mobileSize: 20.0,
-                              webSize: 24.0,
-                              mobile: isMobile,
-                              boldText: true,
+                                hoverColor: GlobalColors.orangeColor,
+                                mobileSize: 20.0,
+                                webSize: 24.0,
+                                mobile: GlobalScreenSizes.isMobileScreen(context),
+                                boldText: true,
+                              )
+                              : Text( // text only
+                                item["title"]!,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: GlobalColors.firstColor,
+                                  fontSize: GlobalScreenSizes.isMobileScreen(context) ? 20.0 : 24.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
                             )
-                            : Text( // Text only
-                              item["title"]!,
-                              style: TextStyle(
-                                color: GlobalColors.firstColor,
-                                fontSize: isMobile ? 20.0 : 24.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
                           )
-                          : SizedBox.shrink(),
-                        ],
-                      ),
-                    )
-                  );
-                },
-              ),
+                        )
+                      ],
+                    ),
+                  ),
+                ), 
+              ), 
             );
-          }).toList(),
-        ),
+          }),
+        ), 
+        if (GlobalScreenSizes.isCustomSize(context, activeCarouselSlider)) 
         const SizedBox(height: 15.0),
+        if (GlobalScreenSizes.isCustomSize(context, activeCarouselSlider)) 
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(typeOfRenovationData.length, (index) {
