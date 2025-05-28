@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:async';
@@ -38,6 +37,11 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
       "comment": "\"Un vrai plaisir de voir mon projet réalisé avec autant de soin et de précision ! Bravo à toute l’équipe.\"",
       "author": "M. D. ",
       "title": "Modernisation complète d’un loft à République",
+    },
+    {
+      "comment": "\"Merci pour le professionnalisme et le soin apporté aux finitions. Je referai appel à vous pour mes futures travaux.\"",
+      "author": "J. H. ",
+      "title": "Rénovation de la salle de bain ",
     },
   ];
 
@@ -114,274 +118,209 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = GlobalScreenSizes.isMobileScreen(context);
+
     return Column(
       children: [
         Text(
           "LE TEMOIGNAGE DE NOS CLIENTS",
           style: TextStyle(
-            fontSize: 30.0,
+            fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
             fontWeight: FontWeight.bold,
             color: GlobalColors.thirdColor,
           ),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 20.0),
-        Container(
-          height: 600.0,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              alignment: Alignment.centerLeft,
-              image: AssetImage(
-                GlobalImages.backgroundFeedbackSection
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              height: 600.0,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  alignment: Alignment.centerLeft,
+                  image: AssetImage(
+                    GlobalImages.backgroundFeedbackSection
+                  ),
+                  fit: BoxFit.fitHeight
+                )
               ),
-              fit: BoxFit.fitHeight
-            )
-          ),
-          child: GlobalScreenSizes.isCustomSize(context, 1550) // Responsive
-            ? Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                  child: SizedBox(
+            ),
+            Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 50.0,
+              runSpacing: 20.0,
+              children: [
+                SizedBox(
+                  width: 750.0,
+                  child: Align(
+                    alignment: GlobalScreenSizes.isCustomSize(context, 1550) ? Alignment.center : Alignment.centerRight,
+                    child: SizedBox(
                     width: 400.0,
                     child: Text(
                       "La confiance de nos clients et partenaires est notre plus belle récompense. Vos recommandations témoignent de notre engagement et de la qualité de notre travail",
                       style: TextStyle(
-                        fontSize: 16.0,
+                        fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                         color: Colors.black87,
                       ),
                       textAlign: TextAlign.center,
                     ),
                   )
+                )
                 ),
-              const SizedBox(height: 20.0),
-              Center(
-                child: Container(
-                  width: 550.0,
-                  height: 450.0,
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [BoxShadow(
-                      color: Colors.black26, 
-                      blurRadius: 6
-                    )],
-                  ),
+                SizedBox(
+                  width: GlobalScreenSizes.isCustomSize(context, 1550) ? 950 : 750,
+                  height: 600,
                   child: Stack(
                     children: [
-                      SizedBox(
-                        child: PageView.builder(
-                          controller: _pageController,
-                          itemCount: feedbacks.length,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  feedbacks[index]["comment"]!,
-                                  style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  "- ${feedbacks[index]["author"]}, ${feedbacks[index]["title"]}",
-                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.grey),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                      Positioned(
-                        top: 0.0,
-                        child: Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: SvgPicture.asset(
-                            GlobalLogo.logoDots,
-                            width: 100,
-                            height: 100,
-                          )
+                      Positioned( // Top square
+                        top: 20.0,
+                        right: 100.0,
+                        child: Container(
+                          width: 200.0,
+                          height: 200.0,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: GlobalColors.thirdColor.withValues(alpha: 0.9),
+                              width: 10.0,
+                            )
+                          ),
                         )
-                      )
-                    ],
-                  ) 
-                ),
-              )
-            ],
-          )
-          : Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 750.0,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: SizedBox(
-                  width: 400.0,
-                  child: Text(
-                    "La confiance de nos clients et partenaires est notre plus belle récompense. Vos recommandations témoignent de notre engagement et de la qualité de notre travail",
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.black87,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              )
-              ),
-              const SizedBox(width: 50.0),
-              SizedBox(
-                width: 750,
-                height: 600,
-                child: Stack(
-                  children: [
-                    Positioned( // Top square
-                      top: 20.0,
-                      right: 100.0,
-                      child: Container(
-                        width: 200.0,
-                        height: 200.0,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: GlobalColors.thirdColor.withValues(alpha: 0.9),
-                            width: 10.0,
-                          )
-                        ),
-                      )
-                    ),
-                    Positioned( // Middle square
-                      top: 180.0,
-                      right: 50.0,
-                      child: Container(
-                        width: 100.0,
-                        height: 100.0,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: GlobalColors.thirdColor.withValues(alpha: 0.6),
-                            width: 10.0,
-                          )
-                        ),
-                      )
-                    ),
-                    Positioned( // Bottom square
-                      right: 0.0,
-                      bottom: 0.0,
-                      child: Container(
-                        width: 350.0,
-                        height: 350.0,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: GlobalColors.thirdColor.withValues(alpha: 0.75),
-                            width: 10.0,
-                          )
-                        ),
-                      )
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        width: 550.0,
-                        height: 450.0,
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [BoxShadow(
-                            color: Colors.black26, 
-                            blurRadius: 6
-                          )],
-                        ),
-                        child: MouseRegion(
-                          onEnter: (_) => setState(() {
-                            _isHovered = true;
-                          }),
-                          onExit: (_) => setState(() {
-                            _isHovered = false;
-                          }),
-                          child: Stack(
-                            children: [
-                              SizedBox(
-                                child: PageView.builder(
-                                  controller: _pageController,
-                                  itemCount: feedbacks.length,
-                                  itemBuilder: (context, index) {
-                                    return Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        // Previous arrow
-                                        AnimatedOpacity(
-                                          opacity: _isHovered ? 1.0 : 0.0,
-                                          duration: const Duration(milliseconds: 500),
-                                          child: IconButton(
-                                            icon: Icon(Icons.arrow_back_ios),
-                                            onPressed: () {
-                                              _previousFeedBack();
-                                            },
-                                          )
-                                        ),
-                                        // Feeback
-                                        Align(
-                                          alignment: Alignment.center,
-                                          child: SizedBox(
-                                          width: 430,
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  feedbacks[index]["comment"]!,
-                                                  style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                                SizedBox(height: 10),
-                                                Text(
-                                                  "- ${feedbacks[index]["author"]}, ${feedbacks[index]["title"]}",
-                                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.grey),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ],
+                      ),
+                      Positioned( // Middle square
+                        top: 180.0,
+                        right: 50.0,
+                        child: Container(
+                          width: 100.0,
+                          height: 100.0,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: GlobalColors.thirdColor.withValues(alpha: 0.6),
+                              width: 10.0,
+                            )
+                          ),
+                        )
+                      ),
+                      Positioned( // Bottom square
+                        right: 0.0,
+                        bottom: 0.0,
+                        child: Container(
+                          width: 350.0,
+                          height: 350.0,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: GlobalColors.thirdColor.withValues(alpha: 0.75),
+                              width: 10.0,
+                            )
+                          ),
+                        )
+                      ),
+                      Align( // Feedback
+                        alignment: GlobalScreenSizes.isCustomSize(context, 1550) ? Alignment.center : Alignment.centerLeft,
+                        child: Container(
+                          width: 550.0,
+                          height: 450.0,
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: GlobalColors.firstColor,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [BoxShadow(
+                              color: Colors.black26, 
+                              blurRadius: 6
+                            )],
+                          ),
+                          child: MouseRegion(
+                            onEnter: (_) => setState(() {
+                              _isHovered = true;
+                            }),
+                            onExit: (_) => setState(() {
+                              _isHovered = false;
+                            }),
+                            child: Stack(
+                              children: [
+                                SizedBox(
+                                  child: PageView.builder(
+                                    controller: _pageController,
+                                    itemCount: feedbacks.length,
+                                    itemBuilder: (context, index) {
+                                      return Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          // Previous arrow
+                                          AnimatedOpacity(
+                                            opacity: GlobalScreenSizes.isCustomSize(context, 1550) ? 1.0 : _isHovered ? 1.0 : 0.0,
+                                            duration: const Duration(milliseconds: 500),
+                                            child: IconButton(
+                                              icon: Icon(Icons.arrow_back_ios),
+                                              onPressed: () {
+                                                _previousFeedBack();
+                                              },
                                             )
                                           ),
-                                        ),
-                                        // Next arrow
-                                        AnimatedOpacity(
-                                          opacity: _isHovered ? 1.0 : 0.0,
-                                          duration: const Duration(milliseconds: 500),
-                                          child: IconButton( 
-                                            icon: Icon(Icons.arrow_forward_ios),
-                                            onPressed: () {
-                                              _previousFeedBack();
-                                            },
-                                          )
-                                        ),
-                                      ]
-                                    );
-                                  },
+                                          // Feedback
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: SizedBox(
+                                            width: 430,
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    feedbacks[index]["comment"]!,
+                                                    style: TextStyle(fontSize: GlobalSize.webSizeText, fontStyle: FontStyle.italic),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                  SizedBox(height: 10),
+                                                  Text(
+                                                    "- ${feedbacks[index]["author"]}, ${feedbacks[index]["title"]}",
+                                                    style: TextStyle(fontSize: GlobalSize.mobileSizeText, fontWeight: FontWeight.w600, color: GlobalColors.fiveColor),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ],
+                                              )
+                                            ),
+                                          ),
+                                          // Next arrow
+                                          AnimatedOpacity(
+                                            opacity: GlobalScreenSizes.isCustomSize(context, 1550) ? 1.0 : _isHovered ? 1.0 : 0.0,
+                                            duration: const Duration(milliseconds: 500),
+                                            child: IconButton( 
+                                              icon: Icon(Icons.arrow_forward_ios),
+                                              onPressed: () {
+                                                _nextFeedBack();
+                                              },
+                                            )
+                                          ),
+                                        ]
+                                      );
+                                    },
+                                  ),
                                 ),
-                              ),
-                              Positioned(
-                                top: 0.0,
-                                child: Padding(
-                                  padding: EdgeInsets.all(16.0),
-                                  child: SvgPicture.asset(
-                                    GlobalLogo.logoDots,
-                                    width: 100,
-                                    height: 100,
+                                Positioned(
+                                  top: 0.0,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(16.0),
+                                    child: SvgPicture.asset(
+                                      GlobalLogo.logoDots,
+                                      width: 100,
+                                      height: 100,
+                                    )
                                   )
-                                )
-                              ),
-                            ],
-                          ) 
-                        )
+                                ),
+                              ],
+                            ) 
+                          )
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  )
                 )
-              )
-            ],
-          )
-        ),
+              ],
+            )
+          ],
+        )
       ],
     );
   }

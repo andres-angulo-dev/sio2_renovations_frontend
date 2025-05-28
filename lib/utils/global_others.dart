@@ -46,12 +46,20 @@ class GlobalSize {
   static const double webSubTitle = 18.0; 
   static const double mobileSizeText = 14.0; 
   static const double webSizeText = 16.0;
-  // Steps section 
+  // Steps section
+  static const double stepsSectionMobilebSubTitle = 20.0; 
+  static const double stepsSectionWebSubTitle = 24.0; 
   static const double stepsSectionMobileTitleCard = 52.0;
   static const double stepsSectionWebTitleCard = 52.0;
   static const double stepsSectionMobileSubTitleCard = 22.0;
   static const double stepsSectionWebSubTitleCard = 22.0;
- 
+  // Key figures section
+  static const double keyFiguresSectionMobileTitle = 36.0;
+  static const double keyFiguresSectionWebTitle = 40.0;
+  static const double keyFiguresSectionMobileSubTitle = 16.0;
+  static const double keyFiguresSectionWebSubTitle = 18.0;
+  static const double keyFiguresSectionMobileDescription = 12.0;
+  static const double keyFiguresSectionWebDescription = 14.0;
   // Footer
   static const double footerMobileTitle = 18.0; 
   static const double footerWebTitle = 20.0; 

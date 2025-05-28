@@ -31,6 +31,8 @@ class StepsSectionState extends State<StepsSection> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = GlobalScreenSizes.isMobileScreen(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Column(
@@ -40,7 +42,7 @@ class StepsSectionState extends State<StepsSection> {
           Text(
             "VOUS AVEZ UN PROJET ?", 
             style: TextStyle(
-              fontSize: 30.0,
+              fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
               fontWeight: FontWeight.bold,
               color: GlobalColors.thirdColor,
             ),
@@ -51,7 +53,7 @@ class StepsSectionState extends State<StepsSection> {
           Text(
             "Votre parcours en quatre temps", 
             style: TextStyle(
-              fontSize: 24,
+              fontSize: isMobile ? GlobalSize.stepsSectionMobilebSubTitle : GlobalSize.stepsSectionWebSubTitle,
               fontFamily: 'DancingScript',
               fontWeight: FontWeight.w800,
               color: Colors.black87,

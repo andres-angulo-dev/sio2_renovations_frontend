@@ -15,8 +15,10 @@ class KeyFiguresSection extends StatefulWidget {
 class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerProviderStateMixin {
   bool _isVisible = false;
 
-    // Function to create animated number display
+  // Function to create animated number display
   Widget _buildAnimatedStat(int finalValue, String title, String description) {
+    final bool isMobile = GlobalScreenSizes.isMobileScreen(context);
+    
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: Column(
@@ -30,14 +32,14 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
             builder: (context, value, child) {
               return Text(
                 finalValue == 95 ? "$value%" : "$value", // Adds % for satisfaction rate
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: GlobalColors.thirdColor),
+                style: TextStyle(fontSize: isMobile ? GlobalSize.keyFiguresSectionMobileTitle : GlobalSize.keyFiguresSectionWebTitle, fontWeight: FontWeight.bold, color: GlobalColors.thirdColor),
               );
             },
           ),
           SizedBox(height: 5),
-          Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+          Text(title, style: TextStyle(fontSize: isMobile ? GlobalSize.keyFiguresSectionMobileSubTitle : GlobalSize.keyFiguresSectionWebSubTitle, fontWeight: FontWeight.w600)),
           SizedBox(height: 5),
-          Text(description, textAlign: TextAlign.start, style: TextStyle(fontSize: 14, color: Colors.grey)),
+          Text(description, textAlign: TextAlign.start, style: TextStyle(fontSize: isMobile ? GlobalSize.keyFiguresSectionMobileDescription : GlobalSize.keyFiguresSectionWebDescription, color: GlobalColors.fiveColor)),
         ],
       ),
     );
@@ -45,6 +47,8 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
 
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = GlobalScreenSizes.isMobileScreen(context);
+    
     return VisibilityDetector(
       key: const Key("key_figures_section"), 
       onVisibilityChanged: (info) {
@@ -63,7 +67,7 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
               Text(
                 "SIO2 RÉNOVATIONS EN QUELQUES CHIFFRES",
                 style: TextStyle(
-                  fontSize: 30.0,
+                  fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
                   fontWeight: FontWeight.bold,
                   color: GlobalColors.thirdColor,
                 ),
@@ -108,8 +112,8 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
                         Text(
                           "Découvrez en un coup d'oeil, nos dernières réalisations",
                           style: TextStyle(
-                            fontSize: 16.0,
-                            color: Colors.black87,
+                            fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                            color: GlobalColors.secondColor,
                           ),
                           textAlign: TextAlign.center,
                         ),
