@@ -62,17 +62,18 @@ class ServicesSectionState extends State<ServicesSection> with SingleTickerProvi
 
   @override
   Widget build(BuildContext context) {
-    final int initialItemCount = 4;
+    final int initialItemCount = GlobalScreenSizes.isCustomSize(context, 638) ? 1 : 4;
+    final bool isMobile = GlobalScreenSizes.isMobileScreen(context);
 
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.7,
+      width: GlobalScreenSizes.screenWidth(context) * 0.7,
       child: GlobalScreenSizes.isCustomSize(context, 1879) 
       ? Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // First part: Presentation text of the services
           VisibilityDetector(
-            key: const Key('section_services'), 
+            key: const Key('services_section'), 
             onVisibilityChanged: (info) {
               if (info.visibleFraction > 0.3) {
                 setState(() {
@@ -99,7 +100,7 @@ class ServicesSectionState extends State<ServicesSection> with SingleTickerProvi
                         Text(
                           "UNE ENTREPRISE TOUS CORPS D’ÉTAT",
                           style: TextStyle(
-                            fontSize: 30.0,
+                            fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
                             fontWeight: FontWeight.bold,
                             color: GlobalColors.thirdColor,
                           ),
@@ -119,7 +120,7 @@ class ServicesSectionState extends State<ServicesSection> with SingleTickerProvi
                           'Quelle que soit la complexité du chantier, avec ou sans architecte,  nous nous adaptons aux imprévus et veillons à respecter délais et budget, '
                           'tout en garantissant un haut niveau de qualité.',
                           style: TextStyle(
-                            fontSize: 16.0,
+                            fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                             color: Colors.black87,
                           ),
                           textAlign: TextAlign.center,
@@ -178,7 +179,7 @@ class ServicesSectionState extends State<ServicesSection> with SingleTickerProvi
               child: Text(
                 showAllServices ? "Réduire" :  "Afficher plus", // Switch between different texts
                 style: TextStyle(
-                  fontSize: 16.0,
+                  fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                   color: GlobalColors.thirdColor,
                   fontWeight: FontWeight.bold,
                 )
@@ -235,7 +236,7 @@ class ServicesSectionState extends State<ServicesSection> with SingleTickerProvi
                           Text(
                             "UNE ENTREPRISE TOUS CORPS D’ÉTAT",
                             style: TextStyle(
-                              fontSize: 30.0,
+                              fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
                               fontWeight: FontWeight.bold,
                               color: GlobalColors.thirdColor,
                             ),
@@ -255,7 +256,7 @@ class ServicesSectionState extends State<ServicesSection> with SingleTickerProvi
                             'Quelle que soit la complexité du chantier, avec ou sans architecte,  nous nous adaptons aux imprévus et veillons à respecter délais et budget, '
                             'tout en garantissant un haut niveau de qualité.',
                             style: TextStyle(
-                              fontSize: 16.0,
+                              fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                               color: Colors.black87,
                             ),
                             textAlign: TextAlign.center,
@@ -287,6 +288,8 @@ class ServiceTitleState extends State<ServiceTitle> {
 
   @override
   Widget build(BuildContext context) {
+  final bool isMobile = GlobalScreenSizes.isMobileScreen(context);
+  
     return MouseRegion(
       onEnter: (_) => setState(() => isHovered = true), 
       onExit: (_) => setState(() => isHovered = false), 
@@ -330,7 +333,7 @@ class ServiceTitleState extends State<ServiceTitle> {
                     widget.services["title"]!,
                     style: TextStyle(
                       color: GlobalColors.thirdColor,
-                      fontSize: 16.0,
+                      fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

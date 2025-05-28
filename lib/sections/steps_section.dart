@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sio2_renovations_frontend/utils/global_screen_sizes.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 import '../utils/global_colors.dart';
 import '../components/my_rive_button.dart';
 import '../utils/global_others.dart';
@@ -13,6 +15,19 @@ class StepsSection extends StatefulWidget {
 class StepsSectionState extends State<StepsSection> {
   final ScrollController _scrollController = ScrollController(); // ScrollController to handle horizontal scrolling
   double _scrollOffset = 0.0; // Variable to track manual scrolling offset
+  double _progress = 0.0; // ✅ Variable pour stocker la progression du scroll
+  bool showProgressBar = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _scrollController.addListener(() { // ✅ Met à jour la barre de progression à chaque mouvement
+      setState(() {
+        _progress = _scrollController.offset / _scrollController.position.maxScrollExtent;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +78,32 @@ class StepsSectionState extends State<StepsSection> {
               ),
             ),
           ),
+          if (GlobalScreenSizes.isCustomSize(context, 1067))
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 20),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15), // ✅ Bords arrondis pour un effet moderne
+              child: Container(
+                width: 150, // ✅ Largeur contrôlée
+                height: 8, // ✅ Épaisseur fine et élégante
+                alignment: Alignment.centerLeft,
+                decoration: BoxDecoration(
+                  color: Colors.grey[300], // ✅ Couleur de fond discrète
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: FractionallySizedBox(
+                  widthFactor: _progress, // ✅ Ajuste la largeur en fonction du scroll
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: GlobalColors.thirdColor, // ✅ Couleur principale
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -97,93 +138,103 @@ class StepsSectionState extends State<StepsSection> {
       },
     ];
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Card(
-        elevation: 6,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        color: gradientColors[index], // Assigns color based on index for gradient effect
-        child: SizedBox(
-          width: 300,
-          height: 500,
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Step number rectangle positioned at top-left
-                Expanded(
-                  flex: 1,
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Container(
-                      width: 80,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "${index + 1}", // Step number dynamically generated
-                          style: TextStyle(
-                            fontFamily: 'DancingScript',
-                            fontSize: 52.0,
-                            fontWeight: FontWeight.bold,
-                            color: gradientColors[index], // Matches step number color to card background
+    final bool isMobile = GlobalScreenSizes.isMobileScreen(context);
+    
+    return VisibilityDetector(
+      key: Key("card_$index"), 
+      onVisibilityChanged: (info) {
+          setState(() {
+            showProgressBar = info.visibleFraction > 0.1;
+          });
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Card(
+          elevation: 6,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          color: gradientColors[index], // Assigns color based on index for gradient effect
+          child: SizedBox(
+            width: 300,
+            height: 500,
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Step number rectangle positioned at top-left
+                  Expanded(
+                    flex: 1,
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Container(
+                        width: 80,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "${index + 1}", // Step number dynamically generated
+                            style: TextStyle(
+                              fontFamily: 'DancingScript',
+                              fontSize: isMobile ? GlobalSize.stepsSectionMobileTitleCard : GlobalSize.stepsSectionWebTitleCard, 
+                              fontWeight: FontWeight.bold,
+                              color: gradientColors[index], // Matches step number color to card background
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),  
-                ),
-                // Ensures consistent layout by expanding the text area
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Title
-                      SizedBox(
-                        height: 60.0,
-                        child: Text(
-                          stepData[index]["title"]!,
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      // Description
-                      Text(
-                        stepData[index]["description"]!,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white70,
-                        ),
-                        textAlign: TextAlign.justify,
-                      ),
-                      // Adds button only in the first card (`index == 0`)
-                      if (index == 0) ...[
-                        SizedBox(height: 20),
-                        SizedBox(
-                          height: 60,
-                          width:  120,
-                          child: MyRiveButton(
-                            onPressed: () => Navigator.pushNamed(context, ('/contact')), // Navigates to contact page
-                            buttonPath: GlobalButtonsAndIcons.contactButtonWithReverse,
-                          )
-                        ),
-                      ]
-                    ],
+                    ),  
                   ),
-                ),
-              ],
+                  // Ensures consistent layout by expanding the text area
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Title
+                        SizedBox(
+                          height: 60.0,
+                          child: Text(
+                            stepData[index]["title"]!,
+                            style: TextStyle(
+                              fontSize: isMobile ? GlobalSize.stepsSectionMobileSubTitleCard : GlobalSize.stepsSectionWebSubTitleCard,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        // Description
+                        Text(
+                          stepData[index]["description"]!,
+                          style: TextStyle(
+                            fontSize: isMobile ? GlobalSize.webSizeText : GlobalSize.webSizeText,
+                            color: Colors.white70,
+                          ),
+                          textAlign: TextAlign.justify,
+                        ),
+                        // Adds button only in the first card (`index == 0`)
+                        if (index == 0) ...[
+                          SizedBox(height: 20),
+                          SizedBox(
+                            height: 60,
+                            width:  120,
+                            child: MyRiveButton(
+                              onPressed: () => Navigator.pushNamed(context, ('/contact')), // Navigates to contact page
+                              buttonPath: GlobalButtonsAndIcons.contactButtonWithReverse,
+                            )
+                          ),
+                        ]
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      )
+        )
+      ),
     );
   }
 }

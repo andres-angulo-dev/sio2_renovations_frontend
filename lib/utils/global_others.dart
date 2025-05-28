@@ -45,7 +45,13 @@ class GlobalSize {
   static const double mobileSubTitle = 16.0; 
   static const double webSubTitle = 18.0; 
   static const double mobileSizeText = 14.0; 
-  static const double webSizeText = 16.0; 
+  static const double webSizeText = 16.0;
+  // Steps section 
+  static const double stepsSectionMobileTitleCard = 52.0;
+  static const double stepsSectionWebTitleCard = 52.0;
+  static const double stepsSectionMobileSubTitleCard = 22.0;
+  static const double stepsSectionWebSubTitleCard = 22.0;
+ 
   // Footer
   static const double footerMobileTitle = 18.0; 
   static const double footerWebTitle = 20.0; 
