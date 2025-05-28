@@ -16,7 +16,6 @@ class OpeningHoursComponent extends StatelessWidget{
   @override   
   Widget build(BuildContext context) {
 
-
     final List<Map<String, String>> scheduleData = [
       {"day": "Lun - Ven", "hour": "9h - 18h"},
       {"day": "Sam", "hour": "10h - 18h"},

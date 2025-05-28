@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sio2_renovations_frontend/utils/global_others.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../utils/global_colors.dart';
+import '../utils/global_screen_sizes.dart';
 
 class WhyChooseUsSection extends StatefulWidget {
   const WhyChooseUsSection({super.key});
@@ -39,22 +41,23 @@ class WhyChooseUsSectionState extends State<WhyChooseUsSection> with SingleTicke
   
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = GlobalScreenSizes.isMobileScreen(context);
 
     return VisibilityDetector(
       key: const Key("why_choose_us_section"), 
       onVisibilityChanged: (info) {
-        if (info.visibleFraction > 0.5) {
+        if (info.visibleFraction > 0.3) {
           _whyChooseUsController.forward();
         }
       },
       child: Stack(
         children: [ 
           Container(
-            width: MediaQuery.of(context).size.width,
+            width: GlobalScreenSizes.screenWidth(context),
             padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 100.0),
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [GlobalColors.fourthColor, Colors.white],
+                colors: [GlobalColors.fourthColor, GlobalColors.firstColor],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -68,7 +71,7 @@ class WhyChooseUsSectionState extends State<WhyChooseUsSection> with SingleTicke
                   Text(
                     "CONFIEZ-NOUS VOTRE PROJET EN TOUTE SÉRÉNITÉ",
                     style: TextStyle(
-                      fontSize: 30.0,
+                      fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
                       fontWeight: FontWeight.bold,
                       color: GlobalColors.thirdColor,
                     ),
@@ -80,7 +83,7 @@ class WhyChooseUsSectionState extends State<WhyChooseUsSection> with SingleTicke
                     width: 800.0,
                     child: Text(
                       "Chez SIO2 Rénovations, chaque rénovation est menée avec rigueur et professionnalisme. Nous comprenons l’importance d’un projet bien encadré et nous nous engageons à offrir une expérience fluide et maîtrisée, du premier échange jusqu’à la livraison finale.",
-                      style: TextStyle(fontSize: 16, color: Colors.black87),
+                      style: TextStyle(fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText, color: GlobalColors.secondColor),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -124,6 +127,8 @@ class WhyChooseUsSectionState extends State<WhyChooseUsSection> with SingleTicke
   }  
   // Helper function to build key points
   Widget _buildKeyPoint(IconData icon, String title, String description) {
+    final bool isMobile = GlobalScreenSizes.isMobileScreen(context);
+
     return FadeTransition(
       opacity: _whyChooseUsFadeAnimation,
       child: Padding(
@@ -131,16 +136,16 @@ class WhyChooseUsSectionState extends State<WhyChooseUsSection> with SingleTicke
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(icon, size: 30, color: GlobalColors.thirdColor),
+            Icon(icon, size: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle, color: GlobalColors.thirdColor),
             const SizedBox(width: 10),
             Expanded(
-              child:            Column(
+              child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
                   style: TextStyle(
-                    fontSize: 20, 
+                    fontSize: isMobile ? GlobalSize.mobileWhyChooseUsSectionTitle : GlobalSize.webWhyChooseUsSectionTitle, 
                     fontWeight: FontWeight.bold, 
                     color: GlobalColors.thirdColor
                   ),
@@ -149,8 +154,8 @@ class WhyChooseUsSectionState extends State<WhyChooseUsSection> with SingleTicke
                 Text(
                   description,
                   style: TextStyle(
-                    fontSize: 16, 
-                    color: Colors.black87
+                    fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText, 
+                    color: GlobalColors.secondColor
                   ),
                   textAlign: TextAlign.start,
                 ),

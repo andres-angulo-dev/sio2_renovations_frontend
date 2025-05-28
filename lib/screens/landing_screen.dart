@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:visibility_detector/visibility_detector.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
 import '../sections/welcome_section.dart';
@@ -73,8 +71,6 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
     );
 
   }
-
-
 
   // Handles user consent for cookies and manages the visibility of the cookie consent banner.
   void _handleCookiesConsent(bool? consent) {
@@ -150,7 +146,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
       ) 
       : null,
       extendBodyBehindAppBar: true,
-      backgroundColor: Colors.white,
+      backgroundColor: GlobalColors.firstColor,
       body: Stack(
             children: [
               SingleChildScrollView(

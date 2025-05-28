@@ -245,12 +245,66 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                                     controller: _pageController,
                                     itemCount: feedbacks.length,
                                     itemBuilder: (context, index) {
-                                      return Row(
+                                      return  GlobalScreenSizes.isMobileScreen(context) 
+                                      ? Column( // Mobile
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Expanded( // Feedback
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  feedbacks[index]["comment"]!,
+                                                  style: TextStyle(fontSize: GlobalSize.webSizeText, fontStyle: FontStyle.italic),
+                                                  textAlign: TextAlign.justify,
+                                                ),
+                                                SizedBox(height: 10),
+                                                Text(
+                                                  "- ${feedbacks[index]["author"]}, ${feedbacks[index]["title"]}",
+                                                  style: TextStyle(fontSize: GlobalSize.mobileSizeText, fontWeight: FontWeight.w600, color: GlobalColors.fiveColor),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 200.0,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                // Previous arrow
+                                                AnimatedOpacity(
+                                                  opacity: 1.0,
+                                                  duration: const Duration(milliseconds: 500),
+                                                  child: IconButton(
+                                                    icon: Icon(Icons.arrow_back_ios),
+                                                    onPressed: () {
+                                                      _previousFeedBack();
+                                                    },
+                                                  )
+                                                ),
+                                                // Next arrow
+                                                AnimatedOpacity(
+                                                  opacity: 1.0,
+                                                  duration: const Duration(milliseconds: 500),
+                                                  child: IconButton( 
+                                                    icon: Icon(Icons.arrow_forward_ios),
+                                                    onPressed: () {
+                                                      _nextFeedBack();
+                                                    },
+                                                  )
+                                                ),
+                                              ],
+                                            )
+                                          )
+                                        ],
+                                      )
+                                      : Row( // Web
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           // Previous arrow
                                           AnimatedOpacity(
-                                            opacity: GlobalScreenSizes.isCustomSize(context, 1550) ? 1.0 : _isHovered ? 1.0 : 0.0,
+                                            opacity: _isHovered ? 1.0 : 0.0,
                                             duration: const Duration(milliseconds: 500),
                                             child: IconButton(
                                               icon: Icon(Icons.arrow_back_ios),
@@ -263,14 +317,14 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                                           Align(
                                             alignment: Alignment.center,
                                             child: SizedBox(
-                                            width: 430,
+                                            width: 430.0,
                                               child: Column(
                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                 children: [
                                                   Text(
                                                     feedbacks[index]["comment"]!,
                                                     style: TextStyle(fontSize: GlobalSize.webSizeText, fontStyle: FontStyle.italic),
-                                                    textAlign: TextAlign.center,
+                                                    textAlign: TextAlign.justify,
                                                   ),
                                                   SizedBox(height: 10),
                                                   Text(
@@ -284,7 +338,7 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                                           ),
                                           // Next arrow
                                           AnimatedOpacity(
-                                            opacity: GlobalScreenSizes.isCustomSize(context, 1550) ? 1.0 : _isHovered ? 1.0 : 0.0,
+                                            opacity: _isHovered ? 1.0 : 0.0,
                                             duration: const Duration(milliseconds: 500),
                                             child: IconButton( 
                                               icon: Icon(Icons.arrow_forward_ios),
@@ -304,8 +358,8 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                                     padding: EdgeInsets.all(16.0),
                                     child: SvgPicture.asset(
                                       GlobalLogo.logoDots,
-                                      width: 100,
-                                      height: 100,
+                                      width: GlobalScreenSizes.isMobileScreen(context) ? 80.0 : 100.0,
+                                      height: GlobalScreenSizes.isMobileScreen(context) ? 80.0 : 100.0,
                                     )
                                   )
                                 ),

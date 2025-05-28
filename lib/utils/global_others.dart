@@ -46,6 +46,9 @@ class GlobalSize {
   static const double webSubTitle = 18.0; 
   static const double mobileSizeText = 14.0; 
   static const double webSizeText = 16.0;
+  // Why choose us section 
+  static const double mobileWhyChooseUsSectionTitle = 18.0; 
+  static const double webWhyChooseUsSectionTitle = 20.0; 
   // Steps section
   static const double stepsSectionMobilebSubTitle = 20.0; 
   static const double stepsSectionWebSubTitle = 24.0; 
