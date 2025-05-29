@@ -9,6 +9,7 @@ import '../sections/key_figures_section.dart';
 import '../sections/services_section.dart';
 import '../sections/steps_section.dart';
 import '../sections/what_type_of_renovations_section.dart';
+import '../sections/before_after_section.dart';
 import '../components/cookies_consent_banner.dart';
 import '../components/my_button.dart';
 import '../sections/customer_feedback_section.dart';
@@ -28,14 +29,6 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
   // AnimationController: Manages the timing of the animations.
   late AnimationController _animationController;
   late AnimationController _servicesAnimationController;
-  late List<AnimationController> _valuesAnimationControllers;
-
-  
-  // Animation<double>: Handles the fade-in effect for text (controls scale effect.
-  late List<Animation<double>> _valuesScaleAnimations;
-
-  // Animation<double>: Handles the fade-in effect for text (controls opacity effect).
-  late List<Animation<double>> _valuesFadeAnimations;
 
   final ScrollController _scrollController = ScrollController(); // Scroll controller for the appBar
 
@@ -130,7 +123,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    final double screenWidth = MediaQuery.of(context).size.width;
     _mobile = GlobalScreenSizes.isMobileScreen(context);
 
     return Scaffold(
@@ -191,87 +184,22 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                     // section 3
                     ValuesSection(),
                     SizedBox(height: 150.0),
-                    // section 3
+                    // section 4
                     WhyChooseUsSection(),
                     SizedBox(height: 100.0),
-                    // section 4
+                    // section 5
                     ServicesSection(),
                     SizedBox(height: 150.0),
-                    // section 5
+                    // section 6
                     StepsSection(),
                     SizedBox(height: 150.0),
-                    // section 6
+                    // section 7
                     KeyFiguresSection(),
                     SizedBox(height: 150.0),             
-                    // section 7
-                    SizedBox(
-                      height: 600.0,
-                      // width: screenWidth * 0.5,
-                      child: Row(
-                        children: [
-                          Flexible(
-                            child: Stack(
-                              children: [
-                                Container(
-                                  width: 1500.0,
-                                  height: 600.0,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage('assets/images/immeuble.jpeg'),
-                                      fit: BoxFit.cover,
-                                    )
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 0.0,
-                                  child: Padding(
-                                    padding: EdgeInsets.all(16.0),
-                                    child: Text(
-                                      "AVANT",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 30.0,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            )
-                          ),
-                          Flexible(
-                            child: Stack(
-                              children: [
-                                Container(
-                                  width: 1500.0,
-                                  height: 600.0,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage('assets/images/immeuble.jpeg'),
-                                      fit: BoxFit.cover,
-                                    )
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 0.0,
-                                  child: Padding(
-                                    padding: EdgeInsets.all(16.0),
-                                    child: Text(
-                                      "APRÈS",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 30.0,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            )
-                          ),
-                        ]
-                      ),
-                    ),   
+                    // section 8
+                    BeforeAfterSection(),
                     SizedBox(height: 150.0),
-                    // section 7
+                    // section 9
                     CustomerFeedbackSection(),
                     SizedBox(height: 100.0),
                     FooterComponent(),

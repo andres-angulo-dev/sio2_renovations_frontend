@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utils/global_others.dart';
 import '../utils/global_colors.dart';
-import '../utils/global_screen_sizes.dart';
 
 class OpeningHoursComponent extends StatelessWidget{
   const OpeningHoursComponent({

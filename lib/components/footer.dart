@@ -6,7 +6,6 @@ import '../components/opening_hours_component.dart';
 import '../utils/global_screen_sizes.dart';
 import '../utils/global_others.dart';
 import '../utils/global_colors.dart';
-import '../utils/global_screen_sizes.dart';
 
 class FooterComponent extends StatelessWidget {
   const FooterComponent({super.key});
