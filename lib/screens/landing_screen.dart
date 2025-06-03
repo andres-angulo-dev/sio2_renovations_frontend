@@ -29,14 +29,15 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
   // AnimationController: Manages the timing of the animations.
   late AnimationController _animationController;
   late AnimationController _servicesAnimationController;
-
-  final ScrollController _scrollController = ScrollController(); // Scroll controller for the appBar
+  // Scroll controller for the back to top button and appBar 
+  final ScrollController _scrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState with _scrollController = ScrollController();
 
   bool _mobile = false; 
   bool _show = false;
   bool? _cookiesAccepted; // State to track cookies consent.
   bool _isBannerVisible = false;
   String currentItem = "Accueil"; // Holds the currently selected menu item to change text color
+  bool _showBackToTopButton = false; // Show or hide Back to top button
 
   @override
   void initState() {
@@ -57,12 +58,14 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
       duration: const Duration(milliseconds: 1500),
     );
 
-    // handle animation in services section
+    // Handle animation in services section
    _servicesAnimationController = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 1000),
     );
 
+    // Handle back to top button 
+    _scrollController.addListener(_scrollListener); // Adds an event listener that captures scrolling from parent Landing Screen using scrollController
   }
 
   // Handles user consent for cookies and manages the visibility of the cookie consent banner.
@@ -112,6 +115,22 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
     });
   }
 
+  // Detects when scrolling should show back to top button
+  void _scrollListener() {
+    setState(() {
+      _showBackToTopButton = _scrollController.position.pixels > MediaQuery.of(context).size.height - 100;
+    });
+  }
+
+  // Go to the top of the page
+  void _scrollToTop() {
+    _scrollController.animateTo(
+      0.0,
+      duration: Duration(milliseconds: 1000),
+      curve: Curves.easeOut,
+    );
+  }
+
   // Disposes of the animation controller to prevent memory leaks.
   @override
   void dispose() {
@@ -132,8 +151,8 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
         onItemSelected: updateCurrentItem,
         scrollController: _scrollController,
       ), 
-      endDrawer: _mobile ? 
-      DrawerComponent(
+      endDrawer: _mobile 
+      ? DrawerComponent(
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
       ) 
@@ -141,96 +160,104 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
       extendBodyBehindAppBar: true,
       backgroundColor: GlobalColors.firstColor,
       body: Stack(
-            children: [
-              SingleChildScrollView(
-                controller: _scrollController,
-                child: Column(
+        children: [
+          SingleChildScrollView(
+            controller: _scrollController,
+            child: Column(
+              children: [
+                // Welcome section
+                Stack(
                   children: [
-                    Stack(
-                      // Welcome section
-                      children: [
-                        // Background image with shadow effect.
-                        Positioned.fill(
-                          child: Container(
-                            height: MediaQuery.of(context).size.height,
-                            width: screenWidth,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(GlobalImages.backgroundLanding),
-                                  fit: BoxFit.cover, // Cover the entire space
-                                ),
-                              ),
+                    // Background image with shadow effect.
+                    Positioned.fill(
+                      child: Container(
+                        height: MediaQuery.of(context).size.height,
+                        width: screenWidth,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(GlobalImages.backgroundLanding),
+                              fit: BoxFit.cover, // Cover the entire space
                             ),
+                          ),
                         ),
-                        Positioned.fill(
-                          child: Container(
-                            height: MediaQuery.of(context).size.height,
-                            width: screenWidth,
-                            decoration: BoxDecoration(
-                              color: Colors.black.withValues(alpha: 0.4),
-                            ),
-                          )
-                        ),
-                        WelcomeSection(),
-                      ]
                     ),
-                    SizedBox(height: 100.0),
-                    // section 1
-                    CompanyProfileSection(),
-                    SizedBox(height: 150.0),
-                    // section 2
-                    WhatTypeOfRenovationsSection(),
-                    SizedBox(height: 150.0),
-                    // section 3
-                    ValuesSection(),
-                    SizedBox(height: 150.0),
-                    // section 4
-                    WhyChooseUsSection(),
-                    SizedBox(height: 100.0),
-                    // section 5
-                    ServicesSection(),
-                    SizedBox(height: 150.0),
-                    // section 6
-                    StepsSection(),
-                    SizedBox(height: 150.0),
-                    // section 7
-                    KeyFiguresSection(),
-                    SizedBox(height: 150.0),             
-                    // section 8
-                    BeforeAfterSection(),
-                    SizedBox(height: 150.0),
-                    // section 9
-                    CustomerFeedbackSection(),
-                    SizedBox(height: 100.0),
-                    FooterComponent(),
-                  ],
+                    Positioned.fill(
+                      child: Container(
+                        height: MediaQuery.of(context).size.height,
+                        width: screenWidth,
+                        decoration: BoxDecoration(
+                          color: Colors.black.withValues(alpha: 0.4),
+                        ),
+                      )
+                    ),
+                    WelcomeSection(),
+                  ]
                 ),
-              ),
-              // Cookie consent banner appears when banner visibility i
-              if (_isBannerVisible)
-              CookiesConsentBanner(
-                onConsentGiven: _handleCookiesConsent,
-                onConsentLoaded: _handleLoadedConsent,
-                toggleVisibility: _toggleBannerVisibility,
-              ),
-              // Image button appears after cookie consent is accepted.                    
-              if (!_isBannerVisible && _cookiesAccepted == true)
-              Positioned(
-                bottom: 20,
-                left: 20,
-                child: AnimatedOpacity(
-                  opacity: _show ? 1.0 : 0.0, 
-                  duration: const Duration(seconds: 2),
-                  child: MyButton(
-                    onPressed: _toggleBannerVisibility,
-                    buttonPath: GlobalButtonsAndIcons.cookiesButton, 
-                    foregroundPath: GlobalButtonsAndIcons.iconCookieButton,
-                  )
-                )
+                SizedBox(height: 100.0),
+                // section 1
+                CompanyProfileSection(),
+                SizedBox(height: 150.0),
+                // section 2
+                WhatTypeOfRenovationsSection(),
+                SizedBox(height: 150.0),
+                // section 3
+                ValuesSection(),
+                SizedBox(height: 150.0),
+                // section 4
+                WhyChooseUsSection(),
+                SizedBox(height: 100.0),
+                // section 5
+                ServicesSection(),
+                SizedBox(height: 150.0),
+                // section 6
+                StepsSection(),
+                SizedBox(height: 150.0),
+                // section 7
+                KeyFiguresSection(),
+                SizedBox(height: 150.0),             
+                // section 8
+                BeforeAfterSection(),
+                SizedBox(height: 150.0),
+                // section 9
+                CustomerFeedbackSection(),
+                SizedBox(height: 100.0),
+                FooterComponent(),
+              ],
+            ),
+          ),
+          // Cookie consent banner appears when banner visibility i
+          if (_isBannerVisible)
+          CookiesConsentBanner(
+            onConsentGiven: _handleCookiesConsent,
+            onConsentLoaded: _handleLoadedConsent,
+            toggleVisibility: _toggleBannerVisibility,
+          ),
+          // Image button appears after cookie consent is accepted.                    
+          if (!_isBannerVisible && _cookiesAccepted == true)
+          Positioned(
+            bottom: 15,
+            left: 15,
+            child: AnimatedOpacity(
+              opacity: _show ? 1.0 : 0.0, 
+              duration: const Duration(seconds: 2),
+              child: MyButton(
+                onPressed: _toggleBannerVisibility,
+                buttonPath: GlobalButtonsAndIcons.cookiesButton, 
+                foregroundPath: GlobalButtonsAndIcons.iconCookieButton,
               )
-            ],
+            )
+          )
+        ],
+      ),
+      floatingActionButton: _showBackToTopButton
+      ? FloatingActionButton(
+        elevation: 0.0,
+        hoverElevation: 0.0,  
+        onPressed: _scrollToTop,
+        backgroundColor: GlobalColors.orangeColor,
+        child: Icon(Icons.keyboard_arrow_up_rounded, color: Colors.white, size: 40.0,),
       )
-      );
-    
+      : null,
+    );
   }
 }
