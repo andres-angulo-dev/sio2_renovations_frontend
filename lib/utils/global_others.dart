@@ -72,4 +72,11 @@ class GlobalSize {
   static const double footerWebText = 14.0;
   static const double footerMobileCopyright = 12.0;
   static const double footerWebCopyright = 14.0;
+  // Projects page
+  // Welcome section
+  static const double welcomeSectionMobileSubTitle = 26.0;
+  static const double welcomeSectionWebSubTitle = 36.0;
+  static const double welcomeSectionMobileTitle = 28.0;
+  static const double welcomeSectionWebTitle = 40.0;
+
 }
