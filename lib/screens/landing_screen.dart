@@ -220,7 +220,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                 SizedBox(height: 150.0),
                 // section 9
                 CustomerFeedbackSection(),
-                SizedBox(height: 100.0),
+                SizedBox(height: 160.0),
                 FooterComponent(),
               ],
             ),

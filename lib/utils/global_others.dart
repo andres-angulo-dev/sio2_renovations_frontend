@@ -11,6 +11,50 @@ class GlobalImages {
   static const String customGoogleMarker = 'assets/images/customGoogleMarker.png';
   static const String backgroundFeedbackSection = 'assets/images/backgroundFeedbackSection.png';
   static const String backgroundWhyChooseUsSection = 'assets/images/backgroundWhyChooseUs.png';
+
+  static const Map<String, List<String>> photosByService = {
+    'PEINTURE': [
+      GlobalImages.backgroundLanding,
+      GlobalImages.backgroundLanding,
+      GlobalImages.backgroundLanding,
+      GlobalImages.backgroundLanding,
+    ],
+    'MENUISERIE': [
+      GlobalImages.backgroundLanding,
+      GlobalImages.backgroundLanding,
+      GlobalImages.backgroundLanding,
+    ],
+    'SOLS': [
+      GlobalImages.backgroundLanding,
+      GlobalImages.backgroundLanding,
+      GlobalImages.backgroundLanding,      
+      GlobalImages.backgroundLanding,
+      GlobalImages.backgroundLanding,
+    ],
+    'PLOMBERIE': [
+      GlobalImages.backgroundLanding,
+      GlobalImages.backgroundLanding,
+    ],
+    'CHAUFFAGE': [
+      GlobalImages.backgroundLanding,      
+      GlobalImages.backgroundLanding,
+      GlobalImages.backgroundLanding,
+    ],
+    'MAÇONNERIE': [
+      GlobalImages.backgroundLanding,
+      GlobalImages.backgroundLanding,
+      GlobalImages.backgroundLanding,
+      GlobalImages.backgroundLanding,
+      GlobalImages.backgroundLanding,
+      GlobalImages.backgroundLanding,
+    ],
+    'ÉLECTRICITÉ': [
+      GlobalImages.backgroundLanding,
+      GlobalImages.backgroundLanding,      
+      GlobalImages.backgroundLanding,
+      GlobalImages.backgroundLanding,
+    ],
+  };
 }
 
 class GlobalLogo {
@@ -78,5 +122,6 @@ class GlobalSize {
   static const double welcomeSectionWebSubTitle = 36.0;
   static const double welcomeSectionMobileTitle = 28.0;
   static const double welcomeSectionWebTitle = 40.0;
-
 }
+
+

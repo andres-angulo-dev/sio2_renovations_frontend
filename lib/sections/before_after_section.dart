@@ -14,8 +14,8 @@ class BeforeAfterSection extends StatelessWidget {
     return Wrap(
       alignment: WrapAlignment.spaceBetween, 
       children: [
-        _builRightContent(context, isMobile, "APRÈS"),
-        _buildLeftContent(context, isMobile, "AVANT"),
+        _builRightContent(context, isMobile, "AVANT"),
+        _buildLeftContent(context, isMobile, "APRÈS"),
       ],
     );
   }

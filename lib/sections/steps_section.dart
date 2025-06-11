@@ -15,14 +15,14 @@ class StepsSection extends StatefulWidget {
 class StepsSectionState extends State<StepsSection> {
   final ScrollController _scrollController = ScrollController(); // ScrollController to handle horizontal scrolling
   double _scrollOffset = 0.0; // Variable to track manual scrolling offset
-  double _progress = 0.0; // ✅ Variable pour stocker la progression du scroll
+  double _progress = 0.0; // Variable to store the scroll progress
   bool showProgressBar = true;
 
   @override
   void initState() {
     super.initState();
 
-    _scrollController.addListener(() { // ✅ Met à jour la barre de progression à chaque mouvement
+    _scrollController.addListener(() { // Updates the progress bar with each movement
       setState(() {
         _progress = _scrollController.offset / _scrollController.position.maxScrollExtent;
       });
@@ -84,21 +84,21 @@ class StepsSectionState extends State<StepsSection> {
           Padding(
             padding: EdgeInsets.symmetric(vertical: 20),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(15), // ✅ Bords arrondis pour un effet moderne
+              borderRadius: BorderRadius.circular(15), // 
               child: Container(
-                width: 150, // ✅ Largeur contrôlée
-                height: 8, // ✅ Épaisseur fine et élégante
+                width: 150,
+                height: 8, 
                 alignment: Alignment.centerLeft,
                 decoration: BoxDecoration(
-                  color: Colors.grey[300], // ✅ Couleur de fond discrète
+                  color: Colors.grey[300], 
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: FractionallySizedBox(
-                  widthFactor: _progress, // ✅ Ajuste la largeur en fonction du scroll
+                  widthFactor: _progress, // Adjust the width according to the scroll
                   alignment: Alignment.centerLeft,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: GlobalColors.thirdColor, // ✅ Couleur principale
+                      color: GlobalColors.thirdColor, 
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
@@ -111,7 +111,7 @@ class StepsSectionState extends State<StepsSection> {
     );
   }
 
-  // ✅ Function to generate a project card with color gradient
+  // Function to generate a project card with color gradient
   Widget _buildProjectCard(int index) {
     final List<Color> gradientColors = [
       Color(0xFF892323), // Dark red
@@ -120,7 +120,7 @@ class StepsSectionState extends State<StepsSection> {
       Color.fromARGB(255, 165, 127, 78), // Primary color
     ];
 
-    // ✅ List storing unique titles and descriptions for each step
+    // List storing unique titles and descriptions for each step
     final List<Map<String, String>> stepData = [
       {
         "title": "Décrivez votre projet", 
