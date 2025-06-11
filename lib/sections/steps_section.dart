@@ -224,7 +224,7 @@ class StepsSectionState extends State<StepsSection> {
                             width:  120,
                             child: MyRiveButton(
                               onPressed: () => Navigator.pushNamed(context, ('/contact')), // Navigates to contact page
-                              buttonPath: GlobalButtonsAndIcons.contactButtonWithReverse,
+                              buttonPath: GlobalButtonsAndIcons.contactButtonV2,
                             )
                           ),
                         ]

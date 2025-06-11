@@ -7,6 +7,7 @@ class GlobalImages {
   static const String image6 = 'assets/images/image6.jpeg';
   static const String image7 = 'assets/images/image7.jpeg';
   static const String image8 = 'assets/images/image8.jpeg';
+  static const String bakcgroundQuote = 'assets/images/iStock-871105006.webp';
   static const String backgroundLanding = 'assets/images/immeuble.jpeg';
   static const String customGoogleMarker = 'assets/images/customGoogleMarker.png';
   static const String backgroundFeedbackSection = 'assets/images/backgroundFeedbackSection.png';
@@ -78,9 +79,10 @@ class GlobalButtonsAndIcons {
   static const String iconCookieButton = 'assets/icon_button.svg';
   static const String contactButton = 'assets/rive/contact_button.riv';
   static const String contactButtonWithReverse = 'assets/rive/contact_button _with_reverse.riv';
-  static const String contactButtonWithReverseV2 = 'assets/rive/contact_button_with_reverse_v2.riv';
+  static const String contactButtonV2 = 'assets/rive/contact_button_v2.riv';
   static const String callUsButton = 'assets/rive/call_us_button.riv';
   static const String freeQuoteButton = 'assets/rive/free_quote_button.riv';
+  static const String freeQuoteButtonV2 = 'assets/rive/free_quote_button_v2.riv';
 }
 
 class GlobalSize {
