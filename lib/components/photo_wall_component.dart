@@ -9,7 +9,6 @@ class PhotoWallComponent extends StatelessWidget {
 
   final List<String> photos;
 
-
   @override
   Widget build(BuildContext context) {
     // We center the grid and constrain it so it doesn't use the entire screen width
@@ -28,7 +27,10 @@ class PhotoWallComponent extends StatelessWidget {
             return StaggeredGridTile.count(
               crossAxisCellCount: crossAxisCellCount,
               mainAxisCellCount: mainAxisCellCount,
-              child: PhotoGridItem(imageUrl: photos[index]),
+              child: PhotoGridItem(
+                imageUrl: photos[index], 
+                heroTag: 'photo-$index' // Unique tag by index
+              ),
             );
           }),
         )
@@ -40,10 +42,12 @@ class PhotoWallComponent extends StatelessWidget {
 class PhotoGridItem extends StatelessWidget {
   const PhotoGridItem({
     super.key,
-    required this.imageUrl
+    required this.imageUrl,
+    required this.heroTag,
   });
   
   final String imageUrl;
+  final String heroTag;  
 
   void _openEnlargedImage(BuildContext context) {
     // Show a dialog overlay with the enlarged image
@@ -59,10 +63,9 @@ class PhotoGridItem extends StatelessWidget {
             height: double.infinity,
             child: Center(
               child: Hero(
-                tag: imageUrl, // Matches the tag for animated transition
+                tag: heroTag, // Matches the tag for animated transition
                 child: InteractiveViewer(
-                  // Doesn't allow for zooming and panning of the enlarged image
-                  scaleEnabled: false,
+                  scaleEnabled: false, // Doesn't allow for zooming and panning of the enlarged image
                   child: Image.network(
                     imageUrl,
                     fit: BoxFit.contain,
@@ -84,7 +87,7 @@ class PhotoGridItem extends StatelessWidget {
       child: GestureDetector(
         onTap: () => _openEnlargedImage(context), // Triggers the opening of the enlarged image on click/tap
         child: Hero(
-          tag: imageUrl,
+          tag: heroTag,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.network(
@@ -97,20 +100,6 @@ class PhotoGridItem extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // // WITHOUT DYNAMIC LIST
 // import 'package:flutter/material.dart';

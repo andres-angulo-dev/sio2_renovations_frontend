@@ -294,9 +294,9 @@ class ProjectsScreenState extends State<ProjectsScreen> {
                   ),
                 ),
                 const SizedBox(height: 100.0),
-                // Photo wall filtered
+                // Photo wall 
                 PhotoWallComponent(photos: filteredPhotos),
-                const SizedBox(height: 160.0),
+                const SizedBox(height: 100.0),
                 // Footer
                 const FooterComponent(),
               ],
