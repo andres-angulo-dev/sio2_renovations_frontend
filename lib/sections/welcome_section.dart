@@ -41,7 +41,6 @@ class WelcomeSection extends StatelessWidget {
                       ),
                       textAlign: TextAlign.center,
                     ),
-
                     DefaultTextStyle(
                       style: TextStyle(
                         color: GlobalColors.firstColor,

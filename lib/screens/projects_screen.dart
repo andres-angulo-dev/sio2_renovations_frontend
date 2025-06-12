@@ -4,8 +4,9 @@ import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
 import '../components/vertical_words_carousel_component.dart';
 import '../components/photo_wall_component.dart';
-import '../components/footer.dart';
 import '../components/my_rive_button.dart';
+import '../components/my_back_to_top_button.dart';
+import '../components/footer.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
@@ -23,10 +24,14 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
   late Animation<Offset> _slideTitleAnimation;
   late Animation<Offset> _slideButtonAnimation;
   late Animation<double> _fadeAnimation;
-  final ScrollController _scrollController = ScrollController();
+  // Scroll controller for the left and right button in horizontal menu
+  final ScrollController _scrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState 
+  // Scroll controller for the back to top button and appBar 
+  final ScrollController _pageScrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState 
   final bool mobile = false;
   String currentItem = 'Projets';
-  bool _show = false;
+  bool _showTitleScreen = false;
+  bool _showBackToTopButton = false;
 
   // Currently selected service, by default 'ALL'
   String selectedService = 'TOUT VOIR';
@@ -37,7 +42,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
 
     Future.delayed(const Duration(microseconds: 100), () {
       setState(() {
-        _show = true;
+        _showTitleScreen = true;
       });
     });
 
@@ -76,6 +81,9 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
       parent: _animationTitleController,
       curve: Curves.easeInOut
     ));
+
+    // Handle back to top button 
+    _pageScrollController.addListener(_pageScrollListener); // Adds an event listener that captures scrolling
   }
 
   void updateCurrentItem(String newItem) {
@@ -121,12 +129,24 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
     });
   }
 
+  // Detects when scrolling should show back to top button
+  void _pageScrollListener() {
+    final shouldShow = _pageScrollController.position.pixels > MediaQuery.of(context).size.height - 1000.0;
+    if (shouldShow != _showBackToTopButton) {
+      setState(() {
+        _showBackToTopButton = shouldShow;
+      });
+    }
+  }
+
   @override
   void dispose() {
-    super.dispose();
     _scrollController.dispose();
+    _pageScrollController.removeListener(_pageScrollListener);
+    _pageScrollController.dispose();
     _animationTitleController.dispose();
     _animationButtonController.dispose();
+    super.dispose();
   }
   
   @override
@@ -159,6 +179,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
         builder: (context, constraints) {
           final availableHeight = 800.0;
           return SingleChildScrollView(
+            controller: _pageScrollController,
             child: Column(
               children: [
                 // Welcome section
@@ -208,7 +229,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
                             color: GlobalColors.firstColor,
                           ),
                           child: AnimatedOpacity(
-                            opacity: _show ? 1.0 : 0.0,
+                            opacity: _showTitleScreen ? 1.0 : 0.0,
                             duration: const Duration(milliseconds: 1500),
                             child: Center(
                               child: Column(
@@ -429,6 +450,11 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
           );
         },
       ),
+      floatingActionButton: _showBackToTopButton 
+      ? MyBackToTopButton(
+        controller: _pageScrollController,
+      )
+      : null
     );
   }
 }

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
+import '../components/cookies_consent_banner.dart';
+import '../components/my_button.dart';
+import '../components/my_back_to_top_button.dart';
+import '../components/footer.dart';
 import '../sections/welcome_section.dart';
 import '../sections/company_profile_section.dart';
 import '../sections/values_section.dart';
@@ -10,10 +14,7 @@ import '../sections/services_section.dart';
 import '../sections/steps_section.dart';
 import '../sections/what_type_of_renovations_section.dart';
 import '../sections/before_after_section.dart';
-import '../components/cookies_consent_banner.dart';
-import '../components/my_button.dart';
 import '../sections/customer_feedback_section.dart';
-import '../components/footer.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
@@ -117,18 +118,14 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
 
   // Detects when scrolling should show back to top button
   void _scrollListener() {
-    setState(() {
-      _showBackToTopButton = _scrollController.position.pixels > MediaQuery.of(context).size.height - 100;
-    });
-  }
-
-  // Go to the top of the page
-  void _scrollToTop() {
-    _scrollController.animateTo(
-      0.0,
-      duration: Duration(milliseconds: 1000),
-      curve: Curves.easeOut,
-    );
+    final shouldShow = _scrollController.position.pixels > MediaQuery.of(context).size.height - 100;
+    if (shouldShow != _showBackToTopButton) {
+      setState(() {
+        setState(() {
+          _showBackToTopButton = shouldShow;
+        }); 
+      });
+    }
   }
 
   // Disposes of the animation controller to prevent memory leaks.
@@ -136,6 +133,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
   void dispose() {
     _animationController.dispose(); 
     _servicesAnimationController.dispose();
+    _scrollController.removeListener(_scrollListener);
     _scrollController.dispose();
     super.dispose();
   }
@@ -250,13 +248,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
         ],
       ),
       floatingActionButton: _showBackToTopButton
-      ? FloatingActionButton(
-        elevation: 0.0,
-        hoverElevation: 0.0,  
-        onPressed: _scrollToTop,
-        backgroundColor: GlobalColors.orangeColor,
-        child: Icon(Icons.keyboard_arrow_up_rounded, color: Colors.white, size: 40.0,),
-      )
+      ? MyBackToTopButton(controller: _scrollController)
       : null,
     );
   }
