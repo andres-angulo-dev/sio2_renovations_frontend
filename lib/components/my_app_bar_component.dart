@@ -10,11 +10,13 @@ class MyAppBarComponent extends StatefulWidget implements PreferredSizeWidget {
   const MyAppBarComponent({super.key,
     required this.currentItem,
     required this.onItemSelected,
+    this.currentSubItem,
     this.scrollController, // Added scroll controller
   });
 
   final String currentItem; // The currently active menu item
   final Function(String) onItemSelected; // Callback to notify the parent when a menu item is selected
+  final String? currentSubItem; // The currently active sub menu item
   final ScrollController? scrollController; // Capture the scroll to change appBar background color and navItems text color
 
   @override
@@ -117,6 +119,7 @@ class MyAppBarComponentState extends State<MyAppBarComponent> {
                     isHorizontal: true,
                     currentItem: widget.currentItem, // Pass the active item
                     onItemSelected: widget.onItemSelected, // Pass the callback
+                    currentSubItem: widget.currentSubItem, // Pass the active sub item
                   ),
                 ],
               )

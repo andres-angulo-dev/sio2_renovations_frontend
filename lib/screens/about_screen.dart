@@ -29,7 +29,8 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
   late Animation<double> _contactFadeAnimation;
 
   final bool mobile = false;
-  String currentItem = 'À propos de nous';
+  String currentItem = 'À propos';
+  String currentSubItem = 'Qui sommes nous ?';
   bool _show = false;
   bool _showHistorySection = false;
   bool _showServicesSection = false;
@@ -141,11 +142,13 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
       appBar: MyAppBarComponent(
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
+        currentSubItem: currentSubItem,
       ),
       endDrawer: mobile 
         ? DrawerComponent(
           currentItem: currentItem,
           onItemSelected: updateCurrentItem,
+          currentSubItem: currentSubItem,
         ) 
         : null,
       backgroundColor: GlobalColors.firstColor,

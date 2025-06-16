@@ -6,10 +6,12 @@ class DrawerComponent extends StatefulWidget{
   const DrawerComponent({super.key,
   required this.currentItem,
   required this.onItemSelected,
+  this.currentSubItem,
   });
 
   final String currentItem;   // The currently active menu item
   final Function(String) onItemSelected; // Callback to notify the parent when a menu item is selected
+  final String? currentSubItem;   // The currently active menu item
 
   @override  
   DrawerComponentState createState() => DrawerComponentState();
@@ -30,6 +32,7 @@ class DrawerComponentState extends State<DrawerComponent> {
             isHorizontal: false, // Display menu items vertically
             currentItem: widget.currentItem, // Pass the active item
             onItemSelected: widget.onItemSelected, // Pass the callback
+            currentSubItem: widget.currentSubItem, // Pass the active item
           )
         ],
       ),
