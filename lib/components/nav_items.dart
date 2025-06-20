@@ -1,5 +1,8 @@
+// widget PopupMenuButton with click
+import 'dart:async';
 import 'package:flutter/material.dart';
 import '../utils/global_colors.dart';
+import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
 
 class NavItems extends StatefulWidget {
@@ -10,6 +13,7 @@ class NavItems extends StatefulWidget {
   required this.currentItem,
   required this.onItemSelected,
   this.currentSubItem,
+  this.onDesktopMenuOpen,
   });
 
   final Color defaultColor;
@@ -18,6 +22,8 @@ class NavItems extends StatefulWidget {
   final String currentItem; // The currently active menu item
   final Function(String) onItemSelected; // Callback to notify the parent when a menu item is selected
   final String? currentSubItem; // The currently active sub menu item
+  final void Function(bool)? onDesktopMenuOpen; //Captures and sends to the parent whether the dropdown menu is open or not
+
 
   @override  
   NavItemsState createState() => NavItemsState();
@@ -28,14 +34,14 @@ class NavItemsState extends State<NavItems> {
   bool _isDesktopAboutOpen = false;   
   bool _isMobileAboutOpen = false;
 
-
   @override
   Widget build(BuildContext context) {
+
     final bool mobile = GlobalScreenSizes.isMobileScreen(context);
     final bool isSmallScreen = GlobalScreenSizes.isSmallScreen(context);
     final List<Map<String, dynamic>> navItemsData;
     final items = <Widget>[]; // Holds the final list of widgets (buttons or dropdowns)
-
+    
     navItemsData = [
       {'icon': Icons.dashboard, 'label': 'Accueil', 'route': '/landing'},
       {'icon': Icons.folder_open, 'label': 'Nos réalisations', 'route': '/projects'},
@@ -48,17 +54,19 @@ class NavItemsState extends State<NavItems> {
       {'icon': Icons.contact_mail, 'label': 'Contact', 'route': '/contact'},
     ];
 
+    if (!(widget.isHorizontal )) items.add(Padding(padding: EdgeInsets.only(top: 30.0))); // Adding padding only for the drawer menu
+
     for (var i = 0; i < navItemsData.length; i++) {
       final item = navItemsData[i];
       final bool isActive = item['label'] == widget.currentItem; // Determine if this nav item is currently selected
       final List? children = (item['children'] as List?)?.cast<Map<String, String>>(); // Extract children if any
       final bool hasChildren = children != null && children.isNotEmpty; // Check if this item has submenus
       final Widget navWidget;
-
+    
       if (hasChildren) {
-        // Build submenu (dropdown or expandable list)
+        // Build submenu (PopupMenuButton (desktop) or expandable list (mobile))
         navWidget = widget.isHorizontal 
-          ? Theme(  // Web version for the sub items
+        ? Theme(  // Web version for the sub items
           data: Theme.of(context).copyWith( // Inject a custom theme to disable the default options of the PopupMenuButton widget
             splashFactory: NoSplash.splashFactory,
             highlightColor: Colors.transparent,
@@ -73,10 +81,11 @@ class NavItemsState extends State<NavItems> {
             position: PopupMenuPosition.under,
             color: Colors.white,
             elevation: 4.0,
-            offset: const Offset(65.0, 38.0),
+            offset: const Offset(60.0, 38.0),
             onSelected: (route) {
               setState(() {
                 _isDesktopAboutOpen = false; // Close hover state after navigation
+                widget.onDesktopMenuOpen?.call(false); // Sends if drop down menu is open or not to the parent (MyAppBarComponent)
               });
               final childLabel = children.firstWhere((e) => e['route'] == route)['subLabel']!;
               widget.onItemSelected(childLabel);
@@ -85,6 +94,7 @@ class NavItemsState extends State<NavItems> {
             onCanceled: () { 
               setState(() {
                 _isDesktopAboutOpen = false; // Close hover state when menu is closed by user action
+                widget.onDesktopMenuOpen?.call(false); // Sends if drop down menu is open or not to the parent (MyAppBarComponent)
               });
             },
             // Creation of the title item and sub items
@@ -97,34 +107,41 @@ class NavItemsState extends State<NavItems> {
                     return PopupMenuItem<String>(
                       padding: EdgeInsets.zero, // Remove default padding
                       value: children[i]['route'],
-                      child: StatefulBuilder(
-                        builder: (context2, setState2) {
-                          return MouseRegion(
-                            onEnter: (_) => setState2(() => hovering = true),
-                            onExit: (_) => setState2(() => hovering = false),
-                            child: Container(
-                              padding: EdgeInsets.only(left: 10.0),
-                              alignment: Alignment.centerLeft,
-                              width: double.infinity,
-                              height: 45.0,
-                              color: hovering // Background on hover
-                                ? GlobalColors.secondColor.withValues(alpha: 0.03) 
-                                : Colors.transparent,
-                              child: Text(
-                                children[i]['subLabel'],
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: widget.currentSubItem == children[i]['subLabel'] // Highlight the current sub menu item
-                                    ?  GlobalColors.orangeColor 
-                                    : hovering // Change color on hover
-                                      ? GlobalColors.orangeColor
-                                      : GlobalColors.secondColor,
+                      child: SizedBox(
+                        width: double.infinity, // Allows you to specify the size of the container you want.
+                        child: StatefulBuilder(
+                          builder: (context2, setState2) {
+                            return MouseRegion(
+                              onEnter: (_) {
+                                setState2(() => hovering = true);
+                              },
+                              onExit: (_) {
+                                setState2(() => hovering = false);
+                              }, 
+                              child: Container(
+                                padding: EdgeInsets.only(left: 10.0),
+                                alignment: Alignment.centerLeft,
+                                width: 170.0, // The desired size of the container for each sub-menu
+                                height: 45.0,
+                                color: hovering // Background on hover
+                                  ? GlobalColors.secondColor.withValues(alpha: 0.03) 
+                                  : Colors.transparent,
+                                child: Text(
+                                  children[i]['subLabel'],
+                                  style: TextStyle(
+                                    fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                    color: widget.currentSubItem == children[i]['subLabel'] // Highlight the current sub menu item
+                                      ?  GlobalColors.orangeColor 
+                                      : hovering // Change color on hover
+                                        ? GlobalColors.orangeColor
+                                        : GlobalColors.secondColor,
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
+                            );
+                          },
+                        ),
+                      ) 
                     );
                   })(),
                 );
@@ -135,12 +152,13 @@ class NavItemsState extends State<NavItems> {
               }
               return entries; // Return the list of sub items
             },
-            child: Listener(
+            child: Listener( // Intercept the click to capture the click event and update your _isDesktopAboutOpen state
               behavior: HitTestBehavior.translucent,
               onPointerDown: (_) {
                 setState(() {
                   _isDesktopAboutOpen = true;
                 });
+                widget.onDesktopMenuOpen?.call(true); // Sends if drop down menu is open or not to the parent (MyAppBarComponent)
               },
               child: CustomNavItem( 
                 key: ValueKey(item['label']), // Trigger animation on color change
@@ -150,85 +168,88 @@ class NavItemsState extends State<NavItems> {
                 onPressed: () {}, // Disabled since PopupMenuButton handles tap
                 defaultColor: widget.defaultColor,
                 hoverColor: widget.hoverColor,
-                animationDelay: Duration(milliseconds: (i + 1) * 200),
-                enableTap: false,
-                forceHover: _isDesktopAboutOpen || (widget.currentItem=='À propos'), // Keep highlight active during dropdown open
+                animationDelay: Duration(milliseconds: (i + 1) * 200), // Creates a time delay effect between each menu
+                enableDownArrowIcon: true,
+                forceHover: _isDesktopAboutOpen, // || (widget.currentItem=='À propos'), // Keep highlight active during dropdown open
+                isDesktopMenuOpen: _isDesktopAboutOpen,
               ),
             ) 
           )
         )
-        : ExpansionTile( // Mobile version for the sub items
-          onExpansionChanged: (isOpen) {
-            setState(() {
-              _isMobileAboutOpen = isOpen;
-            });
-          },
-          tilePadding: EdgeInsets.zero,
-          title: CustomNavItem( 
-            key: ValueKey(item['label']), // Trigger animation on color change
-            icon: item['icon'],
-            label: item['label'],
-            isActive: isActive,
-            onPressed: () {},
-            defaultColor: widget.defaultColor,
-            hoverColor: widget.hoverColor,
-            enableHover: false,
-            animationDelay: Duration(milliseconds: (i + 1) * 200),
-            enableTap: false,
-            forceHover: _isMobileAboutOpen || (widget.currentItem=='À propos'), // Keep highlight active during dropdown open
-          ),
-          children: List.generate(children.length * 2 - 1, (index) { // Allows switching between ListTile (for submenus) and Container (for dividers),
-            if (index.isEven) { // Check if index is an even number
-              final e = children[index ~/ 2 ];
-              
-              return (() {
-                bool hovering = false;
-                return StatefulBuilder(
-                  builder: (context2, setState2) {
-                    return MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      onEnter: (_) => setState2(() => hovering = true),
-                      onExit: (_) => setState2(() => hovering = false),
-                      child: GestureDetector(
-                        onTap: () {
-                          widget.onItemSelected(e['subLabel']);
-                          Navigator.pushNamed(context, e['route']);
-                        },
-                        child: Container(
-                          height: 45.0,
-                          width: double.infinity,
-                          padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          alignment: Alignment.centerLeft,
-                          color: 
-                          hovering // Background on hover
-                            ? GlobalColors.secondColor.withValues(alpha: 0.03) 
-                            : Colors.transparent,
-                            //  Colors.transparent,
-                          child: Text(
-                            e['subLabel'],
-                            style: TextStyle(
-                              fontSize: 16.0,                            
-                              color: widget.currentSubItem == e['subLabel'] || hovering // // Highlight the current sub menu item or change color on hover
-                                ? GlobalColors.orangeColor
-                                : GlobalColors.secondColor,
+        : Column( // Mobile version for the sub items
+          children: [
+            GestureDetector(
+              onTap: () => setState(() => _isMobileAboutOpen = !_isMobileAboutOpen),
+              child: CustomNavItem(
+                key: ValueKey(item['label']),
+                icon: item['icon'],
+                label: item['label'],
+                isActive: isActive,
+                onPressed: () => setState(() => _isMobileAboutOpen = !_isMobileAboutOpen),
+                defaultColor: widget.defaultColor,
+                hoverColor: widget.hoverColor,
+                animationDelay: Duration(milliseconds: (i + 1) * 200), // Creates a time delay effect between each menu
+                enableDownArrowIcon: true,  // to obtain the down arrow icon
+                forceHover: _isMobileAboutOpen,// || widget.currentItem == 'À propos', // Keep highlight active during dropdown open
+                isDesktopMenuOpen: _isDesktopAboutOpen,
+              ),
+            ),
+            AnimatedCrossFade( // Mobile version for the sub items
+              firstChild: const SizedBox.shrink(),
+              secondChild: Column( 
+                children: List.generate(children.length * 2 - 1, (index) { // Allows switching between ListTile (for submenus) and Container (for dividers),
+                  if (index.isEven) {
+                    final e = children[index ~/ 2];
+                    bool hovering = false;
+                    return StatefulBuilder(
+                      builder: (context2, setState2) {
+                        return MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          onEnter: (_) => setState2(() => hovering = true),
+                          onExit: (_) => setState2(() => hovering = false),
+                          child: GestureDetector(
+                            onTap: () {
+                              widget.onItemSelected(e['subLabel']);
+                              Navigator.pushNamed(context, e['route']);
+                            },
+                            child: Container(
+                              height: 45.0,
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                              alignment: Alignment.centerLeft,
+                              color: hovering
+                                ? GlobalColors.secondColor.withValues(alpha: 0.03)
+                                : Colors.transparent,
+                              child: Text(
+                                e['subLabel'],
+                                style: TextStyle(
+                                  fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                  color: widget.currentSubItem == e['subLabel'] || hovering // Highlight the current sub menu item or change color on hover
+                                    ? GlobalColors.orangeColor
+                                    : GlobalColors.secondColor,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    );  
+                        );
+                      },
+                    );
+                  } else { // Otherwise index is an odd number
+                    return Divider( // divider inside the dropdown list 
+                      thickness: 1.0,
+                      indent: 12.0,
+                      endIndent: 12.0,
+                      color: Colors.black.withValues(alpha: 0.1),
+                    );
                   }
-                );
-              })();
-            } else { // Otherwise index is an odd number
-              return Padding( // Divider
-                padding: EdgeInsets.symmetric(horizontal: 12.0),
-                child: Container(
-                  height: 1.0,
-                  color: Colors.black.withValues(alpha: 0.1),
-                ),
-              );
-            }
-          })
+                }),
+              ),
+              crossFadeState: _isMobileAboutOpen
+                  ? CrossFadeState.showSecond
+                  : CrossFadeState.showFirst,
+              duration: const Duration(milliseconds: 300),
+            ),
+          ],
         );
       } else {
         // Creation of the others menu items without sub items
@@ -245,14 +266,19 @@ class NavItemsState extends State<NavItems> {
             },
             defaultColor: widget.defaultColor,
             hoverColor: widget.hoverColor,
-            animationDelay: Duration(milliseconds: (i + 1) * 200),
+            animationDelay: Duration(milliseconds: (i + 1) * 200), // Creates a time delay effect between each menu
+            isDesktopMenuOpen: _isDesktopAboutOpen,
           )
         );
       }
 
       items.add(navWidget);
-      if (i != navItemsData.length - 1 && widget.isHorizontal) {
-        items.add(Text('|', style: TextStyle(color: widget.defaultColor, fontSize: 18)));
+      if (i != navItemsData.length - 1) {
+        if (widget.isHorizontal) {
+          items.add(Text('|', style: TextStyle(color: widget.defaultColor, fontSize: 18)));
+        } else {
+          items.add(Divider(height: 1.0, indent: 15.0, endIndent: 15.0,));
+        }
       }
     }
 
@@ -281,8 +307,9 @@ class CustomNavItem extends StatefulWidget {
   this.enableHover = true, 
   required this.animationDelay,
   required this.isActive,
-  this.enableTap = true,
+  this.enableDownArrowIcon = false,
   this.forceHover = false,
+  required this.isDesktopMenuOpen,
   });
 
   final IconData icon;
@@ -293,8 +320,9 @@ class CustomNavItem extends StatefulWidget {
   final bool enableHover;
   final Duration animationDelay;
   final bool isActive;
-  final bool enableTap;
+  final bool enableDownArrowIcon;
   final bool forceHover;
+  final bool isDesktopMenuOpen;
 
   @override
   CustomNavItemstate createState() => CustomNavItemstate();
@@ -339,22 +367,17 @@ class CustomNavItemstate extends State<CustomNavItem> with SingleTickerProviderS
   void didUpdateWidget(CustomNavItem oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-     if (widget.forceHover != oldWidget.forceHover) {
-       setState(() {
-         if (widget.forceHover) {
-           _textColor       = widget.hoverColor;
-           _backgroundColor = widget.hoverColor.withValues(alpha: 0.2);
-         } else {
-           _textColor       = widget.defaultColor;
-           _backgroundColor = Colors.transparent;
-         }
-       });
-     }
-
-    // Comparison between old color and new
-    if (widget.defaultColor != oldWidget.defaultColor) {
+    // Allows to maintain the color change throughout the opening of the dropdown list and when it's closed
+    if (widget.forceHover != oldWidget.forceHover) {
       setState(() {
-        _textColor = widget.defaultColor; // Automatically update _textColor
+        if (widget.forceHover) {
+          _textColor = widget.hoverColor; // Automatically update _textColor
+          _backgroundColor = Colors.transparent; // if we want to change the color of the container holding the dropdown menu title
+        } 
+        // else {
+        //   _textColor = widget.defaultColor;  // Automatically update _textColor
+        //   _backgroundColor = Colors.transparent;
+        // }
       });
     }
   }
@@ -371,11 +394,14 @@ class CustomNavItemstate extends State<CustomNavItem> with SingleTickerProviderS
     bool isSmallScreen = GlobalScreenSizes.isSmallScreen(context);
 
     return MouseRegion(
+      cursor: SystemMouseCursors.click,
       onEnter: (event) {
+        if (!widget.forceHover) {
           setState(() {
             _textColor = widget.hoverColor; // Change text color on hover
             _backgroundColor =  const Color.fromARGB(255, 241, 237, 237); // Add background on hover
           });
+        }
       }, 
       onExit: (event) {
         if (!widget.forceHover) {
@@ -385,14 +411,15 @@ class CustomNavItemstate extends State<CustomNavItem> with SingleTickerProviderS
           });
         }
       },
-      child: mobile 
+      child: mobile && !(widget.isDesktopMenuOpen) 
       // Mobile navigation menu
       ? SlideTransition(
         position: _slideAnimation,
-        child: GestureDetector(
+        child: !widget.enableDownArrowIcon  
+        ? GestureDetector( // without drop down menu
           onTap: widget.onPressed,
           child: Container(
-            color: widget.enableHover == true ? _backgroundColor : null,
+            color: _backgroundColor,
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0), // padding to repeat in ExpansionTile
             child: Row(
               children: [
@@ -400,7 +427,7 @@ class CustomNavItemstate extends State<CustomNavItem> with SingleTickerProviderS
                   widget.icon,
                   color: widget.isActive ? GlobalColors.orangeColor : _textColor, // logic for the color change depending on the page you are on
                 ),
-                const SizedBox(width: 8.0,),
+                const SizedBox(width: 8.0),
                 Text(
                  widget.label,
                  style: TextStyle(
@@ -411,13 +438,40 @@ class CustomNavItemstate extends State<CustomNavItem> with SingleTickerProviderS
               ],
             ) 
           ) 
+        )
+        : GestureDetector(  // to obtain the down arrow icon
+          onTap: widget.onPressed,
+          child: Container(
+            color: _backgroundColor,
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0), // padding to repeat in ExpansionTile
+            child: Row(
+              children: [
+                Icon(
+                  widget.icon,
+                  color: widget.isActive ? GlobalColors.orangeColor : _textColor, // logic for the color change depending on the page you are on
+                ),
+                const SizedBox(width: 8.0),
+                Text(
+                 widget.label,
+                 style: TextStyle(
+                    color: widget.isActive ? GlobalColors.orangeColor : _textColor, // logic for the color change depending on the page you are on
+                   fontSize: isSmallScreen ? 16.0 : 18.0,
+                 ),
+                ),
+                const SizedBox(width: 8.0),
+                Icon(
+                  Icons.arrow_drop_down_sharp,
+                  color: widget.isActive ? GlobalColors.orangeColor : _textColor,
+                  size: 25.0,
+                )
+              ],
+            ) 
+          ) 
         ),
       )
       // Web navigation menu
-      : MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: widget.enableTap
-        ? GestureDetector(
+      : !widget.enableDownArrowIcon  
+        ? GestureDetector( // without drop down menu
           onTap: widget.onPressed,
           child: Text(
             widget.label,
@@ -427,7 +481,7 @@ class CustomNavItemstate extends State<CustomNavItem> with SingleTickerProviderS
             ),
           ),
         )
-        : Row(
+        : Row( // to obtain the down arrow icon
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
@@ -440,18 +494,26 @@ class CustomNavItemstate extends State<CustomNavItem> with SingleTickerProviderS
             const SizedBox(width: 8.0,),
             Icon(
               Icons.arrow_drop_down_sharp,
-              color:widget.isActive ? GlobalColors.orangeColor : _textColor,
+              color: widget.isActive ? GlobalColors.orangeColor : _textColor,
               size: 25.0,
             )
           ],
         )  
-      ) 
     );
   }
 }
 
 
-// // Simple NavItem without sub items
+
+
+
+
+
+
+
+
+
+// // Simple NavItem without sub menus
 // import 'package:flutter/material.dart';
 // import '../utils/global_colors.dart';
 // import '../utils/global_screen_sizes.dart';

@@ -5,6 +5,8 @@ import '../components/my_hover_route_navigator.dart';
 import '../components/footer.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
+import '../utils/global_screen_sizes.dart';
+
 
 /// PrivacyPolicyScreen displays the privacy policy and cookie management details.
 class PrivacyPolicyScreen extends StatefulWidget {
@@ -15,8 +17,8 @@ class PrivacyPolicyScreen extends StatefulWidget {
 }
 
 class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTickerProviderStateMixin {
-
   String currentItem = 'Politique de confidentialité';
+  bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not
 
   void updateCurrentItem(String newItem) {
     setState(() {
@@ -26,14 +28,15 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
 
   @override
   Widget build(BuildContext context) {
-    final bool mobile = MediaQuery.of(context).size.width > 768 ? false : true;
+    final bool mobile = GlobalScreenSizes.isMobileScreen(context);
 
     return Scaffold(
       appBar: MyAppBarComponent(
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
+        onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable
       ),
-      endDrawer: mobile 
+      endDrawer: mobile && !_isDesktopMenuOpen
         ? DrawerComponent(
           currentItem: currentItem,
           onItemSelected: updateCurrentItem,

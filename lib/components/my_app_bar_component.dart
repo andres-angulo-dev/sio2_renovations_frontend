@@ -12,22 +12,25 @@ class MyAppBarComponent extends StatefulWidget implements PreferredSizeWidget {
     required this.onItemSelected,
     this.currentSubItem,
     this.scrollController, // Added scroll controller
+    required this.onDesktopMenuOpenChanged, // 
   });
 
   final String currentItem; // The currently active menu item
   final Function(String) onItemSelected; // Callback to notify the parent when a menu item is selected
   final String? currentSubItem; // The currently active sub menu item
   final ScrollController? scrollController; // Capture the scroll to change appBar background color and navItems text color
+  final void Function(bool)? onDesktopMenuOpenChanged; //Captures and sends to the parent whether the dropdown menu is open or not
 
   @override
   MyAppBarComponentState createState() => MyAppBarComponentState();
 
   @override
-  Size get preferredSize => const Size.fromHeight(100.0);
+  Size get preferredSize => const Size.fromHeight(100.0); // Heigh size of app bar
 }
 
 class MyAppBarComponentState extends State<MyAppBarComponent> {
   final ValueNotifier<Color> appBarColorNotifier = ValueNotifier<Color>(Colors.transparent);
+  bool _isDesktopMenuOpen = false;  // Check if the child (NavItem) has the dropdown menu or not
 
   @override
   void initState() {
@@ -43,7 +46,7 @@ class MyAppBarComponentState extends State<MyAppBarComponent> {
       appBarColorNotifier.value = isScrolled ? GlobalColors.firstColor : Colors.transparent; // Change color if the condition is met
     } 
   }
-
+  
   @override
   Widget build(BuildContext context) {
     final mobile = GlobalScreenSizes.isMobileScreen(context);
@@ -58,7 +61,7 @@ class MyAppBarComponentState extends State<MyAppBarComponent> {
           scrolledUnderElevation: 0.0, // Disables the effect of change caused by scrolling.
           backgroundColor: color, // Change dynamiquement en fonction du scroll
           iconTheme: IconThemeData( // Change the color of the DrawerComponent icon
-            color: widget.currentItem == "Accueil" ?  color == GlobalColors.firstColor ? GlobalColors.secondColor : GlobalColors.firstColor   : GlobalColors.secondColor,
+            color: widget.currentItem == "Accueil" ? (color == GlobalColors.firstColor ? GlobalColors.secondColor : GlobalColors.firstColor) : GlobalColors.secondColor,
             // color: widget.currentItem == "Accueil" ? GlobalColors.firstColor : GlobalColors.secondColor,
           ),
           flexibleSpace: widget.currentItem == "Accueil" // Change the background color of the appbar
@@ -71,7 +74,7 @@ class MyAppBarComponentState extends State<MyAppBarComponent> {
               ),
             )
             : null,
-          leading: mobile // Manages the left part (logo) of the appbar
+          leading: mobile
             ? MouseRegion(
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
@@ -87,7 +90,8 @@ class MyAppBarComponentState extends State<MyAppBarComponent> {
               ),
               )
             : null,
-          title: mobile ? null // Manages the center part of the appbar
+          title: mobile && !_isDesktopMenuOpen 
+            ? null // Manages the center part of the appbar
             : Center(
             child: Container(
               alignment: Alignment.center,
@@ -96,7 +100,9 @@ class MyAppBarComponentState extends State<MyAppBarComponent> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // Logo
-                  MouseRegion(
+                  mobile && _isDesktopMenuOpen 
+                  ? SizedBox.shrink()   
+                  : MouseRegion(
                     cursor: SystemMouseCursors.click,
                     child: GestureDetector(
                       onTap: () => Navigator.pushNamed(context, '/landing'),
@@ -116,10 +122,13 @@ class MyAppBarComponentState extends State<MyAppBarComponent> {
                   NavItems(
                     defaultColor: widget.currentItem == "Accueil" ? (color == GlobalColors.firstColor ? GlobalColors.secondColor : GlobalColors.firstColor ) : GlobalColors.secondColor, 
                     hoverColor: GlobalColors.orangeColor, 
-                    isHorizontal: true,
                     currentItem: widget.currentItem, // Pass the active item
                     onItemSelected: widget.onItemSelected, // Pass the callback
                     currentSubItem: widget.currentSubItem, // Pass the active sub item
+                    onDesktopMenuOpen: (bool isOpen) {
+                      setState(() => _isDesktopMenuOpen = isOpen); // Updates true or false with the information sent by his child (NavItem)
+                      widget.onDesktopMenuOpenChanged?.call(isOpen); // updates true or false and sends the information to the parent (Screens)
+                    },
                   ),
                 ],
               )

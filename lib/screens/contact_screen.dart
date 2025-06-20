@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
 import '../utils/global_colors.dart';
+import '../utils/global_screen_sizes.dart';
 
 class ContactScreen extends StatefulWidget {
   const ContactScreen({super.key,});
@@ -13,6 +14,8 @@ class ContactScreen extends StatefulWidget {
 class ContactScreenState extends State<ContactScreen> {
   final bool mobile = false;
   String currentItem = 'Contact';
+  bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not
+
 
   void updateCurrentItem(String newItem) {
     setState(() {
@@ -23,14 +26,15 @@ class ContactScreenState extends State<ContactScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final mobile = MediaQuery.of(context).size.width > 768 ? false : true;
+    final mobile = GlobalScreenSizes.isMobileScreen(context);
 
     return Scaffold(
       appBar: MyAppBarComponent(
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
+        onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable
       ),
-      endDrawer: mobile 
+      endDrawer: mobile && !_isDesktopMenuOpen
         ? DrawerComponent(
           currentItem: currentItem,
           onItemSelected: updateCurrentItem,

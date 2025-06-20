@@ -7,11 +7,13 @@ class GlobalImages {
   static const String image6 = 'assets/images/image6.jpeg';
   static const String image7 = 'assets/images/image7.jpeg';
   static const String image8 = 'assets/images/image8.jpeg';
-  static const String bakcgroundQuote = 'assets/images/iStock-871105006.webp';
   static const String backgroundLanding = 'assets/images/immeuble.jpeg';
   static const String customGoogleMarker = 'assets/images/customGoogleMarker.png';
   static const String backgroundFeedbackSection = 'assets/images/backgroundFeedbackSection.png';
   static const String backgroundWhyChooseUsSection = 'assets/images/backgroundWhyChooseUs.png';
+  
+  // Projects screen
+  static const String bakcgroundQuote = 'assets/images/iStock-871105006.webp';
 
   static const Map<String, List<String>> photosByService = {
     'PEINTURE': [
@@ -92,24 +94,25 @@ class GlobalSize {
   static const double webSubTitle = 18.0; 
   static const double mobileSizeText = 14.0; 
   static const double webSizeText = 16.0;
-  // Why choose us section 
+  // Landing screen
+    // Why choose us section 
   static const double mobileWhyChooseUsSectionTitle = 18.0; 
   static const double webWhyChooseUsSectionTitle = 20.0; 
-  // Steps section
+    // Steps section
   static const double stepsSectionMobilebSubTitle = 20.0; 
   static const double stepsSectionWebSubTitle = 24.0; 
   static const double stepsSectionMobileTitleCard = 52.0;
   static const double stepsSectionWebTitleCard = 52.0;
   static const double stepsSectionMobileSubTitleCard = 22.0;
   static const double stepsSectionWebSubTitleCard = 22.0;
-  // Key figures section
+    // Key figures section
   static const double keyFiguresSectionMobileTitle = 36.0;
   static const double keyFiguresSectionWebTitle = 40.0;
   static const double keyFiguresSectionMobileSubTitle = 16.0;
   static const double keyFiguresSectionWebSubTitle = 18.0;
   static const double keyFiguresSectionMobileDescription = 12.0;
   static const double keyFiguresSectionWebDescription = 14.0;
-  // Footer
+    // Footer
   static const double footerMobileTitle = 18.0; 
   static const double footerWebTitle = 20.0; 
   static const double footerMobileSubTitle = 12.0; 
@@ -118,8 +121,9 @@ class GlobalSize {
   static const double footerWebText = 14.0;
   static const double footerMobileCopyright = 12.0;
   static const double footerWebCopyright = 14.0;
-  // Projects page
-  // Welcome section
+
+  // Projects screen
+    // Welcome section
   static const double welcomeSectionMobileSubTitle = 26.0;
   static const double welcomeSectionWebSubTitle = 36.0;
   static const double welcomeSectionMobileTitle = 28.0;

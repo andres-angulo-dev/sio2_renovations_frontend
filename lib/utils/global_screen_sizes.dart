@@ -21,6 +21,3 @@ class GlobalScreenSizes {
     return screenWidth(context) < size;
   }
 }
-
-double screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
-

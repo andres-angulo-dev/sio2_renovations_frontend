@@ -29,12 +29,13 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
   // Scroll controller for the back to top button and appBar 
   final ScrollController _pageScrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState 
   final bool mobile = false;
-  String currentItem = 'Projets';
+  String currentItem = 'Nos réalisations';
   bool _showTitleScreen = false;
   bool _showBackToTopButton = false;
 
   // Currently selected service, by default 'ALL'
   String selectedService = 'TOUT VOIR';
+  bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not
 
   @override  
   void initState() {
@@ -151,7 +152,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
   
   @override
   Widget build(BuildContext context) {
-    final mobile = MediaQuery.of(context).size.width > 768 ? false : true;
+    final mobile = GlobalScreenSizes.isMobileScreen(context);
 
     final List<Map<String, String>> servicesData = [
       {"title": "TOUT VOIR", "image": GlobalImages.backgroundLanding},
@@ -168,12 +169,13 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
       appBar: MyAppBarComponent(
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
+        onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable
       ),
-      endDrawer: mobile ? 
-        DrawerComponent(
-          currentItem: currentItem,
-          onItemSelected: updateCurrentItem,
-        ) : null,
+      endDrawer: mobile && !_isDesktopMenuOpen
+      ? DrawerComponent( 
+        currentItem: currentItem,
+        onItemSelected: updateCurrentItem,
+      ) : null,
       backgroundColor: GlobalColors.firstColor,
       body: LayoutBuilder(
         builder: (context, constraints) {

@@ -7,6 +7,7 @@ import '../components/drawer_component.dart';
 import '../components/my_rive_button.dart';
 import '../utils/global_others.dart';
 import '../utils/global_colors.dart';
+import '../utils/global_screen_sizes.dart';
 
 class AboutScreen extends StatefulWidget {
   const AboutScreen({super.key});
@@ -36,6 +37,8 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
   bool _showServicesSection = false;
   bool _showEngagementSection = false;
   bool _showContactButtonSection = false;
+  bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not
+
   
   void updateCurrentItem(String newItem) {
     setState(() {
@@ -135,16 +138,17 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
   @override
   Widget build(BuildContext context) {
 
-    final mobile = MediaQuery.of(context).size.width > 768 ? false : true;
-    final screenWidth = MediaQuery.of(context).size.width;
+    final mobile = GlobalScreenSizes.isMobileScreen(context);
+    final screenWidth = GlobalScreenSizes.screenWidth(context);
 
     return Scaffold(
       appBar: MyAppBarComponent(
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
         currentSubItem: currentSubItem,
+        onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable
       ),
-      endDrawer: mobile 
+      endDrawer: mobile && !_isDesktopMenuOpen
         ? DrawerComponent(
           currentItem: currentItem,
           onItemSelected: updateCurrentItem,

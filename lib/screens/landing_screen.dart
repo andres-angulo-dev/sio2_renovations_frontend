@@ -39,6 +39,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
   bool _isBannerVisible = false;
   String currentItem = "Accueil"; // Holds the currently selected menu item to change text color
   bool _showBackToTopButton = false; // Show or hide Back to top button
+  bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not
 
   @override
   void initState() {
@@ -148,8 +149,9 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
         scrollController: _scrollController,
+        onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);},// receive whether the dropdown menu is open or not and update the variable
       ), 
-      endDrawer: _mobile 
+      endDrawer: _mobile && !_isDesktopMenuOpen
       ? DrawerComponent(
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
