@@ -12,14 +12,14 @@ class MyAppBarComponent extends StatefulWidget implements PreferredSizeWidget {
     required this.onItemSelected,
     this.currentSubItem,
     this.scrollController, // Added scroll controller
-    required this.onDesktopMenuOpenChanged, // 
+    // required this.onDesktopMenuOpenChanged, // (only for NavItem with click)
   });
 
   final String currentItem; // The currently active menu item
   final Function(String) onItemSelected; // Callback to notify the parent when a menu item is selected
   final String? currentSubItem; // The currently active sub menu item
-  final ScrollController? scrollController; // Capture the scroll to change appBar background color and navItems text color
-  final void Function(bool)? onDesktopMenuOpenChanged; //Captures and sends to the parent whether the dropdown menu is open or not
+  final ScrollController? scrollController; // Capture the scroll to change appBar background color and navItems text color 
+  // final void Function(bool)? onDesktopMenuOpenChanged; //Captures and sends to the parent whether the dropdown menu is open or not // (only for NavItem with click)
 
   @override
   MyAppBarComponentState createState() => MyAppBarComponentState();
@@ -30,7 +30,7 @@ class MyAppBarComponent extends StatefulWidget implements PreferredSizeWidget {
 
 class MyAppBarComponentState extends State<MyAppBarComponent> {
   final ValueNotifier<Color> appBarColorNotifier = ValueNotifier<Color>(Colors.transparent);
-  bool _isDesktopMenuOpen = false;  // Check if the child (NavItem) has the dropdown menu or not
+  // bool _isDesktopMenuOpen = false;  // Check if the child (NavItem) has the dropdown menu or not (only for NavItem with click)
 
   @override
   void initState() {
@@ -90,7 +90,7 @@ class MyAppBarComponentState extends State<MyAppBarComponent> {
               ),
               )
             : null,
-          title: mobile && !_isDesktopMenuOpen 
+          title: mobile // && !_isDesktopMenuOpen // (only for NavItem with click)
             ? null // Manages the center part of the appbar
             : Center(
             child: Container(
@@ -100,7 +100,7 @@ class MyAppBarComponentState extends State<MyAppBarComponent> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // Logo
-                  mobile && _isDesktopMenuOpen 
+                  mobile // && _isDesktopMenuOpen // (only for NavItem with click)
                   ? SizedBox.shrink()   
                   : MouseRegion(
                     cursor: SystemMouseCursors.click,
@@ -125,10 +125,10 @@ class MyAppBarComponentState extends State<MyAppBarComponent> {
                     currentItem: widget.currentItem, // Pass the active item
                     onItemSelected: widget.onItemSelected, // Pass the callback
                     currentSubItem: widget.currentSubItem, // Pass the active sub item
-                    onDesktopMenuOpen: (bool isOpen) {
-                      setState(() => _isDesktopMenuOpen = isOpen); // Updates true or false with the information sent by his child (NavItem)
-                      widget.onDesktopMenuOpenChanged?.call(isOpen); // updates true or false and sends the information to the parent (Screens)
-                    },
+                    // onDesktopMenuOpen: (bool isOpen) { // (only for NavItem with click)
+                    //   setState(() => _isDesktopMenuOpen = isOpen); // Updates true or false with the information sent by his child (NavItem)
+                    //   widget.onDesktopMenuOpenChanged?.call(isOpen); // updates true or false and sends the information to the parent (Screens) 
+                    // },
                   ),
                 ],
               )

@@ -35,7 +35,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
 
   // Currently selected service, by default 'ALL'
   String selectedService = 'TOUT VOIR';
-  bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not
+  // bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not (only for NavItem with click)
 
   @override  
   void initState() {
@@ -169,9 +169,9 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
       appBar: MyAppBarComponent(
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
-        onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable
+        // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable // (only for NavItem with click)
       ),
-      endDrawer: mobile && !_isDesktopMenuOpen
+      endDrawer: mobile // && !_isDesktopMenuOpen (only for NavItem with click)
       ? DrawerComponent( 
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,

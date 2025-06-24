@@ -18,7 +18,7 @@ class PrivacyPolicyScreen extends StatefulWidget {
 
 class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTickerProviderStateMixin {
   String currentItem = 'Politique de confidentialité';
-  bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not
+  // bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not (only for NavItem with click)
 
   void updateCurrentItem(String newItem) {
     setState(() {
@@ -34,9 +34,9 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> with SingleTic
       appBar: MyAppBarComponent(
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
-        onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable
+        // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable // (only for NavItem with click) 
       ),
-      endDrawer: mobile && !_isDesktopMenuOpen
+      endDrawer: mobile // && !_isDesktopMenuOpen (only for NavItem with click)
         ? DrawerComponent(
           currentItem: currentItem,
           onItemSelected: updateCurrentItem,

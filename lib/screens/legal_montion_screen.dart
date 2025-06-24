@@ -18,7 +18,7 @@ class LegalMontionScreen extends StatefulWidget {
 
 class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTickerProviderStateMixin {
   String currentItem = 'Mentions légales';
-  bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not
+  // bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not (only for NavItem with click)
 
 
   void updateCurrentItem(String newItem) {
@@ -36,10 +36,10 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
       appBar: MyAppBarComponent(
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
-        onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable
+        // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable // (only for NavItem with click)
       ), 
-      endDrawer: mobile && !_isDesktopMenuOpen
-        ? DrawerComponent(
+      endDrawer: mobile // && !_isDesktopMenuOpen (only for NavItem with click)
+        ? DrawerComponent( 
           currentItem: currentItem,
           onItemSelected: updateCurrentItem,
         ) 

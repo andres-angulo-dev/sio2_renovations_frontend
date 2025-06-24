@@ -37,7 +37,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
   bool _showServicesSection = false;
   bool _showEngagementSection = false;
   bool _showContactButtonSection = false;
-  bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not
+  // bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not (only for NavItem with click)
 
   
   void updateCurrentItem(String newItem) {
@@ -146,9 +146,9 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
         currentSubItem: currentSubItem,
-        onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable
+        // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable (only for NavItem with click)
       ),
-      endDrawer: mobile && !_isDesktopMenuOpen
+      endDrawer: mobile // && !_isDesktopMenuOpen (only for NavItem with click)
         ? DrawerComponent(
           currentItem: currentItem,
           onItemSelected: updateCurrentItem,
