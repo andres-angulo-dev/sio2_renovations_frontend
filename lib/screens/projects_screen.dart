@@ -28,7 +28,6 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
   final ScrollController _scrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState 
   // Scroll controller for the back to top button and appBar 
   final ScrollController _pageScrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState 
-  final bool mobile = false;
   String currentItem = 'Nos réalisations';
   bool _showTitleScreen = false;
   bool _showBackToTopButton = false;
@@ -180,6 +179,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
       body: LayoutBuilder(
         builder: (context, constraints) {
           final availableHeight = 800.0;
+          
           return SingleChildScrollView(
             controller: _pageScrollController,
             child: Column(

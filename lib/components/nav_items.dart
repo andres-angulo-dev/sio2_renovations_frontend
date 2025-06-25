@@ -33,13 +33,13 @@ class NavItemsState extends State<NavItems> {
   late List<bool> _mobileOpen;
 
   final List<Map<String, dynamic>> navItemsData = [
-    {'icon': Icons.dashboard,   'label': 'Accueil', 'route': '/landing'},
-    {'icon': Icons.folder_open,  'label': 'Nos réalisations', 'route': '/projects'},
+    {'icon': Icons.dashboard, 'label': 'Accueil', 'route': '/landing'},
+    {'icon': Icons.folder_open, 'label': 'Nos réalisations', 'route': '/projects'},
     {
       'icon': Icons.info, 'label': 'À propos',
       'children': [
         {'subLabel': 'Qui sommes nous ?', 'route': '/about'},
-        {'subLabel': 'Partenaires',       'route': '/contact'},
+        {'subLabel': 'Partenaires', 'route': '/partners'},
       ]
     },
     {'icon': Icons.contact_mail, 'label': 'Contact', 'route': '/contact'},

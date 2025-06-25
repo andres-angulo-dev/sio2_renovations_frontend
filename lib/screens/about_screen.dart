@@ -173,7 +173,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                         width: screenWidth,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage('assets/images/immeuble.jpeg'), 
+                            image: AssetImage(GlobalImages.backgroundLanding), 
                             fit: BoxFit.cover, // Cover the entire space
                           )
                         ),
