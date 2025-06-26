@@ -8,6 +8,7 @@ import './screens/splash_screen.dart';
 import './screens/projects_screen.dart';
 import './screens/legal_montion_screen.dart';
 import './screens/privacy_policy_screen.dart';
+import './screens/partners_screen.dart';
 
 Future<void> main() async {
   try {
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         '/about': (context) => AboutScreen(),
         '/legalMontions': (context) => LegalMontionScreen(),
         '/privacyPolicy': (context) => PrivacyPolicyScreen(),
-
+        '/partners': (context) => PartnersScreen(),
       }
     );
   }
