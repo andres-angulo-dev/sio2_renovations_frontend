@@ -6,6 +6,7 @@ class ProfessionalContactForm extends StatefulWidget {
   final TextEditingController firstNameController;
   final TextEditingController lastNameController;
   final TextEditingController emailController;
+  final TextEditingController phoneController;
   final TextEditingController companyController;
   final TextEditingController messageController;
   final bool isSending;
@@ -17,6 +18,7 @@ class ProfessionalContactForm extends StatefulWidget {
     required this.firstNameController,
     required this.lastNameController,
     required this.emailController,
+    required this.phoneController,
     required this.companyController,
     required this.messageController,
     required this.isSending,
@@ -41,8 +43,8 @@ class ProfessionalContactFormState extends State<ProfessionalContactForm> {
         children: [
           Row(
             children: [
-              Expanded( // Lastname
-                child: _buildTextField(
+              Expanded( 
+                child: _buildTextField( // Lastname
                   controller: widget.lastNameController,
                   labelText: 'Nom *',
                   icon: Icons.person_outline,
@@ -51,9 +53,8 @@ class ProfessionalContactFormState extends State<ProfessionalContactForm> {
                     : null,
                 ),
               ),
-              const SizedBox(width: 16),
-              Expanded( //name
-                child: _buildTextField(
+              Expanded( 
+                child: _buildTextField( //name
                   controller: widget.firstNameController,
                   labelText: 'Prénom *',
                   icon: Icons.person,
@@ -70,20 +71,40 @@ class ProfessionalContactFormState extends State<ProfessionalContactForm> {
             icon: Icons.business,
             validator: (value) => null,
           ),
-          _buildTextField( // Email
-            controller: widget.emailController,
-            labelText: 'E-mail *',
-            keyboardType: TextInputType.emailAddress,
-            icon: Icons.email,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Veuillez entrer un e-mail valide';
-              }
-              final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-              return emailRegex.hasMatch(value) ? null : 'Format d’email invalide';
-            },
+          Row(
+            children: [
+              Expanded(
+                child: _buildTextField( // Email
+                  controller: widget.emailController,
+                  labelText: 'E-mail *',
+                  keyboardType: TextInputType.emailAddress,
+                  icon: Icons.email,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Veuillez entrer un e-mail valide';
+                    }
+                    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+                    return emailRegex.hasMatch(value) ? null : 'Format d’email invalide';
+                  },
+                ),
+              ),
+              Expanded( 
+                child: _buildTextField( // Phone
+                  controller: widget.phoneController,
+                  labelText: 'Téléphone',
+                  icon: Icons.phone,
+                  keyboardType: TextInputType.phone,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) return null;
+                    final onlyDigits = RegExp(r'^[0-9]+$');
+                    return onlyDigits.hasMatch(value) ? null : 'Numéros uniquement';
+
+                  }
+                ),
+              ),
+            ],
           ),
-          _buildTextField( // MEssage
+          _buildTextField( // Message
             controller: widget.messageController,
             labelText: 'Message *',
             icon: Icons.message,
@@ -91,7 +112,7 @@ class ProfessionalContactFormState extends State<ProfessionalContactForm> {
             validator: (value) =>
               value == null || value.isEmpty ? 'Veuillez écrire un message' : null,
           ),
-          const SizedBox(height: 24.0),
+          const SizedBox(height: 5.0),
           Text(
             '* Obligatoire',
             style: TextStyle(
@@ -102,7 +123,9 @@ class ProfessionalContactFormState extends State<ProfessionalContactForm> {
           widget.isSending
             ? const Center(child: CircularProgressIndicator()) // Show a loading indicator if the email is being sent.
             : Align( // Prevents the button from taking the full horizontal width of the ListView.
-                alignment: Alignment.centerLeft,
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: MouseRegion( 
                   onEnter: (_) => setState(() => _isHovered = true),
                   onExit: (_) => setState(() => _isHovered = false),
@@ -134,8 +157,8 @@ class ProfessionalContactFormState extends State<ProfessionalContactForm> {
                     ),
                   )
                 )
-              ),
-          const SizedBox(height: 24.0),
+              ) 
+            ),
         ],
       ),
     );
@@ -151,7 +174,7 @@ class ProfessionalContactFormState extends State<ProfessionalContactForm> {
   }) {
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
       child: TextFormField(
         controller: controller,
         keyboardType: keyboardType,
@@ -161,7 +184,12 @@ class ProfessionalContactFormState extends State<ProfessionalContactForm> {
           labelText: labelText,
           prefixIcon: icon != null ? Icon(icon) : null, // Add an icon if provided.
           filled: true,
-          fillColor: GlobalColors.firstColor, // Background color for the text field.
+          fillColor: WidgetStateColor.resolveWith((states) { // Background color for the text field.
+            if (states.contains(WidgetState.hovered)) { 
+              return GlobalColors.secondColor.withValues(alpha: 0.03); // Color on hover
+            }
+            return GlobalColors.firstColor; // Normal color
+          }),
           labelStyle: TextStyle(color: GlobalColors.secondColor), // Style for the label text.
           enabledBorder: OutlineInputBorder( // Style of the border
             borderSide: BorderSide(color: Colors.transparent),
