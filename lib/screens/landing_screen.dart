@@ -11,6 +11,7 @@ import '../sections/values_section.dart';
 import '../sections/why_choose_us_section.dart';
 import '../sections/key_figures_section.dart';
 import '../sections/services_section.dart';
+import '../sections/work_together_section.dart';
 import '../sections/steps_section.dart';
 import '../sections/what_type_of_renovations_section.dart';
 import '../sections/before_after_section.dart';
@@ -210,15 +211,18 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                 ServicesSection(),
                 SizedBox(height: 150.0),
                 // section 6
-                StepsSection(),
+                WorkTogetherSection(),
                 SizedBox(height: 150.0),
                 // section 7
+                StepsSection(),
+                SizedBox(height: 150.0),
+                // section 8
                 KeyFiguresSection(),
                 SizedBox(height: 150.0),             
-                // section 8
+                // section 9
                 BeforeAfterSection(),
                 SizedBox(height: 150.0),
-                // section 9
+                // section 10
                 CustomerFeedbackSection(),
                 SizedBox(height: 160.0),
                 FooterComponent(),

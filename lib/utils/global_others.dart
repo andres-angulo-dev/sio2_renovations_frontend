@@ -7,10 +7,12 @@ class GlobalImages {
   static const String image6 = 'assets/images/image6.jpeg';
   static const String image7 = 'assets/images/image7.jpeg';
   static const String image8 = 'assets/images/image8.jpeg';
+  // Landing Screen
   static const String backgroundLanding = 'assets/images/immeuble.jpeg';
   static const String customGoogleMarker = 'assets/images/customGoogleMarker.png';
   static const String backgroundFeedbackSection = 'assets/images/backgroundFeedbackSection.png';
   static const String backgroundWhyChooseUsSection = 'assets/images/backgroundWhyChooseUs.png';
+  static const String backgroundWorkTogetherSection = 'assets/images/AdobeStock_544852100bis.jpg';
   
   // Projects screen
   static const String bakcgroundQuote = 'assets/images/iStock-871105006.webp';
