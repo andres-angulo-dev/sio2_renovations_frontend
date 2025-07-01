@@ -64,7 +64,7 @@ class MyAppBarComponentState extends State<MyAppBarComponent> {
             color: widget.currentItem == "Accueil" ? (color == GlobalColors.firstColor ? GlobalColors.secondColor : GlobalColors.firstColor) : GlobalColors.secondColor,
             // color: widget.currentItem == "Accueil" ? GlobalColors.firstColor : GlobalColors.secondColor,
           ),
-          flexibleSpace: widget.currentItem == "Accueil" // Change the background color of the appbar
+          flexibleSpace: widget.currentItem == "Accueil"  && color == Colors.transparent // Change the background color of the appbar
             ? ClipRect(
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
@@ -144,7 +144,7 @@ class MyAppBarComponentState extends State<MyAppBarComponent> {
             child: Container(
               width: double.infinity,
               height: 0.5,
-              color: GlobalColors.firstColor,
+              color: color == Colors.transparent ? GlobalColors.firstColor : GlobalColors.fourthColor,
             ),
           ),
         );

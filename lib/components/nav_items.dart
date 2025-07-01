@@ -45,7 +45,6 @@ class NavItemsState extends State<NavItems> {
     {'icon': Icons.contact_mail, 'label': 'Contact', 'route': '/contact'},
   ];
 
-
   @override
   void initState() {
     super.initState();
@@ -265,6 +264,20 @@ class CustomNavItemstate extends State<CustomNavItem> with SingleTickerProviderS
     _controller.dispose(); // Dispose of animation controller to free memory
     super.dispose();
   }
+
+
+  // when the parent's scrollListener is detected and the widget.defaultColor changes, it updates the color _textColor
+  @override
+  void didUpdateWidget(CustomNavItem oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // Comparison between old color and new
+    if (widget.defaultColor != oldWidget.defaultColor) {
+      setState(() {
+        _textColor = widget.defaultColor; // Automatically update _textColor
+      });
+    }
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -273,7 +286,7 @@ class CustomNavItemstate extends State<CustomNavItem> with SingleTickerProviderS
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
-      // Fonctionne avec la version Mobile
+      // Work with the mobile version
       onEnter: (event) { 
         setState(() {
           _textColor = widget.hoverColor; // Change text color on hover
