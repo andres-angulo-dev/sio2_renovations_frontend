@@ -98,7 +98,6 @@ class ProfessionalContactFormState extends State<ProfessionalContactForm> {
                     if (value == null || value.isEmpty) return null;
                     final onlyDigits = RegExp(r'^[0-9]+$');
                     return onlyDigits.hasMatch(value) ? null : 'Numéros uniquement';
-
                   }
                 ),
               ),

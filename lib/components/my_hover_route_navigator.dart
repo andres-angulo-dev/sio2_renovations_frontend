@@ -8,6 +8,7 @@ class MyHoverRouteNavigator extends StatefulWidget{
   required this.text,
   this.arguments,
   this.mobile = false,
+  this.italic = false,
   this.hoverColor,
   this.color,
   this.mobileSize,
@@ -19,6 +20,7 @@ class MyHoverRouteNavigator extends StatefulWidget{
   final String text;
   final Object? arguments;
   final bool mobile;
+  final bool italic;
   final Color? hoverColor;
   final Color? color;
   final double? mobileSize;
@@ -50,6 +52,7 @@ class MyHoverRouteNavigatorState extends State<MyHoverRouteNavigator>  with Sing
             color: _hovering ? (widget.hoverColor ?? GlobalColors.hoverHyperLinkColor) : (widget.color ?? GlobalColors.hyperLinkColor),
             fontSize: widget.mobile ? (widget.mobileSize ?? GlobalSize.mobileSizeText) : (widget.webSize ?? GlobalSize.mobileSizeText),
             fontWeight: widget.boldText ? FontWeight.bold : null,
+            fontStyle: widget.italic ? FontStyle.italic : null,
           )
         )
       ),

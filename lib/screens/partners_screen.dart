@@ -35,7 +35,7 @@ class PartnersScreenState extends State<PartnersScreen> {
   String currenSubItem = 'Partenaires';
   bool _showTitleScreen = false;
   bool _showBackToTopButton = false;
-
+  // bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not (only for NavItem with click)
 
   @override  
   void initState() {
@@ -84,8 +84,9 @@ class PartnersScreenState extends State<PartnersScreen> {
         currentItem: currentItem, 
         onItemSelected: updateCurrentItem,
         currentSubItem: currenSubItem,
+        // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable // (only for NavItem with click)
       ),
-      endDrawer: mobile 
+      endDrawer: mobile // && !_isDesktopMenuOpen (only for NavItem with click)
       ? DrawerComponent(
         currentItem: currentItem, 
         onItemSelected: updateCurrentItem,
@@ -325,9 +326,9 @@ class PartnersScreenState extends State<PartnersScreen> {
                     ),
                   )
                 ),
-                SizedBox(height: 160.0),
+                const SizedBox(height: 160.0),
                 // Footer
-                const FooterComponent(),
+                FooterComponent(),
               ],
             ),
           );

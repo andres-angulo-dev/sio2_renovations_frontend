@@ -96,6 +96,8 @@ class GlobalSize {
   static const double webSubTitle = 18.0; 
   static const double mobileSizeText = 14.0; 
   static const double webSizeText = 16.0;
+  static const double mobileItalicText = 12.0;
+  static const double webItalicText = 14.0;
   // Landing screen
     // Why choose us section 
   static const double mobileWhyChooseUsSectionTitle = 18.0; 
