@@ -4,7 +4,9 @@ import '../components/drawer_component.dart';
 import '../components/my_back_to_top_button.dart';
 import '../components/customer_contact_form.dart';
 import '../components/opening_hours_component.dart';
+import '../components/success_popup_component.dart';
 import '../components/footer.dart';
+import '../services/contact_form_service.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
@@ -21,7 +23,6 @@ class ContactScreenState extends State<ContactScreen> {
   final ScrollController _scrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState 
   // Scroll controller for the back to top button and appBar 
   final ScrollController _pageScrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState 
-  
   final GlobalKey _rightBlockKey = GlobalKey();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _requestTypeController = TextEditingController();
@@ -32,7 +33,7 @@ class ContactScreenState extends State<ContactScreen> {
   final TextEditingController _phoneController = TextEditingController();
   final ValueNotifier<List<String>> _typeWork = ValueNotifier([]);
   final TextEditingController _startDateController = TextEditingController();
-  final TextEditingController _locationController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
   final TextEditingController _messageController = TextEditingController();
   double? _rightBlockHeight;
   double? _rightBlockWidht;
@@ -43,12 +44,13 @@ class ContactScreenState extends State<ContactScreen> {
   bool _isHovered = false;
   bool _showNumber = false;
   bool _showTypeWorkError = false;
+  bool _showTextAfterMessageSending = false;
+  num _startLeftBlockHeight = 0;
   // bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not (only for NavItem with click)
 
   @override  
   void initState() {
     super.initState();
-
     Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         _showTitleScreen = true;
@@ -74,26 +76,89 @@ class ContactScreenState extends State<ContactScreen> {
     }
   }
 
+  void _resetForm() {
+    _formKey.currentState?.reset();  // allows the visual errors of the form to disappear (Reset the state of form)
+    _requestTypeController.clear(); // Empty the entered value
+    _lastNameController.clear();
+    _firstNameController.clear(); 
+    _companyController.clear();
+    _emailController.clear();
+    _phoneController.clear(); 
+    _typeWork.value = []; // Empty a list
+    _startDateController.clear();
+    _addressController.clear();
+    _messageController.clear();
+  }
+
+  Future<void> _showSuccessPopup() async {
+    final result = await showGeneralDialog<bool>(
+      context: context,
+      barrierDismissible: false, // Prevents closing by tapping background
+      barrierLabel: 'Success', // Label for accessibility (screen readers)
+      barrierColor: Colors.black54, // Semi-transparent dark background
+      transitionDuration: const Duration(milliseconds: 400),
+      pageBuilder: (context, animation1, animation2) {
+        return SuccessPopupComponent(resetForm: _resetForm);
+      },
+      transitionBuilder: (context, animation, _, child) {
+        return ScaleTransition(  // Animation at the entrance and exit popover
+          scale: CurvedAnimation(parent: animation, curve: Curves.easeOutBack), // Scale + easeOutBack effect
+          child: child,
+        );
+      },
+    );
+
+    // If the user clicked OK → result == true
+    if (result == true) setState(() => _showTextAfterMessageSending = true);
+  }
+
   // Check the selection of typeWork before sending it to the backend
-  void handleSubmit() {
+  void handleSubmit() async {
     setState(() => _showTypeWorkError = false); // Reset the variable on each click of the "Envoyer" button of the form
   
     if (!_formKey.currentState!.validate()) return; // If it is not valid, we exit the function
 
     // Check if a selection of typeWork has been made correctly when requestType is 'Renovation project ....'
     if (_requestTypeController.text == 'Projet de rénovation (devis, estimations...)' && _typeWork.value.isEmpty) {
-      setState(() => _showTypeWorkError = true); // triggers the display of the error in the customer contact form child
+      setState(() => _showTypeWorkError = true); // Triggers the display of the error in the customer contact form child
       return;
     }
 
-    // NEXT STEP : Data collection for sending to the backend 
+    await ContactFormService.submitContactForm(
+      formKey: _formKey, 
+      context: context, 
+      requestTypeController: _requestTypeController,
+      lastNameController: _lastNameController, 
+      firstNameController: _firstNameController, 
+      companyController: _companyController, 
+      emailController: _emailController, 
+      phoneController: _phoneController, 
+      typeWork: _typeWork.value,
+      startDateController: _startDateController,
+      addressController: _addressController,
+      messageController: _messageController, 
+      showSuccessDialog: _showSuccessPopup, // Call SuccesPopupComponent and inside call _resetForm
+      setIsSending: (value) {
+        setState(() => _isSending = value);
+      }
+    );
   }
-
 
   @override  
   void dispose() {
     _scrollController.dispose();
     _pageScrollController.removeListener(_pageScrollListener);
+    _pageScrollController.dispose();
+    _requestTypeController.dispose(); // Dispose All the TextEditingController
+    _lastNameController.dispose();
+    _firstNameController.dispose(); 
+    _companyController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose(); 
+    _typeWork.dispose(); // Dispose ValueNotifier
+    _startDateController.dispose();
+    _addressController.dispose();
+    _messageController.dispose();
     super.dispose();
   }
 
@@ -105,16 +170,28 @@ class ContactScreenState extends State<ContactScreen> {
     // Calculate automatically  the heigh of Form container 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final box = _rightBlockKey.currentContext?.findRenderObject() as RenderBox?;
-      if (box != null) {
+      
+      // For the height only once when we arrive on the page
+      if (box != null && _startLeftBlockHeight == 0) {
         final height = box.size.height;
-        final widht = box.size.width;
-        // Only once when we arrive on the page
         _rightBlockHeight = height;
-        _rightBlockWidht = widht;
-        // // Update each time the heigh of form container changes
-        // setState(() => _rightBlockHeight = height);
+        _startLeftBlockHeight++;
       }
+
+      // // Update each time the heigh of form container changes
+      // if (box != null && _startLeftBlockHeight == 0) {
+      //   final height = box.size.height;
+      //   setState(() => _rightBlockHeight = height);
+      // }
+      
+      // For the widht 
+      if (box != null) {
+        final widht = box.size.width;
+        _rightBlockWidht = widht;
+      }
+
     });
+    
 
     return Scaffold(
       appBar: MyAppBarComponent(
@@ -213,7 +290,6 @@ class ContactScreenState extends State<ContactScreen> {
                 ),
                 // Form section
                 Container(
-                  width: screenWidth * 0.7,
                   padding: EdgeInsets.symmetric(horizontal: mobile ? 16.0 : 32.0, vertical: mobile ? 28.0 : 42.0),
                   child: Wrap(
                     spacing: 100.0,
@@ -357,10 +433,10 @@ class ContactScreenState extends State<ContactScreen> {
                                   typeWork: _typeWork,
                                   showTypeWorkError: _showTypeWorkError,
                                   startDateController: _startDateController,
-                                  locationController: _locationController,
+                                  addressController: _addressController,
                                   messageController: _messageController, 
                                   isSending: _isSending, 
-                                  sendEmail: handleSubmit,
+                                  sendEmail: handleSubmit, // call ContactFormService and inside call SuccesPopupComponent
                                 ),
                               )
                             )
@@ -372,13 +448,15 @@ class ContactScreenState extends State<ContactScreen> {
                 ),
                 const SizedBox(height: 20.0),
                 // Text
+                if (_showTextAfterMessageSending) 
                 Align(
                   child: Text(
-                    "En attendant notre retour, prenez le temps de découvrir nos réalisations en rénovation.",
-                      style: TextStyle(
-                        fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                        color: GlobalColors.secondColor,
+                    "Dans l'attente de notre retour, prenez le temps de découvrir nos réalisations en rénovation.",
+                    style: TextStyle(
+                      fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                      color: GlobalColors.secondColor,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 const SizedBox(height: 160.0),

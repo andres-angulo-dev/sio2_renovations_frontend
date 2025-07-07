@@ -19,7 +19,7 @@ class CustomerContactForm extends StatefulWidget {
     required this.typeWork,
     required this.showTypeWorkError,
     required this.startDateController,
-    required this.locationController,
+    required this.addressController,
     required this.messageController,
     required this.isSending,
     required this.sendEmail,
@@ -36,7 +36,7 @@ class CustomerContactForm extends StatefulWidget {
   final ValueNotifier<List<String>> typeWork; // A reactive list that holds the types of work selected by the user. Updated when they interact with the FilterChips and observed for changes during form submission.
   final bool showTypeWorkError;
   final TextEditingController startDateController;
-  final TextEditingController locationController;
+  final TextEditingController addressController;
   final TextEditingController messageController;
   final bool isSending;
   final VoidCallback sendEmail;
@@ -46,9 +46,22 @@ class CustomerContactForm extends StatefulWidget {
 }
 
 class CustomerContactFormState extends State<CustomerContactForm> {
-  String? _selectedRequestType;
+  // Triggered whenever the text in requestTypeController changes
+  late final VoidCallback _updateRequestTypeOnClick;
   bool _isHovered = false;
-  // final List<String> _selectedNatures = [];
+
+  @override
+  void initState() {
+    super.initState();
+   _updateRequestTypeOnClick = () => setState(() {}); // Initialize the callback to call setState(), forcing the widget to rebuild
+    widget.requestTypeController.addListener(_updateRequestTypeOnClick); // Register the listener on the controller to observe text updates
+  }
+
+  @override
+  void dispose() {
+    widget.requestTypeController.removeListener(_updateRequestTypeOnClick); // Remove listener to prevent memory leaks
+    super.dispose();
+  }
 
   final List<String> _typeWorkOptions = [
     'Rénovation totale',
@@ -83,7 +96,7 @@ class CustomerContactFormState extends State<CustomerContactForm> {
             child: DropdownButtonFormField2<String>(
               isExpanded: true,
               decoration: _buildDropdownDecoration('Votre demande concerne ... *'),
-              value: _selectedRequestType,
+              value: widget.requestTypeController.text.isEmpty ? null : widget.requestTypeController.text,
               items: items.map((item) => DropdownMenuItem<String>(
                 value: item,
                 child: Text(
@@ -91,8 +104,7 @@ class CustomerContactFormState extends State<CustomerContactForm> {
                   style: const TextStyle(fontSize: 14.0),
                 )
               )).toList(),
-              onChanged:(value) {
-                setState(() => _selectedRequestType = value);
+              onChanged: (value) {
                 widget.requestTypeController.text = value ?? '';
               },
               dropdownStyleData: DropdownStyleData(
@@ -169,7 +181,7 @@ class CustomerContactFormState extends State<CustomerContactForm> {
             ],
           ),
           // Added if the resquest is a renovaiton project
-          if (_selectedRequestType == 'Projet de rénovation (devis, estimations...)') ...[
+          if (widget.requestTypeController.text == 'Projet de rénovation (devis, estimations...)') ...[
             SizedBox(height: 30.0),
             SizedBox(
               child: Column(
@@ -231,7 +243,7 @@ class CustomerContactFormState extends State<CustomerContactForm> {
                 : null,
             ),
             _buildTextField(
-              controller: widget.locationController,
+              controller: widget.addressController,
               labelText: 'Localisation du projet *',
               icon: Icons.location_on,
               validator: (value) => value == null || value.isEmpty 
@@ -258,45 +270,48 @@ class CustomerContactFormState extends State<CustomerContactForm> {
             ),
           ),
           const SizedBox(height: 24.0),
-          widget.isSending
-          ? const Center(child: CircularProgressIndicator()) // Show a loading indicator if the email is being sent.
-          : Align( // Prevents the button from taking the full horizontal width of the ListView.
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: MouseRegion( 
-                onEnter: (_) => setState(() => _isHovered = true),
-                onExit: (_) => setState(() => _isHovered = false),
-                child: SizedBox( // Button 
-                  width: 200.0,
-                  height: 48.0,
-                  child: ElevatedButton(
-                    onPressed: widget.sendEmail,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: _isHovered ? GlobalColors.thirdColor : GlobalColors.firstColor ,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+          if (widget.isSending) ...[
+            const Center(child: CircularProgressIndicator()), // Show a loading indicator if the email is being sent.
+            const SizedBox(height: 30.0),
+          ] else ...[
+            Align( // Prevents the button from taking the full horizontal width of the ListView.
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: MouseRegion( 
+                  onEnter: (_) => setState(() => _isHovered = true),
+                  onExit: (_) => setState(() => _isHovered = false),
+                  child: SizedBox( // Button 
+                    width: 200.0,
+                    height: 48.0,
+                    child: ElevatedButton(
+                      onPressed: widget.sendEmail,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: _isHovered ? GlobalColors.thirdColor : GlobalColors.firstColor ,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.send, color: _isHovered ? GlobalColors.firstColor : GlobalColors.secondColor ),
+                          const SizedBox(width: 8),
+                          Text(
+                            'ENVOYER',
+                            style: TextStyle(
+                              color: _isHovered ? GlobalColors.firstColor : GlobalColors.secondColor ,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.send, color: _isHovered ? GlobalColors.firstColor : GlobalColors.secondColor ),
-                        const SizedBox(width: 8),
-                        Text(
-                          'ENVOYER',
-                          style: TextStyle(
-                            color: _isHovered ? GlobalColors.firstColor : GlobalColors.secondColor ,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  )
                 )
-              )
-            ) 
-          ),
+              ) 
+            ),
+          ],
           const SizedBox(height: 5.0),
           RichText(
             text: TextSpan(
@@ -404,7 +419,7 @@ class CustomerContactFormState extends State<CustomerContactForm> {
 
 
 
-// // Simple cusstomer contact form (without any option)
+// // Simple customer contact form (without any option)
 // import 'package:flutter/material.dart';
 // import 'package:sio2_renovations_frontend/components/my_hover_route_navigator.dart';
 // import '../utils/global_colors.dart';
