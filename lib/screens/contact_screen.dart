@@ -38,6 +38,8 @@ class ContactScreenState extends State<ContactScreen> {
   double? _rightBlockHeight;
   double? _rightBlockWidht;
   bool _isSending = false;
+  bool _hasAcceptedConditions = false;
+  bool _showConsentError = false;
   String currentItem = 'Contact';
   bool _showTitleScreen = false;
   bool _showBackToTopButton = false;
@@ -76,20 +78,57 @@ class ContactScreenState extends State<ContactScreen> {
     }
   }
 
-  void _resetForm() {
-    _formKey.currentState?.reset();  // allows the visual errors of the form to disappear (Reset the state of form)
-    _requestTypeController.clear(); // Empty the entered value
-    _lastNameController.clear();
-    _firstNameController.clear(); 
-    _companyController.clear();
-    _emailController.clear();
-    _phoneController.clear(); 
-    _typeWork.value = []; // Empty a list
-    _startDateController.clear();
-    _addressController.clear();
-    _messageController.clear();
+    // Check the selection of typeWork before sending it to the backend
+  void handleSubmit() async {
+    // Stock if there is an error in the forms
+    bool inputInvalid = false;
+    // Reset the variables on each click of the "Envoyer" button of the form
+    setState(() {
+      _showTypeWorkError = false;
+      _showConsentError = false;    
+    }); 
+  
+    // Check if checkbox is checked
+    if (!_hasAcceptedConditions) {
+      setState(() => _showConsentError = true); // enables the visual error message
+      inputInvalid = true;
+    }
+
+    // validate the entire form, if it is not valid, we exit the function
+    if (!_formKey.currentState!.validate()) {
+      inputInvalid = true;
+    }; 
+
+    // Check typeWork if necessary : if a selection of typeWork has been made correctly when requestType is 'Renovation project ....'
+    if (_requestTypeController.text == 'Projet de rénovation (devis, estimations...)' && _typeWork.value.isEmpty) {
+      setState(() => _showTypeWorkError = true); // Triggers the display of the error in the customer contact form child
+      inputInvalid = true;
+    }
+
+    // If there is an error, the message does not send
+    if (inputInvalid) return; 
+
+    await ContactFormService.submitContactForm(
+      formKey: _formKey, 
+      context: context, 
+      requestTypeController: _requestTypeController,
+      lastNameController: _lastNameController, 
+      firstNameController: _firstNameController, 
+      companyController: _companyController, 
+      emailController: _emailController, 
+      phoneController: _phoneController, 
+      typeWork: _typeWork.value,
+      startDateController: _startDateController,
+      addressController: _addressController,
+      messageController: _messageController, 
+      showSuccessDialog: _showSuccessPopup, // Call SuccesPopupComponent and inside call _resetForm
+      setIsSending: (value) {
+        setState(() => _isSending = value);
+      }
+    );
   }
 
+  // Handle popup when the message is sent
   Future<void> _showSuccessPopup() async {
     final result = await showGeneralDialog<bool>(
       context: context,
@@ -112,37 +151,26 @@ class ContactScreenState extends State<ContactScreen> {
     if (result == true) setState(() => _showTextAfterMessageSending = true);
   }
 
-  // Check the selection of typeWork before sending it to the backend
-  void handleSubmit() async {
-    setState(() => _showTypeWorkError = false); // Reset the variable on each click of the "Envoyer" button of the form
-  
-    if (!_formKey.currentState!.validate()) return; // If it is not valid, we exit the function
 
-    // Check if a selection of typeWork has been made correctly when requestType is 'Renovation project ....'
-    if (_requestTypeController.text == 'Projet de rénovation (devis, estimations...)' && _typeWork.value.isEmpty) {
-      setState(() => _showTypeWorkError = true); // Triggers the display of the error in the customer contact form child
-      return;
-    }
-
-    await ContactFormService.submitContactForm(
-      formKey: _formKey, 
-      context: context, 
-      requestTypeController: _requestTypeController,
-      lastNameController: _lastNameController, 
-      firstNameController: _firstNameController, 
-      companyController: _companyController, 
-      emailController: _emailController, 
-      phoneController: _phoneController, 
-      typeWork: _typeWork.value,
-      startDateController: _startDateController,
-      addressController: _addressController,
-      messageController: _messageController, 
-      showSuccessDialog: _showSuccessPopup, // Call SuccesPopupComponent and inside call _resetForm
-      setIsSending: (value) {
-        setState(() => _isSending = value);
-      }
-    );
+  // When the SuccessPopup closes
+  void _resetForm() {
+    _formKey.currentState?.reset();  // allows the visual errors of the form to disappear (Reset the state of form)
+    _requestTypeController.clear(); // Empty the entered value
+    _lastNameController.clear();
+    _firstNameController.clear(); 
+    _companyController.clear();
+    _emailController.clear();
+    _phoneController.clear(); 
+    _typeWork.value = []; // Empty a list
+    _startDateController.clear();
+    _addressController.clear();
+    _messageController.clear();
+    setState(() { // Reset the variables to false to uncheck the box
+      _hasAcceptedConditions = false; 
+      _showConsentError = false; 
+    }); 
   }
+
 
   @override  
   void dispose() {
@@ -436,6 +464,14 @@ class ContactScreenState extends State<ContactScreen> {
                                   addressController: _addressController,
                                   messageController: _messageController, 
                                   isSending: _isSending, 
+                                  hasAcceptedConditions: _hasAcceptedConditions,
+                                  showConsentError: _showConsentError,
+                                  onAcceptConditionsChanged: (value) {
+                                    setState(() {
+                                      _hasAcceptedConditions = value;
+                                      if (value) _showConsentError = false; // Remove the error message as soon as we check it
+                                    });
+                                  },
                                   sendEmail: handleSubmit, // call ContactFormService and inside call SuccesPopupComponent
                                 ),
                               )
