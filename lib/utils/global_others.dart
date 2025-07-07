@@ -15,7 +15,11 @@ class GlobalImages {
   static const String backgroundWorkTogetherSection = 'assets/images/AdobeStock_544852100bis.jpg';
   
   // Projects screen
-  static const String bakcgroundQuote = 'assets/images/iStock-871105006.webp';
+  static const String bakcgroundQuote = 'assets/images/iStock-871105006.webp';  
+  
+  // CapchaComponent
+  static const String imageCaptha = 'assets/images/immeuble.jpeg';
+  static const String iconCaptcha = 'assets/icons/captcha.png';
 
   static const Map<String, List<String>> photosByService = {
     'PEINTURE': [
