@@ -3,7 +3,9 @@ import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
 import '../components/my_back_to_top_button.dart';
 import '../components/professional_contact_form.dart';
+import '../components/success_popup_component.dart';
 import '../components/footer.dart';
+import '../services/contact_form_service.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
@@ -28,13 +30,14 @@ class PartnersScreenState extends State<PartnersScreen> {
   final TextEditingController _companyController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _messageController = TextEditingController();
-  bool _isSending = false;
-  
-  
   String currentItem = 'À propos';
   String currenSubItem = 'Partenaires';
+  bool _isSending = false;
   bool _showTitleScreen = false;
   bool _showBackToTopButton = false;
+  bool _hasAcceptedConditions = false;
+  bool _showConsentError = false;
+  bool _showTextAfterMessageSending = false;
   // bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not (only for NavItem with click)
 
   @override  
@@ -67,10 +70,97 @@ class PartnersScreenState extends State<PartnersScreen> {
     }
   }
 
+    // Check the selection of typeWork before sending it to the backend
+  void handleSubmit() async {
+    // Keep if there is an error in the forms
+    bool inputInvalid = false;
+    // Reset the variables on each click of the "Envoyer" button of the form
+    setState(() {
+      _showConsentError = false; 
+    }); 
+
+    // Check if checkbox is checked
+    if (!_hasAcceptedConditions) {
+      setState(() => _showConsentError = true); // enables the visual error message
+      inputInvalid = true;
+    }
+
+    // validate the entire form, if it is not valid, we exit the function
+    if (!_formKey.currentState!.validate()) {
+      inputInvalid = true;
+    }
+
+    // If there is an error, the message does not send
+    if (inputInvalid) return; 
+
+    await ContactFormService.submitContactForm(
+      formKey: _formKey, 
+      context: context, 
+      lastNameController: _lastNameController, 
+      firstNameController: _firstNameController, 
+      companyController: _companyController, 
+      emailController: _emailController, 
+      phoneController: _phoneController, 
+      messageController: _messageController, 
+      showSuccessDialog: _showSuccessPopup, // Call SuccesPopupComponent and inside call _resetForm
+      setIsSending: (value) {
+        setState(() => _isSending = value);
+      }
+    );
+  }
+
+    // Handle popup when the message is sent
+  Future<void> _showSuccessPopup() async {
+    final result = await showGeneralDialog<bool>(
+      context: context,
+      barrierDismissible: false, // Prevents closing by tapping background
+      barrierLabel: 'Success', // Label for accessibility (screen readers)
+      barrierColor: Colors.black54, // Semi-transparent dark background
+      transitionDuration: const Duration(milliseconds: 400),
+      pageBuilder: (context, animation1, animation2) {
+        return SuccessPopupComponent(
+          resetForm: _resetForm,
+        );
+      },
+      transitionBuilder: (context, animation, _, child) {
+        return ScaleTransition(  // Animation at the entrance and exit popover
+          scale: CurvedAnimation(parent: animation, curve: Curves.easeOutBack), // Scale + easeOutBack effect
+          child: child,
+        );
+      },
+    );
+
+    // If the user clicked OK → result == true
+    if (result == true) setState(() => _showTextAfterMessageSending = true);
+  }
+
+    // When the SuccessPopup closes
+  void _resetForm() {
+    _formKey.currentState?.reset();  // allows the visual errors of the form to disappear (Reset the state of form)
+    _lastNameController.clear();
+    _firstNameController.clear(); 
+    _companyController.clear();
+    _emailController.clear();
+    _phoneController.clear(); 
+    _messageController.clear();
+    setState(() { // Reset the variables 
+      _hasAcceptedConditions = false; 
+      _showConsentError = false; 
+    }); 
+  }
+
+  
   @override 
   void dispose() {
     _scrollController.dispose();
     _pageScrollController.removeListener(_pageScrollListener);
+    _pageScrollController.dispose();
+    _lastNameController.dispose();
+    _firstNameController.dispose(); 
+    _companyController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose(); 
+    _messageController.dispose();
     super.dispose();
   }
 
@@ -176,102 +266,33 @@ class PartnersScreenState extends State<PartnersScreen> {
                     ],
                   ),
                 ),
-                // Description section
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Container(
-                    constraints: BoxConstraints(maxWidth: 1000.0, minHeight: 500.0),
-                    padding: EdgeInsets.symmetric(horizontal: mobile ? 16.0 : 32.0, vertical: mobile ? 28.0 : 42.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: GlobalColors.thirdColor,
-                      ),
-                      color: GlobalColors.fourthColor,
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    child: Align(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          // Title
-                          Text(
-                            "REJOIGNEZ UN RESEAU OÙ LE SAVOIR-FAIRE FAIT DIFFÉRENCE",
-                            style: TextStyle(
-                              fontSize: mobile ? GlobalSize.mobileTitle : GlobalSize.webTitle, 
-                              fontWeight: FontWeight.bold,
+                AnimatedOpacity(
+                  opacity: _showTitleScreen ? 1.0 : 0.0,
+                  duration: const Duration(milliseconds: 1500),
+                  child: Column(
+                    children: [
+                      // Description section
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Container(
+                          constraints: BoxConstraints(maxWidth: 1000.0, minHeight: 500.0),
+                          padding: EdgeInsets.symmetric(horizontal: mobile ? 16.0 : 32.0, vertical: mobile ? 28.0 : 42.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(
                               color: GlobalColors.thirdColor,
                             ),
-                            textAlign: TextAlign.center,
+                            color: GlobalColors.fourthColor,
+                            borderRadius: BorderRadius.circular(16.0),
                           ),
-                          const SizedBox(height: 20), // Space between
-                          // Sub title
-                          RichText(
-                            textAlign: TextAlign.center,
-                            text : TextSpan(
-                              style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                                color: GlobalColors.secondColor
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: 'Parce qu’un projet d’exception ne se réalise jamais seul. ',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  )
-                                ),
-                                TextSpan(
-                                  text: "Chez "
-                                ),
-                                TextSpan(
-                                  text: 'SIO2 Rénovations ',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  )
-                                ),
-                                TextSpan(
-                                  text: 
-                                    'nous croyons à la force du collectif. C’est en nous entourant de partenaires passionnés et exigeants (architectes, cuisinistes, bureaux d’études, fournisseurs spécialisés ect...) que nous donnons vie à des projets uniques, cohérents et durables.'
-                                    'Chaque collaboration est guidée par les mêmes valeurs qui nous animent : l’écoute, l’engagement, la confiance, la précision et le savoir-faire. Ce sont elles qui font la différence sur nos chantiers, et qui transforment une rénovation en une vraie réussite partagée.\n\n'
-                                ), 
-                                  TextSpan(
-                                  text: 'Rejoignez un réseau où chaque détail compte et chaque talent fait la différence.',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  )
-                                ),
-                              ]
-                            )
-                          ),
-                        ],
-                      ),
-                    )
-                  ), 
-                ),
-                SizedBox(height: 100.0),
-                // Contact form section
-                Container(
-                  width: screenWidth,
-                  color: GlobalColors.fourthColor,
-                  padding: EdgeInsets.symmetric(horizontal: mobile ? 16.0 : 32.0, vertical: mobile ? 28.0 : 42.0),
-                  child: SizedBox(
-                    width: screenWidth * 0.8,
-                    child: Wrap(
-                      spacing: 30.0,
-                      runSpacing: 40.0,
-                      alignment: WrapAlignment.center,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        Container(
-                          constraints: BoxConstraints(maxWidth: 800.0),
-                          child: Center(
+                          child: Align(
                             child: Column(
-                              mainAxisSize: MainAxisSize.min, // Shrink to fit content
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 // Title
                                 Text(
-                                  "VOUS SOUHAITEZ COLLABORER AVEC NOUS ?",
+                                  "REJOIGNEZ UN RESEAU OÙ LE SAVOIR-FAIRE FAIT DIFFÉRENCE",
                                   style: TextStyle(
-                                    fontSize: mobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
+                                    fontSize: mobile ? GlobalSize.mobileTitle : GlobalSize.webTitle, 
                                     fontWeight: FontWeight.bold,
                                     color: GlobalColors.thirdColor,
                                   ),
@@ -279,53 +300,151 @@ class PartnersScreenState extends State<PartnersScreen> {
                                 ),
                                 const SizedBox(height: 20), // Space between
                                 // Sub title
-                                Text(
-                                  "Si vous avez un savoir-faire et une expertise qui peut enrichir nos projets, n'hésitez pas à compléter ce formulaire",
-                                  style: TextStyle(
-                                    fontSize: 24.0,
-                                    color: GlobalColors.secondColor,
-                                  ),
+                                RichText(
                                   textAlign: TextAlign.center,
-                                ),
-                                const SizedBox(height: 20), // Space between
-                                // Description
-                                Text(
-                                  "Nous réalisons nos projets en interne, avec une maîtrise globale du chantier, de la conception à la livraison. Nous aimons collaborer avec des professionnels passionnés qui partagent notre exigence et notre sens du détail. Architectes, cuisinistes, décorateurs, fabricants spécialisés ect... Nous serions ravis d’en discuter avec vous. Remplissez le formulaire pour rejoindre notre réseau de partenaires exigeants et engagés.",
-                                  style: TextStyle(
-                                    fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                                    color: GlobalColors.secondColor,
-                                  ),
-                                  textAlign: TextAlign.center,
+                                  text : TextSpan(
+                                    style: TextStyle(
+                                      fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                      color: GlobalColors.secondColor
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: 'Parce qu’un projet d’exception ne se réalise jamais seul. ',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        )
+                                      ),
+                                      TextSpan(
+                                        text: "Chez "
+                                      ),
+                                      TextSpan(
+                                        text: 'SIO2 Rénovations ',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        )
+                                      ),
+                                      TextSpan(
+                                        text: 
+                                          'nous croyons à la force du collectif. C’est en nous entourant de partenaires passionnés et exigeants (architectes, cuisinistes, bureaux d’études, fournisseurs spécialisés ect...) que nous donnons vie à des projets uniques, cohérents et durables.'
+                                          'Chaque collaboration est guidée par les mêmes valeurs qui nous animent : l’écoute, l’engagement, la confiance, la précision et le savoir-faire. Ce sont elles qui font la différence sur nos chantiers, et qui transforment une rénovation en une vraie réussite partagée.\n\n'
+                                      ), 
+                                        TextSpan(
+                                        text: 'Rejoignez un réseau où chaque détail compte et chaque talent fait la différence.',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        )
+                                      ),
+                                    ]
+                                  )
                                 ),
                               ],
                             ),
                           )
-                        ),
-                        if (!GlobalScreenSizes.isCustomSize(context, 1727.0)) Container(
-                          height: 600.0,
-                          width: 3.0,
-                          color: GlobalColors.orangeColor.withValues(alpha: 0.3),
-                        ),
-                        Container(
-                          constraints: BoxConstraints(maxWidth: 800.0),
-                          child: Center(
-                            child: ProfessionalContactForm(
-                              formKey: _formKey, 
-                              firstNameController: _firstNameController, 
-                              lastNameController: _lastNameController, 
-                              emailController: _emailController, 
-                              phoneController: _phoneController,
-                              companyController: _companyController, 
-                              messageController: _messageController, 
-                              isSending: _isSending, 
-                              onSend: () => {},
-                            ),
-                          )
+                        ), 
+                      ),
+                      SizedBox(height: 100.0),
+                      // Contact form section
+                      Container(
+                        width: screenWidth,
+                        color: GlobalColors.fourthColor,
+                        padding: EdgeInsets.symmetric(horizontal: mobile ? 16.0 : 32.0, vertical: mobile ? 28.0 : 42.0),
+                        child: SizedBox(
+                          width: screenWidth * 0.8,
+                          child: Wrap(
+                            spacing: 30.0,
+                            runSpacing: 40.0,
+                            alignment: WrapAlignment.center,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              Container(
+                                constraints: BoxConstraints(maxWidth: 800.0),
+                                child: Center(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min, // Shrink to fit content
+                                    children: [
+                                      // Title
+                                      Text(
+                                        "VOUS SOUHAITEZ COLLABORER AVEC NOUS ?",
+                                        style: TextStyle(
+                                          fontSize: mobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
+                                          fontWeight: FontWeight.bold,
+                                          color: GlobalColors.thirdColor,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      const SizedBox(height: 20), // Space between
+                                      // Sub title
+                                      Text(
+                                        "Si vous avez un savoir-faire et une expertise qui peut enrichir nos projets, n'hésitez pas à compléter ce formulaire",
+                                        style: TextStyle(
+                                          fontSize: 24.0,
+                                          color: GlobalColors.secondColor,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      const SizedBox(height: 20), // Space between
+                                      // Description
+                                      Text(
+                                        "Nous réalisons nos projets en interne, avec une maîtrise globale du chantier, de la conception à la livraison. Nous aimons collaborer avec des professionnels passionnés qui partagent notre exigence et notre sens du détail. Architectes, cuisinistes, décorateurs, fabricants spécialisés ect... Nous serions ravis d’en discuter avec vous. Remplissez le formulaire pour rejoindre notre réseau de partenaires exigeants et engagés.",
+                                        style: TextStyle(
+                                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                          color: GlobalColors.secondColor,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ),
+                              if (!GlobalScreenSizes.isCustomSize(context, 1727.0)) Container(
+                                height: 600.0,
+                                width: 3.0,
+                                color: GlobalColors.orangeColor.withValues(alpha: 0.3),
+                              ),
+                              Container(
+                                constraints: BoxConstraints(maxWidth: 800.0),
+                                child: Center(
+                                  child: ProfessionalContactForm(
+                                    formKey: _formKey, 
+                                    firstNameController: _firstNameController, 
+                                    lastNameController: _lastNameController, 
+                                    emailController: _emailController, 
+                                    phoneController: _phoneController,
+                                    companyController: _companyController, 
+                                    messageController: _messageController, 
+                                    isSending: _isSending, 
+                                    hasAcceptedConditions: _hasAcceptedConditions,
+                                    showConsentError: _showConsentError,
+                                    onAcceptConditionsChanged: (value) {
+                                      setState(() {
+                                        _hasAcceptedConditions = value;
+                                        if (value) _showConsentError = false; // Remove the error message as soon as we check it
+                                      }); 
+                                    },
+                                    sendEmail: handleSubmit, // call ContactFormService and inside call SuccesPopupComponent
+                                  ),
+                                )
+                              )
+                            ],
+                          ),
                         )
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 20.0),
+                      // Text if email sent
+                      if (_showTextAfterMessageSending) 
+                      Align(
+                        child: Text(
+                          "Dans l'attente de notre retour, prenez le temps de découvrir nos réalisations en rénovation.",
+                          style: TextStyle(
+                            fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                            color: GlobalColors.secondColor,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),  
+                    ],
                   )
-                ),
+                ), 
                 const SizedBox(height: 160.0),
                 // Footer
                 FooterComponent(),

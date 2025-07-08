@@ -6,15 +6,15 @@ class ContactFormService {
   static Future<void> submitContactForm({
     required GlobalKey<FormState> formKey,
     required BuildContext context,
-    required TextEditingController requestTypeController,                
+    TextEditingController? requestTypeController,                
     required TextEditingController lastNameController,
     required TextEditingController firstNameController,
     required TextEditingController companyController,
     required TextEditingController emailController,
     required TextEditingController phoneController,
     List<String>? typeWork,               
-    required TextEditingController startDateController,                    
-    required TextEditingController addressController,                     
+    TextEditingController? startDateController,                    
+    TextEditingController? addressController,                     
     required TextEditingController messageController,
     required VoidCallback showSuccessDialog,
     required Function(bool) setIsSending,
@@ -29,15 +29,15 @@ class ContactFormService {
     }
 
     final request = ContactFormRequest(
-      requestType: requestTypeController.text.isEmpty ? null : requestTypeController.text,
+      requestType: requestTypeController?.text.isEmpty ?? true ? null : requestTypeController!.text,
       firstName: firstNameController.text,
       lastName: lastNameController.text,
       company: companyController.text,
       email: emailController.text,
       phone: phoneController.text,
       typeWork: typeWork,
-      startDate: startDateController.text.isEmpty ? null : startDateController.text,
-      address: addressController.text.isEmpty ? null : addressController.text,
+      startDate: startDateController?.text.isEmpty ?? true ? null : startDateController!.text,
+      address: addressController?.text.isEmpty ?? true ? null : addressController!.text,
       message: messageController.text,
     );
 
@@ -58,3 +58,4 @@ class ContactFormService {
     }
   }
 }
+

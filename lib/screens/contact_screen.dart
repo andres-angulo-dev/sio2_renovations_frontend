@@ -98,7 +98,7 @@ class ContactScreenState extends State<ContactScreen> {
     // validate the entire form, if it is not valid, we exit the function
     if (!_formKey.currentState!.validate()) {
       inputInvalid = true;
-    }; 
+    }
 
     // Check typeWork if necessary : if a selection of typeWork has been made correctly when requestType is 'Renovation project ....'
     if (_requestTypeController.text == 'Projet de rénovation (devis, estimations...)' && _typeWork.value.isEmpty) {

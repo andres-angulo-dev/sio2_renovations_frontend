@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import '../components/my_hover_route_navigator.dart';
 import '../utils/global_colors.dart';
+import '../utils/global_others.dart';
+import '../utils/global_screen_sizes.dart';
 
 class ProfessionalContactForm extends StatefulWidget {
   final GlobalKey<FormState> formKey;
@@ -10,7 +13,10 @@ class ProfessionalContactForm extends StatefulWidget {
   final TextEditingController companyController;
   final TextEditingController messageController;
   final bool isSending;
-  final VoidCallback onSend;
+  final bool hasAcceptedConditions;
+  final bool showConsentError;
+  final ValueChanged<bool> onAcceptConditionsChanged;
+  final VoidCallback sendEmail;
 
   const ProfessionalContactForm({
     super.key,
@@ -22,7 +28,10 @@ class ProfessionalContactForm extends StatefulWidget {
     required this.companyController,
     required this.messageController,
     required this.isSending,
-    required this.onSend,
+    required this.hasAcceptedConditions,
+    required this.onAcceptConditionsChanged,
+    required this.showConsentError,
+    required this.sendEmail,
   });
 
   @override  
@@ -34,6 +43,7 @@ class ProfessionalContactFormState extends State<ProfessionalContactForm> {
 
   @override
   Widget build(BuildContext context) {
+  bool mobile = GlobalScreenSizes.isMobileScreen(context);
 
     return Form(
       key: widget.formKey,
@@ -56,11 +66,9 @@ class ProfessionalContactFormState extends State<ProfessionalContactForm> {
               Expanded( 
                 child: _buildTextField( //name
                   controller: widget.firstNameController,
-                  labelText: 'Prénom *',
+                  labelText: 'Prénom',
                   icon: Icons.person,
-                  validator: (value) => value == null || value.isEmpty
-                    ? 'Veuillez renseigner votre prénom'
-                    : null,
+                  validator: (value) => null,
                 ),
               ),
             ],
@@ -109,55 +117,197 @@ class ProfessionalContactFormState extends State<ProfessionalContactForm> {
             icon: Icons.message,
             maxLines: 6,
             validator: (value) =>
-              value == null || value.isEmpty ? 'Veuillez écrire un message' : null,
+              value == null || value.isEmpty ? 'Veuillez saisir votre message' : null,
           ),
           const SizedBox(height: 5.0),
           Text(
-            '* Obligatoire',
+            '*Ces champs sont obligatoires',
             style: TextStyle(
               fontStyle: FontStyle.italic,
             ),
           ),
           const SizedBox(height: 24.0),
-          widget.isSending
-            ? const Center(child: CircularProgressIndicator()) // Show a loading indicator if the email is being sent.
-            : Align( // Prevents the button from taking the full horizontal width of the ListView.
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: MouseRegion( 
-                  onEnter: (_) => setState(() => _isHovered = true),
-                  onExit: (_) => setState(() => _isHovered = false),
-                  child: SizedBox( // Button 
-                    width: 200.0,
-                    height: 48.0,
-                    child: ElevatedButton(
-                      onPressed: widget.onSend,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: _isHovered ? GlobalColors.thirdColor : GlobalColors.firstColor ,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+          // Checkbox
+          CheckboxListTile(
+            value: widget.hasAcceptedConditions,
+            onChanged: widget.isSending
+                ? null  // Disabled during sending
+                : (value) {
+                  widget.onAcceptConditionsChanged(value ??  false);
+                },
+            controlAffinity: ListTileControlAffinity.leading,
+            activeColor: GlobalColors.orangeColor,
+            title: Text(
+              'En soumettant ce formulaire, je consens aux conditions de collecte et d’utilisation des données*',
+              style: TextStyle(
+                color: GlobalColors.secondColor,
+                fontSize: mobile ? GlobalSize.mobileItalicText : GlobalSize.webItalicText,
+              ),
+            ),
+          ),
+          if (widget.showConsentError)
+          Padding(
+            padding: const EdgeInsets.only(left: 24.0),
+            child: Text(
+              'Veuillez accepter les conditions avant de continuer.',
+              style: TextStyle(
+                color: Colors.red[900],
+                fontSize: 13.0,
+              ),
+            ),
+          ),
+          const SizedBox(height: 20.0),
+          // Button "ENVOYER"
+          if (widget.isSending)
+          Row(
+            children: [
+              Align( // Prevents the button from taking the full horizontal width of the ListView.
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: MouseRegion( 
+                    onEnter: (_) => setState(() => _isHovered = true),
+                    onExit: (_) => setState(() => _isHovered = false),
+                    child: SizedBox( // Button 
+                      width: 200.0,
+                      height: 48.0,
+                      child: ElevatedButton(
+                        onPressed: null,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: GlobalColors.dividerColor1 ,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 16.0,
+                              height: 16.0,
+                              child: CircularProgressIndicator(
+                                color: GlobalColors.orangeColor,
+                              )
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              'ENVOI...',
+                              style: TextStyle(
+                                color: GlobalColors.secondColor ,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.send, color: _isHovered ? GlobalColors.firstColor : GlobalColors.secondColor ),
-                          const SizedBox(width: 8),
-                          Text(
-                            'ENVOYER',
-                            style: TextStyle(
-                              color: _isHovered ? GlobalColors.firstColor : GlobalColors.secondColor ,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    )
                   )
                 )
-              ) 
-            ),
+              ),
+              const SizedBox(width: 10.0),
+              // Icon captcha
+              Container(
+                width: 45.0,
+                height: 45.0,
+                padding: EdgeInsets.all(7.0),
+                color: GlobalColors.firstColor,
+                child: Image.asset(
+                  GlobalImages.iconCaptcha,
+                  semanticLabel: 'Captcha security icon',
+                ) 
+              )
+            ],
+          )
+          else 
+          Row(
+            children: [
+              Align( // Prevents the button from taking the full horizontal width of the ListView.
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: MouseRegion( 
+                    onEnter: (_) => setState(() => _isHovered = true),
+                    onExit: (_) => setState(() => _isHovered = false),
+                    child: SizedBox( // Button 
+                      width: 200.0,
+                      height: 48.0,
+                      child: ElevatedButton(
+                        onPressed: widget.sendEmail,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: _isHovered ? GlobalColors.thirdColor : GlobalColors.firstColor ,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.send, color: _isHovered ? GlobalColors.firstColor : GlobalColors.secondColor ),
+                            const SizedBox(width: 8),
+                            Text(
+                              'ENVOYER',
+                              style: TextStyle(
+                                color: _isHovered ? GlobalColors.firstColor : GlobalColors.secondColor ,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  )
+                ) 
+              ),
+              const SizedBox(width: 10.0),
+              // Icon captcha
+              Container(
+                width: 45.0,
+                height: 45.0,
+                padding: EdgeInsets.all(7.0),
+                color: GlobalColors.firstColor,
+                child: Image.asset(
+                  GlobalImages.iconCaptcha,
+                  semanticLabel: 'Captcha security icon',
+                ) 
+              )
+            ],
+          ),
+          const SizedBox(height: 5.0),
+          RichText(
+            text: TextSpan(
+              style: TextStyle(
+                fontStyle: FontStyle.italic,
+                fontSize: mobile ? GlobalSize.mobileItalicText : GlobalSize.webItalicText,
+                color: GlobalColors.fiveColor,
+              ),
+              children: [
+                TextSpan(
+                  text: '*Les informations que vous nous communiquez via ce formulaire font l’objet d’un traitement informatique, destiné exclusivement à SiO 2 Rénovations, dans le but de gérer vos demandes et d’assurer le suivi de notre relation. Elles sont accessibles uniquement par nos équipes internes habilitées et, si nécessaire, par nos prestataires techniques, dans le respect strict de la confidentialité.'
+                  'Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez à tout moment d’un droit d’accès, de rectification, de suppression ou de limitation du traitement de vos données. Vous pouvez également exercer votre droit à la portabilité, ainsi que définir des directives relatives à leur conservation post-mortem.'
+                  'Vos données sont conservées pendant une durée maximale de trois ans à compter du dernier échange. Pour exercer vos droits, contactez-nous à l’adresse suivante : contact@sio2renovations.com. En cas de désaccord non résolu, vous avez également la possibilité de saisir la CNIL.'
+                  'Pour en savoir plus, consultez notre '
+                ),
+                WidgetSpan(
+                  alignment: PlaceholderAlignment.baseline,
+                  baseline: TextBaseline.alphabetic,
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                  ),
+                  child: MyHoverRouteNavigator(
+                    routeName: '/privacyPolicy', 
+                    text: 'Politique de confidentialité',
+                    mobile: mobile,
+                    color: GlobalColors.orangeColor.withValues(alpha: 0.5),
+                    hoverColor: GlobalColors.secondColor.withValues(alpha: 0.5),
+                    mobileSize: GlobalSize.mobileItalicText,
+                    webSize: GlobalSize.webItalicText,
+                    italic: true,
+                  ) 
+                )
+              ]
+            )
+          )
         ],
       ),
     );
