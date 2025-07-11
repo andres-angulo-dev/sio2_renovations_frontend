@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../components/zoom_fade_image_carousel_component.dart';
 import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
 import '../components/cookies_consent_banner.dart';
@@ -169,19 +170,13 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                 // Welcome section
                 Stack(
                   children: [
-                    // Background image with shadow effect.
-                    Positioned.fill(
-                      child: Container(
-                        height: MediaQuery.of(context).size.height,
-                        width: screenWidth,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(GlobalImages.backgroundLanding),
-                              fit: BoxFit.cover, // Cover the entire space
-                            ),
-                          ),
-                        ),
+                    // Image carousel
+                    ZoomFadeIamgeCarouselComponent(
+                      imagePaths: GlobalImages.landingCarouselImages,
+                      height: MediaQuery.of(context).size.height,
                     ),
+
+                    // Shadow effect
                     Positioned.fill(
                       child: Container(
                         height: MediaQuery.of(context).size.height,

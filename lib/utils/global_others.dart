@@ -13,6 +13,11 @@ class GlobalImages {
   static const String backgroundFeedbackSection = 'assets/images/backgroundFeedbackSection.png';
   static const String backgroundWhyChooseUsSection = 'assets/images/backgroundWhyChooseUs.png';
   static const String backgroundWorkTogetherSection = 'assets/images/AdobeStock_544852100bis.jpg';
+  static const List<String> landingCarouselImages = [
+    GlobalImages.backgroundLanding,
+    GlobalImages.bakcgroundQuote,
+    GlobalImages.backgroundWorkTogetherSection,
+  ];
   
   // Projects screen
   static const String bakcgroundQuote = 'assets/images/iStock-871105006.webp';  
