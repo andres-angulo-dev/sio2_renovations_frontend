@@ -175,7 +175,6 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
                       imagePaths: GlobalImages.landingCarouselImages,
                       height: MediaQuery.of(context).size.height,
                     ),
-
                     // Shadow effect
                     Positioned.fill(
                       child: Container(
@@ -224,7 +223,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
               ],
             ),
           ),
-          // Cookie consent banner appears when banner visibility i
+          // Cookie consent banner appears when banner visibility is true
           if (_isBannerVisible)
           CookiesConsentBanner(
             onConsentGiven: _handleCookiesConsent,

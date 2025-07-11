@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../components/my_hover_route_navigator.dart';
 import '../utils/global_colors.dart'; 
 import '../utils/global_others.dart';
+import '../utils/global_screen_sizes.dart';
 
 class CookiesConsentBanner extends StatefulWidget {
   const CookiesConsentBanner({
@@ -116,29 +117,33 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
   @override
   // Decides between showing the consent banner or cookie management screen.
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 20,
-      left: 20,
-      child: SlideTransition(
-        position: _slideAnimation,
-        child: FadeTransition(
-          opacity: _fadeAnimation,
-          child: _isManagingCookies
-          ? _buildCookiesManager() // Shows the cookie management screen.
-          : _buildConsentBanner(), // Shows the main banner.
+    bool mobile = GlobalScreenSizes.isMobileScreen(context); 
+    return Align(
+      alignment: Alignment.bottomLeft,
+      child: Padding(
+        padding: EdgeInsets.all( mobile ? 0.0 : 20.0),
+          child: SlideTransition(
+          position: _slideAnimation,
+          child: FadeTransition(
+            opacity: _fadeAnimation,
+            child: _isManagingCookies
+            ? _buildCookiesManager() // Shows the cookie management screen.
+            : _buildConsentBanner(), // Shows the main banner.
+          ),
         ),
-      ),
+      )
     );
   }
 
   // Constructs the main banner widget that displays cookie information.
   Widget _buildConsentBanner() {
+    bool mobile = GlobalScreenSizes.isMobileScreen(context); 
     return Container(
-      width: 400, 
+      constraints: BoxConstraints(maxWidth: 400.0),
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: GlobalColors.firstColor, 
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: mobile ? null : BorderRadius.circular(10.0),
         boxShadow: [
           BoxShadow(
             color: GlobalColors.shadowColor, // Subtle shadow for depth.
@@ -151,37 +156,43 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
         crossAxisAlignment: CrossAxisAlignment.start, // Aligns content to the left.
         mainAxisSize: MainAxisSize.min, // Adjusts height dynamically based on content.
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start, // Aligns content to the left.
-                mainAxisSize: MainAxisSize.min, // Adjusts height dynamically based on content.
-                children: [
-                   const Text(
-                    "Ce site utilise",
-                    style: TextStyle(fontSize: GlobalSize.mobileSizeText, color: GlobalColors.secondColor),
-                  ),
-                  const Text(
-                    "des Cookies",
-                    style: TextStyle(fontSize: 18.0, color: GlobalColors.secondColor, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),    
-              SvgPicture.asset(
-                "assets/cookie.svg",
-                width: 40,
-                height: 40,
-                semanticsLabel: 'A cookie icon',
-              ),
-            ]
+          SizedBox(
+            width: double.infinity,
+            child: Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 10.0,
+              runSpacing: 10.0,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start, // Aligns content to the left.
+                  mainAxisSize: MainAxisSize.min, // Adjusts height dynamically based on content.
+                  children: [
+                     const Text(
+                      "Ce site utilise",
+                      style: TextStyle(fontSize: GlobalSize.mobileSizeText, color: GlobalColors.secondColor),
+                    ),
+                    const Text(
+                      "des Cookies",
+                      style: TextStyle(fontSize: 18.0, color: GlobalColors.secondColor, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),    
+                SvgPicture.asset(
+                  "assets/cookie.svg",
+                  width: 40,
+                  height: 40,
+                  semanticsLabel: 'A cookie icon',
+                ),
+              ]
+            ),
           ),
           Divider(
             color: GlobalColors.dividerColor2,
             thickness: 1.0, // Adds a thin divider line for separation.
           ),
           SizedBox(height: 10.0),
-        // Description and "Learn More" link
+          // Description and "Learn More" link
           RichText(
             textAlign: TextAlign.justify, // Justified text for cleaner appearance.
             text: TextSpan(
@@ -206,32 +217,42 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
             thickness: 1.0, // Adds a thin divider line for separation.
           ),
           SizedBox(height: 10.0),
-        // Action buttons for cookie preferences and consent
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    _isManagingCookies = true; // Opens the cookie management screen.
-                  });
-                },
-                child: const Text('Je choisis'),
-              ),
-              const SizedBox(width: 10.0),
-              ElevatedButton(
-                onPressed: () {
-                  widget.onConsentGiven(true); // Trigger the consent action to parent widget
-                  _saveConsentStatus(true);
-                  _animationController.reverse(); // Triggers slide-out + Fade-out
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: GlobalColors.orangeColor,
-                  foregroundColor: GlobalColors.firstColor,
+          // Action buttons for cookie preferences and consent
+          Align(
+            alignment: mobile ? Alignment.centerLeft : Alignment.center,
+            child: Wrap(
+              // alignment: WrapAlignment.start,
+              // runAlignment: WrapAlignment.center,
+              // crossAxisAlignment: WrapCrossAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 20.0,
+              runSpacing: 20.0,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _isManagingCookies = true; // Opens the cookie management screen.
+                    });
+                  },
+                  child: const Text('Je choisis'),
                 ),
-                child: const Text('J\'ai compris et j\'accepte'),
-              ),
-            ],
+                ElevatedButton(
+                  onPressed: () {
+                    widget.onConsentGiven(true); // Trigger the consent action to parent widget
+                    _saveConsentStatus(true);
+                    _animationController.reverse(); // Triggers slide-out + Fade-out
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: GlobalColors.orangeColor,
+                    foregroundColor: GlobalColors.firstColor,
+                  ),
+                  child: const Text(
+                    'J\'ai compris et j\'accepte',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ), 
           ),
         ],
       ),
@@ -240,12 +261,13 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
 
   // Builds the cookie management screen allowing users to select individual cookie preferences.
   Widget _buildCookiesManager() {
+    bool mobile = GlobalScreenSizes.isMobileScreen(context); 
     return Container(
-      width: 600,
-      padding: const EdgeInsets.all(16.0),
+      width: 600.0,
+      height: 880.0,
       decoration: BoxDecoration(
         color: GlobalColors.firstColor, 
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: mobile ? null : BorderRadius.circular(10.0),
         boxShadow: [
           BoxShadow(
             color: GlobalColors.shadowColor, // Subtle shadow for depth.
@@ -254,144 +276,148 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "Gérer vos préférences de cookies",
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: GlobalColors.secondColor),
-          ),
-          const Text(
-            "Choisissez comment nous collectons et utilisons vos données pour une meilleure expérience de navigation sur notre site. Votre vie privée est primordiale et vous avez le plein contrôle ici.",
-            style: TextStyle(
-              fontSize: GlobalSize.mobileSizeText,
-              color: GlobalColors.secondColor,
-              height: 1.5,
+      child: SingleChildScrollView(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Gérer vos préférences des cookies",
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: GlobalColors.secondColor),
             ),
-            textAlign: TextAlign.justify,
-          ),
-          SizedBox(height: 10.0),
-          Divider(
-            color: GlobalColors.dividerColor2,
-            thickness: 1.0,
-          ),
-        // "Select All" Checkbox
-          CheckboxListTile(
-            title: const Text(
-              "Tout sélectionner",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            activeColor: GlobalColors.secondColor,
-            value: _globalConsentCookies,
-            onChanged: (bool? value) {
-              setState(() {
-                _globalConsentCookies = value ?? false;
-                _preferencesCookies = value ?? false;
-                _statisticsCookies = value ?? false;
-                _marketingCookies = value ?? false;
-              });
-            },
-          ),
-          const SizedBox(height: 10.0),
-          // Individual Cookie Preferences with individual checkboxes.
-          Container(
-            padding: EdgeInsets.all(20.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0),
-              border: Border.all(
-                color: GlobalColors.borderColor,
-                width: 1.0,
-                style: BorderStyle.solid,
+            const SizedBox(height: 5.0),
+            const Text(
+              "Choisissez comment nous collectons et utilisons vos données pour une meilleure expérience de navigation sur notre site. Votre vie privée est primordiale et vous avez le plein contrôle ici.",
+              style: TextStyle(
+                fontSize: GlobalSize.mobileSizeText,
+                color: GlobalColors.secondColor,
+                height: 1.5,
               ),
-              color: GlobalColors.backgroundColor,
+              textAlign: TextAlign.justify,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center, // Aligns all items in the center.
+            SizedBox(height: 10.0),
+            Divider(
+              color: GlobalColors.dividerColor2,
+              thickness: 1.0,
+            ),
+          // "Select All" Checkbox
+            CheckboxListTile(
+              title: const Text(
+                "Tout sélectionner",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              activeColor: GlobalColors.secondColor,
+              value: _globalConsentCookies,
+              onChanged: (bool? value) {
+                setState(() {
+                  _globalConsentCookies = value ?? false;
+                  _preferencesCookies = value ?? false;
+                  _statisticsCookies = value ?? false;
+                  _marketingCookies = value ?? false;
+                });
+              },
+            ),
+            const SizedBox(height: 10.0),
+            // Individual Cookie Preferences with individual checkboxes.
+            Container(
+              padding: mobile ? null : EdgeInsets.all(20.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                border: Border.all(
+                  color: GlobalColors.borderColor,
+                  width: 1.0,
+                  style: BorderStyle.solid,
+                ),
+                color: GlobalColors.backgroundColor,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center, // Aligns all items in the center.
+                children: [
+                  // Checkbox for "Necessary Cookies" (always active and uneditable).
+                  _buildCheckbox(
+                    title: "Nécessaires (Toujours activés)",
+                    subtitle: 'Les cookies nécessaires contribuent à rendre un site web utilisable en activant des fonctions de base comme la navigation de page et l\'accès aux zones sécurisées du site web, enregistrer vos préférences pour les réglages de cookie. Le site web ne peut pas fonctionner correctement sans ces cookies.',
+                    value: _necessaryCookies,
+                    enable: false,
+                  ),
+                  Divider(
+                    color: GlobalColors.dividerColor3, // Divider to separate sections.
+                    thickness: 1.0,
+                  ),
+                  _buildCheckbox(
+                    title: "Préférences",
+                    subtitle: 'Les cookies de préférences permettent à un site web de retenir des informations qui modifient la manière dont le site se comporte ou s’affiche, comme votre langue préférée ou la région dans laquelle vous vous situez.',
+                    value: _preferencesCookies,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _preferencesCookies = value ?? false; // Updates preferences state.
+                        _updateGlobalConsent(); // Updates global consent.
+                      });
+                    }
+                  ),
+                  Divider(
+                    color: GlobalColors.dividerColor3,
+                    thickness: 1.0,
+                  ),
+                  _buildCheckbox(
+                    title: "Statistiques",
+                    subtitle: 'Les cookies statistiques aident les propriétaires du site web, par la collecte et la communication d\'informations de manière anonyme, à comprendre comment les visiteurs interagissent avec les sites web.',
+                    value: _statisticsCookies,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _statisticsCookies = value ?? false; // Updates preferences state.
+                        _updateGlobalConsent(); // Updates global consent.
+                      });
+                    }
+                  ),
+                  Divider(
+                    color: GlobalColors.dividerColor3,
+                    thickness: 1.0,
+                  ),
+                  _buildCheckbox(
+                    title: "Marketing",
+                    subtitle: 'Les cookies marketing sont utilisés pour effectuer le suivi des visiteurs au travers des sites web. Le but est d\'afficher des publicités qui sont pertinentes et intéressantes pour l\'utilisateur individuel et donc plus précieuses pour les éditeurs et annonceurs tiers',
+                    value: _marketingCookies,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _marketingCookies = value ?? false; // Updates preferences state.
+                        _updateGlobalConsent(); // Updates global consent.
+                      });
+                    }
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10.0),
+            Divider(
+              color: GlobalColors.dividerColor2,
+              thickness: 1.0, // Adds a thin divider line for separation.
+            ),
+            SizedBox(height: 10.0),
+            // Save Button
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                // Checkbox for "Necessary Cookies" (always active and uneditable).
-                _buildCheckbox(
-                  title: "Nécessaires (Toujours activés)",
-                  subtitle: 'Les cookies nécessaires contribuent à rendre un site web utilisable en activant des fonctions de base comme la navigation de page et l\'accès aux zones sécurisées du site web, enregistrer vos préférences pour les réglages de cookie. Le site web ne peut pas fonctionner correctement sans ces cookies.',
-                  value: _necessaryCookies,
-                  enable: false,
-                ),
-                Divider(
-                  color: GlobalColors.dividerColor3, // Divider to separate sections.
-                  thickness: 1.0,
-                ),
-                _buildCheckbox(
-                  title: "Préférences",
-                  subtitle: 'Les cookies de préférences permettent à un site web de retenir des informations qui modifient la manière dont le site se comporte ou s’affiche, comme votre langue préférée ou la région dans laquelle vous vous situez.',
-                  value: _preferencesCookies,
-                  onChanged: (bool? value) {
+                ElevatedButton(
+                  onPressed: () async {
+                    widget.onConsentGiven(true); // Notify parent about global consent.
+                    await _saveConsentPreferences(); // Saves preferences to persistent storage.
+                    _animationController.reverse(); // Hide banner with animation.
                     setState(() {
-                      _preferencesCookies = value ?? false; // Updates preferences state.
-                      _updateGlobalConsent(); // Updates global consent.
+                      _isManagingCookies = false; // Returns to the main banner screen.
                     });
-                  }
-                ),
-                Divider(
-                  color: GlobalColors.dividerColor3,
-                  thickness: 1.0,
-                ),
-                _buildCheckbox(
-                  title: "Statistiques",
-                  subtitle: 'Les cookies statistiques aident les propriétaires du site web, par la collecte et la communication d\'informations de manière anonyme, à comprendre comment les visiteurs interagissent avec les sites web.',
-                  value: _statisticsCookies,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      _statisticsCookies = value ?? false; // Updates preferences state.
-                      _updateGlobalConsent(); // Updates global consent.
-                    });
-                  }
-                ),
-                Divider(
-                  color: GlobalColors.dividerColor3,
-                  thickness: 1.0,
-                ),
-                _buildCheckbox(
-                  title: "Marketing",
-                  subtitle: 'Les cookies marketing sont utilisés pour effectuer le suivi des visiteurs au travers des sites web. Le but est d\'afficher des publicités qui sont pertinentes et intéressantes pour l\'utilisateur individuel et donc plus précieuses pour les éditeurs et annonceurs tiers',
-                  value: _marketingCookies,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      _marketingCookies = value ?? false; // Updates preferences state.
-                      _updateGlobalConsent(); // Updates global consent.
-                    });
-                  }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: GlobalColors.orangeColor,
+                    foregroundColor: GlobalColors.firstColor, 
+                  ),
+                  child: const Text("Enregistrer"),
                 ),
               ],
             ),
-          ),
-          SizedBox(height: 10.0),
-          Divider(
-            color: GlobalColors.dividerColor2,
-            thickness: 1.0, // Adds a thin divider line for separation.
-          ),
-          SizedBox(height: 10.0),
-          // Save Button
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              ElevatedButton(
-                onPressed: () async {
-                  widget.onConsentGiven(true); // Notify parent about global consent.
-                  await _saveConsentPreferences(); // Saves preferences to persistent storage.
-                  _animationController.reverse(); // Hide banner with animation.
-                  setState(() {
-                    _isManagingCookies = false; // Returns to the main banner screen.
-                  });
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: GlobalColors.orangeColor,
-                  foregroundColor: GlobalColors.firstColor, 
-                ),
-                child: const Text("Enregistrer"),
-              ),
-            ],
-          ),
-        ],
-      ),
+          ],
+        ),
+      ) 
     );
   }
 
