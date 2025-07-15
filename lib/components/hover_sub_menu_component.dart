@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:sio2_renovations_frontend/utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
 
@@ -29,14 +30,15 @@ class HoverSubMenuComponentState extends State<HoverSubMenuComponent> with Singl
   final LayerLink _layerLink = LayerLink();
   OverlayEntry? _entry;
   Timer? _hideTimer; // timer to close the menu after a short delay
-  /// Contrôleur et Tween pour l’effet “drop in” / “lift up”
+  /// Controller and Tween for the “drop in” / “lift up” effet
   late final AnimationController _animController;
   late final Animation<double> _sizeAnimation;
+  late List<bool> _hoveringStates; // Each submenu _buildSubMenuItem(i) reads and updates its own _hoverStates[i], ensuring the persistence of the hover state even if the parent rebuilds
 
   @override
   void initState() {
     super.initState();
-
+    _hoveringStates = List.filled(widget.items.length, false); // Initialize a 'false' state for each sub-menu wich allows the hover to work
     // Animation dropdown menu
     _animController = AnimationController(
       vsync: this,
@@ -108,44 +110,59 @@ class HoverSubMenuComponentState extends State<HoverSubMenuComponent> with Singl
                     elevation: 4.0,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
-                      children: widget.items.map((index) {
-                        // Bool local for EACH sub-element
-                        bool hovering = false;
-
-                        return StatefulBuilder(
-                          builder: (context2, setHover) {
-                            return MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              onEnter: (_) => setHover(() => hovering = true),
-                              onExit:  (_) => setHover(() => hovering = false),
-                              child: InkWell(
-                                onTap: () {
-                                  _removeOverlay();
-                                  widget.onItemSelected(index['subLabel']!);
-                                  Navigator.pushNamed(context2, index['route']!);
-                                },
-                                child: Container(
-                                  height: 45.0,
-                                  padding: EdgeInsets.only(left: isSmallScreen ? 5.0 : 10.0, right: isSmallScreen ? 5.0 : 10.0),
-                                  alignment: Alignment.centerLeft,
-                                  color: hovering
-                                    ? Colors.black.withValues(alpha: 0.03)
-                                    : Colors.transparent,
-                                  child: Text(
-                                    index['subLabel']!,
-                                    style: TextStyle(
-                                      fontSize: mobile || isSmallScreen  ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                                      color: hovering || widget.currentSubItem == index['subLabel']
-                                        ? widget.hoverColor
-                                        : Colors.black,
+                      children: [
+                        for (int i = 0; i < widget.items.length; i++) ...[ // The spread operator ... allows merging multiple widgets from the same iteration in the children list.
+                          // Creation of each sub-menu with ou without divider
+                          StatefulBuilder(
+                            builder: (context2, setHover) {
+                              final item = widget.items[i];
+                              
+                              return MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                // onEnter/onExit update _hoverStates[i] via setHover()
+                                onEnter: (_) => setHover(() => _hoveringStates[i] = true),
+                                onExit:  (_) => setHover(() => _hoveringStates[i] = false),
+                                child: InkWell( // Allows adding a visual touch reaction effect (“ripple” or ink wave)
+                                  onTap: () {
+                                    _removeOverlay();
+                                    widget.onItemSelected(item['subLabel']!);
+                                    Navigator.pushNamed(context2, item['route']!);
+                                  },
+                                  child: Container(
+                                    height: 45.0,
+                                    padding: EdgeInsets.only(
+                                      left: isSmallScreen ? 5.0 : 10.0,
+                                      right: isSmallScreen ? 5.0 : 10.0,
+                                    ),
+                                    alignment: Alignment.centerLeft,
+                                    color: _hoveringStates[i]
+                                        ? Colors.black.withValues(alpha: 0.03)
+                                        : Colors.transparent,
+                                    child: Text(
+                                      item['subLabel']!,
+                                      style: TextStyle(
+                                        fontSize: mobile || isSmallScreen
+                                            ? GlobalSize.mobileSizeText
+                                            : GlobalSize.webSizeText,
+                                        color: _hoveringStates[i] || widget.currentSubItem == item['subLabel']
+                                            ? widget.hoverColor
+                                            : Colors.black,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
-                        );
-                      }).toList()
+                              );
+                            },
+                          ),
+                          // Divider only if it is not the last element
+                          if (i != widget.items.length - 1)
+                          Divider(
+                            height: 1.0,
+                            thickness: 1.0,
+                            color: GlobalColors.dividerColor3,
+                          ),
+                        ],
+                      ]
                     ),
                   ), 
                 )
