@@ -1,3 +1,36 @@
+class GlobalDates {
+  // Privaty policy screen
+  static const String lastUpdate = '1er août 2025'; 
+}
+
+class GlobalPersonalData {
+  GlobalPersonalData._(); // private constructor to prevent instantiation
+
+  static const String companyName = 'SiO₂ Rénovations';
+  static const String legalForm = 'Entrepreneur individuel (EI)';
+  static const String gender = 'M';
+  static const String ceo = 'Germán Holguin';
+  static const String siren = '123 456 789';
+  static const String siret = '388 863 821 00038';
+  static const String socialCapital = '€';
+  static const String vatNumber = 'FR';
+  static const String rcs = 'RCS';
+  static const String headOfficeAddress = '3 ter Avenue Théodore Rousseau, 75007 Paris, France';
+  static const String phone = '+(33) 6 46 34 12 03';
+  static const String email = 'contact@sio2-renovations.com';
+  static const String website = 'https://www.sio2renovations.com';
+  static const String companyCreationDate = '15 septembre 2020';
+  static const String hostingProviderName = 'OVH SAS';
+  static const String hostingProviderAddress = '2 Rue Kellermann, 59100 Roubaix, France';
+  static const String developerCompanyName = 'Andrés Angulo';
+  static const String developerCompanyWebsite = 'https://www.andres-angulo.com';
+  static const String dpoGender = 'M';
+  static const String dpoName = 'Germán Holguin';
+  static const String dpoEmail = 'contact@sio2-renovations.com';
+  static const String dpoPhone = '+(33) 6 46 34 12 03';
+}
+
+
 class GlobalImages {
   static const String image1 = 'assets/images/image1.jpeg';
   static const String image2 = 'assets/images/image2.jpeg';
