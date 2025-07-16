@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
 import '../components/my_hover_route_navigator.dart';
+import '../components/my_hover_url_navigator.dart';
 import '../components/my_back_to_top_button.dart';
 import '../components/footer.dart';
 import '../utils/global_colors.dart';
@@ -18,18 +19,18 @@ class PrivacyPolicyScreen extends StatefulWidget {
 }
 
 class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
-    // Scroll controller for the left and right button in horizontal menu
+  // Scroll controller for the left and right button in horizontal menu
   final ScrollController _scrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState 
   // Scroll controller for the back to top button and appBar 
   final ScrollController _pageScrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState 
   String currentItem = 'Politique de confidentialité';
-    bool _showBackToTopButton = false;
+  bool _showBackToTopButton = false;
   // bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not (only for NavItem with click)
 
   @override 
   void initState() {
     super.initState( );
-        // Handle back to top button 
+    // Handle back to top button 
     _pageScrollController.addListener(_pageScrollListener); // Adds an event listener that captures scrolling
   }
   
@@ -138,11 +139,19 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                           ]
                         )
                       ),
-                      const SizedBox(height: 30.0)  ,
+                      const SizedBox(height: 20.0),
+                      Text(
+                        "Le présente page décrit les modalités de collecte, d’utilisation et de protection des données personnelles sur notre site vitrine.",
+                        style: TextStyle(
+                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          color: GlobalColors.secondColor,
+                        ),
+                      ),
+                      const SizedBox(height: 30.0),
 
                       // Section: Collection of Identity Data
                       Text(
-                        "${numberSection++}. Collecte des données d'identité",
+                        "${numberSection++}. Collecte des données d’identité",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
@@ -151,7 +160,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       ),
                       const SizedBox(height: 8.0),
                       Text(
-                        "La consultation du Site s'effectue librement, sans inscription préalable. Aucune donnée nominative (nom, prénom, adresse, etc.) n'est collectée lors de la simple consultation du Site.",
+                        "La consultation du site s'effectue librement, sans inscription préalable. Aucune donnée nominative (nom, prénom, adresse, etc.) n'est collectée lors de la simple consultation du site.",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
@@ -159,9 +168,9 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       ),
                       const SizedBox(height: 30.0), 
  
-                      // Section: Nature of Collected Data
+                      // Section: Nature of Collected Data and recipients
                       Text(
-                        "${numberSection++}. Nature des données collectées",
+                        "${numberSection++}. Nature des données collectées et destinataires",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
@@ -170,13 +179,25 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       ),
                       const SizedBox(height: 8.0),
                       Text(
-                        "Dans le cadre de l’utilisation du Site, l’Éditeur peut collecter :\n"
-                        "- Vos coordonnées via le formulaire de contact.\n"
+                        "Dans le cadre de l’utilisation du site, l’éditeur peut collecter notamment :\n"
+                        "- Vos données via le formulaire de contact.\n"
                         "- Des informations pour Google Analytics pour des mesures statistiques.\n"
+                        "- Des données de suivi de conversion (Google Ads).\n"
                         "- Les avis et témoignages que vous déposez sur le site.",
                         style: TextStyle(
-                        fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText ,
-
+                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          color: GlobalColors.secondColor,
+                        ),
+                      ),   
+                      const SizedBox(height: 20.0), 
+                      Text(
+                        "Destinataires des données Les informations que vous nous transmettez sont accessibles à :\n"
+                        "- Nos services internes dédiés (commercial, technique, relation client).\n"
+                        "- Notre hébergeur ${GlobalPersonalData.hostingProviderName}.\n"
+                        "- Nos prestataires techniques pour l’envoi d’e-mails et l’analyse d’audience.\n"
+                        "- Les autorités compétentes, sur réquisition légale ou judiciaire. ",
+                        style: TextStyle(
+                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                       ),
@@ -196,11 +217,9 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Toutes les données que vous partagez sur le formulaire de la page Contact sont "
+                            "Toutes les données que vous partagez sur les formulaires disponibles sur note site après acceptation de votre part des \"conditions de collecte et d'utilisation des données\" sont "
                             "centralisées et traitées exclusivement par ${GlobalPersonalData.companyName}. Elles servent à répondre à "
-                            "vos requêtes (devis, informations techniques, suivi client…) et sont accessibles uniquement "
-                            "aux membres de notre équipe habilités et à nos prestataires techniques, dans le strict respect "
-                            "de la confidentialité.",
+                            "vos requêtes (devis, informations, suivi client…) et sont accessibles aux destinataires listés à la section 3. « Nature des données collectées et destinataires ».",
                             style: TextStyle(
                               fontSize: mobile
                                   ? GlobalSize.mobileSizeText
@@ -354,7 +373,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                           const SizedBox(height: 20.0),
                           Text(
                             "Vos informations de contact sont archivées pendant une durée maximale de trois ans à compter "
-                            "de votre dernier échange avec nous.",
+                            "de votre dernier échange avec nos services.",
                             style: TextStyle(
                               fontSize: mobile
                                   ? GlobalSize.mobileSizeText
@@ -425,7 +444,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 30)  ,
+                      const SizedBox(height: 30),
 
                       // Section: Reviews and Testimonials
                       Text(
@@ -453,7 +472,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                           const SizedBox(height: 20.0),
                           Text(
                             "Si vous souhaitez faire évoluer votre témoignage (correction de texte) ou en réclamer la "
-                            "suppression, il suffit de repasser par le formulaire de la page Contact en choisissant « Autre », "
+                            "suppression, il suffit de repasser par le formulaire de la page \"Contact\" en choisissant le type de demande « Autre », "
                             "puis de mentionner :",
                             style: TextStyle(
                               fontSize: mobile
@@ -547,11 +566,11 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 30.0)  ,
+                      const SizedBox(height: 30.0),
 
-                      // Section: Cookie
+                      // Section: Cookies
                       Text(
-                        "${numberSection++}. Cookies",
+                        "${numberSection++}. Les Cookies",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
@@ -563,353 +582,447 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                         "${GlobalPersonalData.companyName} utilise des cookies afin d’optimiser votre expérience sur son site web. Ces cookies nous permettent \n"
                         "d’améliorer la navigation, de personnaliser l’affichage, de diffuser des publicités ciblées et de recueillir des données \n"
                         "indispensables pour un suivi précis des performances du site. Pour en savoir plus sur les différents types de cookies utilisés,\n" 
-                        "veuillez consulter la section \"Gestion des cookies\" ci-dessous.",
+                        "veuillez consulter la section 6.1 « Gestion des préférences » ci-dessous.",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                       ),
-                      const SizedBox(height: 30.0)  ,
-
-                      // Section: Cookie Management
-                      Text(
-                        "${numberSection++}. Gestion des Cookies",
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
-                          fontWeight: FontWeight.bold,
-                          color: GlobalColors.secondColor,
-                        ),
-                      ),
-                      const SizedBox(height: 8.0),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Vous pouvez définir vos préférences concernant la collecte et l’utilisation de vos données. Choisissez comment nous devons collecter et traiter ces informations pour vous offrir une expérience sur-mesure tout en garantissant le respect de votre vie privée.",
-                            style: TextStyle(
-                              fontSize: mobile
-                                  ? GlobalSize.mobileSizeText
-                                  : GlobalSize.webSizeText,
-                              color: GlobalColors.secondColor,
+                      const SizedBox(height: 20.0),
+                      Padding(
+                        padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Section: Cookie Management
+                            Text(
+                              "6.1 Gestion des préférences",
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontWeight: FontWeight.bold,
+                                color: GlobalColors.secondColor,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 12.0),
-                          Padding(
-                            padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
-                            child: Column(
+                            const SizedBox(height: 8.0),
+                            Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      WidgetSpan(
-                                        alignment: PlaceholderAlignment.baseline,
-                                        baseline: TextBaseline.alphabetic,
-                                        // Use Transform.scale to visually enlarge the bullet without increasing line height.
-                                        child: Transform.scale(
-                                          scale: 2.0, // initial size * 2.3 ≈ 32; 
-                                          child: const Text(
-                                            "•",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: GlobalColors.secondColor,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const WidgetSpan(child: SizedBox(width: 8.0)),
-                                      TextSpan(
-                                        text: "Cookies nécessaires : ces cookies garantissent le bon fonctionnement du site. Ils activent des fonctions essentielles telles que la navigation, l’accès sécurisé aux zones protégées et la sauvegarde des préférences d'affichage. Sans ces cookies, le site ne pourrait pas fonctionner correctement.",
-                                        style: TextStyle(
-                                          fontSize: mobile
-                                              ? GlobalSize.mobileSizeText
-                                              : GlobalSize.webSizeText,
-                                          color: GlobalColors.secondColor,
-                                        ),
-                                      ),                                    
-                                    ]
-                                  )
+                                Text(
+                                  "Vous pouvez définir vos préférences concernant la collecte et l’utilisation de vos données lors de l'arrivée sur notre site ou sur notre bouton \"Cookies\" en bas à gauche de l'écran. Choisissez comment nous devons collecter et traiter ces informations pour vous offrir une expérience sur-mesure tout en garantissant le respect de votre vie privée.",
+                                  style: TextStyle(
+                                    fontSize: mobile
+                                        ? GlobalSize.mobileSizeText
+                                        : GlobalSize.webSizeText,
+                                    color: GlobalColors.secondColor,
+                                  ),
                                 ),
-                                const SizedBox(height: 8.0),
-                                RichText(
-                                  text: TextSpan(
+                                const SizedBox(height: 12.0),
+                                Padding(
+                                  padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      WidgetSpan(
-                                        alignment: PlaceholderAlignment.baseline,
-                                        baseline: TextBaseline.alphabetic,
-                                        // Use Transform.scale to visually enlarge the bullet without increasing line height.
-                                        child: Transform.scale(
-                                          scale: 2.0, // initial size * 2.3 ≈ 32; 
-                                          child: const Text(
-                                            "•",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: GlobalColors.secondColor,
+                                      RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            WidgetSpan(
+                                              alignment: PlaceholderAlignment.baseline,
+                                              baseline: TextBaseline.alphabetic,
+                                              // Use Transform.scale to visually enlarge the bullet without increasing line height.
+                                              child: Transform.scale(
+                                                scale: 2.0, // initial size * 2.3 ≈ 32; 
+                                                child: const Text(
+                                                  "•",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: GlobalColors.secondColor,
+                                                  ),
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ),
+                                            const WidgetSpan(child: SizedBox(width: 8.0)),
+                                            TextSpan(
+                                              text: "Cookies nécessaires : ces cookies garantissent le bon fonctionnement du site. Ils activent des fonctions essentielles telles que la navigation, l’accès sécurisé aux zones protégées et la sauvegarde des préférences d'affichage. Sans ces cookies, le site ne pourrait pas fonctionner correctement.",
+                                              style: TextStyle(
+                                                fontSize: mobile
+                                                    ? GlobalSize.mobileSizeText
+                                                    : GlobalSize.webSizeText,
+                                                color: GlobalColors.secondColor,
+                                              ),
+                                            ),                                    
+                                          ]
+                                        )
                                       ),
-                                      const WidgetSpan(child: SizedBox(width: 8.0)),
-                                      TextSpan(
-                                        text: "Cookies de préférences : ces cookies permettent de mémoriser vos choix (langue, région, options d’affichage) afin d’harmoniser l’expérience utilisateur lors de vos visites ultérieures, facilitant ainsi une navigation personnalisée.",
-                                        style: TextStyle(
-                                          fontSize: mobile
-                                              ? GlobalSize.mobileSizeText
-                                              : GlobalSize.webSizeText,
-                                          color: GlobalColors.secondColor,
-                                        ),
-                                      ),                                    
-                                    ]
-                                  )
+                                      const SizedBox(height: 8.0),
+                                      RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            WidgetSpan(
+                                              alignment: PlaceholderAlignment.baseline,
+                                              baseline: TextBaseline.alphabetic,
+                                              // Use Transform.scale to visually enlarge the bullet without increasing line height.
+                                              child: Transform.scale(
+                                                scale: 2.0, // initial size * 2.3 ≈ 32; 
+                                                child: const Text(
+                                                  "•",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: GlobalColors.secondColor,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            const WidgetSpan(child: SizedBox(width: 8.0)),
+                                            TextSpan(
+                                              text: "Cookies de préférences : ces cookies permettent de mémoriser vos choix (langue, région, options d’affichage) afin d’harmoniser l’expérience utilisateur lors de vos visites ultérieures, facilitant ainsi une navigation personnalisée.",
+                                              style: TextStyle(
+                                                fontSize: mobile
+                                                    ? GlobalSize.mobileSizeText
+                                                    : GlobalSize.webSizeText,
+                                                color: GlobalColors.secondColor,
+                                              ),
+                                            ),                                    
+                                          ]
+                                        )
+                                      ),
+                                      const SizedBox(height: 8.0),
+                                      RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            WidgetSpan(
+                                              alignment: PlaceholderAlignment.baseline,
+                                              baseline: TextBaseline.alphabetic,
+                                              // Use Transform.scale to visually enlarge the bullet without increasing line height.
+                                              child: Transform.scale(
+                                                scale: 2.0, // initial size * 2.3 ≈ 32; 
+                                                child: const Text(
+                                                  "•",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: GlobalColors.secondColor,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            const WidgetSpan(child: SizedBox(width: 8.0)),
+                                            TextSpan(
+                                              text: "Cookies statistiques : ces cookies collectent anonymement des informations sur la fréquence et les modes d’utilisation du site, nous aidant à améliorer les services proposés en comprenant comment les visiteurs interagissent avec le site.",
+                                              style: TextStyle(
+                                                fontSize: mobile
+                                                    ? GlobalSize.mobileSizeText
+                                                    : GlobalSize.webSizeText,
+                                                color: GlobalColors.secondColor,
+                                              ),
+                                            ),                                    
+                                          ]
+                                        )
+                                      ),
+                                      const SizedBox(height: 8.0),
+                                      RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            WidgetSpan(
+                                              alignment: PlaceholderAlignment.baseline,
+                                              baseline: TextBaseline.alphabetic,
+                                              // Use Transform.scale to visually enlarge the bullet without increasing line height.
+                                              child: Transform.scale(
+                                                scale: 2.0, // initial size * 2.3 ≈ 32; 
+                                                child: const Text(
+                                                  "•",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: GlobalColors.secondColor,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            const WidgetSpan(child: SizedBox(width: 8.0)),
+                                            TextSpan(
+                                              text: "Cookies marketing : utilisés pour suivre votre comportement de navigation, ces cookies permettent d’afficher des publicités adaptées à vos centres d’intérêt, facilitant ainsi la diffusion d’annonces pertinentes sans collecter d’informations personnelles identifiables.",
+                                              style: TextStyle(
+                                                fontSize: mobile
+                                                    ? GlobalSize.mobileSizeText
+                                                    : GlobalSize.webSizeText,
+                                                color: GlobalColors.secondColor,
+                                              ),
+                                            ),                                    
+                                          ]
+                                        )
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                            const SizedBox(height: 20.0),
+
+                            // Section: Cookie Retention Period
+                            Text(
+                              "6.2. Durée de conservation des cookies",
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontWeight: FontWeight.bold,
+                                color: GlobalColors.secondColor,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Conformément aux lignes directrices de la CNIL (sept. 2020.0), la durée de vie des cookies doit être "
+                                  "proportionnée à leur finalité. Vous trouverez ci-dessous le détail de nos durées de conservation :",
+                                  style: TextStyle(
+                                    fontSize: mobile
+                                        ? GlobalSize.mobileSizeText
+                                        : GlobalSize.webSizeText,
+                                    color: GlobalColors.secondColor,
+                                  ),
                                 ),
-                                const SizedBox(height: 8.0),
-                                RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      WidgetSpan(
-                                        alignment: PlaceholderAlignment.baseline,
-                                        baseline: TextBaseline.alphabetic,
-                                        // Use Transform.scale to visually enlarge the bullet without increasing line height.
-                                        child: Transform.scale(
-                                          scale: 2.0, // initial size * 2.3 ≈ 32; 
-                                          child: const Text(
-                                            "•",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: GlobalColors.secondColor,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const WidgetSpan(child: SizedBox(width: 8.0)),
-                                      TextSpan(
-                                        text: "Cookies statistiques : ces cookies collectent anonymement des informations sur la fréquence et les modes d’utilisation du site, nous aidant à améliorer les services proposés en comprenant comment les visiteurs interagissent avec le site.",
-                                        style: TextStyle(
-                                          fontSize: mobile
-                                              ? GlobalSize.mobileSizeText
-                                              : GlobalSize.webSizeText,
-                                          color: GlobalColors.secondColor,
-                                        ),
-                                      ),                                    
-                                    ]
-                                  )
+                                const SizedBox(height: 16),
+                                Table(
+                                  border: TableBorder.all(color: GlobalColors.secondColor.withValues(alpha: 0.3)),
+                                  columnWidths: const {
+                                    0: FlexColumnWidth(2),
+                                    1: FlexColumnWidth(3),
+                                    2: FlexColumnWidth(2),
+                                  },
+                                  children: [
+                                    TableRow(
+                                      decoration: BoxDecoration(color: GlobalColors.secondColor.withValues(alpha: 0.1)),
+                                      children: [
+                                        _buildCell("Catégorie", isHeader: true),
+                                        _buildCell("Finalité", isHeader: true),
+                                        _buildCell("Durée de conservation", isHeader: true),
+                                      ],
+                                    ),
+                                    TableRow(children: [
+                                      _buildCell("Nécessaires"),
+                                      _buildCell("Sécurisation de la navigation, accès aux zones protégées"),
+                                      _buildCell("Durée de session (suppression à la fermeture du navigateur)"),
+                                    ]),
+                                    TableRow(children: [
+                                      _buildCell("Préférences"),
+                                      _buildCell("Mémorisation de la langue, de la mise en page…"),
+                                      _buildCell("13 mois après dépôt"),
+                                    ]),
+                                    TableRow(children: [
+                                      _buildCell("Statistiques (Analytics)"),
+                                      _buildCell("Mesure d’audience anonymisée (Google Analytics)"),
+                                      _buildCell("13 mois après dépôt"),
+                                    ]),
+                                    TableRow(children: [
+                                      _buildCell("Marketing (Ads)"),
+                                      _buildCell("Publicités personnalisées"),
+                                      _buildCell("6 mois après dépôt"),
+                                    ]),
+                                  ],
                                 ),
-                                const SizedBox(height: 8.0),
-                                RichText(
-                                  text: TextSpan(
+                                const SizedBox(height: 20.0),
+                                Padding(
+                                  padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      WidgetSpan(
-                                        alignment: PlaceholderAlignment.baseline,
-                                        baseline: TextBaseline.alphabetic,
-                                        // Use Transform.scale to visually enlarge the bullet without increasing line height.
-                                        child: Transform.scale(
-                                          scale: 2.0, // initial size * 2.3 ≈ 32; 
-                                          child: const Text(
-                                            "•",
+                                      RichText(
+                                        text: TextSpan(children: [
+                                          WidgetSpan(
+                                            alignment: PlaceholderAlignment.baseline,
+                                            baseline: TextBaseline.alphabetic,
+                                            child: Transform.scale(
+                                              scale: 2.0,
+                                              child: const Text(
+                                                "•",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: GlobalColors.secondColor,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const WidgetSpan(child: SizedBox(width: 8.0)),
+                                          TextSpan(
+                                            text:
+                                                "À l’issue de la période indiquée, les cookies sont automatiquement supprimés ou invalidés.",
                                             style: TextStyle(
-                                              fontWeight: FontWeight.bold,
+                                              fontSize: mobile
+                                                  ? GlobalSize.mobileSizeText
+                                                  : GlobalSize.webSizeText,
                                               color: GlobalColors.secondColor,
                                             ),
                                           ),
-                                        ),
+                                        ]),
                                       ),
-                                      const WidgetSpan(child: SizedBox(width: 8.0)),
-                                      TextSpan(
-                                        text: "Cookies marketing : utilisés pour suivre votre comportement de navigation, ces cookies permettent d’afficher des publicités adaptées à vos centres d’intérêt, facilitant ainsi la diffusion d’annonces pertinentes sans collecter d’informations personnelles identifiables.",
-                                        style: TextStyle(
-                                          fontSize: mobile
-                                              ? GlobalSize.mobileSizeText
-                                              : GlobalSize.webSizeText,
-                                          color: GlobalColors.secondColor,
-                                        ),
-                                      ),                                    
-                                    ]
-                                  )
+                                      const SizedBox(height: 8.0),
+                                      RichText(
+                                        text: TextSpan(children: [
+                                          WidgetSpan(
+                                            alignment: PlaceholderAlignment.baseline,
+                                            baseline: TextBaseline.alphabetic,
+                                            child: Transform.scale(
+                                              scale: 2.0,
+                                              child: const Text(
+                                                "•",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: GlobalColors.secondColor,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const WidgetSpan(child: SizedBox(width: 8.0)),
+                                          TextSpan(
+                                            text:
+                                                "Vos consentements sont renouvelés dès que la durée limite est atteinte.",
+                                            style: TextStyle(
+                                              fontSize: mobile
+                                                  ? GlobalSize.mobileSizeText
+                                                  : GlobalSize.webSizeText,
+                                              color: GlobalColors.secondColor,
+                                            ),
+                                          ),
+                                        ]),
+                                      ),
+                                      const SizedBox(height: 8.0),
+                                      RichText(
+                                        text: TextSpan(children: [
+                                          WidgetSpan(
+                                            alignment: PlaceholderAlignment.baseline,
+                                            baseline: TextBaseline.alphabetic,
+                                            child: Transform.scale(
+                                              scale: 2.0,
+                                              child: const Text(
+                                                "•",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: GlobalColors.secondColor,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const WidgetSpan(child: SizedBox(width: 8.0)),
+                                          TextSpan(
+                                            text:
+                                                "Vous pouvez à tout moment modifier vos choix via notre bouton \"Cookies\" en bas à gauche de l'écran.",
+                                            style: TextStyle(
+                                              fontSize: mobile
+                                                  ? GlobalSize.mobileSizeText
+                                                  : GlobalSize.webSizeText,
+                                              color: GlobalColors.secondColor,
+                                            ),
+                                          ),
+                                        ]),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 20.0),
+                                Text(
+                                  "En cas de question relative à ces durées ou pour exercer vos droits, consultez la section « Gestion des cookies » "
+                                  "ou contactez-nous à ${GlobalPersonalData.email}.",
+                                  style: TextStyle(
+                                    fontSize: mobile
+                                        ? GlobalSize.mobileSizeText
+                                        : GlobalSize.webSizeText,
+                                    color: GlobalColors.secondColor,
+                                  ),
                                 ),
                               ],
                             ),
-                          )
-                        ],
+                            const SizedBox(height: 20.0),
+                                                
+                            // Section: Google Analytics 
+                            Text(
+                              "6.3. Statistiques et mesures d’audience – Google Analytics",
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontWeight: FontWeight.bold,
+                                color: GlobalColors.secondColor,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            Text(
+                                "Nous utilisons le service Google Analytics pour analyser et optimiser la navigation sur notre Site. "
+                                "Ce service recueille des données pseudonymisées telles que le nombre de visites, la durée des sessions et les parcours de navigation. "
+                                "Les adresses IP sont tronquées (anonymize_ip) avant tout traitement pour préserver votre anonymat. "
+                                "Les données anonymes collectées par Google Analytics peuvent être transférées aux États-Unis. "
+                                "Conformément à l’article 46 du RGPD, nous avons intégré les Clauses Contractuelles Types (CCT) adoptées par la Commission européenne dans les Conditions relatives au traitement des données de Google Analytics, afin de garantir un niveau de protection équivalent à celui de l’Union européenne.",
+                                style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                color: GlobalColors.secondColor,
+                              ),
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                style: TextStyle(
+                                  color: GlobalColors.secondColor,
+                                  fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: 'Vous pouvez refuser ou désactiver Google Analytics à tout moment en installant le module complémentaire officiel :',
+                                  ),
+                                  TextSpan(text: " "),
+                                  WidgetSpan(
+                                    alignment: PlaceholderAlignment.baseline,
+                                    baseline: TextBaseline.alphabetic,
+                                    child: MyHoverUrlNavigator(url: 'https://tools.google.com/dlpage/gaoptout/', text: "https://tools.google.com/dlpage/gaoptout", color: GlobalColors.secondColor,),
+                                  ),
+                                  TextSpan(text: "."),
+                                ]
+                              )
+                            ),
+                            const SizedBox(height: 20.0),
+
+                            // Section: Google Ads 
+                            Text(
+                              "6.4. Statistiques et mesures d’audience – Google Analytics",
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontWeight: FontWeight.bold,
+                                color: GlobalColors.secondColor,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            Text(
+                                "Dans le cadre de nos campagnes publicitaires via Google Ads, un cookie de suivi de conversion est installé après un clic sur une annonce, exclusivement avec votre consentement (article 6.1 a RGPD). "
+                                "Ce cookie, strictement pseudonymisé, expire après 30 jours et permet de comptabiliser les actions (achats, formulaires, etc.) effectuées sur notre site. "
+                                "Si vous préférez ne pas participer à ce suivi, vous pouvez modifier vos préférences à tout moment ; voir section 6.1 « Gestion des préférences » pour en savoir plus. "
+                                "Les données générées sont susceptibles d’être transférées aux États-Unis. "
+                                "Conformément à l’article 46 du RGPD, nous avons intégré les Clauses Contractuelles Types (CCT) de la Commission européenne pour garantir un niveau de protection équivalent à celui de l’Union européenne.",
+                                style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                color: GlobalColors.secondColor,
+                              ),
+                            ),
+                            const SizedBox(height: 20.0),
+
+                            // Section: User Right to Refuse Cookies
+                            Text(
+                              "6.5. Droit de refuser les cookies",
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontWeight: FontWeight.bold,
+                                color: GlobalColors.secondColor,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            Text(
+                              "Lors de l’accès au Site, votre consentement est requis pour l’installation des cookies. En cas de refus," 
+                              "seuls les cookies strictement nécessaires au bon fonctionnement du Site seront générés ; certaines fonctionnalités pourraient être restreintes.",
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                color: GlobalColors.secondColor,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(height: 30.0),
-                      // Section: Cookie Retention Period
-                      Text(
-                        "${numberSection++}. Durée de conservation des cookies",
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
-                          fontWeight: FontWeight.bold,
-                          color: GlobalColors.secondColor,
-                        ),
-                      ),
-                      const SizedBox(height: 8.0),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Conformément aux lignes directrices de la CNIL (sept. 2020.0), la durée de vie des cookies doit être "
-                            "proportionnée à leur finalité. Vous trouverez ci-dessous le détail de nos durées de conservation :",
-                            style: TextStyle(
-                              fontSize: mobile
-                                  ? GlobalSize.mobileSizeText
-                                  : GlobalSize.webSizeText,
-                              color: GlobalColors.secondColor,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          Table(
-                            border: TableBorder.all(color: GlobalColors.secondColor.withValues(alpha: 0.3)),
-                            columnWidths: const {
-                              0: FlexColumnWidth(2),
-                              1: FlexColumnWidth(3),
-                              2: FlexColumnWidth(2),
-                            },
-                            children: [
-                              TableRow(
-                                decoration: BoxDecoration(color: GlobalColors.secondColor.withValues(alpha: 0.1)),
-                                children: [
-                                  _buildCell("Catégorie", isHeader: true),
-                                  _buildCell("Finalité", isHeader: true),
-                                  _buildCell("Durée de conservation", isHeader: true),
-                                ],
-                              ),
-                              TableRow(children: [
-                                _buildCell("Nécessaires"),
-                                _buildCell("Sécurisation de la navigation, accès aux zones protégées"),
-                                _buildCell("Durée de session (suppression à la fermeture du navigateur)"),
-                              ]),
-                              TableRow(children: [
-                                _buildCell("Préférences"),
-                                _buildCell("Mémorisation de la langue, de la mise en page…"),
-                                _buildCell("13 mois après dépôt"),
-                              ]),
-                              TableRow(children: [
-                                _buildCell("Statistiques (Analytics)"),
-                                _buildCell("Mesure d’audience anonymisée (Google Analytics)"),
-                                _buildCell("13 mois après dépôt"),
-                              ]),
-                              TableRow(children: [
-                                _buildCell("Marketing"),
-                                _buildCell("Publicités personnalisées"),
-                                _buildCell("6 mois après dépôt"),
-                              ]),
-                            ],
-                          ),
-                          const SizedBox(height: 20.0),
-                          Padding(
-                            padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                RichText(
-                                  text: TextSpan(children: [
-                                    WidgetSpan(
-                                      alignment: PlaceholderAlignment.baseline,
-                                      baseline: TextBaseline.alphabetic,
-                                      child: Transform.scale(
-                                        scale: 2.0,
-                                        child: const Text(
-                                          "•",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: GlobalColors.secondColor,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    const WidgetSpan(child: SizedBox(width: 8.0)),
-                                    TextSpan(
-                                      text:
-                                          "À l’issue de la période indiquée, les cookies sont automatiquement supprimés ou invalidés.",
-                                      style: TextStyle(
-                                        fontSize: mobile
-                                            ? GlobalSize.mobileSizeText
-                                            : GlobalSize.webSizeText,
-                                        color: GlobalColors.secondColor,
-                                      ),
-                                    ),
-                                  ]),
-                                ),
-                                const SizedBox(height: 8.0),
-                                RichText(
-                                  text: TextSpan(children: [
-                                    WidgetSpan(
-                                      alignment: PlaceholderAlignment.baseline,
-                                      baseline: TextBaseline.alphabetic,
-                                      child: Transform.scale(
-                                        scale: 2.0,
-                                        child: const Text(
-                                          "•",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: GlobalColors.secondColor,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    const WidgetSpan(child: SizedBox(width: 8.0)),
-                                    TextSpan(
-                                      text:
-                                          "Vos consentements sont renouvelés dès que la durée limite est atteinte.",
-                                      style: TextStyle(
-                                        fontSize: mobile
-                                            ? GlobalSize.mobileSizeText
-                                            : GlobalSize.webSizeText,
-                                        color: GlobalColors.secondColor,
-                                      ),
-                                    ),
-                                  ]),
-                                ),
-                                const SizedBox(height: 8.0),
-                                RichText(
-                                  text: TextSpan(children: [
-                                    WidgetSpan(
-                                      alignment: PlaceholderAlignment.baseline,
-                                      baseline: TextBaseline.alphabetic,
-                                      child: Transform.scale(
-                                        scale: 2.0,
-                                        child: const Text(
-                                          "•",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: GlobalColors.secondColor,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    const WidgetSpan(child: SizedBox(width: 8.0)),
-                                    TextSpan(
-                                      text:
-                                          "Vous pouvez à tout moment modifier vos choix via notre bandeau de gestion des cookies.",
-                                      style: TextStyle(
-                                        fontSize: mobile
-                                            ? GlobalSize.mobileSizeText
-                                            : GlobalSize.webSizeText,
-                                        color: GlobalColors.secondColor,
-                                      ),
-                                    ),
-                                  ]),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 20.0),
-                          Text(
-                            "En cas de question relative à ces durées ou pour exercer vos droits, consultez la section « Gestion des cookies » "
-                            "ou contactez-nous à ${GlobalPersonalData.email}.",
-                            style: TextStyle(
-                              fontSize: mobile
-                                  ? GlobalSize.mobileSizeText
-                                  : GlobalSize.webSizeText,
-                              color: GlobalColors.secondColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 30.0)  ,
 
-                      // Section: User Right to Refuse Cookies
+                      // Section : Contenu tiers embarqué
                       Text(
-                        "${numberSection++}. Droit de l'Utilisateur de refuser les cookies",
+                        "${numberSection++}. Contenu tiers embarqué",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
@@ -918,36 +1031,50 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       ),
                       const SizedBox(height: 8.0),
                       Text(
-                        "Lors de l'accès au Site, votre consentement est demandé pour l'installation des cookies. Si vous refusez, seuls les cookies strictement nécessaires seront générés.",
+                        "Le Site peut afficher des contenus hébergés par des services externes "
+                        "(vidéos YouTube, cartes Google Maps, publications de réseaux sociaux, "
+                        "articles intégrés, etc.). Ces éléments fonctionnent comme si vous "
+                        "naviguiez directement sur les sites tiers et sont susceptibles de "
+                        "déposer des cookies et de collecter des données vous concernant.",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                       ),
-                      const SizedBox(height: 30.0), 
- 
-                      // Section: Embedded Content
-                      Text(
-                        "${numberSection++}. Contenu embarqué depuis d'autres sites",
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
-                          fontWeight: FontWeight.bold,
-                          color: GlobalColors.secondColor,
-                        ),
-                      ),
-                      const SizedBox(height: 8.0),
-                      Text(
-                        "Les articles du Site peuvent inclure des contenus intégrés (vidéos, images, articles, etc.) provenant d'autres sites. Ces contenus se comportent comme si vous visitiez ces sites directement. Toutefois, certains contenus (comme les vidéos YouTube en mode confidentialité avancée) n'installent pas de cookies sur le Site.",
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                          color: GlobalColors.secondColor,
+                      const SizedBox(height: 12.0),
+                      Padding(
+                        padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildDefinition(
+                              "Widgets en « mode confidentialité avancée »",
+                              "Certains fournisseurs, comme YouTube, proposent un mode qui n’installe aucun "
+                              "cookie tiers tant que vous n’interagissez pas avec le contenu "
+                              "(lecture de la vidéo, activation du son, etc.).",
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "Cookies et collectes associées",
+                              "Dès que vous lancez ou interagissez avec un contenu embarqué, le tiers peut "
+                              "déposer des cookies de suivi et collecter des informations "
+                              "(adresse IP, navigation, préférences).",
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "Gestion et refus",
+                              "Vous pouvez gérer ou bloquer ces cookies via notre bandeau de gestion des cookies "
+                              "ou directement dans les réglages de votre navigateur. Pour en savoir plus, "
+                              "veuillez consulter la section 6.1 « Gestion des préférences ».",
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 30.0), 
  
                       // Section: Data Retention for Technical Data
                       Text(
-                        "${numberSection++}. Durée de conservation des données techniques",
+                        "${numberSection++}. Sécurité et confidentialité ",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
@@ -956,10 +1083,35 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       ),
                       const SizedBox(height: 8.0),
                       Text(
-                        "Les données techniques sont conservées pour la durée strictement nécessaire à l'accomplissement des finalités décrites ci-dessus.",
+                        "Nous assurons la protection de vos données par :",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
+                        ),
+                      ),
+                      const SizedBox(height: 8.0),
+                      Padding(
+                        padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 8.0),
+                            _buildBullet(
+                              "Chiffrement SSL des échanges."
+                            ),
+                            const SizedBox(height: 8.0),
+                            _buildBullet(
+                              "Accès restreint aux bases de données. "
+                            ),
+                            const SizedBox(height: 8.0),
+                            _buildBullet(
+                              "Sauvegardes régulières et procédures de restauration."
+                            ),
+                            const SizedBox(height: 8.0),
+                            _buildBullet(
+                              "Formation et sensibilisation de notre personnel."
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 30.0), 
@@ -982,6 +1134,61 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                         ),
                       ),
                       const SizedBox(height: 30.0),
+
+                      // Section: Users'rights
+                      Text(
+                        "${numberSection++}. Droits des utilisateurs",
+                        style: TextStyle(
+                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontWeight: FontWeight.bold,
+                          color: GlobalColors.secondColor,
+                        ),
+                      ),
+                      const SizedBox(height: 8.0),
+                      Text(
+                        "Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez des droits suivants :",
+                        style: TextStyle(
+                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          color: GlobalColors.secondColor,
+                        ),
+                      ),
+                      const SizedBox(height: 8.0),
+                      Text(
+                        "- Droit d’accès : obtenir confirmation que vos données sont traitées et en obtenir une copie.\n"
+                        "- Droit de rectification : faire corriger des informations inexactes ou incomplètes.\n"
+                        "- Droit à l’effacement (droit à l’oubli) : demander la suppression de vos données, sous réserve des obligations légales de conservation.\n"
+                        "- Droit à la limitation du traitement : demander la suspension du traitement de vos données.\n"
+                        "- Droit d’opposition : vous opposer à un traitement (notamment prospection).\n"
+                        "- Droit à la portabilité : recevoir vos données dans un format structuré et réutilisable.\n"
+                        "- Droit de définir des directives post-mortem : indiquer le sort de vos données après votre décès.",
+                        style: TextStyle(
+                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          color: GlobalColors.secondColor,
+                        ),
+                      ),
+                      const SizedBox(height: 20.0),
+                      RichText(
+                        text: TextSpan(
+                          style: TextStyle(
+                            color: GlobalColors.secondColor,
+                            fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: 'Pour exercer l’un de ces droits contactez notre DPO ; voir section 11. ci-dessous ou en cas de litige, vous pouvez également saisir la',
+                            ),
+                            TextSpan(text: " "),
+                            WidgetSpan(
+                              alignment: PlaceholderAlignment.baseline,
+                              baseline: TextBaseline.alphabetic,
+                              child: MyHoverUrlNavigator(url: 'https://www.cnil.fr/', text: "CNIL", color: GlobalColors.secondColor,),
+                            ),
+                            TextSpan(text: "."),
+                          ]
+                        )
+                      ),
+                      const SizedBox(height: 30.0),  
+
                       // Section DPO
                       Text(
                         "${numberSection++}. Délégué à la protection des données (DPO)",
@@ -1030,8 +1237,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                           color: GlobalColors.secondColor,
                         ),
                       ),
-                      const SizedBox(height: 30)  , 
-
+                      const SizedBox(height: 30), 
 
                       // Section: Modifications of Policy
                       Text(
@@ -1051,8 +1257,8 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                         ),
                       ),
                       const SizedBox(height: 30.0), 
- 
-                      // Section: Lexicon
+
+                      // Section : Glossary.
                       Text(
                         "${numberSection++}. Lexique",
                         style: TextStyle(
@@ -1062,14 +1268,86 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                         ),
                       ),
                       const SizedBox(height: 8.0),
-                      Text(
-                        "L’éditeur : La personne, physique ou morale, qui édite les services de communication en ligne.\n"
-                        "Le site : L’ensemble des pages Internet et services en ligne proposés par l’Éditeur.\n"
-                        "L’utilisateur : La personne utilisant le Site et ses services.\n"
-                        "Informations personnelles: Données qui permettent d'identifier directement ou indirectement un individu.",
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                          color: GlobalColors.secondColor,
+                      Padding(
+                        padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildDefinition(
+                              "Éditeur",
+                              "la personne physique ou morale responsable de la publication et de la gestion du site."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "Site",
+                              "ensemble des pages et services accessibles à l’adresse https://${GlobalPersonalData.website}."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "Utilisateur",
+                              "toute personne physique qui visite et/ou utilise les services du Site."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "Informations d’identité",
+                              "données nominatives recueillies via le formulaire de contact (nom, prénom, adresse e-mail, téléphone)."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "Cookie",
+                              "petit fichier stocké sur le terminal de l’Utilisateur pour mémoriser des informations ou collecter des données."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "Données pseudonymisées",
+                              "données traitées pour supprimer l’identification directe de l’Utilisateur (adresses IP tronquées)."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "Données anonymes",
+                              "données définitivement dépourvues d’identifiants personnels."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "Données techniques",
+                              "logs et informations automatiques de connexion (adresse IP, type de navigateur, fournisseur d’accès)."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "Consentement",
+                              "accord préalable de l’Utilisateur pour le traitement de ses données (art. 6.1 a RGPD)."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "Clauses contractuelles types (CCT)",
+                              "garanties juridiques encadrant les transferts de données hors Union européenne (art. 46 RGPD)."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "RGPD",
+                              "Règlement Général sur la Protection des Données (UE) 2016/679."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "DPO",
+                              "Délégué à la Protection des Données, interlocuteur pour toute question et l’exercice des droits."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "CGU  ",
+                              "Conditions Générales d’Utilisation, document définissant les modalités d’accès et d’utilisation du Site."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "CNIL",
+                              "Commission Nationale de l’Informatique et des Libertés, autorité française de contrôle."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "Session",
+                              "période de navigation pendant laquelle un cookie de session est actif (suppression à la fermeture du navigateur)."
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 30.0), 
@@ -1111,6 +1389,72 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
           fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
           color: GlobalColors.secondColor,
         ),
+      ),
+    );
+  }
+
+ // Helper for the definitions
+  Widget _buildDefinition(String term, String definition) {
+    bool mobile = GlobalScreenSizes.isMobileScreen(context);
+
+    return RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: "$term : ",
+            style: TextStyle(
+              fontSize: mobile 
+                  ? GlobalSize.mobileSizeText 
+                  : GlobalSize.webSizeText,
+              color: GlobalColors.secondColor,
+            ),
+          ),
+          TextSpan(
+            text: definition,
+            style: TextStyle(
+              fontSize: mobile 
+                  ? GlobalSize.mobileSizeText 
+                  : GlobalSize.webSizeText,
+              color: GlobalColors.secondColor,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Helper for the chip
+  Widget _buildBullet(String text) {
+    bool mobile = GlobalScreenSizes.isMobileScreen(context);
+
+    return RichText(
+      text: TextSpan(
+        children: [
+          WidgetSpan(
+            alignment: PlaceholderAlignment.baseline,
+            baseline: TextBaseline.alphabetic,
+            child: Transform.scale(
+              scale: 2.0,
+              child: const Text(
+                "•",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: GlobalColors.secondColor,
+                ),
+              ),
+            ),
+          ),
+          const WidgetSpan(child: SizedBox(width: 8)),
+          TextSpan(
+            text: text,
+            style: TextStyle(
+              fontSize: mobile 
+                  ? GlobalSize.mobileSizeText 
+                  : GlobalSize.webSizeText,
+              color: GlobalColors.secondColor,
+            ),
+          ),
+        ],
       ),
     );
   }
