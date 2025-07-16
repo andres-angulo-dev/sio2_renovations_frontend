@@ -5,7 +5,7 @@ class GlobalDates {
 
 class GlobalPersonalData {
   GlobalPersonalData._(); // private constructor to prevent instantiation
-
+  // Company
   static const String companyName = 'SiO₂ Rénovations';
   static const String legalForm = 'Entrepreneur individuel (EI)';
   static const String gender = 'M';
@@ -17,17 +17,25 @@ class GlobalPersonalData {
   static const String rcs = 'RCS';
   static const String headOfficeAddress = '3 ter Avenue Théodore Rousseau, 75007 Paris, France';
   static const String phone = '+(33) 6 46 34 12 03';
-  static const String email = 'contact@sio2-renovations.com';
-  static const String website = 'https://www.sio2renovations.com';
+  static const String email = 'contact@sio2renovations.com';
+  static const String website = 'www.sio2renovations.com';
   static const String companyCreationDate = '15 septembre 2020';
+  // Hosting
   static const String hostingProviderName = 'OVH SAS';
   static const String hostingProviderAddress = '2 Rue Kellermann, 59100 Roubaix, France';
+  // Developer
   static const String developerCompanyName = 'Andrés Angulo';
-  static const String developerCompanyWebsite = 'https://www.andres-angulo.com';
+  static const String developerCompanyWebsite = 'www.andres-angulo.com';
+  // DPO
   static const String dpoGender = 'M';
   static const String dpoName = 'Germán Holguin';
   static const String dpoEmail = 'contact@sio2-renovations.com';
   static const String dpoPhone = '+(33) 6 46 34 12 03';
+  // Insurance
+  static const String insurerName = 'XXX';              
+  static const String policyNumber = 'XXX';              
+  static const String policyStartDate = 'XX/XX/XX';         
+  static const String policyEndDate = 'XX/XX/XX';    
 }
 
 

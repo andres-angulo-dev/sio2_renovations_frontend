@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:sio2_renovations_frontend/components/footer.dart';
-import 'package:sio2_renovations_frontend/components/my_hover_route_navigator.dart';
-import 'package:sio2_renovations_frontend/components/my_hover_url_navigator.dart';
 import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
+import '../components/my_back_to_top_button.dart';
+import '../components/my_hover_route_navigator.dart';
+import '../components/my_hover_url_navigator.dart';
+import '../components/footer.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
@@ -17,9 +18,19 @@ class LegalMontionScreen extends StatefulWidget {
 }
 
 class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTickerProviderStateMixin {
+  // Scroll controller for the left and right button in horizontal menu
+  final ScrollController _scrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState 
+  // Scroll controller for the back to top button and appBar 
+  final ScrollController _pageScrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState 
   String currentItem = 'Mentions légales';
+  bool _showBackToTopButton = false;
   // bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not (only for NavItem with click)
 
+  @override  
+  void initState() {
+    super.initState();
+    _pageScrollController.addListener(_pageScrollListener); // Adds an event listener that captures scrolling
+  }
 
   void updateCurrentItem(String newItem) {
     setState(() {
@@ -27,10 +38,29 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
     });
   }
 
+  // Detects when scrolling should show back to top button
+  void _pageScrollListener() {
+    final shouldShow = _pageScrollController.position.pixels > MediaQuery.of(context).size.height - 1000.0;
+    if (shouldShow != _showBackToTopButton) {
+      setState(() {
+        _showBackToTopButton = shouldShow;
+      });
+    }
+  }
+
+  @override 
+  void dispose() {
+    _scrollController.dispose();
+    _pageScrollController.removeListener(_pageScrollListener);
+    _pageScrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     // Determine if the device is mobile based on screen width.
     final bool mobile = GlobalScreenSizes.isMobileScreen(context);
+    int numberSection = 1;
 
     return Scaffold(
       appBar: MyAppBarComponent(
@@ -46,140 +76,154 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
         : null, // Drawer visible on mobile devices only.
       backgroundColor: GlobalColors.firstColor, 
       body: SingleChildScrollView(
+        controller: _pageScrollController,
         child: Column(
           children: [
             SingleChildScrollView(
-              // Padding adds margins on the sides (mimicking a centered A4 layout).
+              // Padding adds margins on the sides (mimicking a centered A4 layout)
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
               child: Center(
                 child: ConstrainedBox(
-                  // Constrain the maximum width for better readability on large screens.
+                  // Constrain the maximum width for better readability on large screens
                   constraints: const BoxConstraints(maxWidth: 1000),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start, // Align content to the left.
+                    crossAxisAlignment: CrossAxisAlignment.start, // Align content to the left
                     children: [
-                      // Page Title centered at the top.
-
+                      // Page title
                       Text(
-                        "MENTIONS LÉGALES", // Page title.
+                        "MENTIONS LÉGALES", 
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.orangeColor,
                         ),
                       ),
+                      const SizedBox(height: 30.0), // Vertical spacing
 
-                      const SizedBox(height: 30.0), // Vertical spacing.
-
-                      // Section 1: Presentation of the Site and its Operation.
+                      // Section : Presentation of the Site and its Operation
                       Text(
-                        "1. Présentation du Site et de l'Exploitation",
+                        "${numberSection++}. Présentation du Site et de l'Exploitation",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
                       ),
-                      const SizedBox(height: 8.0), // Spacing between title and content.
-                      // Subsection 1.1: Publisher Identity.
-                      Text(
-                        "1.1 Identité de l'Éditeur",
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                          color: GlobalColors.secondColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 8.0),
-                      Text(
-                        "En application de l’article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique, "
-                        "les utilisateurs du site sont informés des différents intervenants impliqués dans sa conception et sa gestion :\n\n"
-                        "SIO2 Rénovations\n"
-                        "Entrepreneur individuel – German Holguin\n"
-                        "3 ter Avenue Théodore Rousseau, 75007 Paris\n"
-                        "Tél.: +(33) 6 46 34 12 03\n"
-                        "Mail: contact@sio2renovations.com\n"
-                        "Site Web: www.sio2renovations.com\n"
-                        "Siret: 38886382100038",
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                          color: GlobalColors.secondColor,
-                        ),
-                      ),
-                      const SizedBox(height: 24.0),
-                      // Subsection 1.2: Publication Director.
-                      Text(
-                        "1.2 Directeur de Publication",
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                          color: GlobalColors.secondColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 8.0),
-                      Text(
-                        "Le directeur de la publication du site est Monsieur German Holguin.\n"
-                        "Mail: contact@sio2renovations.com\n"
-                        "Tél.: +(33) 6 46 34 12 03",
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                          color: GlobalColors.secondColor,
-                        ),
-                      ),
-                      const SizedBox(height: 24.0),
-                      // Subsection 1.3: Hosting Details.
-                      Text(
-                        "1.3 Hébergement",
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                          color: GlobalColors.secondColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 8.0),
-                      Text(
-                        "Le site est hébergé par OVH SAS 2, rue Kellermann 59100 Roubaix, France",
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                          color: GlobalColors.secondColor,
-                        ),
-                      ),
-                      const SizedBox(height: 24.0),
-                      // Subsection 1.4: Site Design.
-                      Text(
-                        "1.4 Conception du Site",
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                          color: GlobalColors.secondColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 8.0),
-                      RichText(
-                        text: TextSpan(
-                          style: TextStyle(
-                            color: GlobalColors.secondColor,
-                            fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: 'Le site a été conçu par Andrés Angulo Site Web:',
+                      const SizedBox(height: 8.0), // Spacing between title and content
+                      Padding(
+                        padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [     
+                            // Subsection 1
+                            Text(
+                              "1.1 Identité de l'Éditeur",
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                color: GlobalColors.secondColor,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                            TextSpan(text: " "),
-                            WidgetSpan(
-                              alignment: PlaceholderAlignment.baseline,
-                              baseline: TextBaseline.alphabetic,
-                              child: MyHoverUrlNavigator(url: 'https://www.andres-angulo.com/', text: "www.andres-angulo.com")
+                            const SizedBox(height: 8.0),
+                            Text(
+                              "En application de l’article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique, "
+                              "les utilisateurs du site sont informés des différents intervenants impliqués dans sa conception et sa gestion :",
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                color: GlobalColors.secondColor,
+                              ),
                             ),
-                            TextSpan(text: "."),
+                            const SizedBox(height: 8.0),
+                            Text(
+                              "${GlobalPersonalData.companyName}\n"
+                              "${GlobalPersonalData.legalForm} – ${GlobalPersonalData.ceo}\n"
+                              "${GlobalPersonalData.headOfficeAddress}\n"
+                              "Tél. : ${GlobalPersonalData.phone}\n"
+                              "E-mail : ${GlobalPersonalData.email}\n"
+                              "Site Web : ${GlobalPersonalData.website}\n"
+                              "Siret : ${GlobalPersonalData.siret}",
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                color: GlobalColors.secondColor,
+                              ),
+                            ),
+                            const SizedBox(height: 20.0),
+                            // Subsection 2
+                            Text(
+                              "1.2 Directeur de Publication",
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                color: GlobalColors.secondColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            Text(
+                              "Le directeur de la publication du site est ${GlobalPersonalData.gender}. ${GlobalPersonalData.ceo}.\n"
+                              "E-mail : ${GlobalPersonalData.email}\n"
+                              "Tél. : ${GlobalPersonalData.phone}",
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                color: GlobalColors.secondColor,
+                              ),
+                            ),
+                            const SizedBox(height: 20.0),
+                            // Subsection 3
+                            Text(
+                              "1.3 Hébergement",
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                color: GlobalColors.secondColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            Text(
+                              "Le site est hébergé par : ${GlobalPersonalData.hostingProviderName} ${GlobalPersonalData.hostingProviderAddress}",
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                color: GlobalColors.secondColor,
+                              ),
+                            ),
+                            const SizedBox(height: 20.0),
+                            // Subsection 4
+                            Text(
+                              "1.4 Conception du Site",
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                color: GlobalColors.secondColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            RichText(
+                              text: TextSpan(
+                                style: TextStyle(
+                                  color: GlobalColors.secondColor,
+                                  fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: 'Le site a été conçu par ${GlobalPersonalData.developerCompanyName} Site Web :',
+                                  ),
+                                  TextSpan(text: " "),
+                                  WidgetSpan(
+                                    alignment: PlaceholderAlignment.baseline,
+                                    baseline: TextBaseline.alphabetic,
+                                    child: MyHoverUrlNavigator(url: 'https://${GlobalPersonalData.developerCompanyWebsite}/', text: GlobalPersonalData.developerCompanyWebsite)
+                                  ),
+                                  TextSpan(text: "."),
+                                ]
+                              )
+                            ),
                           ]
                         )
                       ),
                       const SizedBox(height: 30.0),
 
-                      // Section 2: Conditions of Use.
+                      // Section : Conditions of Use.
                       Text(
-                        "2. Conditions Générales d'Utilisation",
+                        "${numberSection++}. Conditions Générales d'Utilisation (CGU)",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
@@ -197,9 +241,9 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       ),
                       const SizedBox(height: 30.0),
 
-                      // Section 3: Description of Services Provided.
+                      // Section : Description of Services Provided.
                       Text(
-                        "3. Description des Services Fournis",
+                        "${numberSection++}. Description des Services Fournis",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
@@ -208,7 +252,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       ),
                       const SizedBox(height: 8.0),
                       Text(
-                        "Le site a pour objectif de fournir des informations relatives aux activités de SIO2 Rénovations. "
+                        "Le site a pour objectif de fournir des informations relatives aux activités de ${GlobalPersonalData.companyName}. "
                         "Les informations sont fournies à titre indicatif et peuvent être modifiées sans préavis. "
                         "L'éditeur s'efforce de garantir la précision des données, sans pouvoir être tenu responsable des omissions ou erreurs.",
                         style: TextStyle(
@@ -218,9 +262,9 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       ),
                       const SizedBox(height: 30.0),
 
-                      // Section 4: Contractual and Technical Limitations.
+                      // Section : Contractual and Technical Limitations.
                       Text(
-                        "4. Limitations Contractuelles et Techniques",
+                        "${numberSection++}. Limitations Contractuelles et Techniques",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
@@ -228,66 +272,123 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         ),
                       ),
                       const SizedBox(height: 8.0),
-                      Text(
-                        "4.1 Données Techniques",
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                          color: GlobalColors.secondColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 8.0),
-                      Text(
-                        "Le site utilise la technologie JavaScript pour son fonctionnement. L'éditeur décline toute responsabilité pour tout dommage matériel lié à l'utilisation du site, notamment en cas d'utilisation d'équipements obsolètes ou non sécurisés.",
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                          color: GlobalColors.secondColor,
-                        ),
-                      ),
-                      const SizedBox(height: 24.0),
-                      // Subsection 1.4: Site Design.
-                      Text(
-                        "4.2 Responsabilité de l'Éditeur",
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                          color: GlobalColors.secondColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 8.0),
-                      Text(
-                        "SIO2 Rénovations ne pourra être tenu responsable des dommages directs ou indirects, incluant la perte de marché ou d'opportunités, résultant de l'utilisation ou de l'impossibilité d'accéder au site.",
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                          color: GlobalColors.secondColor,
+                      Padding(
+                        padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "4.1 Données Techniques",
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                color: GlobalColors.secondColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            Text(
+                              "Le site utilise la technologie JavaScript pour son fonctionnement. L'éditeur décline toute responsabilité pour tout dommage matériel lié à l'utilisation du site, notamment en cas d'utilisation d'équipements obsolètes ou non sécurisés.",
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                color: GlobalColors.secondColor,
+                              ),
+                            ),
+                            const SizedBox(height: 20.0),
+                            // Subsection 1.4: Site Design.
+                            Text(
+                              "4.2 Responsabilité de l'Éditeur",
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                color: GlobalColors.secondColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            Text(
+                              "${GlobalPersonalData.companyName} ne pourra être tenu responsable des dommages directs ou indirects, incluant la perte de marché ou d'opportunités, résultant de l'utilisation ou de l'impossibilité d'accéder au site.",
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                color: GlobalColors.secondColor,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 30.0),
 
-                      // Section 5: Intellectual Property.
+                      // Section : Intellectual Property.
                       Text(
-                        "5. Propriété Intellectuelle",
+                        "${numberSection++}. Propriété intellectuelle",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w600,
                           color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 8.0),
-                      Text(
-                        "Tous les contenus présents sur ce site (textes, images, graphismes, logos, icônes, sons et logiciels) sont la propriété exclusive de SIO2 Rénovations ou font l'objet d'autorisations spécifiques. "
-                        "Toute reproduction ou modification est strictement interdite sans l'accord écrit préalable de SIO2 Rénovations. "
-                        "Toute exploitation non autorisée sera poursuivie conformément aux dispositions légales en vigueur.",
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                          color: GlobalColors.secondColor,
+                      Padding(
+                        padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // 5.1 Contenus exclusifs
+                            Text(
+                              "5.1 Contenus exclusifs",
+                              style: TextStyle(
+                                fontSize: mobile
+                                    ? GlobalSize.mobileSizeText
+                                    : GlobalSize.webSizeText,
+                                fontWeight: FontWeight.w600,
+                                color: GlobalColors.secondColor,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            Text(
+                              "L’ensemble des contenus (textes, graphismes, logos, icônes, sons, logiciels) "
+                              "ainsi que certaines photographies originales présentes sur ce site sont la propriété "
+                              "exclusive de ${GlobalPersonalData.companyName}." 
+                              "Toute reproduction, représentation ou adaptation de ces éléments, en tout ou partie, est interdite sans "
+                              "accord écrit préalable de ${GlobalPersonalData.companyName}.",
+                              style: TextStyle(
+                                fontSize: mobile
+                                    ? GlobalSize.mobileSizeText
+                                    : GlobalSize.webSizeText,
+                                color: GlobalColors.secondColor,
+                              ),
+                            ),
+                            const SizedBox(height: 20.0),
+                            Text(
+                              "5.2 Photographies sous licence et non contractuelles",
+                              style: TextStyle(
+                                fontSize: mobile
+                                    ? GlobalSize.mobileSizeText
+                                    : GlobalSize.webSizeText,
+                                fontWeight: FontWeight.w600,
+                                color: GlobalColors.secondColor,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            Text(
+                              "Certaines photographies et illustrations utilisées sur ce site proviennent de "
+                              "bibliothèques d’images en ligne, sous licence, et sont fournies à titre purement illustratif."
+                              "En raison de nos 30 années d’expérience et du volume important de réalisations, il "
+                              "nous est matériellement impossible de numériser l’intégralité de nos chantiers. "
+                              "Ces visuels offrent simplement un aperçu illustratif de la qualité de nos interventions.",
+                              style: TextStyle(
+                                fontSize: mobile
+                                    ? GlobalSize.mobileSizeText
+                                    : GlobalSize.webSizeText,
+                                color: GlobalColors.secondColor,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 30.0),
 
-                      // Section 6: Limitation of Liability.
+                      // Section : Limitation of Liability.
                       Text(
-                        "6. Limitations de Responsabilité",
+                        "${numberSection++}. Limitations de Responsabilité",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
@@ -296,7 +397,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       ),
                       const SizedBox(height: 8.0),
                       Text(
-                        "SIO2 Rénovations ne pourra être tenu responsable des dommages matériels causés au matériel de l'utilisateur lors de l'accès au site. "
+                        "${GlobalPersonalData.companyName} ne pourra être tenu responsable des dommages matériels causés au matériel de l'utilisateur lors de l'accès au site. "
                         "L'éditeur décline toute responsabilité concernant d'éventuels bugs, incompatibilités ou erreurs de contenu sur le site.",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
@@ -304,10 +405,88 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         ),
                       ),
                       const SizedBox(height: 30.0),
-
-                      // Section 7: Management of Personal Data.
+                      
+                      
+                      // Section : CGV and intervention conditions
                       Text(
-                        "7. Gestion des Données Personnelles",
+                        "${numberSection++}. Conditions d’intervention et garanties légales",
+                        style: TextStyle(
+                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontWeight: FontWeight.bold,
+                          color: GlobalColors.secondColor,
+                        ),
+                      ),
+                      const SizedBox(height: 8.0),
+                      Text(
+                        "Tous les devis et contrats émis par ${GlobalPersonalData.companyName} sont soumis à nos "
+                        "Conditions Générales de Vente, disponibles sur simple demande via notre formulaire en ligne (type de demande « Autre ») ou directement à ${GlobalPersonalData.email}.",
+                        style: TextStyle(
+                          fontSize: mobile 
+                              ? GlobalSize.mobileSizeText 
+                              : GlobalSize.webSizeText,
+                          color: GlobalColors.secondColor,
+                        ),
+                      ),
+                      const SizedBox(height: 20.0),
+                      // Text(
+                      //   "Assurances",
+                      //   style: TextStyle(
+                      //     fontSize: mobile 
+                      //         ? GlobalSize.mobileSizeText 
+                      //         : GlobalSize.webSizeText,
+                      //     fontWeight: FontWeight.w600,
+                      //     color: GlobalColors.secondColor,
+                      //   ),
+                      // ),
+                      // const SizedBox(height: 8.0),
+                      // Padding(
+                      //   padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       _buildBullet(
+                      //         "Assurance responsabilité civile professionnelle et décennale souscrite auprès de ${GlobalPersonalData.insurerName}, police n° ${GlobalPersonalData.policyNumber}, valable du ${GlobalPersonalData.policyStartDate} au ${GlobalPersonalData.policyEndDate}."
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // const SizedBox(height: 20.0),
+                      Text(
+                        "Garanties",
+                        style: TextStyle(
+                          fontSize: mobile 
+                              ? GlobalSize.mobileSizeText 
+                              : GlobalSize.webSizeText,
+                          fontWeight: FontWeight.w600,
+                          color: GlobalColors.secondColor,
+                        ),
+                      ),
+                      const SizedBox(height: 8.0),
+                      Padding(
+                        padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 8.0),
+                            _buildBullet(
+                              "Garantie de parfait achèvement : 1 an à compter de la réception des travaux."
+                            ),
+                            const SizedBox(height: 8.0),
+                            _buildBullet(
+                              "Garantie biennale (articles 1792-3 et suivants du Code civil) : 2 ans sur les équipements."
+                            ),
+                            const SizedBox(height: 8.0),
+                            _buildBullet(
+                              "Garantie décennale (article 1792-4-1 du Code civil) : 10 ans sur les ouvrages."
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 30.0),
+
+                      // Section : Management of Personal Data.
+                      Text(
+                        "${numberSection++}. Gestion des Données Personnelles",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
@@ -326,9 +505,9 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       ),
                       const SizedBox(height: 30.0),
 
-                      // Section 8: Hyperlinks and Cookies.
+                      // Section : Hyperlinks and Cookies.
                       Text(
-                        "8. Liens Hypertextes et Cookies",
+                        "${numberSection++}. Liens Hypertextes et Cookies",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
@@ -336,59 +515,68 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         ),
                       ),
                       const SizedBox(height: 8.0),
-                      Text(
-                        "8.1 Liens Hypertextes",
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                          color: GlobalColors.secondColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 8.0),
-                      Text(
-                        "Le site peut contenir des liens vers d'autres sites externes. SIO2 Rénovations n'exerce aucun contrôle sur le contenu de ces sites et décline toute responsabilité en cas de contenu illicite ou inapproprié.",                  
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                          color: GlobalColors.secondColor,
-                        ),
-                      ),
-                      const SizedBox(height: 24.0),
-                      // Subsection 1.4: Site Design.
-                      Text(
-                        "8.2 Gestion des Cookies",
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                          color: GlobalColors.secondColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 8.0),
-                      RichText(
-                        text: TextSpan(
-                          style: TextStyle(
-                            fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                            color: GlobalColors.secondColor,
-                          ),
+                      Padding(
+                        padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TextSpan(
-                              text: "La navigation sur ce site peut entraîner l'installation de cookies sur l'ordinateur de l'utilisateur. Certains cookies permettent la navigation et d'autres de mesurer la fréquentation par exemple. Le refus des cookies peut limiter l'accès à certaines fonctionnalités du site. L'utilisateur peut configurer et refuser les cookies. Pour en savoir plus, veuillez consulter notre page de ",
+                            // Subsection 1
+                            Text(
+                              "9.1 Liens Hypertextes",
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                color: GlobalColors.secondColor,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                            WidgetSpan(
-                              alignment: PlaceholderAlignment.baseline,
-                              baseline: TextBaseline.alphabetic,
-                              child: MyHoverRouteNavigator(routeName: '/privacyPolicy', text: 'politique de confidentialité')
+                            const SizedBox(height: 8.0),
+                            Text(
+                              "Le site peut contenir des liens vers d'autres sites externes. ${GlobalPersonalData.companyName} n'exerce aucun contrôle sur le contenu de ces sites et décline toute responsabilité en cas de contenu illicite ou inapproprié.",                  
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                color: GlobalColors.secondColor,
+                              ),
                             ),
-                            TextSpan(
-                              text: '.',
-                            )
-                          ]
-                        )
+                            const SizedBox(height: 20.0),
+                            // Subsection 2
+                            Text(
+                              "9.2 Gestion des Cookies",
+                              style: TextStyle(
+                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                color: GlobalColors.secondColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            RichText(
+                              text: TextSpan(
+                                style: TextStyle(
+                                  fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                  color: GlobalColors.secondColor,
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: "La navigation sur ce site peut entraîner l'installation de cookies sur l'ordinateur de l'utilisateur. Certains cookies permettent la navigation et d'autres de mesurer la fréquentation par exemple. Le refus des cookies peut limiter l'accès à certaines fonctionnalités du site. L'utilisateur peut configurer et refuser les cookies. Pour en savoir plus, veuillez consulter notre page de ",
+                                  ),
+                                  WidgetSpan(
+                                    alignment: PlaceholderAlignment.baseline,
+                                    baseline: TextBaseline.alphabetic,
+                                    child: MyHoverRouteNavigator(routeName: '/privacyPolicy', text: 'politique de confidentialité')
+                                  ),
+                                  TextSpan(
+                                    text: '.',
+                                  )
+                                ]
+                              )
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(height: 30.0),
 
-                      // Section 9: Applicable Law and Jurisdiction.
+                      // Section : Applicable Law and Jurisdiction.
                       Text(
-                        "9. Droit Applicable et Juridiction",
+                        "${numberSection++}. Droit Applicable et Juridiction",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
@@ -404,9 +592,9 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       ),
                       const SizedBox(height: 30.0),
 
-                      // Section 10: Legal Framework.
+                      // Section : Legal Framework.
                       Text(
-                        "10. Cadre Légal",
+                        "${numberSection++}. Cadre Légal",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
@@ -423,9 +611,9 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       ),
                       const SizedBox(height: 30.0),
 
-                      // Section 11: Glossary.
+                      // Section : Glossary.
                       Text(
-                        "11. Lexique",
+                        "${numberSection++}. Lexique",
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
@@ -433,12 +621,66 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         ),
                       ),
                       const SizedBox(height: 8.0),
-                      Text(
-                        "Utilisateur : Toute personne accédant et naviguant sur le site.\n"
-                        "Informations personnelles : Les données permettant d'identifier directement ou indirectement un individu.",
-                        style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                          color: GlobalColors.secondColor,
+                      Padding(
+                        padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildDefinition(
+                              "Éditeur",
+                              "La personne physique ou morale responsable de la publication et de la gestion du site."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "Site",
+                              "L’ensemble des pages et services accessibles à l’adresse https://${GlobalPersonalData.website}."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "Utilisateur",
+                              "Toute personne physique qui visite et/ou utilise les services du Site."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "Données personnelles",
+                              "Toute information se rapportant à une personne physique identifiée ou identifiable."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "Données techniques",
+                              "Informations collectées automatiquement lors de la navigation (adresse IP, navigateur, fournisseur d’accès, etc.)."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "Cookie",
+                              "Petit fichier déposé sur votre terminal pour mémoriser des informations (préférences, statistiques, etc.)."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "RGPD",
+                              "Règlement Général sur la Protection des Données (UE) 2016/679."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "CGU",
+                              "Conditions Générales d’Utilisation, définissant les modalités d’accès et d’utilisation du Site."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "Devis",
+                              "Document précontractuel, estimatif et descriptif des prestations proposées."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "Contrat",
+                              "Accord formel liant l’éditeur et le client, définissant les obligations et conditions des travaux."
+                            ),
+                            const SizedBox(height: 8),
+                            _buildDefinition(
+                              "Siret",
+                              "Numéro unique d’identification de l’entreprise."
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 30.0),
@@ -462,7 +704,76 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
             FooterComponent(),
           ],
         ),
-      ) 
+      ),
+      floatingActionButton: _showBackToTopButton
+      ? MyBackToTopButton(controller: _pageScrollController)
+      : null,
+    );
+  }
+
+  // Helper for the definitions
+  Widget _buildDefinition(String term, String definition) {
+    bool mobile = GlobalScreenSizes.isMobileScreen(context);
+
+    return RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: "$term : ",
+            style: TextStyle(
+              fontSize: mobile 
+                  ? GlobalSize.mobileSizeText 
+                  : GlobalSize.webSizeText,
+              color: GlobalColors.secondColor,
+            ),
+          ),
+          TextSpan(
+            text: definition,
+            style: TextStyle(
+              fontSize: mobile 
+                  ? GlobalSize.mobileSizeText 
+                  : GlobalSize.webSizeText,
+              color: GlobalColors.secondColor,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Helper for the chip
+  Widget _buildBullet(String text) {
+    bool mobile = GlobalScreenSizes.isMobileScreen(context);
+
+    return RichText(
+      text: TextSpan(
+        children: [
+          WidgetSpan(
+            alignment: PlaceholderAlignment.baseline,
+            baseline: TextBaseline.alphabetic,
+            child: Transform.scale(
+              scale: 2.0,
+              child: const Text(
+                "•",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: GlobalColors.secondColor,
+                ),
+              ),
+            ),
+          ),
+          const WidgetSpan(child: SizedBox(width: 8)),
+          TextSpan(
+            text: text,
+            style: TextStyle(
+              fontSize: mobile 
+                  ? GlobalSize.mobileSizeText 
+                  : GlobalSize.webSizeText,
+              color: GlobalColors.secondColor,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
