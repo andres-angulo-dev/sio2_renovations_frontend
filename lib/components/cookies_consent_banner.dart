@@ -206,7 +206,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
                 WidgetSpan(
                   alignment: PlaceholderAlignment.baseline, // Aligns with the main text baseline.
                   baseline: TextBaseline.alphabetic,
-                  child: MyHoverRouteNavigator(routeName: '/privacyPolicy', text: 'En savoir plus', webSize: GlobalSize.mobileSizeText)
+                  child: MyHoverRouteNavigator(routeName: '/privacyPolicy', text: 'En savoir plus', arguments: GlobalKey(), webSize: GlobalSize.mobileSizeText)
                 ),
               ],
             ),

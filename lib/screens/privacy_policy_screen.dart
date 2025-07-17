@@ -10,9 +10,10 @@ import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
 
 
-/// PrivacyPolicyScreen displays the privacy policy and cookie management details.
+// PrivacyPolicyScreen displays the privacy policy and cookie management details.
 class PrivacyPolicyScreen extends StatefulWidget {
-  const PrivacyPolicyScreen({super.key});
+  
+  const PrivacyPolicyScreen({super.key,});
 
   @override 
   PrivacyPolicyScreenState createState() => PrivacyPolicyScreenState();
@@ -23,15 +24,42 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
   final ScrollController _scrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState 
   // Scroll controller for the back to top button and appBar 
   final ScrollController _pageScrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState 
+  // Allows you to target the section to trigger a scroll
+  GlobalKey? _cookiesKey;   
   String currentItem = 'Politique de confidentialité';
   bool _showBackToTopButton = false;
-  // bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not (only for NavItem with click)
 
+  // bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not (only for NavItem with click)
   @override 
   void initState() {
     super.initState( );
     // Handle back to top button 
     _pageScrollController.addListener(_pageScrollListener); // Adds an event listener that captures scrolling
+  }
+
+  // Allows scroll to Cookies section using dynamic Key and called just after initState(), the context is fully initialized, we can retrieve the route arguments via ModalRoute.of(context)
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // We retrieve the target key passed as an argument, if it exists
+    final args = ModalRoute.of(context)?.settings.arguments;
+    if (args is GlobalKey) {
+      _cookiesKey = args;
+
+      // Schedule a callback after the first frame is rendered. This ensures the widget tree is fully built before attempting to scroll
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final context = _cookiesKey?.currentContext;
+        if (context != null) {
+          // Programmatically scroll the widget associated with cookiesKey into view
+          Scrollable.ensureVisible(
+            context,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeOutCubic,
+          );
+        }
+      });
+    }
   }
   
   void updateCurrentItem(String newItem) {
@@ -571,6 +599,9 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       // Section: Cookies
                       Text(
                         "${numberSection++}. Les Cookies",
+                        // key: GlobalScrollTargets.cookiesKey,
+                        // key: PrivacyPolicyScreen.cookiesKey,
+                        key: _cookiesKey,
                         style: TextStyle(
                           fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,

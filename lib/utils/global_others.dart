@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class GlobalDates {
   // Privaty policy screen
   static const String lastUpdate = '1er août 2025'; 
@@ -184,4 +186,6 @@ class GlobalSize {
   static const double welcomeSectionWebTitle = 40.0;
 }
 
-
+class GlobalScrollTargets {
+  static final GlobalKey cookiesKey = GlobalKey();
+}
