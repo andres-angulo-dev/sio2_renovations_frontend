@@ -8,6 +8,7 @@ class GlobalDates {
 class GlobalPersonalData {
   GlobalPersonalData._(); // private constructor to prevent instantiation
   // Company
+  static const String companyPrefixName = 'SiO₂';
   static const String companyName = 'SiO₂ Rénovations';
   static const String legalForm = 'Entrepreneur individuel (EI)';
   static const String gender = 'M';
@@ -164,6 +165,8 @@ class GlobalSize {
     // Key figures section
   static const double keyFiguresSectionMobileTitle = 36.0;
   static const double keyFiguresSectionWebTitle = 40.0;
+  static const double keyFiguresSectionSuffixMobileTitle = 28.0;
+  static const double keyFiguresSectionSuffixWebTitle = 32.0;
   static const double keyFiguresSectionMobileSubTitle = 16.0;
   static const double keyFiguresSectionWebSubTitle = 18.0;
   static const double keyFiguresSectionMobileDescription = 12.0;

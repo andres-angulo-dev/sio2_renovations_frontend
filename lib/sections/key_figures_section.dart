@@ -19,8 +19,23 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
   Widget _buildAnimatedStat(int finalValue, String title, String description) {
     final bool isMobile = GlobalScreenSizes.isMobileScreen(context);
     
+    Map<String, String> formatStat(int counterValue, int finalValue) {
+      String prefix = '';
+      String suffix = '';
+
+      if (finalValue == 30) prefix = '+';
+      if (finalValue == 30) suffix = ' ans';
+      if (finalValue == 3360) suffix = ' m²';
+
+      return {
+        "prefix" : prefix,
+        'value': "$counterValue",
+        'suffix': suffix,
+      };
+    }
+    
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+      padding: const EdgeInsets.symmetric(vertical: 20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -29,17 +44,64 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
           TweenAnimationBuilder<int>(
             tween: IntTween(begin: 0, end: finalValue),
             duration: Duration(seconds: 3),
-            builder: (context, value, child) {
-              return Text(
-                finalValue == 95 ? "$value%" : "$value", // Adds % for satisfaction rate
-                style: TextStyle(fontSize: isMobile ? GlobalSize.keyFiguresSectionMobileTitle : GlobalSize.keyFiguresSectionWebTitle, fontWeight: FontWeight.bold, color: GlobalColors.thirdColor),
-              );
+            builder: (context, counterValue, child) {
+              final parts = formatStat(counterValue, finalValue);
+
+              return RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: parts['prefix'],
+                      style: TextStyle(
+                        fontSize: isMobile
+                          ? GlobalSize.keyFiguresSectionMobileTitle
+                          : GlobalSize.keyFiguresSectionWebTitle,
+                        fontWeight: FontWeight.bold,
+                        color: GlobalColors.thirdColor,
+                      ),
+                    ),
+                    TextSpan(
+                      text: parts['value'],
+                      style: TextStyle(
+                        fontSize: isMobile
+                          ? GlobalSize.keyFiguresSectionMobileTitle
+                          : GlobalSize.keyFiguresSectionWebTitle,
+                        fontWeight: FontWeight.bold,
+                        color: GlobalColors.thirdColor,
+                      ),
+                    ),
+                    TextSpan(
+                      text: parts['suffix'],
+                      style: TextStyle(
+                        fontSize: isMobile
+                          ? GlobalSize.keyFiguresSectionSuffixMobileTitle
+                          : GlobalSize.keyFiguresSectionSuffixWebTitle,
+                        fontWeight: FontWeight.w400,
+                        color: GlobalColors.thirdColor
+                      ),
+                    ),
+                  ],
+                ),
+              ); 
             },
           ),
-          SizedBox(height: 5),
-          Text(title, style: TextStyle(fontSize: isMobile ? GlobalSize.keyFiguresSectionMobileSubTitle : GlobalSize.keyFiguresSectionWebSubTitle, fontWeight: FontWeight.w600)),
-          SizedBox(height: 5),
-          Text(description, textAlign: TextAlign.start, style: TextStyle(fontSize: isMobile ? GlobalSize.keyFiguresSectionMobileDescription : GlobalSize.keyFiguresSectionWebDescription, color: GlobalColors.fiveColor)),
+          const SizedBox(height: 5.0),
+          Text(
+            title, 
+            style: TextStyle(
+              fontSize: isMobile ? GlobalSize.keyFiguresSectionMobileSubTitle : GlobalSize.keyFiguresSectionWebSubTitle, 
+              fontWeight: FontWeight.w600
+            )
+          ),
+          const SizedBox(height: 5.0),
+          Text(
+            description, 
+            textAlign: TextAlign.start, 
+            style: TextStyle(
+              fontSize: isMobile ? GlobalSize.keyFiguresSectionMobileDescription : GlobalSize.keyFiguresSectionWebDescription, 
+              color: GlobalColors.fiveColor
+            )
+          ),
         ],
       ),
     );
@@ -54,18 +116,18 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
       onVisibilityChanged: (info) {
         if (info.visibleFraction > 0.3 && !_isVisible) {
           setState(() {
-            _isVisible = true; // Animation starts only when 50% of the section is visible
+            _isVisible = true; // Animation starts only when XX% of the section is visible
           });
         } 
       },
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 22.0),
-          child: SizedBox(
+        child: SizedBox(
           width: 1400.0,
           child: Column(
             children: [
               Text(
-                "SIO2 RÉNOVATIONS EN QUELQUES CHIFFRES",
+                "${GlobalPersonalData.companyPrefixName} RÉNOVATIONS EN QUELQUES CHIFFRES",
                 style: TextStyle(
                   fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
                   fontWeight: FontWeight.bold,
@@ -83,22 +145,22 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
                       children: [
                         _buildAnimatedStat(
                           10, 
-                          "Corps de métier réunis", 
+                          "corps de métier réunis", 
                           "Des artisans qualifiés : électriciens, plombiers, chauffagistes, carreleurs, plaquistes, peintres, maçons…"
                         ),
                         _buildAnimatedStat(
                           30, 
-                          "Ans d'expérience", 
+                          "d'expérience", 
                           "Une solide expérience en rénovation, avec des équipes formées pour intervenir efficacement sur l’ensemble de l’Île-de-France."
                         ),
                         _buildAnimatedStat(
                           48, 
-                          "Projets réalisés depuis le début d'année", 
+                          "projets réalisés depuis le début d'année", 
                           "Chaque chantier est une nouvelle opportunité de satisfaire nos clients et d’améliorer leur espace de vie."
                         ),
                         _buildAnimatedStat(
                           3360, 
-                          "m² rénovés ces derniers mois", 
+                          "rénovés ces derniers mois", 
                           "Des surfaces transformées avec soin et professionnalisme pour des habitats modernisés et fonctionnels."
                         ),
                       ],
