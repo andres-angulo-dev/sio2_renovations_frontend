@@ -1,10 +1,18 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:sio2_renovations_frontend/utils/global_colors.dart';
+import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
 
 class HoverSubMenuComponent extends StatefulWidget {
+  final Widget label;
+  final List<Map<String, String>> items; // Array with the submenus     
+  final Color defaultColor; 
+  final Color hoverColor;
+  final String currentSubItem;
+  final ValueChanged<String> onItemSelected;
+  final ValueChanged<bool>? onSubMenuOpenChanged;
+
   const HoverSubMenuComponent({
     super.key,
     required this.label,
@@ -13,14 +21,9 @@ class HoverSubMenuComponent extends StatefulWidget {
     required this.hoverColor,
     required this.currentSubItem,
     required this.onItemSelected,
+    this.onSubMenuOpenChanged,
   });
 
-  final Widget label; // widget CustomNavItem which only manages the menu title
-  final List<Map<String, String>> items; // Array with the submenus     
-  final Color defaultColor; 
-  final Color hoverColor;
-  final String currentSubItem;
-  final ValueChanged<String> onItemSelected;
 
   @override
   HoverSubMenuComponentState createState() => HoverSubMenuComponentState();
@@ -94,9 +97,15 @@ class HoverSubMenuComponentState extends State<HoverSubMenuComponent> with Singl
         link: _layerLink, // Connect your overlay to the title's position
         showWhenUnlinked: false, // Guarantees that it remains hidden if this connection is ever broken.
         offset: Offset(isSmallScreen ? -27.0 : -48.0, size.height), // menu offset from the bottom of the title
-        child: MouseRegion( // For the list containing the entire dropdown menu
-          onEnter: (_) => _cancelHideTimer(),
-          onExit:  (_) => _startHideTimer(),
+        child: MouseRegion( // For the list containing the entire dropdown menu (manage the hover only dropdown menu)
+          onEnter: (_) {
+            _cancelHideTimer();
+            widget.onSubMenuOpenChanged?.call(true);
+          },
+          onExit:  (_) {
+            _startHideTimer();
+            widget.onSubMenuOpenChanged?.call(false);
+          },
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -192,13 +201,15 @@ class HoverSubMenuComponentState extends State<HoverSubMenuComponent> with Singl
     return CompositedTransformTarget( // Records its position/size of menu title
       // Allows CompositedTransformFollower to position the overlay here
       link: _layerLink, // Connect your overlay to the title's position
-      child: MouseRegion( // To display the dropdown menu when hovering over the menu title
+      child: MouseRegion( // To display the dropdown menu when hovering over the menu title (handle the hover only on the title)
         onEnter: (_) {
           _cancelHideTimer(); // On enter, cancel the function of hiding the dropdown menu.
           _showOverlay(context);
+          widget.onSubMenuOpenChanged?.call(true);
         },
         onExit: (_) {
           _startHideTimer(); // On exit, activate the function to hide the dropdown menu
+          widget.onSubMenuOpenChanged?.call(false);
         },
         child: widget.label, // Menu Title
       ),

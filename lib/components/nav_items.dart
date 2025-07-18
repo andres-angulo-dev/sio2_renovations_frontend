@@ -7,22 +7,22 @@ import '../utils/global_screen_sizes.dart';
 import '../components/hover_sub_menu_component.dart';
 
 class NavItems extends StatefulWidget {
-  const NavItems({super.key, 
-  required this.defaultColor, 
-  required this.hoverColor, 
-  this.isHorizontal = true,
-  required this.currentItem,
-  required this.onItemSelected,
-  this.currentSubItem,
-  });
-
   final Color defaultColor;
   final Color hoverColor;
   final bool isHorizontal; // Whether the menu is displayed horizontally
   final String currentItem; // The currently active menu item
   final Function(String) onItemSelected; // Callback to notify the parent when a menu item is selected
   final String? currentSubItem; // The currently active sub menu item
-
+  
+  const NavItems({
+    super.key, 
+    required this.defaultColor, 
+    required this.hoverColor, 
+    this.isHorizontal = true,
+    required this.currentItem,
+    required this.onItemSelected,
+    this.currentSubItem,
+  });
 
   @override  
   NavItemsState createState() => NavItemsState();
@@ -30,7 +30,8 @@ class NavItems extends StatefulWidget {
 
 class NavItemsState extends State<NavItems> {
   // Creation of a bool by children for each items
-  late List<bool> _mobileOpen;
+  late List<bool> _openDropdownMobile;
+  int? _openDropdownWebIndex;
 
   final List<Map<String, dynamic>> navItemsData = [
     {'icon': Icons.dashboard, 'label': 'Accueil', 'route': '/landing'},
@@ -48,16 +49,16 @@ class NavItemsState extends State<NavItems> {
   @override
   void initState() {
     super.initState();
-    _mobileOpen = List<bool>.filled(navItemsData.length, false); // Initialize a "false" for each entry of navItemsData
+    _openDropdownMobile = List<bool>.filled(navItemsData.length, false); // Initialize a "false" for each entry of navItemsData
   }
-  
+
   @override
   Widget build(BuildContext context) {
 
     final bool mobile = GlobalScreenSizes.isMobileScreen(context);
     final bool isSmallScreen = GlobalScreenSizes.isSmallScreen(context);
     final items = <Widget>[]; // Holds the final list of widgets (buttons or dropdowns)
-    
+
     if (!(widget.isHorizontal )) items.add(Padding(padding: EdgeInsets.only(top: 30.0))); // Adding padding only for the drawer menu
 
     for (var i = 0; i < navItemsData.length; i++) {
@@ -67,37 +68,45 @@ class NavItemsState extends State<NavItems> {
       final List<Map<String,String>> children = rawChildren != null ? rawChildren.map((e) => Map<String, String>.from(e as Map)).toList() : <Map<String,String>>[]; // Extract children if any
       final bool hasChildren = children.isNotEmpty; // Check if this item has submenus
       final Widget navWidget;
+      final bool isSubMenuExpanded = _openDropdownWebIndex == i;
     
       if (hasChildren) {
         navWidget = widget.isHorizontal 
         ? HoverSubMenuComponent( // Web version for the sub items
-            label: CustomNavItem( // Menu Title
-              icon: item['icon'],
-              label: item['label'],
-              isActive: isActive,
-              defaultColor: widget.defaultColor,
-              hoverColor: widget.hoverColor,
-              onPressed: () {},
-              animationDelay: Duration(milliseconds: (i + 1) * 200),
-              enableDownArrowIcon: true,
-            ),
-            items: children,
+          label: CustomNavItem(
+            icon: item['icon'],
+            label: item['label'],
+            isActive: isActive,
+            onPressed: () {},
             defaultColor: widget.defaultColor,
             hoverColor: widget.hoverColor,
-            currentSubItem: widget.currentSubItem ?? '',
-            onItemSelected: widget.onItemSelected,
-          )
+            animationDelay: null,
+            enableDownArrowIcon: true, // to obtain the down arrow icon
+            isSubMenuExpanded: isSubMenuExpanded,
+          ),
+          items: children,
+          defaultColor: widget.defaultColor,
+          hoverColor: widget.hoverColor,
+          currentSubItem: widget.currentSubItem ?? '',
+          onItemSelected: widget.onItemSelected,
+          onSubMenuOpenChanged: (bool isOpen) {
+            setState(() {
+              _openDropdownWebIndex = isOpen ? i : null;
+            });
+          },
+        )
         : Column( // Mobile version for the sub items
           children: [
             CustomNavItem( // Menu Title
               icon: item['icon'],
               label: item['label'],
               isActive: isActive,
-              onPressed: () => setState(() => _mobileOpen[i] = !_mobileOpen[i]),
+              onPressed: () => setState(() => _openDropdownMobile[i] = !_openDropdownMobile[i]),
               defaultColor: widget.defaultColor,
               hoverColor: widget.hoverColor,
               animationDelay: Duration(milliseconds: (i + 1) * 200), // Creates a time delay effect between each menu
               enableDownArrowIcon: true,  // to obtain the down arrow icon
+              isSubMenuExpanded: _openDropdownMobile[i],
             ),
             AnimatedCrossFade( // Sub items
               firstChild: const SizedBox.shrink(),
@@ -126,7 +135,7 @@ class NavItemsState extends State<NavItems> {
                               child: Text(
                                 e['subLabel']!,
                                 style: TextStyle(
-                                  fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                  fontSize: mobile ? GlobalSize.webSizeText : GlobalSize.webSizeText,
                                   color: widget.currentSubItem == e['subLabel'] || hovering // Highlight the current sub menu item or change color on hover
                                     ? GlobalColors.orangeColor
                                     : GlobalColors.secondColor,
@@ -147,9 +156,9 @@ class NavItemsState extends State<NavItems> {
                   }
                 }),
               ),
-              crossFadeState: _mobileOpen[i]
-                  ? CrossFadeState.showSecond
-                  : CrossFadeState.showFirst,
+              crossFadeState: _openDropdownMobile[i] // Allows open dropdown list 
+                  ? CrossFadeState.showSecond // Submenu list
+                  : CrossFadeState.showFirst, // Empty
               duration: const Duration(milliseconds: 300),
             ),
           ],
@@ -206,9 +215,10 @@ class CustomNavItem extends StatefulWidget {
   required this.defaultColor, 
   required this.hoverColor,
   this.enableHover = true, 
-  required this.animationDelay,
+  this.animationDelay,
   required this.isActive,
   this.enableDownArrowIcon = false,
+  this.isSubMenuExpanded = false,
   });
 
   final IconData icon;
@@ -217,17 +227,20 @@ class CustomNavItem extends StatefulWidget {
   final Color defaultColor;
   final Color hoverColor;
   final bool enableHover;
-  final Duration animationDelay;
+  final Duration? animationDelay;
   final bool isActive;
   final bool enableDownArrowIcon;
+  final bool isSubMenuExpanded; 
 
   @override
   CustomNavItemstate createState() => CustomNavItemstate();
 }
 
-class CustomNavItemstate extends State<CustomNavItem> with SingleTickerProviderStateMixin {
+class CustomNavItemstate extends State<CustomNavItem> with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
+  late AnimationController _rotationController;
+  late Animation<double> _rotationAnimation;
   late Color _textColor;
   late Color _backgroundColor;
 
@@ -252,19 +265,37 @@ class CustomNavItemstate extends State<CustomNavItem> with SingleTickerProviderS
       curve: Curves.easeInOut,
     ));
 
-    Future.delayed(widget.animationDelay, () {
-      if (mounted) {
-        _controller.forward(); // Run the animation
-      }
-    });
+    // Animation controller for the rotation animation
+    _rotationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 375),
+    );
+
+    // Rotation animation (1/4 turn to the right)
+    _rotationAnimation = Tween<double> (
+      begin: 0.75, // The tip of the arrow points to the right (default position)
+      end: 1.0, // The tip of the arrow points to the bottom 
+    ).animate(CurvedAnimation(
+      parent: _rotationController, 
+      curve: Curves.easeInOut,
+    ));
+
+    // Since animationDelay is optional, check first if it is not 'null'
+    if (widget.animationDelay != null) {
+      Future.delayed(widget.animationDelay!, () {
+        if (mounted) {
+          _controller.forward(); // Run the animation
+        }
+      });
+    }
   }
 
   @override
   void dispose() {
     _controller.dispose(); // Dispose of animation controller to free memory
+    _rotationController.dispose();
     super.dispose();
   }
-
 
   // when the parent's scrollListener is detected and the widget.defaultColor changes, it updates the color _textColor
   @override
@@ -277,13 +308,20 @@ class CustomNavItemstate extends State<CustomNavItem> with SingleTickerProviderS
         _textColor = widget.defaultColor; // Automatically update _textColor
       });
     }
+
+    // Manages the rotation of the icon with true or false received by HoverSubMenuComponent when the hover is over the title and/or over the dropdown menu
+    if (widget.isSubMenuExpanded && !oldWidget.isSubMenuExpanded) {
+      _rotationController.forward();
+    }
+    if (!widget.isSubMenuExpanded && oldWidget.isSubMenuExpanded) {
+      _rotationController.reverse();
+    }
   }
   
   @override
   Widget build(BuildContext context) {
     bool mobile = GlobalScreenSizes.isMobileScreen(context);
     bool isSmallScreen = GlobalScreenSizes.isSmallScreen(context);
-
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       // Work with the mobile version
@@ -336,22 +374,25 @@ class CustomNavItemstate extends State<CustomNavItem> with SingleTickerProviderS
               children: [
                 Icon(
                   widget.icon,
-                  color: widget.isActive ? GlobalColors.orangeColor : _textColor, // logic for the color change depending on the page you are on
+                  color: widget.isActive ? GlobalColors.orangeColor : widget.isSubMenuExpanded ? GlobalColors.orangeColor : _textColor, // logic for the color change depending on the page you are on
                 ),
                 const SizedBox(width: 8.0),
                 Text(
                  widget.label,
                  style: TextStyle(
-                    color: widget.isActive ? GlobalColors.orangeColor : _textColor, // logic for the color change depending on the page you are on
+                    color: widget.isActive ? GlobalColors.orangeColor : widget.isSubMenuExpanded ? GlobalColors.orangeColor : _textColor, // logic for the color change depending on the page you are on
                    fontSize: isSmallScreen ? 16.0 : 18.0,
                  ),
                 ),
                 const SizedBox(width: 8.0),
-                Icon(
-                  Icons.arrow_drop_down_sharp,
-                  color: widget.isActive ? GlobalColors.orangeColor : _textColor,
-                  size: 25.0,
-                )
+                RotationTransition(
+                  turns: _rotationAnimation,
+                  child: Icon(
+                    Icons.arrow_drop_down_sharp,
+                    color: widget.isActive ? GlobalColors.orangeColor : widget.isSubMenuExpanded ? GlobalColors.orangeColor : _textColor,
+                    size: 25.0,
+                  )
+                ),
               ],
             ) 
           ) 
@@ -375,15 +416,18 @@ class CustomNavItemstate extends State<CustomNavItem> with SingleTickerProviderS
             Text(
               widget.label,
               style: TextStyle(
-                color: widget.isActive ? GlobalColors.orangeColor : _textColor, // logic for the color change depending on the page you are on
+                color: widget.isActive ? GlobalColors.orangeColor : widget.isSubMenuExpanded ? GlobalColors.orangeColor : _textColor, // logic for the color change depending on the page you are on
                 fontSize: isSmallScreen ? 16.0 : 18.0,
               ),
             ),
             const SizedBox(width: 8.0,),
-            Icon(
-              Icons.arrow_drop_down_sharp,
-              color: widget.isActive ? GlobalColors.orangeColor : _textColor,
-              size: 25.0,
+            RotationTransition(
+              turns: _rotationAnimation,
+              child: Icon(
+                Icons.arrow_drop_down_sharp,
+                color: widget.isActive ? GlobalColors.orangeColor : widget.isSubMenuExpanded ? GlobalColors.orangeColor : _textColor,
+                size: 25.0,
+              ) 
             )
           ],
         )  
