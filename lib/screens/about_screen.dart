@@ -39,7 +39,6 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
   bool _showContactButtonSection = false;
   // bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not (only for NavItem with click)
 
-  
   void updateCurrentItem(String newItem) {
     setState(() {
       currentItem = newItem;
@@ -137,7 +136,6 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
   
   @override
   Widget build(BuildContext context) {
-
     final mobile = GlobalScreenSizes.isMobileScreen(context);
     final screenWidth = GlobalScreenSizes.screenWidth(context);
 
@@ -238,8 +236,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                         bottom: 0, // Align at the bottom
                         left: mobile ? null : screenWidth * 0.25 , // Center horizontally 
                         child: Container(
-                          height: 300.0,
-                          // width: screenWidth * 0.5, 
+                          constraints: BoxConstraints(minHeight: 300.0),
                           width: mobile ? screenWidth : screenWidth * 0.5, 
                           padding: const EdgeInsets.all(60.0), // Add padding inside the container
                           decoration: BoxDecoration(
@@ -281,31 +278,26 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                     ],
                   ),
                 ),
-                SizedBox(height: 100.0),
+                const SizedBox(height: 100.0),
                 SizedBox(
-                  height: 600,
+                  height: 600.0,
                   width: screenWidth,
-                  // color: Colors.red,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Expanded(
-                        // flex: 2,
-                        // child: Container(
-                          // color: Colors.green,
-                          child: Center(
-                            child: Container(
-                              width: 1500,
-                              height: 1000,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage('assets/images/immeuble.jpeg'),
-                                  fit: BoxFit.cover,
-                                )
-                              ),
-                            )
+                        child: Center(
+                          child: Container(
+                            width: 1500.0,
+                            height: 1000.0,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('assets/images/immeuble.jpeg'),
+                                fit: BoxFit.cover,
+                              )
+                            ),
                           )
-                        // )
+                        )
                       ),
                       Expanded(
                         child: VisibilityDetector(
@@ -322,8 +314,8 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                             duration: const Duration(milliseconds: 1500),
                             child: Center(
                               child: Container(
-                                height: 600,
-                                width: 1000,
+                                height: 600.0,
+                                width: 1000.0,
                                 padding: EdgeInsets.all(16.0),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -331,13 +323,13 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                                     Text(
                                       "NOTRE HISTOIRE !",
                                       style: TextStyle(
-                                        fontSize: 30, // Adjust font size
+                                        fontSize: 30.0, // Adjust font size
                                         fontWeight: FontWeight.bold,
                                         color: GlobalColors.thirdColor,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
-                                    const SizedBox(height: 20), // Space between
+                                    const SizedBox(height: 20.0), // Space between
                                     Text(
                                       "SIO2 Rénovations est le fruit de la fusion entre deux familles partageant plus de 30 ans d’expérience dans le bâtiment.\n\nNous mettons ce savoir-faire à votre service, que ce soit pour rénover un studio, un appartement, une maison entière ou un local commercial. Capables de prendre en charge des projets de toutes tailles, nous répondons aussi bien aux petits travaux de rénovation qu’aux défis les plus ambitieux.",
                                       style: TextStyle(
@@ -379,11 +371,9 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                       );
                     },
                     child: Container(
-                      width: 1000,
+                      width: 1000.0,
                       padding: EdgeInsets.all(16.0),
                       alignment: Alignment.center,
-                      // padding: EdgeInsets.all(200.0),
-                      // color: Colors.orange,
                       child:  Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
@@ -391,20 +381,20 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                           Text(
                             "NOS SERVICES DE RENOVATIONS",
                             style: TextStyle(
-                              fontSize: 30, // Adjust font size
+                              fontSize: 30.0, // Adjust font size
                               fontWeight: FontWeight.bold,
                               color: GlobalColors.thirdColor,
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          const SizedBox(height: 20), // Space between
+                          const SizedBox(height: 20.0), // Space between
                           Text(
                             "Que vous souhaitiez rénover votre électricité, plomberie, peinture, poser du carrelage, du parquet, ou bien plus encore, SIO2 Rénovations est là pour vous offrir des conseils personnalisés, une expertise éprouvée et un service clé en main.\n\n"
                             "Le succès de chaque projet de rénovation repose sur une organisation solide. C’est pourquoi nous vous accompagnons à chaque étape, de la planification à la livraison, à Paris et en l’Île-de-France. Notre objectif : transformer votre intérieur en un espace unique, moderne et chaleureux.\n\n"
                             "Nous mettons un point d’honneur à confier vos travaux à nos équipes sélectionnées pour leur sérieux et leur souci du détail. En restant agiles face aux imprévus de chantier, nous assurons un service au juste prix et dans le respect des délais.\n\n"
                             "Enfin, nous proposons à nos clients un compte rendu d’activité régulier pour avertir en temps réel des avancées de l’ensemble des travaux de rénovation réalisés ou en cours de réalisation.",
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 16.0,
                               color: Colors.black87,
                             ),
                             textAlign: TextAlign.center,
@@ -416,7 +406,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                 ),
                 const SizedBox(height: 160.0),
                 Container(
-                  height: 600,
+                  height: 600.0,
                   width: screenWidth,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
@@ -427,7 +417,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                 ),
                 const SizedBox(height: 160.0),
                 Container(
-                  width: 1200,
+                  width: 1200.0,
                   alignment: Alignment.center,
                   padding: EdgeInsets.all(24.0),
                   // color: Colors.orange,
@@ -438,7 +428,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                       Text(
                         "POURQUOI NOUS FAIRE CONFIANCE ?",
                         style: TextStyle(
-                          fontSize: 30, // Adjust font size
+                          fontSize: 30.0, // Adjust font size
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.thirdColor,
                         ),
@@ -473,60 +463,60 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                                 Text(
                                   "Nous analysons minutieusement vos besoins pour vous proposer une offre chiffrée et détaillée. Nos clients bénéficient également de rapports réguliers et d’une mise à jour en temps réel sur l’avancée des travaux.",
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 16.0,
                                     color: Colors.black87,
                                   ),
                                   textAlign: TextAlign.justify,
                                 ),
-                                const SizedBox(height: 50), // Space between
+                                const SizedBox(height: 50.0), // Space between
                                 Text(
                                   "Communication",
                                   style: TextStyle(
-                                    fontSize: 24, // Adjust font size
+                                    fontSize: 24.0, // Adjust font size
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
-                                const SizedBox(height: 20), // Space between
+                                const SizedBox(height: 20.0), // Space between
                                 Text(
                                   "À chaque étape de votre projet, du conseil à la réalisation, nous sommes à vos côtés. Vous êtes en contact direct avec un interlocuteur unique, toujours disponible et attentif à vos demandes.",
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 16.0,
                                     color: Colors.black87,
                                   ),
                                   textAlign: TextAlign.justify,
                                 ),
-                                const SizedBox(height: 50), // Space between
+                                const SizedBox(height: 50.0), // Space between
                                 Text(
                                   "Qualité",
                                   style: TextStyle(
-                                    fontSize: 24, // Adjust font size
+                                    fontSize: 24.0, // Adjust font size
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
-                                const SizedBox(height: 20), // Space between
+                                const SizedBox(height: 20.0), // Space between
                                 Text(
                                   "Notre entreprise est reconnue pour son travail méticuleux, son professionnalisme et sa ponctualité Notre objectif est de fournir le plus haut niveau d’exigence et de savoir-faire à chaque projet, quelle qu’en soit sa taille.",
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 16.0,
                                     color: Colors.black87,
                                   ),
                                   textAlign: TextAlign.justify,
                                 ),
-                                const SizedBox(height: 50), // Space between
+                                const SizedBox(height: 50.0), // Space between
                                 Text(
                                   "Satisfaction",
                                   style: TextStyle(
-                                    fontSize: 24, // Adjust font size
+                                    fontSize: 24.0, // Adjust font size
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
-                                const SizedBox(height: 20), // Space between
+                                const SizedBox(height: 20.0), // Space between
                                 Text(
                                   "Nous accordons beaucoup d’importance à la satisfaction de nos clients dans le but d’entretenir une relation de confiance sur le long terme. En tant que petite entreprise, nous valorisons aussi les recommandations de nos clients. Nous ne voulons pas seulement vous satisfaire : nous voulons que vous partagiez votre expérience positive avec vos proches.",
                                   style: TextStyle(
@@ -538,8 +528,8 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                               ],
                             )    
                           : SizedBox(
-                            height: 900,
-                            width: 900,
+                            height: 900.0,
+                            width: 900.0,
                             child: RiveAnimation.asset(GlobalAnimations.engagementAnimation),
                           )
                         ) 
@@ -548,97 +538,93 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                   ),
                 ),
                 const SizedBox(height: 100.0),
-                SizedBox(
-                  height: 600,
+                Container(
                   width: screenWidth,
-                  child: Row(
+                  constraints: BoxConstraints(minHeight: 600.0),
+                  child: IntrinsicHeight( // Forces the Row to adopt the height of its tallest child (the text) → and therefore your Expanded of the image will have a true vertical constraint
+                    child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            VisibilityDetector(
-                              key: const Key('section_contact'), 
-                              onVisibilityChanged: (info) {
-                                if (info.visibleFraction > 0.3) {
-                                  _contactAnimationController.forward();
-                                }
-                              },
-                              child: AnimatedBuilder(
-                                animation: _contactAnimationController,
-                                builder: (context, child) {
-                                  return FadeTransition(
-                                    opacity: _contactFadeAnimation,
-                                    child: SlideTransition(
-                                      position: _contactSlideController,
-                                      child: child,
-                                    ),
-                                  );
+                      children: [
+                        Expanded(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              VisibilityDetector(
+                                key: const Key('section_contact'), 
+                                onVisibilityChanged: (info) {
+                                  if (info.visibleFraction > 0.3) {
+                                    _contactAnimationController.forward();
+                                  }
                                 },
-                                child: Center(
-                                  child: Container(
-                                    width: 1000,
-                                    padding: EdgeInsets.all(16.0),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(
-                                          "TRANFORMONS VOS IDÉES EN RÉALITÉ",
-                                          style: TextStyle(
-                                            fontSize: 30, // Adjust font size
-                                            fontWeight: FontWeight.bold,
-                                            color: GlobalColors.thirdColor,
+                                child: AnimatedBuilder(
+                                  animation: _contactAnimationController,
+                                  builder: (context, child) {
+                                    return FadeTransition(
+                                      opacity: _contactFadeAnimation,
+                                      child: SlideTransition(
+                                        position: _contactSlideController,
+                                        child: child,
+                                      ),
+                                    );
+                                  },
+                                  child: Center(
+                                    child: Container(
+                                      padding: EdgeInsets.all(16.0),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            "TRANFORMONS VOS IDÉES EN RÉALITÉ",
+                                            style: TextStyle(
+                                              fontSize: 30.0, // Adjust font size
+                                              fontWeight: FontWeight.bold,
+                                              color: GlobalColors.thirdColor,
+                                            ),
+                                            textAlign: TextAlign.center,
                                           ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        const SizedBox(height: 20), // Space between
-                                        Text(
-                                          "Vous avez un projet en tête ? Chez SIO2 Rénovations, nous sommes là pour vous accompagner à chaque étape, de l'idée initiale à la réalisation finale.Que ce soit pour rénover un appartement, moderniser une maison, ou redonner vie à un local commercial, notre expertise est à votre disposition.\n"
-                                          "Contactez-nous dès aujourd’hui pour discuter de vos projets de rénovation et découvrir comment nous pouvons concrétiser vos idées. Situés à Paris et actifs dans toute l'Île-de-France, Nous nous engageons à comprendre vos besoins afin de concevoir un espace unique et personnalisé.\n\nEnsemble, donnons vie à vos envies et faisons de votre intérieur un lieu où il fait bon vivre.",
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.black87,
+                                          const SizedBox(height: 20.0), // Space between
+                                          Text(
+                                            "Vous avez un projet en tête ? Chez SIO2 Rénovations, nous sommes là pour vous accompagner à chaque étape, de l'idée initiale à la réalisation finale.Que ce soit pour rénover un appartement, moderniser une maison, ou redonner vie à un local commercial, notre expertise est à votre disposition.\n"
+                                            "Contactez-nous dès aujourd’hui pour discuter de vos projets de rénovation et découvrir comment nous pouvons concrétiser vos idées. Situés à Paris et actifs dans toute l'Île-de-France, Nous nous engageons à comprendre vos besoins afin de concevoir un espace unique et personnalisé.\n\nEnsemble, donnons vie à vos envies et faisons de votre intérieur un lieu où il fait bon vivre.",
+                                            style: TextStyle(
+                                              fontSize: 16.0,
+                                              color: Colors.black87,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 18,
                                           ),
-                                          textAlign: TextAlign.center,
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 18,
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ) 
-                              )
-                            ),
-                            const SizedBox(height: 10), // Space between
-                            VisibilityDetector(
-                              key: const Key('section_contactButton'), 
-                              onVisibilityChanged: (info) {
-                                if (info.visibleFraction > 0.3 && !_showContactButtonSection) {
-                                  setState(() {
-                                    _showContactButtonSection = true;
-                                  });
-                                }
-                              },
-                              child: SizedBox(
-                                height: 100, // Fixed size to allow visibility detection
-                                width: 150,  // Corresponds to the size of the MyButtonRive
-                                child: _showContactButtonSection ? MyRiveButton(
-                                  onPressed: () => Navigator.pushNamed(context, ('/contact')), 
-                                  buttonPath: GlobalButtonsAndIcons.contactButtonWithReverse, 
-                                ) 
-                                : Container(color: Colors.transparent), // Empty widget visible
+                                  ) 
+                                )
                               ),
-                            )                          
-                          ],
-                        )
-                      ),
-                      Expanded(
-                        child: Center(
+                              VisibilityDetector(
+                                key: const Key('section_contactButton'), 
+                                onVisibilityChanged: (info) {
+                                  if (info.visibleFraction > 0.3 && !_showContactButtonSection) {
+                                    setState(() {
+                                      _showContactButtonSection = true;
+                                    });
+                                  }
+                                },
+                                child: SizedBox(
+                                  height: 100.0, // Fixed size to allow visibility detection
+                                  width: 150.0,  // Corresponds to the size of the MyButtonRive
+                                  child: _showContactButtonSection ? MyRiveButton(
+                                    onPressed: () => Navigator.pushNamed(context, ('/contact')), 
+                                    buttonPath: GlobalButtonsAndIcons.contactButtonWithReverse, 
+                                  ) 
+                                  : Container(color: Colors.transparent), // Empty widget visible
+                                ),
+                              )                          
+                            ],
+                          )
+                        ),
+                        Expanded(
                           child: Container(
-                            width: 1500,
-                            height: 1000,
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: AssetImage('assets/images/immeuble.jpeg'),
@@ -646,12 +632,12 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                               )
                             ),
                           )
-                        )
-                      ),
-                    ]
-                  )
+                        ),
+                      ]
+                    )
+                  ) 
                 ),
-                SizedBox(height: mobile ? 160.0 : 160.0),
+                const SizedBox(height: 160.0),
                 FooterComponent(),
               ],
             ),
