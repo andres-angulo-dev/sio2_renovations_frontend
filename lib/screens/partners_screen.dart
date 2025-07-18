@@ -247,10 +247,10 @@ class PartnersScreenState extends State<PartnersScreen> {
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
-                                  const SizedBox(height: 20), // Space between
+                                  const SizedBox(height: 20.0), // Space between
                                   // Description
                                   Text(
-                                    "Ensemble, plus forts, plus loin",
+                                    "Ensemble, plus forts, plus loin !",
                                     style: TextStyle(
                                       fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                       color: GlobalColors.secondColor
@@ -279,7 +279,7 @@ class PartnersScreenState extends State<PartnersScreen> {
                           padding: EdgeInsets.symmetric(horizontal: mobile ? 16.0 : 32.0, vertical: mobile ? 28.0 : 42.0),
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: GlobalColors.thirdColor,
+                              color: GlobalColors.fiveColor,
                             ),
                             color: GlobalColors.fourthColor,
                             borderRadius: BorderRadius.circular(16.0),
@@ -298,13 +298,14 @@ class PartnersScreenState extends State<PartnersScreen> {
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
-                                const SizedBox(height: 20), // Space between
+                                const SizedBox(height: 20.0), // Space between
                                 // Sub title
                                 RichText(
                                   textAlign: TextAlign.center,
                                   text : TextSpan(
                                     style: TextStyle(
                                       fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                      height: 1.5, // Gap between the lines
                                       color: GlobalColors.secondColor
                                     ),
                                     children: [
@@ -342,7 +343,7 @@ class PartnersScreenState extends State<PartnersScreen> {
                           )
                         ), 
                       ),
-                      SizedBox(height: 100.0),
+                      const SizedBox(height: 100.0),
                       // Contact form section
                       Container(
                         width: screenWidth,
@@ -372,7 +373,7 @@ class PartnersScreenState extends State<PartnersScreen> {
                                         ),
                                         textAlign: TextAlign.center,
                                       ),
-                                      const SizedBox(height: 20), // Space between
+                                      const SizedBox(height: 20.0), // Space between
                                       // Sub title
                                       Text(
                                         "Si vous avez un savoir-faire et une expertise qui peut enrichir nos projets, n'hésitez pas à compléter ce formulaire",
@@ -382,7 +383,7 @@ class PartnersScreenState extends State<PartnersScreen> {
                                         ),
                                         textAlign: TextAlign.center,
                                       ),
-                                      const SizedBox(height: 20), // Space between
+                                      const SizedBox(height: 20.0), // Space between
                                       // Description
                                       Text(
                                         "Nous réalisons nos projets en interne, avec une maîtrise globale du chantier, de la conception à la livraison. Nous aimons collaborer avec des professionnels passionnés qui partagent notre exigence et notre sens du détail. Architectes, cuisinistes, décorateurs, fabricants spécialisés ect... Nous serions ravis d’en discuter avec vous. Remplissez le formulaire pour rejoindre notre réseau de partenaires exigeants et engagés.",
