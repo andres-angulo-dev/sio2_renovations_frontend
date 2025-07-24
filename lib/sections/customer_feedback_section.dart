@@ -178,7 +178,6 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                   width: GlobalScreenSizes.isCustomSize(context, 1550) ? 950 : 750,
                   height: 600,
                   alignment: Alignment.center,
-                  color: Colors.red,
                   child: Stack(
                     children: [
                       Positioned( // Top square
@@ -304,7 +303,10 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                                           alignment: Alignment.center,
                                           transform: Matrix4.rotationY(3.1416), // π radians = 180° opposite direction
                                           child: IconButton(
-                                            icon: Icon(Icons.arrow_forward_ios),
+                                            icon: Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: GlobalColors.thirdColor,
+                                            ),
                                             onPressed: () {
                                               _previousFeedBack();
                                             },
@@ -316,7 +318,10 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                                         opacity: 1.0,
                                         duration: const Duration(milliseconds: 500),
                                         child: IconButton( 
-                                          icon: Icon(Icons.arrow_forward_ios),
+                                          icon: Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: GlobalColors.thirdColor,
+                                            ),
                                           onPressed: () {
                                             _nextFeedBack();
                                           },
@@ -352,7 +357,10 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                                           alignment: Alignment.center,
                                           transform: Matrix4.rotationY(3.1416), // π radians = 180° opposite direction
                                           child: IconButton(
-                                            icon: Icon(Icons.arrow_forward_ios),
+                                            icon: Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: GlobalColors.thirdColor,
+                                            ),
                                             onPressed: () {
                                               _previousFeedBack();
                                             },
@@ -394,7 +402,10 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                                         opacity: _isHovered ? 1.0 : 0.0,
                                         duration: const Duration(milliseconds: 500),
                                         child: IconButton( 
-                                          icon: Icon(Icons.arrow_forward_ios),
+                                          icon: Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: GlobalColors.thirdColor,
+                                            ),
                                           onPressed: () {
                                             _nextFeedBack();
                                           },
