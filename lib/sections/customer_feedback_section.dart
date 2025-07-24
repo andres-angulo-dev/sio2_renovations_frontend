@@ -122,6 +122,7 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
 
     return Column(
       children: [
+        //Tittle
         Text(
           "LE TEMOIGNAGE DE NOS CLIENTS",
           style: TextStyle(
@@ -135,6 +136,7 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
         Stack(
           alignment: Alignment.center,
           children: [
+            // Background image
             Container(
               height: 600.0,
               decoration: BoxDecoration(
@@ -153,26 +155,30 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
               spacing: 50.0,
               runSpacing: 20.0,
               children: [
+                // Description
                 SizedBox(
                   width: 750.0,
                   child: Align(
                     alignment: GlobalScreenSizes.isCustomSize(context, 1550) ? Alignment.center : Alignment.centerRight,
                     child: SizedBox(
-                    width: 400.0,
-                    child: Text(
-                      "La confiance de nos clients et partenaires est notre plus belle récompense. Vos recommandations témoignent de notre engagement et de la qualité de notre travail",
-                      style: TextStyle(
-                        fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                        color: Colors.black87,
+                      width: 400.0,
+                      child: Text(
+                        "La confiance de nos clients et partenaires est notre plus belle récompense. Vos recommandations témoignent de notre engagement et de la qualité de notre travail",
+                        style: TextStyle(
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          color: Colors.black87,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
+                    )
                   )
-                )
                 ),
-                SizedBox(
+                // Square that wraps the background squares and the feedbacks container
+                Container(
                   width: GlobalScreenSizes.isCustomSize(context, 1550) ? 950 : 750,
                   height: 600,
+                  alignment: Alignment.center,
+                  color: Colors.red,
                   child: Stack(
                     children: [
                       Positioned( // Top square
@@ -217,18 +223,18 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                           ),
                         )
                       ),
-                      Align( // Feedback
-                        alignment: GlobalScreenSizes.isCustomSize(context, 1550) ? Alignment.center : Alignment.centerLeft,
+                      Align( // Feedbacks container
+                        alignment: GlobalScreenSizes.isCustomSize(context, 1550.0) ? Alignment.center : Alignment.centerLeft,
                         child: Container(
                           width: 550.0,
                           height: 450.0,
-                          padding: EdgeInsets.all(20),
+                          padding: EdgeInsets.all(20.0),
                           decoration: BoxDecoration(
                             color: GlobalColors.firstColor,
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(12.0),
                             boxShadow: [BoxShadow(
                               color: Colors.black26, 
-                              blurRadius: 6
+                              blurRadius: 6.0,
                             )],
                           ),
                           child: MouseRegion(
@@ -238,133 +244,167 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                             onExit: (_) => setState(() {
                               _isHovered = false;
                             }),
-                            child: Stack(
+                            child: isMobile 
+                            ? Column( // Mobile version
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                SizedBox(
-                                  child: PageView.builder(
-                                    controller: _pageController,
-                                    itemCount: feedbacks.length,
-                                    itemBuilder: (context, index) {
-                                      return  GlobalScreenSizes.isMobileScreen(context) 
-                                      ? Column( // Mobile
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Expanded( // Feedback
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  feedbacks[index]["comment"]!,
-                                                  style: TextStyle(fontSize: GlobalSize.webSizeText, fontStyle: FontStyle.italic),
-                                                  textAlign: TextAlign.justify,
-                                                ),
-                                                SizedBox(height: 10),
-                                                Text(
-                                                  "- ${feedbacks[index]["author"]}, ${feedbacks[index]["title"]}",
-                                                  style: TextStyle(fontSize: GlobalSize.mobileSizeText, fontWeight: FontWeight.w600, color: GlobalColors.fiveColor),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ],
+                                // Logo "quotation marks"
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: SvgPicture.asset(
+                                    GlobalLogo.logoDots,
+                                    width: isMobile ? 80.0 : 100.0,
+                                    height: isMobile ? 80.0 : 100.0,
+                                  )
+                                ),
+                                // Container of feedbacks
+                                Expanded( 
+                                  child: SizedBox( 
+                                    width: 430.0,
+                                    child: PageView.builder( // Display Feedbacks
+                                      controller: _pageController,
+                                      itemCount: feedbacks.length,
+                                      itemBuilder: (context, index) {
+                                        return Column( 
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [  
+                                            // Message
+                                            Text(
+                                              feedbacks[index]["comment"]!,
+                                              style: TextStyle(fontSize: GlobalSize.webSizeText, fontStyle: FontStyle.italic),
+                                              textAlign: TextAlign.justify,
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 10,
                                             ),
-                                          ),
-                                          SizedBox(
-                                            width: 200.0,
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                // Previous arrow
-                                                AnimatedOpacity(
-                                                  opacity: 1.0,
-                                                  duration: const Duration(milliseconds: 500),
-                                                  child: IconButton(
-                                                    icon: Icon(Icons.arrow_back_ios),
-                                                    onPressed: () {
-                                                      _previousFeedBack();
-                                                    },
-                                                  )
-                                                ),
-                                                // Next arrow
-                                                AnimatedOpacity(
-                                                  opacity: 1.0,
-                                                  duration: const Duration(milliseconds: 500),
-                                                  child: IconButton( 
-                                                    icon: Icon(Icons.arrow_forward_ios),
-                                                    onPressed: () {
-                                                      _nextFeedBack();
-                                                    },
-                                                  )
-                                                ),
-                                              ],
-                                            )
-                                          )
-                                        ],
-                                      )
-                                      : Row( // Web
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          // Previous arrow
-                                          AnimatedOpacity(
-                                            opacity: _isHovered ? 1.0 : 0.0,
-                                            duration: const Duration(milliseconds: 500),
-                                            child: IconButton(
-                                              icon: Icon(Icons.arrow_back_ios),
-                                              onPressed: () {
-                                                _previousFeedBack();
-                                              },
-                                            )
-                                          ),
-                                          // Feedback
-                                          Align(
-                                            alignment: Alignment.center,
-                                            child: SizedBox(
-                                            width: 430.0,
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    feedbacks[index]["comment"]!,
-                                                    style: TextStyle(fontSize: GlobalSize.webSizeText, fontStyle: FontStyle.italic),
-                                                    textAlign: TextAlign.justify,
-                                                  ),
-                                                  SizedBox(height: 10),
-                                                  Text(
-                                                    "- ${feedbacks[index]["author"]}, ${feedbacks[index]["title"]}",
-                                                    style: TextStyle(fontSize: GlobalSize.mobileSizeText, fontWeight: FontWeight.w600, color: GlobalColors.fiveColor),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                ],
-                                              )
+                                            const SizedBox(height: 10.0),
+                                            // Signing
+                                            Text(
+                                              "- ${feedbacks[index]["author"]}, ${feedbacks[index]["title"]}",
+                                              style: TextStyle(fontSize: GlobalSize.mobileSizeText, fontWeight: FontWeight.w600, color: GlobalColors.fiveColor),
+                                              textAlign: TextAlign.center,
+                                              overflow: TextOverflow.ellipsis
                                             ),
-                                          ),
-                                          // Next arrow
-                                          AnimatedOpacity(
-                                            opacity: _isHovered ? 1.0 : 0.0,
-                                            duration: const Duration(milliseconds: 500),
-                                            child: IconButton( 
-                                              icon: Icon(Icons.arrow_forward_ios),
-                                              onPressed: () {
-                                                _nextFeedBack();
-                                              },
-                                            )
-                                          ),
-                                        ]
-                                      );
-                                    },
+                                          ],
+                                        );
+                                      }
+                                    ),
                                   ),
                                 ),
-                                Positioned(
-                                  top: 0.0,
-                                  child: Padding(
-                                    padding: EdgeInsets.all(16.0),
-                                    child: SvgPicture.asset(
-                                      GlobalLogo.logoDots,
-                                      width: GlobalScreenSizes.isMobileScreen(context) ? 80.0 : 100.0,
-                                      height: GlobalScreenSizes.isMobileScreen(context) ? 80.0 : 100.0,
-                                    )
+                                // Container of arrows
+                                SizedBox( 
+                                  width: 200.0,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      // Previous arrow
+                                      AnimatedOpacity(
+                                        opacity: 1.0,
+                                        duration: const Duration(milliseconds: 500),
+                                        child: Transform(
+                                          alignment: Alignment.center,
+                                          transform: Matrix4.rotationY(3.1416), // π radians = 180° opposite direction
+                                          child: IconButton(
+                                            icon: Icon(Icons.arrow_forward_ios),
+                                            onPressed: () {
+                                              _previousFeedBack();
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                      // Next arrow
+                                      AnimatedOpacity(
+                                        opacity: 1.0,
+                                        duration: const Duration(milliseconds: 500),
+                                        child: IconButton( 
+                                          icon: Icon(Icons.arrow_forward_ios),
+                                          onPressed: () {
+                                            _nextFeedBack();
+                                          },
+                                        )
+                                      ),
+                                    ],
                                   )
                                 ),
                               ],
                             ) 
+                            : Column( // Web version
+                              children: [
+                                // Logo "quotation marks"
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: SvgPicture.asset(
+                                    GlobalLogo.logoDots,
+                                    width: isMobile ? 80.0 : 100.0,
+                                    height: isMobile ? 80.0 : 100.0,
+                                  )
+                                ),
+                                SizedBox(
+                                  width: 430.0,
+                                  height: 250.0,
+                                  child: Row( 
+                                    mainAxisAlignment: MainAxisAlignment.center,  
+                                    children: [
+                                      // Previous arrow
+                                      AnimatedOpacity(
+                                        opacity: _isHovered ? 1.0 : 0.0,
+                                        duration: const Duration(milliseconds: 500),
+                                        child: Transform(
+                                          alignment: Alignment.center,
+                                          transform: Matrix4.rotationY(3.1416), // π radians = 180° opposite direction
+                                          child: IconButton(
+                                            icon: Icon(Icons.arrow_forward_ios),
+                                            onPressed: () {
+                                              _previousFeedBack();
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                      // Container of feedbacks
+                                      Expanded(
+                                        child:PageView.builder(
+                                          controller: _pageController,
+                                          itemCount: feedbacks.length,
+                                          itemBuilder: (context, index) {
+                                           return Column( 
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [  
+                                                // Message
+                                                Text(
+                                                  feedbacks[index]["comment"]!,
+                                                  style: TextStyle(fontSize: GlobalSize.webSizeText, fontStyle: FontStyle.italic),
+                                                  textAlign: TextAlign.justify,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  maxLines: 10,
+                                                ),
+                                                const SizedBox(height: 10.0),
+                                                // Signing
+                                                Text(
+                                                  "- ${feedbacks[index]["author"]}, ${feedbacks[index]["title"]}",
+                                                  style: TextStyle(fontSize: GlobalSize.mobileSizeText, fontWeight: FontWeight.w600, color: GlobalColors.fiveColor),
+                                                  textAlign: TextAlign.center,
+                                                  overflow: TextOverflow.ellipsis
+                                                ),
+                                              ],
+                                            );
+                                          }
+                                        ),
+                                      ),
+                                      // Next arrow
+                                      AnimatedOpacity(
+                                        opacity: _isHovered ? 1.0 : 0.0,
+                                        duration: const Duration(milliseconds: 500),
+                                        child: IconButton( 
+                                          icon: Icon(Icons.arrow_forward_ios),
+                                          onPressed: () {
+                                            _nextFeedBack();
+                                          },
+                                        )
+                                      ),
+                                    ]
+                                  ),
+                                )
+                              ],
+                            )
                           )
                         ),
                       ),
