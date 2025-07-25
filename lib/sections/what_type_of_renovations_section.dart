@@ -21,24 +21,16 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
   final CarouselSliderController _carouselController = CarouselSliderController(); // controller added to go to image on button click
   int _currentIndex = 0;
 
-  final List<Map<String, String?>> typeOfRenovationData =  [
-    {"title": "Rénovation totale", "image": GlobalImages.backgroundLanding, "routePath": null},
-    {"title": "Rénovation partielle", "image": GlobalImages.backgroundLanding, "routePath": '/contact'},
-    {"title": "Rénovation de cuisine", "image": GlobalImages.backgroundLanding, "routePath": '/contact'},
-    {"title": "Rénovation de salle de bain", "image": GlobalImages.backgroundLanding, "routePath": '/contact'},
-    {"title": "Rénovation après sinistre", "image": GlobalImages.backgroundLanding, "routePath": '/contact'},
-  ];
-
   @override 
   void initState() {
     super.initState();
-    isHoveredList = List.generate(typeOfRenovationData.length, (_) => false); // Generating each element to be displayed
+    isHoveredList = List.generate(GlobalData.typeOfRenovationData.length, (_) => false); // Generating each element to be displayed
 
     _initializeSlideAnimation();
   }
 
   void _initializeSlideAnimation() {
-    _animationController = List.generate(typeOfRenovationData.length, (index) => AnimationController(
+    _animationController = List.generate(GlobalData.typeOfRenovationData.length, (index) => AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 600),
     ));
@@ -71,7 +63,7 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
   @override 
   Widget build(BuildContext context) {
     final isMobile = GlobalScreenSizes.isMobileScreen(context);
-    double activeCarouselSlider = 1560;
+    final double activeCarouselSlider = 1560;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -81,7 +73,7 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
           child: Text(
             "QUELS TYPES DE RÉNOVATIONS RÉALISONS-NOUS ?", 
             style: TextStyle(
-              fontSize: GlobalScreenSizes.isMobileScreen(context) ? GlobalSize.mobileTitle : GlobalSize.webTitle,
+              fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
               fontWeight: FontWeight.bold,
               color: GlobalColors.thirdColor,
             ),
@@ -104,8 +96,9 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
               });
             },
           ),
-          items: typeOfRenovationData.map((item) {
-            int index = typeOfRenovationData.indexOf(item);
+          items: GlobalData.typeOfRenovationData.map((item) {
+            int index = GlobalData.typeOfRenovationData.indexOf(item);
+            final projectFiltersArguments = {'selectedService': item["title"], 'scrollToMenu': true};
 
             return MouseRegion(
               cursor: item["routePath"] == null ? SystemMouseCursors.basic : SystemMouseCursors.click,
@@ -122,10 +115,10 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
                   return GestureDetector(
                     onTap: () => {
                       if (item["routePath"] != null)
-                      Navigator.pushNamed(context, item["routePath"]!)
+                      Navigator.pushNamed(context, item["routePath"]!, arguments: projectFiltersArguments)
                     },
                     child: SizedBox(
-                      width: GlobalScreenSizes.isMobileScreen(context) ? null : 400.0, // Static container
+                      width: isMobile ? null : 400.0, // Static container
                       child: ClipRRect( // Allows you to make invisible what is larger than the parent container
                         child: Stack(
                           children: [
@@ -152,7 +145,7 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
                               },
                             ),
                             ),
-                            GlobalScreenSizes.isMobileScreen(context) // Mobile no animation on hover
+                            isMobile // Mobile no animation on hover
                             ? Container(
                               width: double.infinity,
                               height: double.infinity,
@@ -166,8 +159,10 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
                                 hoverColor: GlobalColors.orangeColor,
                                 mobileSize: 20.0,
                                 webSize: 24.0,
+                                arguments: projectFiltersArguments,
                                 mobile: isMobile,
                                 boldText: true,
+                                textAlign: true,
                               )
                               : Text( // Text only
                                 item["title"]!,
@@ -225,8 +220,9 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
         : Row( // Web
           mainAxisAlignment: MainAxisAlignment.center,
           spacing: 15.0,
-          children: List.generate(typeOfRenovationData.length, (index) { // Generating each element to be displayed
-            final item = typeOfRenovationData[index]; // Each element
+          children: List.generate(GlobalData.typeOfRenovationData.length, (index) { // Generating each element to be displayed
+            final item = GlobalData.typeOfRenovationData[index]; // Each element
+            final projectFiltersArguments = {'selectedService': item["title"], 'scrollToMenu': true};
 
             return MouseRegion(
               cursor: item["routePath"] == null ? SystemMouseCursors.basic : SystemMouseCursors.click,
@@ -241,11 +237,11 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
               child: GestureDetector(
                 onTap: () => {
                   if (item["routePath"] != null) 
-                  Navigator.pushNamed(context, item["routePath"]!)
+                  Navigator.pushNamed(context, item["routePath"]!, arguments: projectFiltersArguments)
                 },
                 child: SizedBox(
                   width: GlobalScreenSizes.isCustomSize(context, 1810) ? 300.0 : 350.0, // Static container
-                  height: GlobalScreenSizes.isMobileScreen(context) ? 500.0 : 700.0,
+                  height: isMobile ? 500.0 : 700.0,
                   child: ClipRRect( // Allows you to make invisible what is larger than the parent container
                     child: Stack(
                       children: [
@@ -289,15 +285,17 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
                                 hoverColor: GlobalColors.orangeColor,
                                 mobileSize: 20.0,
                                 webSize: 24.0,
-                                mobile: GlobalScreenSizes.isMobileScreen(context),
+                                mobile: isMobile,
+                                arguments: projectFiltersArguments,
                                 boldText: true,
+                                textAlign: true,
                               )
                               : Text( // text only
                                 item["title"]!,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: GlobalColors.firstColor,
-                                  fontSize: GlobalScreenSizes.isMobileScreen(context) ? 20.0 : 24.0,
+                                  fontSize: isMobile ? 20.0 : 24.0,
                                   fontWeight: FontWeight.bold,
                                 ),
                               )
@@ -317,7 +315,7 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
         if (GlobalScreenSizes.isCustomSize(context, activeCarouselSlider)) 
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(typeOfRenovationData.length, (index) {
+          children: List.generate(GlobalData.typeOfRenovationData.length, (index) {
             return MouseRegion(
               cursor: SystemMouseCursors.click,
                 child: GestureDetector(
@@ -365,7 +363,7 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
 //   late List<bool> isHoveredList; // Creating a list of booleans
 
 //   // List type that accepts the null argument
-//   final List<Map<String, String?>> typeOfRenovationData =  [
+//   final List<Map<String, String?>> GlobalData.typeOfRenovationData =  [
 //     {"title": "Rénovation totale", "image": GlobalImages.backgroundLanding, "routePath": null},
 //     {"title": "Rénovation partielle", "image": GlobalImages.backgroundLanding, "routePath": '/contact'},
 //     {"title": "Rénovation de cuisine", "image": GlobalImages.backgroundLanding, "routePath": '/contact'},
@@ -376,11 +374,13 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
 //   @override 
 //   void initState() {
 //     super.initState();
-//     isHoveredList = List.generate(typeOfRenovationData.length, (_) => false); // Injecting each boolean into each image
+//     isHoveredList = List.generate(GlobalData.typeOfRenovationData.length, (_) => false); // Injecting each boolean into each image
 //   }
 
 //   @override 
 //   Widget build(BuildContext context) {
+//   final isMobile = GlobalScreenSizes.isMobileScreen(context);
+
 //     return Column(
 //       crossAxisAlignment: CrossAxisAlignment.center,
 //       children: [
@@ -398,15 +398,15 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
 //           alignment: WrapAlignment.center,
 //           runSpacing: 10.0,
 //           spacing: 10.0,
-//           children: List.generate(typeOfRenovationData.length, (index) { // Generating each element to be displayed
-//             final item = typeOfRenovationData[index]; // Each element
+//           children: List.generate(GlobalData.typeOfRenovationData.length, (index) { // Generating each element to be displayed
+//             final item = GlobalData.typeOfRenovationData[index]; // Each element
 
 //             return MouseRegion(
 //               onEnter: (_) => setState(() => isHoveredList[index] = true),
 //               onExit: (_) => setState(() => isHoveredList[index] = false),
 //               child: SizedBox(
 //                 width: 400.0, // Static container
-//                 height: GlobalScreenSizes.isMobileScreen(context) ? 500.0 : 700.0,
+//                 height: isMobile ? 500.0 : 700.0,
 //                 child: ClipRRect( // Allows you to make invisible what is larger than the parent container
 //                   child: Stack(
 //                     children: [
@@ -447,7 +447,7 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
 //                           hoverColor: GlobalColors.orangeColor,
 //                           mobileSize: 20.0,
 //                           webSize: 24.0,
-//                           mobile: GlobalScreenSizes.isMobileScreen(context),
+//                           mobile: isMobile,
 //                           boldText: true,
 //                         )
 //                         : Text( // text only
@@ -455,7 +455,7 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
 //                           textAlign: TextAlign.center,
 //                           style: TextStyle(
 //                             color: GlobalColors.firstColor,
-//                             fontSize: GlobalScreenSizes.isMobileScreen(context) ? 20.0 : 24.0,
+//                             fontSize: isMobile ? 20.0 : 24.0,
 //                             fontWeight: FontWeight.bold,
 //                           ),
 //                         )

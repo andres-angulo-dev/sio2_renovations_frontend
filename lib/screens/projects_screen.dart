@@ -28,6 +28,8 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
   final ScrollController _scrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState 
   // Scroll controller for the back to top button and appBar 
   final ScrollController _pageScrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState 
+  // Allows to scroll  to the menu
+  final GlobalKey _menuKey = GlobalKey();
   String currentItem = 'Nos réalisations';
   bool _showTitleScreen = false;
   bool _showBackToTopButton = false;
@@ -84,6 +86,33 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
 
     // Handle back to top button 
     _pageScrollController.addListener(_pageScrollListener); // Adds an event listener that captures scrolling
+  
+    // Access the menu and photo sorting directly. Launches after the first render frame. Necessary because we access context-bound objects like ModalRoute and GlobalKeys
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Retrieve the arguments passed via Navigator.pushNamed from the Landing page
+      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      // The received argument
+      final String? receivedService = args?['selectedService'];
+      // Convert the received argument to lowercase
+      final String? receivedServiceLower = receivedService?.toLowerCase();
+      // Extract all valid titles from servicesDatas and convert to lowercase
+      final List<String> validServices = GlobalData.servicesData.map((item) => item['title']!.toLowerCase()).toList();
+
+      // Verification: if the transmitted service is in the list
+      if (receivedServiceLower != null && validServices.contains(receivedServiceLower)) {
+        updateSelectedService(receivedServiceLower);
+
+        // Scroll to the menu section
+        if (args?['scrollToMenu'] == true) {
+          Scrollable.ensureVisible( // Scroll to the menu using its GlobalKey
+            _menuKey.currentContext!, // Reference to the widget with this key
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+          );
+        }
+      } 
+    });
+
   }
 
   void updateCurrentItem(String newItem) {
@@ -114,12 +143,12 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
     if (selectedService == 'TOUT VOIR') {
       // Combine all the photos
       final List<String> allPhotos = [];
-      GlobalImages.photosByService.forEach((service, photos) {
+      GlobalData.photosWall.forEach((service, photos) {
         allPhotos.addAll(photos);
       });
       return allPhotos;
     }
-    return GlobalImages.photosByService[selectedService] ?? [];
+    return GlobalData.photosWall[selectedService] ?? [];
   }
 
   // Update of the service selection
@@ -152,17 +181,6 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
   @override
   Widget build(BuildContext context) {
     final mobile = GlobalScreenSizes.isMobileScreen(context);
-
-    final List<Map<String, String>> servicesData = [
-      {"title": "TOUT VOIR", "image": GlobalImages.backgroundLanding},
-      {"title": "PEINTURE", "image": GlobalImages.backgroundLanding},
-      {"title": "MENUISERIE", "image": GlobalImages.backgroundLanding},
-      {"title": "SOLS", "image": GlobalImages.backgroundLanding},
-      {"title": "PLOMBERIE", "image": GlobalImages.backgroundLanding},
-      {"title": "CHAUFFAGE", "image": GlobalImages.backgroundLanding},
-      {"title": "MAÇONNERIE", "image": GlobalImages.backgroundLanding},
-      {"title": "ÉLECTRICITÉ", "image": GlobalImages.backgroundLanding},
-    ];
 
     return Scaffold(
       appBar: MyAppBarComponent(
@@ -269,6 +287,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
                 // Menu
                 Center(
                   child: Container(
+                    key: _menuKey,
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     constraints: const BoxConstraints(maxWidth: 1776.0), // Max size of container
                     height: GlobalScreenSizes.isMobileScreen(context) ? 150.0 : 200.0, // Size of menu
@@ -292,9 +311,9 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
                           child: ListView.builder(
                             controller: _scrollController,
                             scrollDirection: Axis.horizontal,
-                            itemCount: servicesData.length,
+                            itemCount: GlobalData.servicesData.length,
                             itemBuilder: (context, index) {
-                              final service = servicesData[index];
+                              final service = GlobalData.servicesData[index];
                               // When you click on a menu item, the selected category is updated.
                               return GestureDetector(
                                 onHorizontalDragUpdate: (details) {

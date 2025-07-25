@@ -41,6 +41,84 @@ class GlobalPersonalData {
   static const String policyEndDate = 'XX/XX/XX';    
 }
 
+class GlobalData {
+  // Landing screen
+  // What Type Of Renovations Section extends
+  static   final List<Map<String, String?>> typeOfRenovationData =  [
+    {"title": "Rénovation totale", "image": GlobalImages.backgroundLanding, "routePath": '/projects'},
+    {"title": "Rénovation partielle", "image": GlobalImages.backgroundLanding, "routePath": '/projects'},
+    {"title": "Rénovation de cuisine", "image": GlobalImages.backgroundLanding, "routePath": '/projects'},
+    {"title": "Rénovation de salle de bain", "image": GlobalImages.backgroundLanding, "routePath": '/projects'},
+    {"title": "Rénovation après sinistre", "image": GlobalImages.backgroundLanding, "routePath": '/projects'},
+  ];
+
+
+  // Projects screen 
+  // Title of menu and photos
+ static final List<Map<String, String>> servicesData = [
+    {"title": "TOUT VOIR", "image": GlobalImages.backgroundLanding},
+    {"title": "PEINTURE", "image": GlobalImages.backgroundLanding},
+    {"title": "MENUISERIE", "image": GlobalImages.backgroundLanding},
+    {"title": "SOLS", "image": GlobalImages.backgroundLanding},
+    {"title": "PLOMBERIE", "image": GlobalImages.backgroundLanding},
+    {"title": "CHAUFFAGE", "image": GlobalImages.backgroundLanding},
+    {"title": "MAÇONNERIE", "image": GlobalImages.backgroundLanding},
+    {"title": "ÉLECTRICITÉ", "image": GlobalImages.backgroundLanding},
+  ];
+
+  // Photow wall
+  static final Map<String, List<String>> photosWall = _initPhotosWall();
+  
+  static Map<String, List<String>> _initPhotosWall() {  // Allows to convert to lowercase
+    final rawData = {
+      'peinture': [
+        GlobalImages.backgroundLanding,
+        GlobalImages.backgroundLanding,
+        GlobalImages.backgroundLanding,
+        GlobalImages.backgroundLanding,
+      ],
+      'menuiserie': [
+        GlobalImages.backgroundLanding,
+        GlobalImages.backgroundLanding,
+        GlobalImages.backgroundLanding,
+      ],
+      'sols': [
+        GlobalImages.backgroundLanding,
+        GlobalImages.backgroundLanding,
+        GlobalImages.backgroundLanding,      
+        GlobalImages.backgroundLanding,
+        GlobalImages.backgroundLanding,
+      ],
+      'plomberie': [
+        GlobalImages.backgroundLanding,
+        GlobalImages.backgroundLanding,
+      ],
+      'chauffage': [
+        GlobalImages.backgroundLanding,      
+        GlobalImages.backgroundLanding,
+        GlobalImages.backgroundLanding,
+      ],
+      'maçconnerie': [
+        GlobalImages.backgroundLanding,
+        GlobalImages.backgroundLanding,
+        GlobalImages.backgroundLanding,
+        GlobalImages.backgroundLanding,
+        GlobalImages.backgroundLanding,
+        GlobalImages.backgroundLanding,
+      ],
+      'électricité': [
+        GlobalImages.backgroundLanding,
+        GlobalImages.backgroundLanding,      
+        GlobalImages.backgroundLanding,
+        GlobalImages.backgroundLanding,
+      ],
+    };
+
+    return rawData.map( // The function automatically transforms them to lowercase
+      (key, value) => MapEntry(key.toLowerCase(), value)
+    );
+  }
+}
 
 class GlobalImages {
   static const String image1 = 'assets/images/image1.jpeg';
@@ -69,50 +147,6 @@ class GlobalImages {
   // CapchaComponent
   static const String imageCaptha = 'assets/images/immeuble.jpeg';
   static const String iconCaptcha = 'assets/icons/captcha.png';
-
-  static const Map<String, List<String>> photosByService = {
-    'PEINTURE': [
-      GlobalImages.backgroundLanding,
-      GlobalImages.backgroundLanding,
-      GlobalImages.backgroundLanding,
-      GlobalImages.backgroundLanding,
-    ],
-    'MENUISERIE': [
-      GlobalImages.backgroundLanding,
-      GlobalImages.backgroundLanding,
-      GlobalImages.backgroundLanding,
-    ],
-    'SOLS': [
-      GlobalImages.backgroundLanding,
-      GlobalImages.backgroundLanding,
-      GlobalImages.backgroundLanding,      
-      GlobalImages.backgroundLanding,
-      GlobalImages.backgroundLanding,
-    ],
-    'PLOMBERIE': [
-      GlobalImages.backgroundLanding,
-      GlobalImages.backgroundLanding,
-    ],
-    'CHAUFFAGE': [
-      GlobalImages.backgroundLanding,      
-      GlobalImages.backgroundLanding,
-      GlobalImages.backgroundLanding,
-    ],
-    'MAÇONNERIE': [
-      GlobalImages.backgroundLanding,
-      GlobalImages.backgroundLanding,
-      GlobalImages.backgroundLanding,
-      GlobalImages.backgroundLanding,
-      GlobalImages.backgroundLanding,
-      GlobalImages.backgroundLanding,
-    ],
-    'ÉLECTRICITÉ': [
-      GlobalImages.backgroundLanding,
-      GlobalImages.backgroundLanding,      
-      GlobalImages.backgroundLanding,
-      GlobalImages.backgroundLanding,
-    ],
-  };
 }
 
 class GlobalLogo {

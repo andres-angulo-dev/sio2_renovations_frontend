@@ -14,6 +14,7 @@ class MyHoverRouteNavigator extends StatefulWidget{
   this.mobileSize,
   this.webSize,
   this.boldText = false,
+  this.textAlign = false,
   });
 
   final String? routeName;
@@ -26,6 +27,7 @@ class MyHoverRouteNavigator extends StatefulWidget{
   final double? mobileSize;
   final double? webSize;
   final bool boldText;
+  final bool textAlign;
 
   @override   
   MyHoverRouteNavigatorState createState() => MyHoverRouteNavigatorState();
@@ -53,7 +55,8 @@ class MyHoverRouteNavigatorState extends State<MyHoverRouteNavigator>  with Sing
             fontSize: widget.mobile ? (widget.mobileSize ?? GlobalSize.mobileSizeText) : (widget.webSize ?? GlobalSize.webSizeText),
             fontWeight: widget.boldText ? FontWeight.bold : null,
             fontStyle: widget.italic ? FontStyle.italic : null,
-          )
+          ),
+          textAlign: widget.textAlign ? TextAlign.center : null,
         )
       ),
     );
