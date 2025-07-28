@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../components/my_hover_route_navigator.dart';
 import '../components/my_hover_url_navigator.dart';
 import '../components/opening_hours_component.dart';
+import '../components/my_hover_slide_link.dart';
 import '../utils/global_screen_sizes.dart';
 import '../utils/global_others.dart';
 import '../utils/global_colors.dart';
@@ -61,20 +62,24 @@ class FooterComponent extends StatelessWidget {
               const SizedBox(height: 20.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center, 
                 children: [
                   const SizedBox(width: 4.0),
                   Icon(
-                    size: 20.0,
                     Icons.email,
+                    size: 20.0,
                     color: GlobalColors.orangeColor,
                   ),
                   const SizedBox(width: 5.0),
-                  Text(
-                    "contact@sio2renovations.com",
-                    style: const TextStyle(
-                      color: GlobalColors.firstColor,
-                      fontSize: GlobalSize.footerWebText,
+                  Flexible(
+                    child: Text(
+                      "contact@sio2renovations.com",
+                      style: const TextStyle(
+                        color: GlobalColors.firstColor,
+                        fontSize: GlobalSize.footerWebText,
+                      ),
+                      softWrap: true,
+                      overflow: TextOverflow.visible,
                     ),
                   ),
                 ],
@@ -91,11 +96,15 @@ class FooterComponent extends StatelessWidget {
                     color: GlobalColors.orangeColor,
                   ),
                   const SizedBox(width: 5.0),
-                  Text(
-                    "+(33) 6 46 34 12 03",
-                    style: const TextStyle(
-                      color: GlobalColors.firstColor,
-                      fontSize: GlobalSize.footerWebText,
+                  Flexible(
+                    child: Text(
+                      "+(33) 6 46 34 12 03",
+                      style: const TextStyle(
+                        color: GlobalColors.firstColor,
+                        fontSize: GlobalSize.footerWebText,
+                      ),
+                      softWrap: true,
+                      overflow: TextOverflow.visible,
                     ),
                   ),
                 ],
@@ -112,18 +121,20 @@ class FooterComponent extends StatelessWidget {
                     color: GlobalColors.orangeColor,
                   ),
                   const SizedBox(width: 5.0),
-                  MyHoverRouteNavigator(
-                    routeName: '/contact', 
-                    text: 'Demande de devis',
-                    hoverColor: GlobalColors.orangeColor,
-                    color: GlobalColors.firstColor,
-                    webSize: GlobalSize.footerWebText,
+                  Flexible(
+                    child: MyHoverRouteNavigator(
+                      routeName: '/contact', 
+                      text: 'Demande de devis',
+                      hoverColor: GlobalColors.orangeColor,
+                      color: GlobalColors.firstColor,
+                      webSize: GlobalSize.footerWebText,
+                    ),
                   ),
                 ],
               ),
               const SizedBox(height: 30.0),
               Text(
-                "À propos",
+                "Légal",
                 style: TextStyle(
                   fontSize: GlobalSize.footerWebTitle,
                   fontWeight: FontWeight.bold,
@@ -151,12 +162,14 @@ class FooterComponent extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 5.0),
-                  MyHoverRouteNavigator(
-                    routeName: '/legalMontions', 
-                    text: "Mentions légales",
-                    color: GlobalColors.firstColor,
-                    hoverColor: GlobalColors.orangeColor,
-                    webSize: GlobalSize.footerWebText,
+                  Flexible(
+                    child: MyHoverRouteNavigator(
+                      routeName: '/legalMontions', 
+                      text: "Mentions légales",
+                      color: GlobalColors.firstColor,
+                      hoverColor: GlobalColors.orangeColor,
+                      webSize: GlobalSize.footerWebText,
+                    ),
                   ),
                 ],
               ),
@@ -175,12 +188,14 @@ class FooterComponent extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 5.0),
-                  MyHoverRouteNavigator(
-                    routeName: '/privacyPolicy', 
-                    text: "Politique de confidentialité",
-                    hoverColor: GlobalColors.orangeColor,
-                    color: GlobalColors.firstColor,
-                    webSize: GlobalSize.footerWebText,
+                  Flexible(
+                    child: MyHoverRouteNavigator(
+                      routeName: '/privacyPolicy', 
+                      text: "Politique de confidentialité",
+                      hoverColor: GlobalColors.orangeColor,
+                      color: GlobalColors.firstColor,
+                      webSize: GlobalSize.footerWebText,
+                    ),
                   ),
                 ],
               ),
@@ -254,7 +269,7 @@ class FooterComponent extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // Tittle
+                                // Title
                                 Text(
                                   "Contact",
                                   style: TextStyle(
@@ -351,7 +366,7 @@ class FooterComponent extends StatelessWidget {
                               children: [
                                 // Title
                                 Text(
-                                  "À propos",
+                                  "Légal",
                                   style: TextStyle(
                                     fontSize: GlobalSize.footerWebTitle,
                                     fontWeight: FontWeight.bold,
@@ -365,36 +380,40 @@ class FooterComponent extends StatelessWidget {
                                   width: MediaQuery.of(context).size.width * 0.5, 
                                   color: GlobalColors.firstColor
                                 ),
-                                const SizedBox(height: 20.0)          ,
+                                const SizedBox(height: 20.0),
                                 // Text
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Icon(Icons.arrow_forward_rounded, size: 20.0, color: GlobalColors.orangeColor,),
-                                    const SizedBox(width: 5.0),
-                                    MyHoverRouteNavigator(
-                                      routeName: '/legalMontions',
-                                      text: "Mentions légales",
-                                      color: GlobalColors.firstColor,
-                                      hoverColor: GlobalColors.orangeColor,
-                                      webSize: GlobalSize.footerWebText,
-                                    ),
-                                  ],
+                                MyHoverSlideLink(
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Icon(Icons.arrow_forward_rounded, size: 20.0, color: GlobalColors.orangeColor,),
+                                      const SizedBox(width: 5.0),
+                                      MyHoverRouteNavigator(
+                                        routeName: '/legalMontions',
+                                        text: "Mentions légales",
+                                        color: GlobalColors.firstColor,
+                                        hoverColor: GlobalColors.orangeColor,
+                                        webSize: GlobalSize.footerWebText,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 const SizedBox(height: 10.0),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Icon(Icons.arrow_forward_rounded, size: 20.0, color: GlobalColors.orangeColor,),
-                                    const SizedBox(width: 5.0),
-                                    MyHoverRouteNavigator(
-                                      routeName: '/privacyPolicy',
-                                      text: "Politique de confidentialité",
-                                      hoverColor: GlobalColors.orangeColor,
-                                      color: GlobalColors.firstColor,
-                                      webSize: GlobalSize.footerWebText,
-                                    ),
-                                  ],
+                                MyHoverSlideLink(
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Icon(Icons.arrow_forward_rounded, size: 20.0, color: GlobalColors.orangeColor,),
+                                      const SizedBox(width: 5.0),
+                                      MyHoverRouteNavigator(
+                                        routeName: '/privacyPolicy',
+                                        text: "Politique de confidentialité",
+                                        hoverColor: GlobalColors.orangeColor,
+                                        color: GlobalColors.firstColor,
+                                        webSize: GlobalSize.footerWebText,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
