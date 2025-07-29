@@ -129,10 +129,10 @@ class ValuesSectionState extends State<ValuesSection> with TickerProviderStateMi
                         // Dinamic icons
                         SvgPicture.asset(
                           [
-                            GlobalLogo.logoEngagement,
-                            GlobalLogo.logoCall,
-                            GlobalLogo.logoStructured,
-                            GlobalLogo.logoCustomer
+                            GlobalLogosAndIcons.engagement,
+                            GlobalLogosAndIcons.call,
+                            GlobalLogosAndIcons.structured,
+                            GlobalLogosAndIcons.customer
                           ][index],
                           width: 100,
                           height: 100,

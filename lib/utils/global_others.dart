@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+class SessionCookieController {
+  static bool delayShown = false;
+}
+
 class GlobalDates {
   // Privaty policy screen
   static const String lastUpdate = '1er août 2025'; 
@@ -149,15 +153,16 @@ class GlobalImages {
   static const String iconCaptcha = 'assets/icons/captcha.png';
 }
 
-class GlobalLogo {
-  static const String blackLogo = 'assets/black_logo.svg';
-  static const String whiteLogo = 'assets/white_logo.svg';
-  static const String logoSplash = 'assets/rive/sio2_renovations_splash.riv';
-  static const String logoEngagement = 'assets/engagement.svg';
-  static const String logoCall = 'assets/call.svg';
-  static const String logoStructured = 'assets/structured.svg';
-  static const String logoCustomer = 'assets/customer.svg';
-  static const String logoDots = 'assets/dots.svg';
+class GlobalLogosAndIcons {
+  static const String blackCompanyLogo = 'assets/black_logo.svg';
+  static const String whiteCompanyLogo = 'assets/white_logo.svg';
+  static const String splash = 'assets/rive/sio2_renovations_splash.riv';
+  static const String engagement = 'assets/engagement.svg';
+  static const String call = 'assets/call.svg';
+  static const String structured = 'assets/structured.svg';
+  static const String customer = 'assets/customer.svg';
+  static const String quotationMarks = 'assets/quotationMarks.svg';
+  static const String cookies = 'assets/cookie.svg';
 }
 
 class GlobalAnimations{

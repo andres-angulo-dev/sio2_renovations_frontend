@@ -33,7 +33,7 @@ class WelcomeSection extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "SIO2 RÉNOVATIONS",
+                      "${GlobalPersonalData.companyPrefixName} RÉNOVATIONS",
                       style: TextStyle(
                         color: GlobalColors.firstColor,
                         fontSize: 32.0,

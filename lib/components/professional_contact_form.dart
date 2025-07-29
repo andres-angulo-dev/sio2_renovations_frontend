@@ -283,7 +283,7 @@ class ProfessionalContactFormState extends State<ProfessionalContactForm> {
               ),
               children: [
                 TextSpan(
-                  text: '*Les informations que vous nous communiquez via ce formulaire font l’objet d’un traitement informatique, destiné exclusivement à SiO 2 Rénovations, dans le but de gérer vos demandes et d’assurer le suivi de notre relation. Elles sont accessibles uniquement par nos équipes internes habilitées et, si nécessaire, par nos prestataires techniques, dans le respect strict de la confidentialité.'
+                  text: '*Les informations que vous nous communiquez via ce formulaire font l’objet d’un traitement informatique, destiné exclusivement à ${GlobalPersonalData.companyName}, dans le but de gérer vos demandes et d’assurer le suivi de notre relation. Elles sont accessibles uniquement par nos équipes internes habilitées et, si nécessaire, par nos prestataires techniques, dans le respect strict de la confidentialité.'
                   'Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez à tout moment d’un droit d’accès, de rectification, de suppression ou de limitation du traitement de vos données. Vous pouvez également exercer votre droit à la portabilité, ainsi que définir des directives relatives à leur conservation post-mortem.'
                   'Vos données sont conservées pendant une durée maximale de trois ans à compter du dernier échange. Pour exercer vos droits, contactez-nous à l’adresse suivante : contact@sio2renovations.com. En cas de désaccord non résolu, vous avez également la possibilité de saisir la CNIL.'
                   'Pour en savoir plus, consultez notre '

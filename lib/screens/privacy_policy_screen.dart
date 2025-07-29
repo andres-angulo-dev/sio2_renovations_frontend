@@ -88,7 +88,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bool mobile = GlobalScreenSizes.isMobileScreen(context);
+    final bool isMobile = GlobalScreenSizes.isMobileScreen(context);
     int numberSection = 1;
 
     return Scaffold(
@@ -97,7 +97,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
         onItemSelected: updateCurrentItem,
         // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable // (only for NavItem with click) 
       ),
-      endDrawer: mobile // && !_isDesktopMenuOpen (only for NavItem with click)
+      endDrawer: isMobile // && !_isDesktopMenuOpen (only for NavItem with click)
         ? DrawerComponent(
           currentItem: currentItem,
           onItemSelected: updateCurrentItem,
@@ -120,7 +120,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "POLITIQUE DE CONFIDENTIALITÉ",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
+                          fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.orangeColor,
                         ),
@@ -131,7 +131,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "${numberSection++}. Qui Sommes-Nous ?",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
@@ -140,7 +140,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       RichText(
                         text: TextSpan(
                           style: TextStyle(
-                            fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                            fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                             color: GlobalColors.secondColor
                           ),
                           children: [
@@ -156,13 +156,13 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                             WidgetSpan(
                               alignment: PlaceholderAlignment.baseline,
                               baseline: TextBaseline.alphabetic,
-                              child: MyHoverRouteNavigator(routeName: '/legalMontions', text: 'mentions légales')
+                              child: MyHoverRouteNavigator(routeName: '/legalMontions', text: 'mentions légales', mobile: isMobile,)
                             ),
                             TextSpan(
                               text: " ",
                             ),
                             TextSpan(
-                              text: "pour plus d'informations",
+                              text: "pour plus d'informations.",
                             ),
                           ]
                         )
@@ -171,7 +171,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "Le présente page décrit les modalités de collecte, d’utilisation et de protection des données personnelles sur notre site vitrine.",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                       ),
@@ -181,7 +181,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "${numberSection++}. Collecte des données d’identité",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
@@ -190,7 +190,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "La consultation du site s'effectue librement, sans inscription préalable. Aucune donnée nominative (nom, prénom, adresse, etc.) n'est collectée lors de la simple consultation du site.",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                       ),
@@ -200,7 +200,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "${numberSection++}. Nature des données collectées et destinataires",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
@@ -213,7 +213,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                         "- Des données de suivi de conversion (Google Ads).\n"
                         "- Les avis et témoignages que vous déposez sur le site.",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                       ),   
@@ -225,7 +225,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                         "- Nos prestataires techniques pour l’envoi d’e-mails et l’analyse d’audience.\n"
                         "- Les autorités compétentes, sur réquisition légale ou judiciaire. ",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                       ),
@@ -235,7 +235,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "${numberSection++}. Formulaires de contact",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
@@ -249,7 +249,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                             "centralisées et traitées exclusivement par ${GlobalPersonalData.companyName}. Elles servent à répondre à "
                             "vos requêtes (devis, informations, suivi client…) et sont accessibles aux destinataires listés à la section 3. « Nature des données collectées et destinataires ».",
                             style: TextStyle(
-                              fontSize: mobile
+                              fontSize: isMobile
                                   ? GlobalSize.mobileSizeText
                                   : GlobalSize.webSizeText,
                               color: GlobalColors.secondColor,
@@ -259,7 +259,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                           Text(
                             "Conformément au RGPD, vous pouvez à tout moment :",
                             style: TextStyle(
-                              fontSize: mobile
+                              fontSize: isMobile
                                   ? GlobalSize.mobileSizeText
                                   : GlobalSize.webSizeText,
                               fontWeight: FontWeight.w600,
@@ -268,7 +268,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                           ),
                           const SizedBox(height: 12.0),
                           Padding(
-                            padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                            padding: EdgeInsets.only(left: isMobile ? 16.0 : 24.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -293,7 +293,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                       TextSpan(
                                         text: "consulter et corriger les informations vous concernant",
                                         style: TextStyle(
-                                          fontSize: mobile
+                                          fontSize: isMobile
                                               ? GlobalSize.mobileSizeText
                                               : GlobalSize.webSizeText,
                                           color: GlobalColors.secondColor,
@@ -324,7 +324,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                       TextSpan(
                                         text: "demander leur effacement ou en restreindre le traitement",
                                         style: TextStyle(
-                                          fontSize: mobile
+                                          fontSize: isMobile
                                               ? GlobalSize.mobileSizeText
                                               : GlobalSize.webSizeText,
                                           color: GlobalColors.secondColor,
@@ -355,7 +355,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                       TextSpan(
                                         text: "obtenir leur portabilité",
                                         style: TextStyle(
-                                          fontSize: mobile
+                                          fontSize: isMobile
                                               ? GlobalSize.mobileSizeText
                                               : GlobalSize.webSizeText,
                                           color: GlobalColors.secondColor,
@@ -386,7 +386,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                       TextSpan(
                                         text: "définir des directives sur leur conservation après votre décès",
                                         style: TextStyle(
-                                          fontSize: mobile
+                                          fontSize: isMobile
                                               ? GlobalSize.mobileSizeText
                                               : GlobalSize.webSizeText,
                                           color: GlobalColors.secondColor,
@@ -403,7 +403,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                             "Vos informations de contact sont archivées pendant une durée maximale de trois ans à compter "
                             "de votre dernier échange avec nos services.",
                             style: TextStyle(
-                              fontSize: mobile
+                              fontSize: isMobile
                                   ? GlobalSize.mobileSizeText
                                   : GlobalSize.webSizeText,
                               color: GlobalColors.secondColor,
@@ -414,7 +414,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                             "Pour exercer vos droits ou formuler une demande spécifique (y compris la modification ou la "
                             "suppression d’un témoignage), procédez ainsi :",
                             style: TextStyle(
-                              fontSize: mobile
+                              fontSize: isMobile
                                   ? GlobalSize.mobileSizeText
                                   : GlobalSize.webSizeText,
                               fontWeight: FontWeight.w600,
@@ -423,14 +423,14 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                           ),
                           const SizedBox(height: 12.0),
                           Padding(
-                            padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                            padding: EdgeInsets.only(left: isMobile ? 16.0 : 24.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   "1. Accédez au formulaire sur la page Contact",
                                   style: TextStyle(
-                                    fontSize: mobile
+                                    fontSize: isMobile
                                         ? GlobalSize.mobileSizeText
                                         : GlobalSize.webSizeText,
                                     color: GlobalColors.secondColor,
@@ -440,7 +440,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                 Text(
                                   "2. Choisissez le type de demande « Autre »",
                                   style: TextStyle(
-                                    fontSize: mobile
+                                    fontSize: isMobile
                                         ? GlobalSize.mobileSizeText
                                         : GlobalSize.webSizeText,
                                     color: GlobalColors.secondColor,
@@ -450,7 +450,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                 Text(
                                   "3. Décrivez précisément votre requête",
                                   style: TextStyle(
-                                    fontSize: mobile
+                                    fontSize: isMobile
                                         ? GlobalSize.mobileSizeText
                                         : GlobalSize.webSizeText,
                                     color: GlobalColors.secondColor,
@@ -464,7 +464,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                             "Nous accusons réception de votre demande dans les 48 heures et nous engageons à y répondre sous "
                             "un délai de 5 jours ouvrés. En cas de litige non résolu, vous pouvez saisir la CNIL.",
                             style: TextStyle(
-                              fontSize: mobile
+                              fontSize: isMobile
                                   ? GlobalSize.mobileSizeText
                                   : GlobalSize.webSizeText,
                               color: GlobalColors.secondColor,
@@ -478,7 +478,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "${numberSection++}. Avis et témoignages",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
@@ -491,7 +491,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                             "Lorsqu’un utilisateur dépose un témoignage, seul son nom (ou pseudo) et le texte du message "
                             "sont enregistrés. Après modération, cet avis reste en ligne sans limitation de durée.",
                             style: TextStyle(
-                              fontSize: mobile
+                              fontSize: isMobile
                                   ? GlobalSize.mobileSizeText
                                   : GlobalSize.webSizeText,
                               color: GlobalColors.secondColor,
@@ -503,7 +503,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                             "suppression, il suffit de repasser par le formulaire de la page \"Contact\" en choisissant le type de demande « Autre », "
                             "puis de mentionner :",
                             style: TextStyle(
-                              fontSize: mobile
+                              fontSize: isMobile
                                   ? GlobalSize.mobileSizeText
                                   : GlobalSize.webSizeText,
                               fontWeight: FontWeight.w600,
@@ -512,7 +512,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                           ),
                           const SizedBox(height: 12.0),
                           Padding(
-                            padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                            padding: EdgeInsets.only(left: isMobile ? 16.0 : 24.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -537,7 +537,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                       TextSpan(
                                         text: "la date et l’objet de votre témoignage",
                                         style: TextStyle(
-                                          fontSize: mobile
+                                          fontSize: isMobile
                                               ? GlobalSize.mobileSizeText
                                               : GlobalSize.webSizeText,
                                           color: GlobalColors.secondColor,
@@ -568,7 +568,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                       TextSpan(
                                         text: "la modification souhaitée ou la demande de retrait",
                                         style: TextStyle(
-                                          fontSize: mobile
+                                          fontSize: isMobile
                                               ? GlobalSize.mobileSizeText
                                               : GlobalSize.webSizeText,
                                           color: GlobalColors.secondColor,
@@ -586,7 +586,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                             "de 5 jours ouvrés. Les données relatives à votre témoignage (nom/pseudo et contenu) sont "
                             "conservées, comme pour les autres formulaires, pendant trois ans à compter de leur dépôt initial.",
                             style: TextStyle(
-                              fontSize: mobile
+                              fontSize: isMobile
                                   ? GlobalSize.mobileSizeText
                                   : GlobalSize.webSizeText,
                               color: GlobalColors.secondColor,
@@ -603,7 +603,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                         // key: PrivacyPolicyScreen.cookiesKey,
                         key: _cookiesKey,
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
@@ -615,13 +615,13 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                         "indispensables pour un suivi précis des performances du site. Pour en savoir plus sur les différents types de cookies utilisés,\n" 
                         "veuillez consulter la section 6.1 « Gestion des préférences » ci-dessous.",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 20.0),
                       Padding(
-                        padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                        padding: EdgeInsets.only(left: isMobile ? 16.0 : 24.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -629,7 +629,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                             Text(
                               "6.1 Gestion des préférences",
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 fontWeight: FontWeight.bold,
                                 color: GlobalColors.secondColor,
                               ),
@@ -641,7 +641,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                 Text(
                                   "Vous pouvez définir vos préférences concernant la collecte et l’utilisation de vos données lors de l'arrivée sur notre site ou sur notre bouton \"Cookies\" en bas à gauche de l'écran. Choisissez comment nous devons collecter et traiter ces informations pour vous offrir une expérience sur-mesure tout en garantissant le respect de votre vie privée.",
                                   style: TextStyle(
-                                    fontSize: mobile
+                                    fontSize: isMobile
                                         ? GlobalSize.mobileSizeText
                                         : GlobalSize.webSizeText,
                                     color: GlobalColors.secondColor,
@@ -649,7 +649,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                 ),
                                 const SizedBox(height: 12.0),
                                 Padding(
-                                  padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                                  padding: EdgeInsets.only(left: isMobile ? 16.0 : 24.0),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
@@ -675,7 +675,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                             TextSpan(
                                               text: "Cookies nécessaires : ces cookies garantissent le bon fonctionnement du site. Ils activent des fonctions essentielles telles que la navigation, l’accès sécurisé aux zones protégées et la sauvegarde des préférences d'affichage. Sans ces cookies, le site ne pourrait pas fonctionner correctement.",
                                               style: TextStyle(
-                                                fontSize: mobile
+                                                fontSize: isMobile
                                                     ? GlobalSize.mobileSizeText
                                                     : GlobalSize.webSizeText,
                                                 color: GlobalColors.secondColor,
@@ -707,7 +707,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                             TextSpan(
                                               text: "Cookies de préférences : ces cookies permettent de mémoriser vos choix (langue, région, options d’affichage) afin d’harmoniser l’expérience utilisateur lors de vos visites ultérieures, facilitant ainsi une navigation personnalisée.",
                                               style: TextStyle(
-                                                fontSize: mobile
+                                                fontSize: isMobile
                                                     ? GlobalSize.mobileSizeText
                                                     : GlobalSize.webSizeText,
                                                 color: GlobalColors.secondColor,
@@ -739,7 +739,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                             TextSpan(
                                               text: "Cookies statistiques : ces cookies collectent anonymement des informations sur la fréquence et les modes d’utilisation du site, nous aidant à améliorer les services proposés en comprenant comment les visiteurs interagissent avec le site.",
                                               style: TextStyle(
-                                                fontSize: mobile
+                                                fontSize: isMobile
                                                     ? GlobalSize.mobileSizeText
                                                     : GlobalSize.webSizeText,
                                                 color: GlobalColors.secondColor,
@@ -771,7 +771,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                             TextSpan(
                                               text: "Cookies marketing : utilisés pour suivre votre comportement de navigation, ces cookies permettent d’afficher des publicités adaptées à vos centres d’intérêt, facilitant ainsi la diffusion d’annonces pertinentes sans collecter d’informations personnelles identifiables.",
                                               style: TextStyle(
-                                                fontSize: mobile
+                                                fontSize: isMobile
                                                     ? GlobalSize.mobileSizeText
                                                     : GlobalSize.webSizeText,
                                                 color: GlobalColors.secondColor,
@@ -791,7 +791,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                             Text(
                               "6.2. Durée de conservation des cookies",
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 fontWeight: FontWeight.bold,
                                 color: GlobalColors.secondColor,
                               ),
@@ -804,7 +804,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                   "Conformément aux lignes directrices de la CNIL (sept. 2020.0), la durée de vie des cookies doit être "
                                   "proportionnée à leur finalité. Vous trouverez ci-dessous le détail de nos durées de conservation :",
                                   style: TextStyle(
-                                    fontSize: mobile
+                                    fontSize: isMobile
                                         ? GlobalSize.mobileSizeText
                                         : GlobalSize.webSizeText,
                                     color: GlobalColors.secondColor,
@@ -851,7 +851,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                 ),
                                 const SizedBox(height: 20.0),
                                 Padding(
-                                  padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                                  padding: EdgeInsets.only(left: isMobile ? 16.0 : 24.0),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
@@ -876,7 +876,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                             text:
                                                 "À l’issue de la période indiquée, les cookies sont automatiquement supprimés ou invalidés.",
                                             style: TextStyle(
-                                              fontSize: mobile
+                                              fontSize: isMobile
                                                   ? GlobalSize.mobileSizeText
                                                   : GlobalSize.webSizeText,
                                               color: GlobalColors.secondColor,
@@ -906,7 +906,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                             text:
                                                 "Vos consentements sont renouvelés dès que la durée limite est atteinte.",
                                             style: TextStyle(
-                                              fontSize: mobile
+                                              fontSize: isMobile
                                                   ? GlobalSize.mobileSizeText
                                                   : GlobalSize.webSizeText,
                                               color: GlobalColors.secondColor,
@@ -936,7 +936,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                             text:
                                                 "Vous pouvez à tout moment modifier vos choix via notre bouton \"Cookies\" en bas à gauche de l'écran.",
                                             style: TextStyle(
-                                              fontSize: mobile
+                                              fontSize: isMobile
                                                   ? GlobalSize.mobileSizeText
                                                   : GlobalSize.webSizeText,
                                               color: GlobalColors.secondColor,
@@ -952,7 +952,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                   "En cas de question relative à ces durées ou pour exercer vos droits, consultez la section « Gestion des cookies » "
                                   "ou contactez-nous à ${GlobalPersonalData.email}.",
                                   style: TextStyle(
-                                    fontSize: mobile
+                                    fontSize: isMobile
                                         ? GlobalSize.mobileSizeText
                                         : GlobalSize.webSizeText,
                                     color: GlobalColors.secondColor,
@@ -966,7 +966,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                             Text(
                               "6.3. Statistiques et mesures d’audience – Google Analytics",
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 fontWeight: FontWeight.bold,
                                 color: GlobalColors.secondColor,
                               ),
@@ -979,7 +979,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                 "Les données anonymes collectées par Google Analytics peuvent être transférées aux États-Unis. "
                                 "Conformément à l’article 46 du RGPD, nous avons intégré les Clauses Contractuelles Types (CCT) adoptées par la Commission européenne dans les Conditions relatives au traitement des données de Google Analytics, afin de garantir un niveau de protection équivalent à celui de l’Union européenne.",
                                 style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,
                               ),
                             ),
@@ -987,7 +987,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                               text: TextSpan(
                                 style: TextStyle(
                                   color: GlobalColors.secondColor,
-                                  fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                  fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 ),
                                 children: [
                                   TextSpan(
@@ -1009,7 +1009,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                             Text(
                               "6.4. Statistiques et mesures d’audience – Google Analytics",
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 fontWeight: FontWeight.bold,
                                 color: GlobalColors.secondColor,
                               ),
@@ -1022,7 +1022,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                 "Les données générées sont susceptibles d’être transférées aux États-Unis. "
                                 "Conformément à l’article 46 du RGPD, nous avons intégré les Clauses Contractuelles Types (CCT) de la Commission européenne pour garantir un niveau de protection équivalent à celui de l’Union européenne.",
                                 style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,
                               ),
                             ),
@@ -1032,7 +1032,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                             Text(
                               "6.5. Droit de refuser les cookies",
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 fontWeight: FontWeight.bold,
                                 color: GlobalColors.secondColor,
                               ),
@@ -1042,7 +1042,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                               "Lors de l’accès au Site, votre consentement est requis pour l’installation des cookies. En cas de refus," 
                               "seuls les cookies strictement nécessaires au bon fonctionnement du Site seront générés ; certaines fonctionnalités pourraient être restreintes.",
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,
                               ),
                             ),
@@ -1055,7 +1055,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "${numberSection++}. Contenu tiers embarqué",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
@@ -1068,13 +1068,13 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                         "naviguiez directement sur les sites tiers et sont susceptibles de "
                         "déposer des cookies et de collecter des données vous concernant.",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 12.0),
                       Padding(
-                        padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                        padding: EdgeInsets.only(left: isMobile ? 16.0 : 24.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -1107,7 +1107,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "${numberSection++}. Sécurité et confidentialité ",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
@@ -1116,13 +1116,13 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "Nous assurons la protection de vos données par :",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 8.0),
                       Padding(
-                        padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                        padding: EdgeInsets.only(left: isMobile ? 16.0 : 24.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -1151,7 +1151,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "${numberSection++}. Communication des données personnelles",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
@@ -1160,7 +1160,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "Aucune donnée personnelle ne sera communiquée à des tiers, sauf obligation légale. Les données pourront être divulguées en application d'une loi, d'un règlement, ou suite à une décision d'une autorité compétente.",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                       ),
@@ -1170,7 +1170,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "${numberSection++}. Droits des utilisateurs",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
@@ -1179,7 +1179,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez des droits suivants :",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                       ),
@@ -1193,7 +1193,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                         "- Droit à la portabilité : recevoir vos données dans un format structuré et réutilisable.\n"
                         "- Droit de définir des directives post-mortem : indiquer le sort de vos données après votre décès.",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                       ),
@@ -1202,7 +1202,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                         text: TextSpan(
                           style: TextStyle(
                             color: GlobalColors.secondColor,
-                            fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                            fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           ),
                           children: [
                             TextSpan(
@@ -1224,7 +1224,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "${numberSection++}. Délégué à la protection des données (DPO)",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
@@ -1234,7 +1234,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                         "${GlobalPersonalData.dpoGender}. ${GlobalPersonalData.dpoName} veille au respect de vos droits relatifs à la protection de vos données personnelles. "
                         "Pour toute question, réclamation ou exercice de vos droits RGPD, vous pouvez le contacter :",
                         style: TextStyle(
-                          fontSize: mobile 
+                          fontSize: isMobile 
                               ? GlobalSize.mobileSizeText 
                               : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
@@ -1244,7 +1244,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         GlobalPersonalData.headOfficeAddress,
                         style: TextStyle(
-                          fontSize: mobile 
+                          fontSize: isMobile 
                               ? GlobalSize.mobileSizeText 
                               : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
@@ -1253,7 +1253,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "E-mail : ${GlobalPersonalData.dpoEmail}",
                         style: TextStyle(
-                          fontSize: mobile 
+                          fontSize: isMobile 
                               ? GlobalSize.mobileSizeText 
                               : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
@@ -1262,7 +1262,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "Tél. : ${GlobalPersonalData.dpoPhone}",
                         style: TextStyle(
-                          fontSize: mobile 
+                          fontSize: isMobile 
                               ? GlobalSize.mobileSizeText 
                               : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
@@ -1274,7 +1274,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "${numberSection++}. Modification des CGU et de la politique de confidentialité",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
@@ -1283,7 +1283,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "En cas de modification substantielle des présentes conditions, l'éditeur s'engage à en informer les utilisateurs avant la mise en ligne.",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                       ),
@@ -1293,14 +1293,14 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "${numberSection++}. Lexique",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 8.0),
                       Padding(
-                        padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                        padding: EdgeInsets.only(left: isMobile ? 16.0 : 24.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -1387,7 +1387,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       Text(
                         "Dernière mise à jour : ${GlobalDates.lastUpdate}",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                           fontStyle: FontStyle.italic
                         ),
@@ -1410,13 +1410,13 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
 
   // Helper to build table cells
   Widget _buildCell(String text, {bool isHeader = false}) {
-    bool mobile = GlobalScreenSizes.isMobileScreen(context);
+    bool isMobile = GlobalScreenSizes.isMobileScreen(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(
         text,
         style: TextStyle(
-          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
           fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
           color: GlobalColors.secondColor,
         ),
@@ -1426,7 +1426,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
 
  // Helper for the definitions
   Widget _buildDefinition(String term, String definition) {
-    bool mobile = GlobalScreenSizes.isMobileScreen(context);
+    bool isMobile = GlobalScreenSizes.isMobileScreen(context);
 
     return RichText(
       text: TextSpan(
@@ -1434,7 +1434,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
           TextSpan(
             text: "$term : ",
             style: TextStyle(
-              fontSize: mobile 
+              fontSize: isMobile 
                   ? GlobalSize.mobileSizeText 
                   : GlobalSize.webSizeText,
               color: GlobalColors.secondColor,
@@ -1443,7 +1443,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
           TextSpan(
             text: definition,
             style: TextStyle(
-              fontSize: mobile 
+              fontSize: isMobile 
                   ? GlobalSize.mobileSizeText 
                   : GlobalSize.webSizeText,
               color: GlobalColors.secondColor,
@@ -1456,7 +1456,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
 
   // Helper for the chip
   Widget _buildBullet(String text) {
-    bool mobile = GlobalScreenSizes.isMobileScreen(context);
+    bool isMobile = GlobalScreenSizes.isMobileScreen(context);
 
     return RichText(
       text: TextSpan(
@@ -1479,7 +1479,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
           TextSpan(
             text: text,
             style: TextStyle(
-              fontSize: mobile 
+              fontSize: isMobile 
                   ? GlobalSize.mobileSizeText 
                   : GlobalSize.webSizeText,
               color: GlobalColors.secondColor,

@@ -82,7 +82,7 @@ class WhyChooseUsSectionState extends State<WhyChooseUsSection> with SingleTicke
                   SizedBox(
                     width: 800.0,
                     child: Text(
-                      "Chez SIO2 Rénovations, chaque rénovation est menée avec rigueur et professionnalisme. Nous comprenons l’importance d’un projet bien encadré et nous nous engageons à offrir une expérience fluide et maîtrisée, du premier échange jusqu’à la livraison finale.",
+                      "Chez ${GlobalPersonalData.companyName}, chaque rénovation est menée avec rigueur et professionnalisme. Nous comprenons l’importance d’un projet bien encadré et nous nous engageons à offrir une expérience fluide et maîtrisée, du premier échange jusqu’à la livraison finale.",
                       style: TextStyle(fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText, color: GlobalColors.secondColor),
                       textAlign: TextAlign.center,
                     ),

@@ -82,7 +82,7 @@ class MyAppBarComponentState extends State<MyAppBarComponent> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),  
                   child: SvgPicture.asset(
-                    widget.currentItem == "Accueil" ? (color == Colors.transparent ? GlobalLogo.whiteLogo : GlobalLogo.blackLogo) : GlobalLogo.blackLogo,
+                    widget.currentItem == "Accueil" ? (color == Colors.transparent ? GlobalLogosAndIcons.whiteCompanyLogo : GlobalLogosAndIcons.blackCompanyLogo) : GlobalLogosAndIcons.blackCompanyLogo,
                     semanticsLabel: 'Circular orange logo with the text "SIO2 Rénovations" displayed to its right',
                     fit: BoxFit.contain,
                   ),
@@ -110,7 +110,7 @@ class MyAppBarComponentState extends State<MyAppBarComponent> {
                         duration: const Duration(milliseconds: 300),
                         child: SvgPicture.asset(
                           key: ValueKey(color),
-                          widget.currentItem == "Accueil" ? (color == Colors.transparent ? GlobalLogo.whiteLogo : GlobalLogo.blackLogo) : GlobalLogo.blackLogo,
+                          widget.currentItem == "Accueil" ? (color == Colors.transparent ? GlobalLogosAndIcons.whiteCompanyLogo : GlobalLogosAndIcons.blackCompanyLogo) : GlobalLogosAndIcons.blackCompanyLogo,
                           semanticsLabel: 'Circular orange logo with the text "SIO2 Rénovations" displayed to its right',
                           fit: BoxFit.contain,
                           width: 150.0,  // Logo size

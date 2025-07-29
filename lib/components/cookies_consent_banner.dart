@@ -7,16 +7,16 @@ import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
 
 class CookiesConsentBanner extends StatefulWidget {
+  final Function(bool) onConsentGiven; // Callback for global cookie consent
+  final Function(bool?) onConsentLoaded; // Callback to inform parent widget about cookie state
+  final VoidCallback toggleVisibility; // Callback to manage banner toggling
+
   const CookiesConsentBanner({
     super.key,
-    required this.onConsentGiven, // Function triggered when global consent is given.
-    required this.onConsentLoaded, // Function triggered when loading initial cookie states.
-    required this.toggleVisibility, // Function to toggle the visibility of the banner.
+    required this.onConsentGiven, // Function triggered when global consent is given
+    required this.onConsentLoaded, // Function triggered when loading initial cookie states
+    required this.toggleVisibility, // Function to toggle the visibility of the banner
   });
-
-  final Function(bool) onConsentGiven; // Callback for global cookie consent.
-  final Function(bool?) onConsentLoaded; // Callback to inform parent widget about cookie state.
-  final VoidCallback toggleVisibility; // Callback to manage banner toggling.
 
   @override
   CookiesConsentBannerState createState() => CookiesConsentBannerState();
@@ -27,13 +27,13 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
   late Animation<Offset> _slideAnimation;
   late Animation<double> _fadeAnimation;
 
-  bool _isManagingCookies = false; // Tracks whether the user is managing cookies.
-  bool _globalConsentCookies = false; // Controls the "Select All" checkbox.
-  final bool _necessaryCookies = true; // Always active; required for site functionality.
+  bool _isManagingCookies = false; // Tracks whether the user is managing cookies
+  bool _globalConsentCookies = false; // Controls the "Select All" checkbox
+  final bool _necessaryCookies = true; // Always active; required for site functionality
   bool _preferencesCookies = false; 
   bool _statisticsCookies = false; 
   bool _marketingCookies = false;
-
+ 
   @override
   void initState() {
     super.initState();
@@ -61,7 +61,16 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
       curve: Curves.easeInOut,
     ));
 
-    _animationController.forward(); // Starts the show animation
+    if (!SessionCookieController.delayShown) {
+      // Starts the show animation after X seconds
+      Future.delayed(const Duration(milliseconds: 1500), () {
+        if (mounted) _animationController.forward();
+      });
+      SessionCookieController.delayShown = true;
+    } else {
+      _animationController.forward();
+    }
+
     _loadConsentStatus(); // Loads saved user cookie preferences 
   }
 
@@ -70,7 +79,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
     final prefs = await SharedPreferences.getInstance();
     final cookiesConsent = prefs.getBool('necessaryCookies'); // Check if necessary cookies were previously accepted
 
-    // Loads the states of individual cookie preferences or defaults to `false`.
+    // Loads the states of individual cookie preferences or defaults to `false`
     setState(() {
       _preferencesCookies = prefs.getBool('preferencesCookies') ?? false;
       _statisticsCookies = prefs.getBool('statisticsCookies') ?? false;
@@ -86,7 +95,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
   // Saves the global consent status as "true" to SharedPreferences.
   Future<void> _saveConsentStatus(bool consentGiven) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('necessaryCookies', true); // Necessary cookies are always enabled.
+    await prefs.setBool('necessaryCookies', true); // Necessary cookies are always enabled
     await prefs.setBool('preferencesCookies', true);
     await prefs.setBool('statisticsCookies', true);
     await prefs.setBool('marketingCookies', true);
@@ -95,13 +104,13 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
   // Saves individual cookie preferences to SharedPreferences.
   Future<void> _saveConsentPreferences() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('necessaryCookies', true); // Necessary cookies are always enabled.
+    await prefs.setBool('necessaryCookies', true); // Necessary cookies are always enabled
     await prefs.setBool('preferencesCookies', _preferencesCookies);
     await prefs.setBool('statisticsCookies', _statisticsCookies);
     await prefs.setBool('marketingCookies', _marketingCookies);
   }
 
-  // Automatically checks or unchecks the "Select All" checkbox based on individual states.
+  // Automatically checks or unchecks the "Select All" checkbox based on individual states
   void _updateGlobalConsent() {
     setState(() {
       _globalConsentCookies = _preferencesCookies && _statisticsCookies && _marketingCookies;
@@ -115,7 +124,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
   }
 
   @override
-  // Decides between showing the consent banner or cookie management screen.
+  // Decides between showing the consent banner or cookie management screen
   Widget build(BuildContext context) {
     bool mobile = GlobalScreenSizes.isMobileScreen(context); 
     return Align(
@@ -127,15 +136,15 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
           child: FadeTransition(
             opacity: _fadeAnimation,
             child: _isManagingCookies
-            ? _buildCookiesManager() // Shows the cookie management screen.
-            : _buildConsentBanner(), // Shows the main banner.
+            ? _buildCookiesManager() // Shows the cookie management screen
+            : _buildConsentBanner(), // Shows the main banner
           ),
         ),
       )
     );
   }
 
-  // Constructs the main banner widget that displays cookie information.
+  // Constructs the main banner widget that displays cookie information
   Widget _buildConsentBanner() {
     bool mobile = GlobalScreenSizes.isMobileScreen(context); 
     return Container(
@@ -146,15 +155,15 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
         borderRadius: mobile ? null : BorderRadius.circular(10.0),
         boxShadow: [
           BoxShadow(
-            color: GlobalColors.shadowColor, // Subtle shadow for depth.
+            color: GlobalColors.shadowColor, // Subtle shadow for depth
             blurRadius: 5.0,
-            offset: const Offset(0, 2), // Position of the shadow.
+            offset: const Offset(0, 2), // Position of the shadow
           )
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start, // Aligns content to the left.
-        mainAxisSize: MainAxisSize.min, // Adjusts height dynamically based on content.
+        crossAxisAlignment: CrossAxisAlignment.start, // Aligns content to the left
+        mainAxisSize: MainAxisSize.min, // Adjusts height dynamically based on content
         children: [
           SizedBox(
             width: double.infinity,
@@ -165,8 +174,8 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
               runSpacing: 10.0,
               children: [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start, // Aligns content to the left.
-                  mainAxisSize: MainAxisSize.min, // Adjusts height dynamically based on content.
+                  crossAxisAlignment: CrossAxisAlignment.start, // Aligns content to the left
+                  mainAxisSize: MainAxisSize.min, // Adjusts height dynamically based on content
                   children: [
                      const Text(
                       "Ce site utilise",
@@ -179,7 +188,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
                   ],
                 ),    
                 SvgPicture.asset(
-                  "assets/cookie.svg",
+                  GlobalLogosAndIcons.cookies,
                   width: 40,
                   height: 40,
                   semanticsLabel: 'A cookie icon',
@@ -189,22 +198,22 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
           ),
           Divider(
             color: GlobalColors.dividerColor2,
-            thickness: 1.0, // Adds a thin divider line for separation.
+            thickness: 1.0, // Adds a thin divider line for separation
           ),
           SizedBox(height: 10.0),
           // Description and "Learn More" link
           RichText(
-            textAlign: TextAlign.justify, // Justified text for cleaner appearance.
+            textAlign: TextAlign.justify, // Justified text for cleaner appearance
             text: TextSpan(
-              text: "Sio2 Rénovations utilise des cookies pour améliorer la navigation sur son site web, pour vous proposer une expérience plus personnalisée, des publicités ciblées et pour recueillir des données afin de vous offrir un réel suivi. Pour en savoir plus sur les différents types de cookies utilisés, consultez la politique relative à la protection des données. ",
+              text: "${GlobalPersonalData.companyName} utilise des cookies pour améliorer la navigation sur son site web, pour vous proposer une expérience plus personnalisée, des publicités ciblées et pour recueillir des données afin de vous offrir un réel suivi. Pour en savoir plus sur les différents types de cookies utilisés, consultez la politique relative à la protection des données. ",
               style: const TextStyle(
                 fontSize: GlobalSize.mobileSizeText,
                 color: GlobalColors.secondColor,
-                height: 1.5, // Line spacing for readability.
+                height: 1.5, // Line spacing for readability
               ),
               children: [
                 WidgetSpan(
-                  alignment: PlaceholderAlignment.baseline, // Aligns with the main text baseline.
+                  alignment: PlaceholderAlignment.baseline, // Aligns with the main text baseline
                   baseline: TextBaseline.alphabetic,
                   child: MyHoverRouteNavigator(routeName: '/privacyPolicy', text: 'En savoir plus', arguments: GlobalKey(), webSize: GlobalSize.mobileSizeText)
                 ),
@@ -214,7 +223,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
           SizedBox(height: 10.0),
           Divider(
             color: GlobalColors.dividerColor2,
-            thickness: 1.0, // Adds a thin divider line for separation.
+            thickness: 1.0, // Adds a thin divider line for separation
           ),
           SizedBox(height: 10.0),
           // Action buttons for cookie preferences and consent
@@ -227,7 +236,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
                 ElevatedButton(
                   onPressed: () {
                     setState(() {
-                      _isManagingCookies = true; // Opens the cookie management screen.
+                      _isManagingCookies = true; // Opens the cookie management screen
                     });
                   },
                   child: const Text('Je choisis'),
@@ -255,7 +264,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
     );
   }
 
-  // Builds the cookie management screen allowing users to select individual cookie preferences.
+  // Builds the cookie management screen allowing users to select individual cookie preferences
   Widget _buildCookiesManager() {
     bool mobile = GlobalScreenSizes.isMobileScreen(context); 
     return Container(
@@ -266,7 +275,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
         borderRadius: mobile ? null : BorderRadius.circular(10.0),
         boxShadow: [
           BoxShadow(
-            color: GlobalColors.shadowColor, // Subtle shadow for depth.
+            color: GlobalColors.shadowColor, // Subtle shadow for depth
             blurRadius: 5.0,
             offset: const Offset(0, 2),
           ),
@@ -314,7 +323,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
               },
             ),
             const SizedBox(height: 10.0),
-            // Individual Cookie Preferences with individual checkboxes.
+            // Individual Cookie Preferences with individual checkboxes
             Container(
               padding: mobile ? null : EdgeInsets.all(20.0),
               decoration: BoxDecoration(
@@ -327,9 +336,9 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
                 color: GlobalColors.backgroundColor,
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center, // Aligns all items in the center.
+                crossAxisAlignment: CrossAxisAlignment.center, // Aligns all items in the center
                 children: [
-                  // Checkbox for "Necessary Cookies" (always active and uneditable).
+                  // Checkbox for "Necessary Cookies" (always active and uneditable)
                   _buildCheckbox(
                     title: "Nécessaires (Toujours activés)",
                     subtitle: 'Les cookies nécessaires contribuent à rendre un site web utilisable en activant des fonctions de base comme la navigation de page et l\'accès aux zones sécurisées du site web, enregistrer vos préférences pour les réglages de cookie. Le site web ne peut pas fonctionner correctement sans ces cookies.',
@@ -337,7 +346,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
                     enable: false,
                   ),
                   Divider(
-                    color: GlobalColors.dividerColor3, // Divider to separate sections.
+                    color: GlobalColors.dividerColor3, // Divider to separate sections
                     thickness: 1.0,
                   ),
                   _buildCheckbox(
@@ -346,8 +355,8 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
                     value: _preferencesCookies,
                     onChanged: (bool? value) {
                       setState(() {
-                        _preferencesCookies = value ?? false; // Updates preferences state.
-                        _updateGlobalConsent(); // Updates global consent.
+                        _preferencesCookies = value ?? false; // Updates preferences state
+                        _updateGlobalConsent(); // Updates global consent
                       });
                     }
                   ),
@@ -361,8 +370,8 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
                     value: _statisticsCookies,
                     onChanged: (bool? value) {
                       setState(() {
-                        _statisticsCookies = value ?? false; // Updates preferences state.
-                        _updateGlobalConsent(); // Updates global consent.
+                        _statisticsCookies = value ?? false; // Updates preferences state
+                        _updateGlobalConsent(); // Updates global consent
                       });
                     }
                   ),
@@ -376,8 +385,8 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
                     value: _marketingCookies,
                     onChanged: (bool? value) {
                       setState(() {
-                        _marketingCookies = value ?? false; // Updates preferences state.
-                        _updateGlobalConsent(); // Updates global consent.
+                        _marketingCookies = value ?? false; // Updates preferences state
+                        _updateGlobalConsent(); // Updates global consent
                       });
                     }
                   ),
@@ -387,7 +396,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
             SizedBox(height: 10.0),
             Divider(
               color: GlobalColors.dividerColor2,
-              thickness: 1.0, // Adds a thin divider line for separation.
+              thickness: 1.0, // Adds a thin divider line for separation
             ),
             SizedBox(height: 10.0),
             // Save Button
@@ -396,11 +405,11 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
               children: [
                 ElevatedButton(
                   onPressed: () async {
-                    widget.onConsentGiven(true); // Notify parent about global consent.
-                    await _saveConsentPreferences(); // Saves preferences to persistent storage.
-                    _animationController.reverse(); // Hide banner with animation.
+                    widget.onConsentGiven(true); // Notify parent about global consent
+                    await _saveConsentPreferences(); // Saves preferences to persistent storage
+                    _animationController.reverse(); // Hide banner with animation
                     setState(() {
-                      _isManagingCookies = false; // Returns to the main banner screen.
+                      _isManagingCookies = false; // Returns to the main banner screen
                     });
                   },
                   style: ElevatedButton.styleFrom(
@@ -417,7 +426,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
     );
   }
 
-  // Builds an individual checkbox item for cookie preferences.
+  // Builds an individual checkbox item for cookie preferences
   Widget _buildCheckbox({
     required String title,
     required String subtitle,
@@ -441,7 +450,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
         )
       ),
       value: value,
-      onChanged: enable ? onChanged : null, // Null if checkbox is disabled.
+      onChanged: enable ? onChanged : null, // Null if checkbox is disabled
     );
   }
 }

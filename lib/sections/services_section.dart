@@ -110,7 +110,7 @@ class ServicesSectionState extends State<ServicesSection> with SingleTickerProvi
                         Text(
                           'Vous souhaitez moderniser votre intérieur, appliquer une nouvelle peinture, '
                           'poser du carrelage ou du parquet, rénover votre plomberie, ou encore mettre aux normes votre installation électrique par exemple ?\n\n'
-                          'SIO2 Rénovations vous accompagne avec un savoir-faire éprouvé et des solutions adaptées à vos besoins.\n\n'
+                          '${GlobalPersonalData.companyName} vous accompagne avec un savoir-faire éprouvé et des solutions adaptées à vos besoins.\n\n'
                           'Nous prenons en charge votre projet de A à Z, en assurant une gestion rigoureuse à chaque étape : '
                           'de la conception aux finitions, nous garantissons une rénovation fluide et efficace. '
                           'Intervenant à Paris et en Île-de-France, nous transformons chaque espace pour qu’il reflète votre vision, '
@@ -246,7 +246,7 @@ class ServicesSectionState extends State<ServicesSection> with SingleTickerProvi
                           Text(
                             'Vous souhaitez moderniser votre intérieur, appliquer une nouvelle peinture, '
                             'poser du carrelage ou du parquet, rénover votre plomberie, ou encore mettre aux normes votre installation électrique par exemple ?\n\n'
-                            'SIO2 Rénovations vous accompagne avec un savoir-faire éprouvé et des solutions adaptées à vos besoins.\n\n'
+                            '${GlobalPersonalData.companyName} vous accompagne avec un savoir-faire éprouvé et des solutions adaptées à vos besoins.\n\n'
                             'Nous prenons en charge votre projet de A à Z, en assurant une gestion rigoureuse à chaque étape : '
                             'de la conception aux finitions, nous garantissons une rénovation fluide et efficace. '
                             'Intervenant à Paris et en Île-de-France, nous transformons chaque espace pour qu’il reflète votre vision, '

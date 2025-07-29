@@ -54,8 +54,27 @@ class WorkTogetherSectionState extends State<WorkTogetherSection> {
                 const SizedBox(height: 20), // Space between
                 // Description
                 Text(
-                  "Notre entreprise de rénovations se distingue par sa capacité à mener à bien des projets de A à Z de manière autonome tout en étant parfaitement à l’aise pour collaborer avec des partenaires tels que des architectes, décorateurs d’intérieur ou bureaux d’étude selon le client. "
+                  "Notre entreprise de rénovations se distingue par sa capacité à mener à bien des projets dans leur globalité, en toute autonomie tout en étant parfaitement à l’aise pour collaborer avec des partenaires selon le besoin et la volonté du client. "
                   "Nous savons conjuguer indépendance et travail d’équipe, en nous adaptant à chaque projet et en collaborant étroitement avec tous les acteurs impliqués pour garantir un résultat à la hauteur de vos attentes.",
+                  style: TextStyle(
+                    fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                    color: GlobalColors.secondColor
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 20), // Space between
+                // Partners
+                Text(
+                  "NOS PARTENAIRES",
+                  style: TextStyle(
+                    fontSize: mobile ? GlobalSize.footerMobileSubTitle: GlobalSize.footerWebSubTitle,
+                    color: GlobalColors.thirdColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  "Architectes, Assureurs, Décorateurs d’intérieur, Bureaux d’étude, Syndics ect...",
                   style: TextStyle(
                     fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                     color: GlobalColors.secondColor

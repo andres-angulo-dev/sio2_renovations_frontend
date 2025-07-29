@@ -299,7 +299,7 @@ class ContactScreenState extends State<ContactScreen> {
                                   const SizedBox(height: 20), // Space between
                                   // Description
                                   Text(
-                                    "Une question, un projet ? SiO2 Rénovations est à votre écoute.",
+                                    "Une question, un projet ? ${GlobalPersonalData.companyName} est à votre écoute.",
                                     style: TextStyle(
                                       fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                       color: GlobalColors.secondColor

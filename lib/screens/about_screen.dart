@@ -292,7 +292,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                             height: 1000.0,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage('assets/images/immeuble.jpeg'),
+                                image: AssetImage(GlobalImages.backgroundLanding),
                                 fit: BoxFit.cover,
                               )
                             ),
@@ -331,7 +331,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                                     ),
                                     const SizedBox(height: 20.0), // Space between
                                     Text(
-                                      "SIO2 Rénovations est le fruit de la fusion entre deux familles partageant plus de 30 ans d’expérience dans le bâtiment.\n\nNous mettons ce savoir-faire à votre service, que ce soit pour rénover un studio, un appartement, une maison entière ou un local commercial. Capables de prendre en charge des projets de toutes tailles, nous répondons aussi bien aux petits travaux de rénovation qu’aux défis les plus ambitieux.",
+                                      "${GlobalPersonalData.companyName} est le fruit de la fusion entre deux familles partageant plus de 30 ans d’expérience dans le bâtiment.\n\nNous mettons ce savoir-faire à votre service, que ce soit pour rénover un studio, un appartement, une maison entière ou un local commercial. Capables de prendre en charge des projets de toutes tailles, nous répondons aussi bien aux petits travaux de rénovation qu’aux défis les plus ambitieux.",
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.black87,
@@ -389,7 +389,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                           ),
                           const SizedBox(height: 20.0), // Space between
                           Text(
-                            "Que vous souhaitiez rénover votre électricité, plomberie, peinture, poser du carrelage, du parquet, ou bien plus encore, SIO2 Rénovations est là pour vous offrir des conseils personnalisés, une expertise éprouvée et un service clé en main.\n\n"
+                            "Que vous souhaitiez rénover votre électricité, plomberie, peinture, poser du carrelage, du parquet, ou bien plus encore, ${GlobalPersonalData.companyName} est là pour vous offrir des conseils personnalisés, une expertise éprouvée et un service clé en main.\n\n"
                             "Le succès de chaque projet de rénovation repose sur une organisation solide. C’est pourquoi nous vous accompagnons à chaque étape, de la planification à la livraison, à Paris et en l’Île-de-France. Notre objectif : transformer votre intérieur en un espace unique, moderne et chaleureux.\n\n"
                             "Nous mettons un point d’honneur à confier vos travaux à nos équipes sélectionnées pour leur sérieux et leur souci du détail. En restant agiles face aux imprévus de chantier, nous assurons un service au juste prix et dans le respect des délais.\n\n"
                             "Enfin, nous proposons à nos clients un compte rendu d’activité régulier pour avertir en temps réel des avancées de l’ensemble des travaux de rénovation réalisés ou en cours de réalisation.",
@@ -410,7 +410,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                   width: screenWidth,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/images/immeuble.jpeg'), // Replace with your image path
+                      image: AssetImage(GlobalImages.backgroundLanding), // Replace with your image path
                       fit: BoxFit.cover, // Cover the entire space
                     )
                   ),
@@ -585,7 +585,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                                           ),
                                           const SizedBox(height: 20.0), // Space between
                                           Text(
-                                            "Vous avez un projet en tête ? Chez SIO2 Rénovations, nous sommes là pour vous accompagner à chaque étape, de l'idée initiale à la réalisation finale.Que ce soit pour rénover un appartement, moderniser une maison, ou redonner vie à un local commercial, notre expertise est à votre disposition.\n"
+                                            "Vous avez un projet en tête ? Chez ${GlobalPersonalData.companyName}, nous sommes là pour vous accompagner à chaque étape, de l'idée initiale à la réalisation finale.Que ce soit pour rénover un appartement, moderniser une maison, ou redonner vie à un local commercial, notre expertise est à votre disposition.\n"
                                             "Contactez-nous dès aujourd’hui pour discuter de vos projets de rénovation et découvrir comment nous pouvons concrétiser vos idées. Situés à Paris et actifs dans toute l'Île-de-France, Nous nous engageons à comprendre vos besoins afin de concevoir un espace unique et personnalisé.\n\nEnsemble, donnons vie à vos envies et faisons de votre intérieur un lieu où il fait bon vivre.",
                                             style: TextStyle(
                                               fontSize: 16.0,
@@ -627,7 +627,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                           child: Container(
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage('assets/images/immeuble.jpeg'),
+                                image: AssetImage(GlobalImages.backgroundLanding),
                                 fit: BoxFit.cover,
                               )
                             ),

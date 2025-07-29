@@ -65,6 +65,8 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
   }
 
   void _checkReadyToTransition() {
+    if (!mounted) return;
+
     if (_animationFinished && _imagesPreloaded) {
       Navigator.of(context).pushReplacement(
         PageTransition(
@@ -97,12 +99,13 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
                 child: ImagePreloaderWidget(
                   imagePaths: imagesToPreload, 
                   onLoaded: () {
+                    if (!mounted) return;
                     setState(() {
                       _imagesPreloaded = true;
                     });
                     _checkReadyToTransition();
                   }, 
-                  child: RiveAnimation.asset(GlobalLogo.logoSplash),
+                  child: RiveAnimation.asset(GlobalLogosAndIcons.splash),
                 )
               ),
             ),
@@ -232,7 +235,7 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
 //                     });
 //                     _checkReadyToTransition();
 //                   }, 
-//                   child: RiveAnimation.asset(GlobalLogo.logoSplash),
+//                   child: RiveAnimation.asset(GlobalLogosAndIcons.splash),
 //                 )
 //               ),
 //             ),

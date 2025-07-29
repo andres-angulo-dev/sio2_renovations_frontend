@@ -319,7 +319,7 @@ class PartnersScreenState extends State<PartnersScreen> {
                                         text: "Chez "
                                       ),
                                       TextSpan(
-                                        text: '"${GlobalPersonalData.companyName}  ',
+                                        text: '${GlobalPersonalData.companyName}  ',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         )

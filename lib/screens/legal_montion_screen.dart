@@ -59,7 +59,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
   @override
   Widget build(BuildContext context) {
     // Determine if the device is mobile based on screen width.
-    final bool mobile = GlobalScreenSizes.isMobileScreen(context);
+    final bool isMobile = GlobalScreenSizes.isMobileScreen(context);
     int numberSection = 1;
 
     return Scaffold(
@@ -68,7 +68,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
         onItemSelected: updateCurrentItem,
         // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable // (only for NavItem with click)
       ), 
-      endDrawer: mobile // && !_isDesktopMenuOpen (only for NavItem with click)
+      endDrawer: isMobile // && !_isDesktopMenuOpen (only for NavItem with click)
         ? DrawerComponent( 
           currentItem: currentItem,
           onItemSelected: updateCurrentItem,
@@ -93,7 +93,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       Text(
                         "MENTIONS LÉGALES", 
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
+                          fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.orangeColor,
                         ),
@@ -104,14 +104,14 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       Text(
                         "${numberSection++}. Présentation du Site et de l'Exploitation",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 8.0), // Spacing between title and content
                       Padding(
-                        padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                        padding: EdgeInsets.only(left: isMobile ? 16.0 : 24.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [     
@@ -119,7 +119,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                             Text(
                               "1.1 Identité de l'Éditeur",
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -129,7 +129,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                               "En application de l’article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique, "
                               "les utilisateurs du site sont informés des différents intervenants impliqués dans sa conception et sa gestion :",
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,
                               ),
                             ),
@@ -143,7 +143,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                               "Site Web : ${GlobalPersonalData.website}\n"
                               "Siret : ${GlobalPersonalData.siret}",
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,
                               ),
                             ),
@@ -152,7 +152,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                             Text(
                               "1.2 Directeur de Publication",
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -163,7 +163,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                               "E-mail : ${GlobalPersonalData.email}\n"
                               "Tél. : ${GlobalPersonalData.phone}",
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,
                               ),
                             ),
@@ -172,7 +172,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                             Text(
                               "1.3 Hébergement",
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -181,7 +181,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                             Text(
                               "Le site est hébergé par : ${GlobalPersonalData.hostingProviderName} ${GlobalPersonalData.hostingProviderAddress}",
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,
                               ),
                             ),
@@ -190,7 +190,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                             Text(
                               "1.4 Conception du Site",
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -200,7 +200,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                               text: TextSpan(
                                 style: TextStyle(
                                   color: GlobalColors.secondColor,
-                                  fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                  fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 ),
                                 children: [
                                   TextSpan(
@@ -210,7 +210,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                                   WidgetSpan(
                                     alignment: PlaceholderAlignment.baseline,
                                     baseline: TextBaseline.alphabetic,
-                                    child: MyHoverUrlNavigator(url: 'https://${GlobalPersonalData.developerCompanyWebsite}/', text: GlobalPersonalData.developerCompanyWebsite)
+                                    child: MyHoverUrlNavigator(url: 'https://${GlobalPersonalData.developerCompanyWebsite}/', text: GlobalPersonalData.developerCompanyWebsite, mobile: isMobile,)
                                   ),
                                   TextSpan(text: "."),
                                 ]
@@ -225,7 +225,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       Text(
                         "${numberSection++}. Conditions Générales d'Utilisation (CGU)",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
@@ -235,7 +235,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "Le site est normalement accessible en continu aux utilisateurs. Des interruptions temporaires peuvent intervenir pour maintenance technique ou mise à jour. "
                         "L'éditeur se réserve le droit de modifier ces mentions légales à tout moment. Il est recommandé à l'utilisateur de consulter régulièrement cette page.",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                       ),
@@ -245,7 +245,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       Text(
                         "${numberSection++}. Description des Services Fournis",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
@@ -256,7 +256,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "Les informations sont fournies à titre indicatif et peuvent être modifiées sans préavis. "
                         "L'éditeur s'efforce de garantir la précision des données, sans pouvoir être tenu responsable des omissions ou erreurs.",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                       ),
@@ -266,21 +266,21 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       Text(
                         "${numberSection++}. Limitations Contractuelles et Techniques",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 8.0),
                       Padding(
-                        padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                        padding: EdgeInsets.only(left: isMobile ? 16.0 : 24.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "4.1 Données Techniques",
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -289,7 +289,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                             Text(
                               "Le site utilise la technologie JavaScript pour son fonctionnement. L'éditeur décline toute responsabilité pour tout dommage matériel lié à l'utilisation du site, notamment en cas d'utilisation d'équipements obsolètes ou non sécurisés.",
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,
                               ),
                             ),
@@ -298,7 +298,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                             Text(
                               "4.2 Responsabilité de l'Éditeur",
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -307,7 +307,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                             Text(
                               "${GlobalPersonalData.companyName} ne pourra être tenu responsable des dommages directs ou indirects, incluant la perte de marché ou d'opportunités, résultant de l'utilisation ou de l'impossibilité d'accéder au site.",
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,
                               ),
                             ),
@@ -320,14 +320,14 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       Text(
                         "${numberSection++}. Propriété intellectuelle",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.w600,
                           color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 8.0),
                       Padding(
-                        padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                        padding: EdgeInsets.only(left: isMobile ? 16.0 : 24.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -335,7 +335,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                             Text(
                               "5.1 Contenus exclusifs",
                               style: TextStyle(
-                                fontSize: mobile
+                                fontSize: isMobile
                                     ? GlobalSize.mobileSizeText
                                     : GlobalSize.webSizeText,
                                 fontWeight: FontWeight.w600,
@@ -350,7 +350,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                               "Toute reproduction, représentation ou adaptation de ces éléments, en tout ou partie, est interdite sans "
                               "accord écrit préalable de ${GlobalPersonalData.companyName}.",
                               style: TextStyle(
-                                fontSize: mobile
+                                fontSize: isMobile
                                     ? GlobalSize.mobileSizeText
                                     : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,
@@ -360,7 +360,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                             Text(
                               "5.2 Photographies sous licence et non contractuelles",
                               style: TextStyle(
-                                fontSize: mobile
+                                fontSize: isMobile
                                     ? GlobalSize.mobileSizeText
                                     : GlobalSize.webSizeText,
                                 fontWeight: FontWeight.w600,
@@ -375,7 +375,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                               "nous est matériellement impossible de numériser l’intégralité de nos chantiers. "
                               "Ces visuels offrent simplement un aperçu illustratif de la qualité de nos interventions.",
                               style: TextStyle(
-                                fontSize: mobile
+                                fontSize: isMobile
                                     ? GlobalSize.mobileSizeText
                                     : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,
@@ -390,7 +390,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       Text(
                         "${numberSection++}. Limitations de Responsabilité",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
@@ -400,7 +400,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "${GlobalPersonalData.companyName} ne pourra être tenu responsable des dommages matériels causés au matériel de l'utilisateur lors de l'accès au site. "
                         "L'éditeur décline toute responsabilité concernant d'éventuels bugs, incompatibilités ou erreurs de contenu sur le site.",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                       ),
@@ -411,7 +411,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       Text(
                         "${numberSection++}. Conditions d’intervention et garanties légales",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
@@ -421,7 +421,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "Tous les devis et contrats émis par ${GlobalPersonalData.companyName} sont soumis à nos "
                         "Conditions Générales de Vente, disponibles sur simple demande via notre formulaire en ligne (type de demande « Autre ») ou directement à ${GlobalPersonalData.email}.",
                         style: TextStyle(
-                          fontSize: mobile 
+                          fontSize: isMobile 
                               ? GlobalSize.mobileSizeText 
                               : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
@@ -431,7 +431,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       // Text(
                       //   "Assurances",
                       //   style: TextStyle(
-                      //     fontSize: mobile 
+                      //     fontSize: isMobile 
                       //         ? GlobalSize.mobileSizeText 
                       //         : GlobalSize.webSizeText,
                       //     fontWeight: FontWeight.w600,
@@ -440,7 +440,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       // ),
                       // const SizedBox(height: 8.0),
                       // Padding(
-                      //   padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                      //   padding: EdgeInsets.only(left: isMobile ? 16.0 : 24.0),
                       //   child: Column(
                       //     crossAxisAlignment: CrossAxisAlignment.start,
                       //     children: [
@@ -454,7 +454,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       Text(
                         "Garanties",
                         style: TextStyle(
-                          fontSize: mobile 
+                          fontSize: isMobile 
                               ? GlobalSize.mobileSizeText 
                               : GlobalSize.webSizeText,
                           fontWeight: FontWeight.w600,
@@ -463,7 +463,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       ),
                       const SizedBox(height: 8.0),
                       Padding(
-                        padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                        padding: EdgeInsets.only(left: isMobile ? 16.0 : 24.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -488,7 +488,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       Text(
                         "${numberSection++}. Gestion des Données Personnelles",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
@@ -499,7 +499,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         "L'utilisateur dispose d'un droit d'accès, de rectification et d'opposition concernant ses données personnelles, "
                         "qu'il peut exercer en adressant une demande écrite à l'éditeur accompagnée d'une pièce d'identité.",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                       ),
@@ -509,14 +509,14 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       Text(
                         "${numberSection++}. Liens Hypertextes et Cookies",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 8.0),
                       Padding(
-                        padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                        padding: EdgeInsets.only(left: isMobile ? 16.0 : 24.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -524,7 +524,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                             Text(
                               "9.1 Liens Hypertextes",
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -533,7 +533,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                             Text(
                               "Le site peut contenir des liens vers d'autres sites externes. ${GlobalPersonalData.companyName} n'exerce aucun contrôle sur le contenu de ces sites et décline toute responsabilité en cas de contenu illicite ou inapproprié.",                  
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,
                               ),
                             ),
@@ -542,7 +542,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                             Text(
                               "9.2 Gestion des Cookies",
                               style: TextStyle(
-                                fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -551,7 +551,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                             RichText(
                               text: TextSpan(
                                 style: TextStyle(
-                                  fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                  fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                   color: GlobalColors.secondColor,
                                 ),
                                 children: [
@@ -561,7 +561,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                                   WidgetSpan(
                                     alignment: PlaceholderAlignment.baseline,
                                     baseline: TextBaseline.alphabetic,
-                                    child: MyHoverRouteNavigator(routeName: '/privacyPolicy', text: 'politique de confidentialité')
+                                    child: MyHoverRouteNavigator(routeName: '/privacyPolicy', text: 'politique de confidentialité', mobile: isMobile,)
                                   ),
                                   TextSpan(
                                     text: '.',
@@ -578,15 +578,16 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       Text(
                         "${numberSection++}. Droit Applicable et Juridiction",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 8.0),
                       Text(
-                        'Tout litige relatif à l\'utilisation du Site sera soumis au droit français. Les tribunaux compétents de Paris auront juridiction exclusive.\nClause d’arbitrage : Tout différend sera réglé selon une procédure d\'arbitrage convenue par les parties.',                  style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                        'Tout litige relatif à l\'utilisation du Site sera soumis au droit français. Les tribunaux compétents de Paris auront juridiction exclusive.\nClause d’arbitrage : Tout différend sera réglé selon une procédure d\'arbitrage convenue par les parties.',
+                          style: TextStyle(
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                       ),
@@ -596,7 +597,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       Text(
                         "${numberSection++}. Cadre Légal",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
@@ -605,7 +606,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       Text(
                         "Ce site est régi par la loi n° 78-17 du 6 janvier 1978 relative à l’informatique, aux fichiers et aux libertés, ainsi que par la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique.",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                         ),
                       ),
@@ -615,14 +616,14 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                       Text(
                         "${numberSection++}. Lexique",
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
+                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                           fontWeight: FontWeight.bold,
                           color: GlobalColors.secondColor,
                         ),
                       ),
                       const SizedBox(height: 8.0),
                       Padding(
-                        padding: EdgeInsets.only(left: mobile ? 16.0 : 24.0),
+                        padding: EdgeInsets.only(left: isMobile ? 16.0 : 24.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -690,7 +691,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         'Toute utilisation non autorisée de ces éléments fera l’objet de poursuites judiciaires.\n\n'
                         'Ce site a été optimisé pour les tablettes, les mobiles et les smartphones et ordinateur de bureau.',
                         style: TextStyle(
-                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,
                           fontStyle: FontStyle.italic,
                         )
@@ -713,7 +714,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
 
   // Helper for the definitions
   Widget _buildDefinition(String term, String definition) {
-    bool mobile = GlobalScreenSizes.isMobileScreen(context);
+    bool isMobile = GlobalScreenSizes.isMobileScreen(context);
 
     return RichText(
       text: TextSpan(
@@ -721,7 +722,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
           TextSpan(
             text: "$term : ",
             style: TextStyle(
-              fontSize: mobile 
+              fontSize: isMobile 
                   ? GlobalSize.mobileSizeText 
                   : GlobalSize.webSizeText,
               color: GlobalColors.secondColor,
@@ -730,7 +731,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
           TextSpan(
             text: definition,
             style: TextStyle(
-              fontSize: mobile 
+              fontSize: isMobile 
                   ? GlobalSize.mobileSizeText 
                   : GlobalSize.webSizeText,
               color: GlobalColors.secondColor,
@@ -743,7 +744,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
 
   // Helper for the chip
   Widget _buildBullet(String text) {
-    bool mobile = GlobalScreenSizes.isMobileScreen(context);
+    bool isMobile = GlobalScreenSizes.isMobileScreen(context);
 
     return RichText(
       text: TextSpan(
@@ -766,7 +767,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
           TextSpan(
             text: text,
             style: TextStyle(
-              fontSize: mobile 
+              fontSize: isMobile 
                   ? GlobalSize.mobileSizeText 
                   : GlobalSize.webSizeText,
               color: GlobalColors.secondColor,

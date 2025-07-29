@@ -27,7 +27,7 @@ class FooterComponent extends StatelessWidget {
           mobile ? Column( // mobile
             children: [
               SvgPicture.asset(
-                GlobalLogo.blackLogo,
+                GlobalLogosAndIcons.blackCompanyLogo,
                 semanticsLabel: 'Circular orange logo with the text "SIO2 Rénovations" displayed to its right',
                 fit: BoxFit.contain,
                 width: 100,
@@ -221,7 +221,7 @@ class FooterComponent extends StatelessWidget {
                             child: Column(
                               children: [
                                 SvgPicture.asset(
-                                  GlobalLogo.blackLogo,
+                                  GlobalLogosAndIcons.blackCompanyLogo,
                                   semanticsLabel: 'Circular orange logo with the text "SIO2 Rénovations" displayed to its right',
                                   fit: BoxFit.cover,
                                   height: 100.0,
@@ -435,7 +435,7 @@ class FooterComponent extends StatelessWidget {
           Center(
             child: RichText(
               text: TextSpan(
-                text: "SIO2 Rénovations © 2025 | Tous droits réservés | Réalisé par",
+                text: "${GlobalPersonalData.companyName} © 2025 | Tous droits réservés | Réalisé par",
                   style: TextStyle(
                   fontSize: GlobalSize.footerWebCopyright,
                   color: GlobalColors.firstColor,

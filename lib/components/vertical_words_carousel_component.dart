@@ -102,7 +102,7 @@ class VerticalWordsCarouselComponentState extends State<VerticalWordsCarouselCom
                   Container(
                     padding: GlobalScreenSizes.isCustomSize(context, 1150) ? null : EdgeInsets.only(left: 50.0),
                     child: Text(
-                      "Chez SIO2 nous réalisons des rénovations :",
+                      "Chez ${GlobalPersonalData.companyName} nous réalisons des rénovations :",
                       style: TextStyle(
                         color: GlobalColors.firstColor,
                         fontSize: isMobile ? GlobalSize.welcomeSectionMobileSubTitle : GlobalSize.welcomeSectionWebSubTitle,

@@ -29,15 +29,12 @@ class LandingScreen extends StatefulWidget {
 }
 
 class LandingScreenState extends State<LandingScreen> with TickerProviderStateMixin {
-  // AnimationController: Manages the timing of the animations.
-  late AnimationController _animationController;
-  late AnimationController _servicesAnimationController;
   // Scroll controller for the back to top button and appBar 
   final ScrollController _scrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState with _scrollController = ScrollController();
 
   bool _mobile = false; 
-  bool _show = false;
-  bool? _cookiesAccepted; // State to track cookies consent.
+  bool _showCookiesButton = false;
+  bool? _cookiesAccepted; // State to track cookies consent
   bool _isBannerVisible = false;
   String currentItem = "Accueil"; // Holds the currently selected menu item to change text color
   bool _showBackToTopButton = false; // Show or hide Back to top button
@@ -46,68 +43,59 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
   @override
   void initState() {
     super.initState();
-    _isBannerVisible = _cookiesAccepted == null;
-
-    // Starts the animation after a 100ms delay and displays on the screen.
-    Future.delayed(const Duration(milliseconds: 100), () {
-      setState(() {
-        _show = true;
-      });
-      _animationController.forward(); // Triggers the sliding and fade-in animations.
-    });
-
-    // Initialize AnimationController with a 1.5-second duration.
-    _animationController = AnimationController(
-      vsync: this, // Links the animation to the widget lifecycle for efficiency.
-      duration: const Duration(milliseconds: 1500),
-    );
-
-    // Handle animation in services section
-   _servicesAnimationController = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 1000),
-    );
+    _isBannerVisible = _cookiesAccepted == null; // if true we consider that consent was never given = show cookies banner
 
     // Handle back to top button 
     _scrollController.addListener(_scrollListener); // Adds an event listener that captures scrolling from parent Landing Screen using scrollController
   }
 
-  // Handles user consent for cookies and manages the visibility of the cookie consent banner.
+  // Handles user consent for cookies and manages the visibility of the cookie consent banner
   void _handleCookiesConsent(bool? consent) {
     setState(() {
       _cookiesAccepted = consent;
-      if (_isBannerVisible) {
-        _animationController.reverse().then((_) {
-          setState(() {
-            _isBannerVisible = false; // Hide banner after animation
-          });
+      _isBannerVisible = false; // Hide banner after animation
+    });
+
+    Future.delayed(Duration(milliseconds: 500), () {
+      if (mounted) {
+        setState(() {
+          _showCookiesButton = true; // Allows the animation to start with each clickin the banner
         });
       }
     });
   }
 
-  // Loads previously saved cookie consent state and updates the banner visibility accordingly.
+
+  // Loads previously saved cookie consent state and updates the banner visibility accordingly
   void _handleLoadedConsent(bool? consent) {
     if (_cookiesAccepted == null) {
       setState(() {
         _cookiesAccepted = consent;
         _isBannerVisible = consent == null;
       });
+
+      if (consent == true) {
+        Future.delayed(const Duration(milliseconds: 500), () {
+        if (mounted) {
+            setState(() {
+              _showCookiesButton = true; // Allows the cookie button to be displayed upon arrival on the page if there are recorded consents
+            });
+          }
+        });
+      }
     }
   }
 
-  // Toggles the visibility of the cookie consent banner (with animations).
+  // Toggles the visibility of the cookie consent banner (with animations)
   void _toggleBannerVisibility() {
     if (_isBannerVisible) {
-      _animationController.reverse().then((_) {
         setState(() {
           _isBannerVisible = false; // Hide banner after animation
         });
-      });
     } else {
       setState(() {
         _isBannerVisible = true;
-        _animationController.forward();
+        _showCookiesButton = false; // Reset the animation to false after each click in the banner
       });
     }
   }
@@ -124,18 +112,14 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
     final shouldShow = _scrollController.position.pixels > MediaQuery.of(context).size.height - 100;
     if (shouldShow != _showBackToTopButton) {
       setState(() {
-        setState(() {
-          _showBackToTopButton = shouldShow;
-        }); 
+        _showBackToTopButton = shouldShow;
       });
     }
   }
 
-  // Disposes of the animation controller to prevent memory leaks.
+  // Disposes of the animation controller to prevent memory leaks
   @override
   void dispose() {
-    _animationController.dispose(); 
-    _servicesAnimationController.dispose();
     _scrollController.removeListener(_scrollListener);
     _scrollController.dispose();
     super.dispose();
@@ -224,7 +208,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
             ),
           ),
           // Cookie consent banner appears when banner visibility is true
-          if (_isBannerVisible)
+          if (_isBannerVisible) // If no consent
           CookiesConsentBanner(
             onConsentGiven: _handleCookiesConsent,
             onConsentLoaded: _handleLoadedConsent,
@@ -236,8 +220,8 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
             bottom: 15,
             left: 15,
             child: AnimatedOpacity(
-              opacity: _show ? 1.0 : 0.0, 
-              duration: const Duration(seconds: 2),
+              opacity: _showCookiesButton ? 1.0 : 0.0, 
+              duration: const Duration(milliseconds: 1000),
               child: MyButton(
                 onPressed: _toggleBannerVisibility,
                 buttonPath: GlobalButtonsAndIcons.cookiesButton, 

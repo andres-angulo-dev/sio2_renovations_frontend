@@ -251,7 +251,7 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: SvgPicture.asset(
-                                    GlobalLogo.logoDots,
+                                    GlobalLogosAndIcons.quotationMarks,
                                     width: isMobile ? 80.0 : 100.0,
                                     height: isMobile ? 80.0 : 100.0,
                                   )
@@ -338,7 +338,7 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: SvgPicture.asset(
-                                    GlobalLogo.logoDots,
+                                    GlobalLogosAndIcons.quotationMarks,
                                     width: isMobile ? 80.0 : 100.0,
                                     height: isMobile ? 80.0 : 100.0,
                                   )
