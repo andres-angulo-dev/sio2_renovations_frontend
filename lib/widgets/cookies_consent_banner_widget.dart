@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../components/my_hover_route_navigator.dart';
+import '../services/cookies_consent_service.dart';
 import '../utils/global_colors.dart'; 
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
 
-class CookiesConsentBanner extends StatefulWidget {
+class CookiesConsentBannerWidget extends StatefulWidget {
   final Function(bool) onConsentGiven; // Callback for global cookie consent
   final Function(bool?) onConsentLoaded; // Callback to inform parent widget about cookie state
   final VoidCallback toggleVisibility; // Callback to manage banner toggling
 
-  const CookiesConsentBanner({
+  const CookiesConsentBannerWidget({
     super.key,
     required this.onConsentGiven, // Function triggered when global consent is given
     required this.onConsentLoaded, // Function triggered when loading initial cookie states
@@ -19,10 +19,10 @@ class CookiesConsentBanner extends StatefulWidget {
   });
 
   @override
-  CookiesConsentBannerState createState() => CookiesConsentBannerState();
+  CookiesConsentBannerWidgetState createState() => CookiesConsentBannerWidgetState();
 }
 
-class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleTickerProviderStateMixin {
+class CookiesConsentBannerWidgetState extends State<CookiesConsentBannerWidget> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
   late Animation<double> _fadeAnimation;
@@ -40,7 +40,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
 
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 700),
     );
 
     // Creates the slide animation to move the banner into view from the left
@@ -74,40 +74,36 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
     _loadConsentStatus(); // Loads saved user cookie preferences 
   }
 
-  // Loads saved cookie preferences from SharedPreferences and updates the state  
+  // Loads saved cookie preferences from SharedPreferences and updates the state
   Future<void> _loadConsentStatus() async {
-    final prefs = await SharedPreferences.getInstance();
-    final cookiesConsent = prefs.getBool('necessaryCookies'); // Check if necessary cookies were previously accepted
+    final preferences = await CookiesConsentService.loadPreferences();
+    final necessaryConsent  = preferences[CookiesConsentService.necessaryKey]; // Check if necessary cookies == null ou were previously accepted
 
     // Loads the states of individual cookie preferences or defaults to `false`
-    setState(() {
-      _preferencesCookies = prefs.getBool('preferencesCookies') ?? false;
-      _statisticsCookies = prefs.getBool('statisticsCookies') ?? false;
-      _marketingCookies = prefs.getBool('marketingCookies') ?? false;
-
-      // Updates "Select All" status based on individual preferences
-      _updateGlobalConsent();
-    });
-
-    widget.onConsentLoaded(cookiesConsent); // Notify parent about loaded consent state
+    _preferencesCookies = preferences[CookiesConsentService.preferencesKey] ?? false;
+    _statisticsCookies = preferences[CookiesConsentService.statisticsKey] ?? false;
+    _marketingCookies = preferences[CookiesConsentService.marketingKey] ?? false;
+    
+    // Updates "Select All" status based on individual preferences
+    _updateGlobalConsent(); 
+    widget.onConsentLoaded(necessaryConsent); // If null, it triggers the display of the banner upon arrival on the site
   }
 
-  // Saves the global consent status as "true" to SharedPreferences.
+  // Saves the global consent status as "true" to SharedPreferences
   Future<void> _saveConsentStatus(bool consentGiven) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('necessaryCookies', true); // Necessary cookies are always enabled
-    await prefs.setBool('preferencesCookies', true);
-    await prefs.setBool('statisticsCookies', true);
-    await prefs.setBool('marketingCookies', true);
+    await CookiesConsentService.saveGlobalConsent();
   }
 
-  // Saves individual cookie preferences to SharedPreferences.
+  // Saves individual cookie preferences to SharedPreferences
   Future<void> _saveConsentPreferences() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('necessaryCookies', true); // Necessary cookies are always enabled
-    await prefs.setBool('preferencesCookies', _preferencesCookies);
-    await prefs.setBool('statisticsCookies', _statisticsCookies);
-    await prefs.setBool('marketingCookies', _marketingCookies);
+    final prefMap = {
+      CookiesConsentService.necessaryKey: true, // Necessary cookies are always enabled
+      CookiesConsentService.preferencesKey: _preferencesCookies,
+      CookiesConsentService.statisticsKey: _statisticsCookies,
+      CookiesConsentService.marketingKey: _marketingCookies,
+    };
+
+    await CookiesConsentService.savePreferences(prefMap);
   }
 
   // Automatically checks or unchecks the "Select All" checkbox based on individual states
@@ -126,18 +122,22 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
   @override
   // Decides between showing the consent banner or cookie management screen
   Widget build(BuildContext context) {
-    bool mobile = GlobalScreenSizes.isMobileScreen(context); 
+    bool isMobile = GlobalScreenSizes.isMobileScreen(context); 
+
     return Align(
       alignment: Alignment.bottomLeft,
       child: Padding(
-        padding: EdgeInsets.all( mobile ? 0.0 : 20.0),
+        padding: EdgeInsets.all( isMobile ? 0.0 : 20.0),
           child: SlideTransition(
           position: _slideAnimation,
           child: FadeTransition(
             opacity: _fadeAnimation,
-            child: _isManagingCookies
-            ? _buildCookiesManager() // Shows the cookie management screen
-            : _buildConsentBanner(), // Shows the main banner
+            child: Card(
+              margin: EdgeInsets.zero,
+              child: _isManagingCookies
+              ? _buildCookiesManager() // Shows the cookie management screen
+              : _buildConsentBanner(), // Shows the main banner
+            ) 
           ),
         ),
       )
@@ -146,13 +146,14 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
 
   // Constructs the main banner widget that displays cookie information
   Widget _buildConsentBanner() {
-    bool mobile = GlobalScreenSizes.isMobileScreen(context); 
+    bool isMobile = GlobalScreenSizes.isMobileScreen(context); 
+
     return Container(
       constraints: BoxConstraints(maxWidth: 400.0),
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: GlobalColors.firstColor, 
-        borderRadius: mobile ? null : BorderRadius.circular(10.0),
+        borderRadius: isMobile ? null : BorderRadius.circular(10.0),
         boxShadow: [
           BoxShadow(
             color: GlobalColors.shadowColor, // Subtle shadow for depth
@@ -228,7 +229,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
           SizedBox(height: 10.0),
           // Action buttons for cookie preferences and consent
           Align(
-            alignment: mobile ? Alignment.centerLeft : Alignment.center,
+            alignment: isMobile ? Alignment.centerLeft : Alignment.center,
             child: Wrap(
               spacing: 20.0,
               runSpacing: 20.0,
@@ -242,10 +243,10 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
                   child: const Text('Je choisis'),
                 ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    await _animationController.reverse(); // Triggers slide-out + Fade-out
                     widget.onConsentGiven(true); // Trigger the consent action to parent widget
                     _saveConsentStatus(true);
-                    _animationController.reverse(); // Triggers slide-out + Fade-out
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: GlobalColors.orangeColor,
@@ -266,13 +267,14 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
 
   // Builds the cookie management screen allowing users to select individual cookie preferences
   Widget _buildCookiesManager() {
-    bool mobile = GlobalScreenSizes.isMobileScreen(context); 
+    bool isMobile = GlobalScreenSizes.isMobileScreen(context); 
+
     return Container(
       width: 600.0,
       height: 880.0,
       decoration: BoxDecoration(
         color: GlobalColors.firstColor, 
-        borderRadius: mobile ? null : BorderRadius.circular(10.0),
+        borderRadius: isMobile ? null : BorderRadius.circular(10.0),
         boxShadow: [
           BoxShadow(
             color: GlobalColors.shadowColor, // Subtle shadow for depth
@@ -325,7 +327,7 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
             const SizedBox(height: 10.0),
             // Individual Cookie Preferences with individual checkboxes
             Container(
-              padding: mobile ? null : EdgeInsets.all(20.0),
+              padding: isMobile ? null : EdgeInsets.all(20.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
                 border: Border.all(
@@ -405,12 +407,10 @@ class CookiesConsentBannerState extends State<CookiesConsentBanner> with SingleT
               children: [
                 ElevatedButton(
                   onPressed: () async {
+                    await _animationController.reverse(); // Hide banner with animation
                     widget.onConsentGiven(true); // Notify parent about global consent
                     await _saveConsentPreferences(); // Saves preferences to persistent storage
-                    _animationController.reverse(); // Hide banner with animation
-                    setState(() {
-                      _isManagingCookies = false; // Returns to the main banner screen
-                    });
+                    _isManagingCookies = false; // reset to false cookies manager (optional because false at initialization)
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: GlobalColors.orangeColor,

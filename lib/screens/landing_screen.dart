@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import '../components/zoom_fade_image_carousel_component.dart';
 import '../components/my_app_bar_component.dart';
 import '../components/drawer_component.dart';
-import '../components/cookies_consent_banner.dart';
-import '../components/my_button.dart';
 import '../components/my_back_to_top_button.dart';
 import '../components/footer.dart';
 import '../sections/welcome_section.dart';
@@ -33,9 +31,6 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
   final ScrollController _scrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState with _scrollController = ScrollController();
 
   bool _mobile = false; 
-  bool _showCookiesButton = false;
-  bool? _cookiesAccepted; // State to track cookies consent
-  bool _isBannerVisible = false;
   String currentItem = "Accueil"; // Holds the currently selected menu item to change text color
   bool _showBackToTopButton = false; // Show or hide Back to top button
   // bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not (only for NavItem with click)
@@ -43,64 +38,12 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
   @override
   void initState() {
     super.initState();
-    _isBannerVisible = _cookiesAccepted == null; // if true we consider that consent was never given = show cookies banner
 
     // Handle back to top button 
     _scrollController.addListener(_scrollListener); // Adds an event listener that captures scrolling from parent Landing Screen using scrollController
   }
-
-  // Handles user consent for cookies and manages the visibility of the cookie consent banner
-  void _handleCookiesConsent(bool? consent) {
-    setState(() {
-      _cookiesAccepted = consent;
-      _isBannerVisible = false; // Hide banner after animation
-    });
-
-    Future.delayed(Duration(milliseconds: 500), () {
-      if (mounted) {
-        setState(() {
-          _showCookiesButton = true; // Allows the animation to start with each clickin the banner
-        });
-      }
-    });
-  }
-
-
-  // Loads previously saved cookie consent state and updates the banner visibility accordingly
-  void _handleLoadedConsent(bool? consent) {
-    if (_cookiesAccepted == null) {
-      setState(() {
-        _cookiesAccepted = consent;
-        _isBannerVisible = consent == null;
-      });
-
-      if (consent == true) {
-        Future.delayed(const Duration(milliseconds: 500), () {
-        if (mounted) {
-            setState(() {
-              _showCookiesButton = true; // Allows the cookie button to be displayed upon arrival on the page if there are recorded consents
-            });
-          }
-        });
-      }
-    }
-  }
-
-  // Toggles the visibility of the cookie consent banner (with animations)
-  void _toggleBannerVisibility() {
-    if (_isBannerVisible) {
-        setState(() {
-          _isBannerVisible = false; // Hide banner after animation
-        });
-    } else {
-      setState(() {
-        _isBannerVisible = true;
-        _showCookiesButton = false; // Reset the animation to false after each click in the banner
-      });
-    }
-  }
   
-    // Function to update the current item when a new one is selected to change text color
+  // Function to update the current item when a new one is selected to change text color
   void updateCurrentItem(String newItem) {
     setState(() {
       currentItem = newItem;
@@ -145,91 +88,65 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
       : null,
       extendBodyBehindAppBar: true,
       backgroundColor: GlobalColors.firstColor,
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            controller: _scrollController,
-            child: Column(
+      body: SingleChildScrollView(
+        controller: _scrollController,
+        child: Column(
+          children: [
+            // Welcome section
+            Stack(
               children: [
-                // Welcome section
-                Stack(
-                  children: [
-                    // Image carousel
-                    ZoomFadeIamgeCarouselComponent(
-                      imagePaths: GlobalImages.landingCarouselImages,
-                      height: MediaQuery.of(context).size.height,
-                    ),
-                    // Shadow effect
-                    Positioned.fill(
-                      child: Container(
-                        height: MediaQuery.of(context).size.height,
-                        width: screenWidth,
-                        decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.4),
-                        ),
-                      )
-                    ),
-                    WelcomeSection(),
-                  ]
+                // Image carousel
+                ZoomFadeIamgeCarouselComponent(
+                  imagePaths: GlobalImages.landingCarouselImages,
+                  height: MediaQuery.of(context).size.height,
                 ),
-                SizedBox(height: 100.0),
-                // section 1
-                CompanyProfileSection(),
-                SizedBox(height: 150.0),
-                // section 2
-                WhatTypeOfRenovationsSection(),
-                SizedBox(height: 150.0),
-                // section 3
-                ValuesSection(),
-                SizedBox(height: 150.0),
-                // section 4
-                WhyChooseUsSection(),
-                SizedBox(height: 100.0),
-                // section 5
-                ServicesSection(),
-                SizedBox(height: 150.0),
-                // section 6
-                WorkTogetherSection(),
-                SizedBox(height: 150.0),
-                // section 7
-                StepsSection(),
-                SizedBox(height: 150.0),
-                // section 8
-                KeyFiguresSection(),
-                SizedBox(height: 150.0),             
-                // section 9
-                BeforeAfterSection(),
-                SizedBox(height: 150.0),
-                // section 10
-                CustomerFeedbackSection(),
-                SizedBox(height: 160.0),
-                FooterComponent(),
-              ],
+                // Shadow effect
+                Positioned.fill(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: screenWidth,
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.4),
+                    ),
+                  )
+                ),
+                WelcomeSection(),
+              ]
             ),
-          ),
-          // Cookie consent banner appears when banner visibility is true
-          if (_isBannerVisible) // If no consent
-          CookiesConsentBanner(
-            onConsentGiven: _handleCookiesConsent,
-            onConsentLoaded: _handleLoadedConsent,
-            toggleVisibility: _toggleBannerVisibility,
-          ),
-          // Image button appears after cookie consent is accepted.                    
-          if (!_isBannerVisible && _cookiesAccepted == true)
-          Positioned(
-            bottom: 15,
-            left: 15,
-            child: AnimatedOpacity(
-              opacity: _showCookiesButton ? 1.0 : 0.0, 
-              duration: const Duration(milliseconds: 1000),
-              child: MyButton(
-                onPressed: _toggleBannerVisibility,
-                buttonPath: GlobalButtonsAndIcons.cookiesButton, 
-                foregroundPath: GlobalButtonsAndIcons.iconCookieButton,
-              )
-            )
-          )
-        ],
+            SizedBox(height: 100.0),
+            // section 1
+            CompanyProfileSection(),
+            SizedBox(height: 150.0),
+            // section 2
+            WhatTypeOfRenovationsSection(),
+            SizedBox(height: 150.0),
+            // section 3
+            ValuesSection(),
+            SizedBox(height: 150.0),
+            // section 4
+            WhyChooseUsSection(),
+            SizedBox(height: 100.0),
+            // section 5
+            ServicesSection(),
+            SizedBox(height: 150.0),
+            // section 6
+            WorkTogetherSection(),
+            SizedBox(height: 150.0),
+            // section 7
+            StepsSection(),
+            SizedBox(height: 150.0),
+            // section 8
+            KeyFiguresSection(),
+            SizedBox(height: 150.0),             
+            // section 9
+            BeforeAfterSection(),
+            SizedBox(height: 150.0),
+            // section 10
+            CustomerFeedbackSection(),
+            SizedBox(height: 160.0),
+            FooterComponent(),
+          ],
+        ),
       ),
       floatingActionButton: _showBackToTopButton
       ? MyBackToTopButton(controller: _scrollController)

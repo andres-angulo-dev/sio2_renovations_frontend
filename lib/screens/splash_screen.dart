@@ -2,9 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:rive/rive.dart';
+import '../screens/landing_screen.dart';
+import '../manager/cookies_overlay_manager.dart';
 import '../widgets/image_preloader_widget.dart';
 import '../utils/global_colors.dart';
-import '../screens/landing_screen.dart';
 import '../utils/global_others.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -70,8 +71,8 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
     if (_animationFinished && _imagesPreloaded) {
       Navigator.of(context).pushReplacement(
         PageTransition(
-          type: PageTransitionType.fade,
-          child: _landingScreen,
+          type: PageTransitionType.fade, // The transition effect to go to the main page
+          child: CookiesOverlayManager(child: _landingScreen),
         ),
       );
     }
