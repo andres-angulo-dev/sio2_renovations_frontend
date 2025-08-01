@@ -1,35 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 
-class MyHoverUrlNavigator extends StatefulWidget{
-  const MyHoverUrlNavigator({super.key,
-  required this.url,
-  required this.text,
-  this.arguments,
-  this.mobile = false,
-  this.hoverColor,
-  this.color,
-  this.mobileSize, 
-  this.webSize
-  });
-
-  final String url;
+class MyHoverRouteNavigatorWidget extends StatefulWidget{
+  final String? routeName;
   final String text;
   final Object? arguments;
   final bool mobile;
+  final bool italic;
   final Color? hoverColor;
   final Color? color;
   final double? mobileSize;
   final double? webSize;
-
+  final bool boldText;
+  final bool textAlign;
+  
+  const MyHoverRouteNavigatorWidget({
+    super.key,
+    this.routeName,
+    required this.text,
+    this.arguments,
+    this.mobile = false,
+    this.italic = false,
+    this.hoverColor,
+    this.color,
+    this.mobileSize,
+    this.webSize,
+    this.boldText = false,
+    this.textAlign = false,
+  });
 
   @override   
-  MyHoverUrlNavigatorState createState() => MyHoverUrlNavigatorState();
+  MyHoverRouteNavigatorWidgetState createState() => MyHoverRouteNavigatorWidgetState();
 }
 
-class MyHoverUrlNavigatorState extends State<MyHoverUrlNavigator>  with SingleTickerProviderStateMixin {
+class MyHoverRouteNavigatorWidgetState extends State<MyHoverRouteNavigatorWidget>  with SingleTickerProviderStateMixin {
   bool _hovering = false;
 
   @override  
@@ -43,19 +48,16 @@ class MyHoverUrlNavigatorState extends State<MyHoverUrlNavigator>  with SingleTi
         _hovering = false;
       }),
       child: GestureDetector(
-        onTap: () async {
-          try {
-            await launchUrl(Uri.parse(widget.url));
-          } catch (error) {
-            throw "Could not launch $widget.url, error: $error";
-          }
-        },
+        onTap: () => Navigator.pushNamed(context, widget.routeName!, arguments: widget.arguments),
         child: Text(
           widget.text,
           style: TextStyle(
             color: _hovering ? (widget.hoverColor ?? GlobalColors.hoverHyperLinkColor) : (widget.color ?? GlobalColors.hyperLinkColor),
             fontSize: widget.mobile ? (widget.mobileSize ?? GlobalSize.mobileSizeText) : (widget.webSize ?? GlobalSize.webSizeText),
-          )
+            fontWeight: widget.boldText ? FontWeight.bold : null,
+            fontStyle: widget.italic ? FontStyle.italic : null,
+          ),
+          textAlign: widget.textAlign ? TextAlign.center : null,
         )
       ),
     );

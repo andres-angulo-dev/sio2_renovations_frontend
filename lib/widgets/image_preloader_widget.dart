@@ -6,10 +6,10 @@ class ImagePreloaderWidget extends StatefulWidget {
   final VoidCallback? onLoaded;
 
   const ImagePreloaderWidget({
+    super.key,
     required this.imagePaths,
     required this.child,
     this.onLoaded,
-    super.key,
   });
 
   @override

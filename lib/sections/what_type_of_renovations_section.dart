@@ -1,7 +1,7 @@
 // Width Carrousel slide widget
 import 'package:flutter/material.dart';
 import 'package:carousel_slider_plus/carousel_slider_plus.dart';
-import '../components/my_hover_route_navigator.dart';
+import '../widgets/my_hover_route_navigator_widget.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
@@ -152,7 +152,7 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
                               color: Colors.black.withValues(alpha: 0.2),
                               alignment: Alignment.center,
                               child: item["routePath"] != null  
-                                ? MyHoverRouteNavigator( // Animation hover text
+                                ? MyHoverRouteNavigatorWidget( // Animation hover text
                                 routeName: item["routePath"]!, 
                                 text: item["title"]!,
                                 color: GlobalColors.firstColor,
@@ -184,7 +184,7 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
                                 child: SlideTransition(
                                   position: _slideAnimation[index],
                                   child: item["routePath"] != null  
-                                    ? MyHoverRouteNavigator( // Animation hover text if routePath isn't empty
+                                    ? MyHoverRouteNavigatorWidget( // Animation hover text if routePath isn't empty
                                     routeName: item["routePath"]!, 
                                     text: item["title"]!,
                                     color: GlobalColors.firstColor,
@@ -278,7 +278,7 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
                             child: SlideTransition(
                               position: _slideAnimation[index],
                               child: item["routePath"] != null  
-                              ? MyHoverRouteNavigator( // Animation hover text
+                              ? MyHoverRouteNavigatorWidget( // Animation hover text
                                 routeName: item["routePath"]!, 
                                 text: item["title"]!,
                                 color: GlobalColors.firstColor,
@@ -440,7 +440,7 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
 //                         color: Colors.black.withValues(alpha: 0.5),
 //                         alignment: Alignment.center,
 //                         child: item["routePath"] != null  
-//                         ? MyHoverRouteNavigator( // Animation hover text
+//                         ? MyHoverRouteNavigatorWidget( // Animation hover text
 //                           routeName: item["routePath"]!, 
 //                           text: item["title"]!,
 //                           color: GlobalColors.firstColor,

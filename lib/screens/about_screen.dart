@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import '../components/footer.dart';
-import '../components/my_app_bar_component.dart';
-import '../components/drawer_component.dart';
-import '../components/my_rive_button.dart';
+import '../components/footer_component.dart';
+import '../components/my_nav_bar_component.dart';
+import '../components/my_drawer_component.dart';
+import '../widgets/my_rive_button_widget.dart';
 import '../utils/global_others.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_screen_sizes.dart';
@@ -140,14 +140,14 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
     final screenWidth = GlobalScreenSizes.screenWidth(context);
 
     return Scaffold(
-      appBar: MyAppBarComponent(
+      appBar: MyNavBarComponent(
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
         currentSubItem: currentSubItem,
         // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable (only for NavItem with click)
       ),
       endDrawer: mobile // && !_isDesktopMenuOpen (only for NavItem with click)
-        ? DrawerComponent(
+        ? MyDrawerComponent(
           currentItem: currentItem,
           onItemSelected: updateCurrentItem,
           currentSubItem: currentSubItem,
@@ -613,7 +613,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                                 child: SizedBox(
                                   height: 100.0, // Fixed size to allow visibility detection
                                   width: 150.0,  // Corresponds to the size of the MyButtonRive
-                                  child: _showContactButtonSection ? MyRiveButton(
+                                  child: _showContactButtonSection ? MyRiveButtonWidget(
                                     onPressed: () => Navigator.pushNamed(context, ('/contact')), 
                                     buttonPath: GlobalButtonsAndIcons.contactButtonWithReverse, 
                                   ) 

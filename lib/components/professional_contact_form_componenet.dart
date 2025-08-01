@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../components/my_hover_route_navigator.dart';
+import '../widgets/my_hover_route_navigator_widget.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
 
-class ProfessionalContactForm extends StatefulWidget {
+class ProfessionalContactFormComponent extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController firstNameController;
   final TextEditingController lastNameController;
@@ -18,7 +18,7 @@ class ProfessionalContactForm extends StatefulWidget {
   final ValueChanged<bool> onAcceptConditionsChanged;
   final VoidCallback sendEmail;
 
-  const ProfessionalContactForm({
+  const ProfessionalContactFormComponent({
     super.key,
     required this.formKey,
     required this.firstNameController,
@@ -35,10 +35,10 @@ class ProfessionalContactForm extends StatefulWidget {
   });
 
   @override  
-  ProfessionalContactFormState createState() => ProfessionalContactFormState();
+  ProfessionalContactFormComponentState createState() => ProfessionalContactFormComponentState();
 }
 
-class ProfessionalContactFormState extends State<ProfessionalContactForm> {
+class ProfessionalContactFormComponentState extends State<ProfessionalContactFormComponent> {
  bool _isHovered = false;
 
   @override
@@ -294,7 +294,7 @@ class ProfessionalContactFormState extends State<ProfessionalContactForm> {
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                   ),
-                  child: MyHoverRouteNavigator(
+                  child: MyHoverRouteNavigatorWidget(
                     routeName: '/privacyPolicy', 
                     text: 'Politique de confidentialité',
                     mobile: mobile,

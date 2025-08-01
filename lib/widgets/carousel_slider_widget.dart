@@ -1,9 +1,10 @@
+// Carousel for website under construction
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import '../utils/global_others.dart';
 
-class CarouselSliderComponent extends StatelessWidget {
-  const CarouselSliderComponent({super.key});
+class CarouselSliderWidget extends StatelessWidget {
+  const CarouselSliderWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rive/rive.dart';
 
-class MyRiveButton extends StatefulWidget {
-  const MyRiveButton({
-  super.key,
-  this.enableCursor = true,
-  this.onPressed, 
-  required this.buttonPath,
-  });
-
+class MyRiveButtonWidget extends StatefulWidget {
   final bool enableCursor; // enable cursor click 
   final VoidCallback? onPressed; // Callback for the button tap event
   final String buttonPath; // Path to the Rive animation file
+  
+  const MyRiveButtonWidget({
+    super.key,
+    this.enableCursor = true,
+    this.onPressed, 
+    required this.buttonPath,
+  });
 
   @override
-  MyRiveButtonState createState() => MyRiveButtonState();
+  MyRiveButtonWidgetState createState() => MyRiveButtonWidgetState();
 }
 
-class MyRiveButtonState extends State<MyRiveButton> {
+class MyRiveButtonWidgetState extends State<MyRiveButtonWidget> {
   late StateMachineController _controller; // Controller for the State Machine in Rive
   late SMIInput<bool> _isHovered; // Input to track hover state
   bool _isLoaded = false; 
@@ -103,8 +103,8 @@ class MyRiveButtonState extends State<MyRiveButton> {
 // import 'package:flutter/material.dart';
 // import 'package:rive/rive.dart';
 
-// class MyRiveButton extends StatefulWidget {
-//   const MyRiveButton({
+// class MyRiveButtonWidget extends StatefulWidget {
+//   const MyRiveButtonWidget({
 //     super.key, 
 //     required this.onPressed, // Callback for what happens when the button is pressed
 //     required this.buttonPath, // Path to the Rive animation file
@@ -114,10 +114,10 @@ class MyRiveButtonState extends State<MyRiveButton> {
 //   final String buttonPath; // Stores the location of the Rive file being used
 
 //   @override  
-//   MyRiveButtonState createState() => MyRiveButtonState(); // Creates the state for this widget
+//   MyRiveButtonWidgetState createState() => MyRiveButtonWidgetState(); // Creates the state for this widget
 // }
 
-// class MyRiveButtonState extends State<MyRiveButton> {
+// class MyRiveButtonWidgetState extends State<MyRiveButtonWidget> {
 //   double _scale = 1.0; // Tracks the scaling of the button (default size)
 
 //   @override   

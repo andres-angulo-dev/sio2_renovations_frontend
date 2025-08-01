@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
-import '../components/hover_sub_menu_component.dart';
+import 'hover_sub_menu_widget.dart';
 
-class NavItems extends StatefulWidget {
+class NavItemsWidget extends StatefulWidget {
   final Color defaultColor;
   final Color hoverColor;
   final bool isHorizontal; // Whether the menu is displayed horizontally
@@ -14,7 +14,7 @@ class NavItems extends StatefulWidget {
   final Function(String) onItemSelected; // Callback to notify the parent when a menu item is selected
   final String? currentSubItem; // The currently active sub menu item
   
-  const NavItems({
+  const NavItemsWidget({
     super.key, 
     required this.defaultColor, 
     required this.hoverColor, 
@@ -25,10 +25,10 @@ class NavItems extends StatefulWidget {
   });
 
   @override  
-  NavItemsState createState() => NavItemsState();
+  NavItemsWidgetState createState() => NavItemsWidgetState();
 }
 
-class NavItemsState extends State<NavItems> {
+class NavItemsWidgetState extends State<NavItemsWidget> {
   // Creation of a bool by children for each items
   late List<bool> _openDropdownMobile;
   int? _openDropdownWebIndex;
@@ -72,7 +72,7 @@ class NavItemsState extends State<NavItems> {
     
       if (hasChildren) {
         navWidget = widget.isHorizontal 
-        ? HoverSubMenuComponent( // Web version for the sub items
+        ? HoverSubMenuWidget( // Web version for the sub items
           label: CustomNavItem(
             icon: item['icon'],
             label: item['label'],
@@ -309,7 +309,7 @@ class CustomNavItemstate extends State<CustomNavItem> with TickerProviderStateMi
       });
     }
 
-    // Manages the rotation of the icon with true or false received by HoverSubMenuComponent when the hover is over the title and/or over the dropdown menu
+    // Manages the rotation of the icon with true or false received by HoverSubMenuWidget when the hover is over the title and/or over the dropdown menu
     if (widget.isSubMenuExpanded && !oldWidget.isSubMenuExpanded) {
       _rotationController.forward();
     }
@@ -445,8 +445,8 @@ class CustomNavItemstate extends State<CustomNavItem> with TickerProviderStateMi
 // import '../utils/global_others.dart';
 // import '../utils/global_screen_sizes.dart';
 
-// class NavItems extends StatefulWidget {
-//   const NavItems({super.key, 
+// class NavItemsWidget extends StatefulWidget {
+//   const NavItemsWidget({super.key, 
 //   required this.defaultColor, 
 //   required this.hoverColor, 
 //   this.isHorizontal = true,
@@ -466,10 +466,10 @@ class CustomNavItemstate extends State<CustomNavItem> with TickerProviderStateMi
 
 
 //   @override  
-//   NavItemsState createState() => NavItemsState();
+//   NavItemsWidgetState createState() => NavItemsWidgetState();
 // }
 
-// class NavItemsState extends State<NavItems> {
+// class NavItemsWidgetState extends State<NavItemsWidget> {
 //   // Used to keep track of whether the "À propos" dropdown menu is open
 //   bool _isDesktopAboutOpen = false;   
 //   bool _isMobileAboutOpen = false;

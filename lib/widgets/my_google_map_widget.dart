@@ -2,17 +2,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../components/google_map_data.dart';
+import '../data/google_map_data.dart';
 import '../utils/global_others.dart';
 
-class MyGoogleMap extends StatefulWidget {
-  const MyGoogleMap({super.key});
+class MyGoogleMapWidget extends StatefulWidget {
+  const MyGoogleMapWidget({super.key});
 
   @override
-  MyGoogleMapState createState() => MyGoogleMapState();
+  MyGoogleMapWidgetState createState() => MyGoogleMapWidgetState();
 }
 
-class MyGoogleMapState extends State<MyGoogleMap> {
+class MyGoogleMapWidgetState extends State<MyGoogleMapWidget> {
   late GoogleMapController mapController;
   final String googleMapsApiKey = dotenv.env['GOOGLE_MAPS_API_KEY'] ?? '';
   final LatLng _center = const LatLng(48.8566, 2.3522); // Paris
@@ -70,7 +70,7 @@ class MyGoogleMapState extends State<MyGoogleMap> {
   void _initializeMarkers() async {
     final BitmapDescriptor myCustomMarker = await _createCustomMarker(GlobalImages.customGoogleMarker);
 
-    _markers = data.map((data) => Marker(
+    _markers = googleMapData.map((data) => Marker(
       markerId: MarkerId(data["id"]),
       position: data["position"],
       onTap: () => _showCustomInfoWindow(
@@ -140,14 +140,14 @@ class MyGoogleMapState extends State<MyGoogleMap> {
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 // import '../utils/global_others.dart';
 
-// class MyGoogleMap extends StatefulWidget {
-//   const MyGoogleMap({super.key});
+// class MyGoogleMapWidget extends StatefulWidget {
+//   const MyGoogleMapWidget({super.key});
 
 //   @override
-//   MyGoogleMapState createState() => MyGoogleMapState();
+//   MyGoogleMapWidgetState createState() => MyGoogleMapWidgetState();
 // }
 
-// class MyGoogleMapState extends State<MyGoogleMap> {
+// class MyGoogleMapWidgetState extends State<MyGoogleMapWidget> {
 //   late GoogleMapController mapController;
 //   final String googleMapsApiKey = dotenv.env['GOOGLE_MAPS_API_KEY'] ?? '';
 //   final LatLng _center = const LatLng(48.8566, 2.3522); // Paris

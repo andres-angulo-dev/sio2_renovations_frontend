@@ -1,10 +1,11 @@
+// Display of the sub-menu
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
 
-class HoverSubMenuComponent extends StatefulWidget {
+class HoverSubMenuWidget extends StatefulWidget {
   final Widget label;
   final List<Map<String, String>> items; // Array with the submenus     
   final Color defaultColor; 
@@ -13,7 +14,7 @@ class HoverSubMenuComponent extends StatefulWidget {
   final ValueChanged<String> onItemSelected;
   final ValueChanged<bool>? onSubMenuOpenChanged;
 
-  const HoverSubMenuComponent({
+  const HoverSubMenuWidget({
     super.key,
     required this.label,
     required this.items,
@@ -26,10 +27,10 @@ class HoverSubMenuComponent extends StatefulWidget {
 
 
   @override
-  HoverSubMenuComponentState createState() => HoverSubMenuComponentState();
+  HoverSubMenuWidgetState createState() => HoverSubMenuWidgetState();
 }
 
-class HoverSubMenuComponentState extends State<HoverSubMenuComponent> with SingleTickerProviderStateMixin{
+class HoverSubMenuWidgetState extends State<HoverSubMenuWidget> with SingleTickerProviderStateMixin{
   final LayerLink _layerLink = LayerLink();
   OverlayEntry? _entry;
   Timer? _hideTimer; // timer to close the menu after a short delay
@@ -41,7 +42,9 @@ class HoverSubMenuComponentState extends State<HoverSubMenuComponent> with Singl
   @override
   void initState() {
     super.initState();
+
     _hoveringStates = List.filled(widget.items.length, false); // Initialize a 'false' state for each sub-menu wich allows the hover to work
+
     // Animation dropdown menu
     _animController = AnimationController(
       vsync: this,
@@ -60,6 +63,7 @@ class HoverSubMenuComponentState extends State<HoverSubMenuComponent> with Singl
       }
     });
   }
+  
   // Will close the menu if there is no more hover
   void _startHideTimer() {
     _hideTimer?.cancel();

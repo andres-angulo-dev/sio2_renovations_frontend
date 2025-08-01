@@ -1,25 +1,28 @@
+// Slide to the right on hover
 import 'package:flutter/material.dart';
 
-class MyHoverSlideLink extends StatefulWidget {
+class MyHoverSlideLinkWidget extends StatefulWidget {
   final Widget child;
   final bool cursorClick;
 
-  const MyHoverSlideLink({
+  const MyHoverSlideLinkWidget({
+    super.key,
     required this.child,
     this.cursorClick = false, 
-    super.key});
+  });
 
   @override
-  MyHoverSlideLinkState createState() => MyHoverSlideLinkState();
+  MyHoverSlideLinkWidgetState createState() => MyHoverSlideLinkWidgetState();
 }
 
-class MyHoverSlideLinkState extends State<MyHoverSlideLink> with SingleTickerProviderStateMixin {
+class MyHoverSlideLinkWidgetState extends State<MyHoverSlideLinkWidget> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _offset;
 
   @override
   void initState() {
     super.initState();
+
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),

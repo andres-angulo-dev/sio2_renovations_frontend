@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:async';
 import 'dart:math';
+import '../data/customer_feedbacks_data.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
@@ -20,35 +21,11 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
   int _currentIndex = 0;
   bool _userInteracted = false;
   bool _isHovered = false;
-  
-  // List of customer testimonials with comment, author, and project title
-  final List<Map<String, String>> feedbacks = [
-    {
-      "comment": "\"Excellente exécution d’un chantier portant sur la rénovation totale d’un appartement. Respect du cahier des charges, des engagements et des quelques aménagements décidés lors de la réalisation. Beau travail et belle équipe.\"",
-      "author": "M. & Mme T. ",
-      "title": "",
-    },
-    {
-      "comment": "\"Travail impeccable et équipe très professionnelle. Mon appartement a été transformé avec beaucoup d’élégance.\"",
-      "author": "Mme B. ",
-      "title": "Rénovation d'un appartement familial - 13ème arrondissement",
-    },
-    {
-      "comment": "\"Un vrai plaisir de voir mon projet réalisé avec autant de soin et de précision ! Bravo à toute l’équipe.\"",
-      "author": "M. D. ",
-      "title": "Modernisation complète d’un loft à République",
-    },
-    {
-      "comment": "\"Merci pour le professionnalisme et le soin apporté aux finitions. Je referai appel à vous pour mes futures travaux.\"",
-      "author": "J. H. ",
-      "title": "Rénovation de la salle de bain ",
-    },
-  ];
 
   @override
   void initState() {
     super.initState();
-    _currentIndex = Random().nextInt(feedbacks.length); // Random selection of a comment at the start
+    _currentIndex = Random().nextInt(customerFeedbacksData.length); // Random selection of a comment at the start
     _pageController = PageController(initialPage: _currentIndex); // Sets the starting comment
     _startAutoScroll();
   }
@@ -66,7 +43,7 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
   int _getRandomIndex() {
     int nextIndex;
     do {
-      nextIndex = Random().nextInt(feedbacks.length); // Random choice of the next testimony
+      nextIndex = Random().nextInt(customerFeedbacksData.length); // Random choice of the next testimony
     } while (nextIndex == _currentIndex); // Avoid choosing the same as the previous one
     return nextIndex; // Move to the next testimonial
   }
@@ -88,7 +65,7 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
 
   void _previousFeedBack() {
     setState(() {
-      _currentIndex = (_currentIndex - 1 + feedbacks.length) % feedbacks.length; // Manage the limits
+      _currentIndex = (_currentIndex - 1 + customerFeedbacksData.length) % customerFeedbacksData.length; // Manage the limits
       _pageController.animateToPage(
         _currentIndex, 
         duration: const Duration(milliseconds: 500), 
@@ -262,14 +239,14 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                                     width: 430.0,
                                     child: PageView.builder( // Display Feedbacks
                                       controller: _pageController,
-                                      itemCount: feedbacks.length,
+                                      itemCount: customerFeedbacksData.length,
                                       itemBuilder: (context, index) {
                                         return Column( 
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [  
                                             // Message
                                             Text(
-                                              feedbacks[index]["comment"]!,
+                                              customerFeedbacksData[index]["comment"]!,
                                               style: TextStyle(fontSize: GlobalSize.webSizeText, fontStyle: FontStyle.italic),
                                               textAlign: TextAlign.justify,
                                               overflow: TextOverflow.ellipsis,
@@ -278,7 +255,7 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                                             const SizedBox(height: 10.0),
                                             // Signing
                                             Text(
-                                              "- ${feedbacks[index]["author"]}, ${feedbacks[index]["title"]}",
+                                              "- ${customerFeedbacksData[index]["author"]}, ${customerFeedbacksData[index]["title"]}",
                                               style: TextStyle(fontSize: GlobalSize.mobileSizeText, fontWeight: FontWeight.w600, color: GlobalColors.fiveColor),
                                               textAlign: TextAlign.center,
                                               overflow: TextOverflow.ellipsis
@@ -371,14 +348,14 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                                       Expanded(
                                         child:PageView.builder(
                                           controller: _pageController,
-                                          itemCount: feedbacks.length,
+                                          itemCount: customerFeedbacksData.length,
                                           itemBuilder: (context, index) {
                                            return Column( 
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               children: [  
                                                 // Message
                                                 Text(
-                                                  feedbacks[index]["comment"]!,
+                                                  customerFeedbacksData[index]["comment"]!,
                                                   style: TextStyle(fontSize: GlobalSize.webSizeText, fontStyle: FontStyle.italic),
                                                   textAlign: TextAlign.justify,
                                                   overflow: TextOverflow.ellipsis,
@@ -387,7 +364,7 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                                                 const SizedBox(height: 10.0),
                                                 // Signing
                                                 Text(
-                                                  "- ${feedbacks[index]["author"]}, ${feedbacks[index]["title"]}",
+                                                  "- ${customerFeedbacksData[index]["author"]}, ${customerFeedbacksData[index]["title"]}",
                                                   style: TextStyle(fontSize: GlobalSize.mobileSizeText, fontWeight: FontWeight.w600, color: GlobalColors.fiveColor),
                                                   textAlign: TextAlign.center,
                                                   overflow: TextOverflow.ellipsis

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'nav_items.dart';
+import '../widgets/nav_items_widget.dart';
 import '../utils/global_colors.dart';
 
-class DrawerComponent extends StatefulWidget{
-  const DrawerComponent({super.key,
+class MyDrawerComponent extends StatefulWidget{
+  const MyDrawerComponent({super.key,
   required this.currentItem,
   required this.onItemSelected,
   this.currentSubItem,
@@ -14,10 +14,10 @@ class DrawerComponent extends StatefulWidget{
   final String? currentSubItem;   // The currently active menu item
 
   @override  
-  DrawerComponentState createState() => DrawerComponentState();
+  MyDrawerComponentState createState() => MyDrawerComponentState();
 }
 
-class DrawerComponentState extends State<DrawerComponent> {
+class MyDrawerComponentState extends State<MyDrawerComponent> {
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class DrawerComponentState extends State<DrawerComponent> {
       child: ListView(
         padding: EdgeInsets.zero, // Removes default padding for the ListView.
         children: [
-          NavItems(
+          NavItemsWidget(
             defaultColor: Colors.black, 
             hoverColor: GlobalColors.orangeColor, 
             isHorizontal: false, // Display menu items vertically

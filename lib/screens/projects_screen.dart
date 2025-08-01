@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import '../components/my_app_bar_component.dart';
-import '../components/drawer_component.dart';
-import '../components/vertical_words_carousel_component.dart';
-import '../components/photo_wall_component.dart';
-import '../components/my_rive_button.dart';
-import '../components/my_back_to_top_button.dart';
-import '../components/footer.dart';
+import '../components/my_nav_bar_component.dart';
+import '../components/my_drawer_component.dart';
+import '../components/footer_component.dart';
+import '../widgets/vertical_words_carousel_widget.dart';
+import '../widgets/photo_wall_widget.dart';
+import '../widgets/my_rive_button_widget.dart';
+import '../widgets/my_back_to_top_button_widget.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
@@ -138,7 +138,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
     );
   }
 
-  // The filtered list of photos that will be transmitted to the PhotoWallComponent.
+  // The filtered list of photos that will be transmitted to the PhotoWallWidget.
   List<String> get filteredPhotos {
     if (selectedService == 'TOUT VOIR') {
       // Combine all the photos
@@ -183,13 +183,13 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
     final mobile = GlobalScreenSizes.isMobileScreen(context);
 
     return Scaffold(
-      appBar: MyAppBarComponent(
+      appBar: MyNavBarComponent(
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
         // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable // (only for NavItem with click)
       ),
       endDrawer: mobile // && !_isDesktopMenuOpen (only for NavItem with click)
-      ? DrawerComponent( 
+      ? MyDrawerComponent( 
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
       ) : null,
@@ -225,7 +225,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
                         left: 0.0,
                         right: 0.0,
                         child: Align(
-                          child: VerticalWordsCarouselComponent(),
+                          child: VerticalWordsCarouselWidget(),
                         ),
                       ),
                       // bottom rectangle shape 
@@ -382,7 +382,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
                 ),
                 const SizedBox(height: 100.0),
                 // Photo wall 
-                PhotoWallComponent(photos: filteredPhotos),
+                PhotoWallWidget(photos: filteredPhotos),
                 const SizedBox(height: 100.0),
                 // A quote section
                 Container(
@@ -453,7 +453,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
                                   )
                                 );
                               },
-                              child: MyRiveButton(
+                              child: MyRiveButtonWidget(
                                 onPressed: () => Navigator.pushNamed(context, '/contact'),
                                 buttonPath: GlobalButtonsAndIcons.freeQuoteButtonV2,
                               ),
@@ -472,7 +472,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
         },
       ),
       floatingActionButton: _showBackToTopButton 
-      ? MyBackToTopButton(
+      ? MyBackToTopButtonWidget(
         controller: _pageScrollController,
       )
       : null

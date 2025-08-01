@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../components/my_app_bar_component.dart';
-import '../components/drawer_component.dart';
-import '../components/my_back_to_top_button.dart';
-import '../components/my_hover_route_navigator.dart';
-import '../components/my_hover_url_navigator.dart';
-import '../components/footer.dart';
+import '../components/my_nav_bar_component.dart';
+import '../components/my_drawer_component.dart';
+import '../components/footer_component.dart';
+import '../widgets/my_back_to_top_button_widget.dart';
+import '../widgets/my_hover_route_navigator_widget.dart';
+import '../widgets/my_hover_url_navigator_widget.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
@@ -63,13 +63,13 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
     int numberSection = 1;
 
     return Scaffold(
-      appBar: MyAppBarComponent(
+      appBar: MyNavBarComponent(
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
         // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable // (only for NavItem with click)
       ), 
       endDrawer: isMobile // && !_isDesktopMenuOpen (only for NavItem with click)
-        ? DrawerComponent( 
+        ? MyDrawerComponent( 
           currentItem: currentItem,
           onItemSelected: updateCurrentItem,
         ) 
@@ -210,7 +210,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                                   WidgetSpan(
                                     alignment: PlaceholderAlignment.baseline,
                                     baseline: TextBaseline.alphabetic,
-                                    child: MyHoverUrlNavigator(url: 'https://${GlobalPersonalData.developerCompanyWebsite}/', text: GlobalPersonalData.developerCompanyWebsite, mobile: isMobile,)
+                                    child: MyHoverUrlNavigatorWidget(url: 'https://${GlobalPersonalData.developerCompanyWebsite}/', text: GlobalPersonalData.developerCompanyWebsite, mobile: isMobile,)
                                   ),
                                   TextSpan(text: "."),
                                 ]
@@ -561,7 +561,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                                   WidgetSpan(
                                     alignment: PlaceholderAlignment.baseline,
                                     baseline: TextBaseline.alphabetic,
-                                    child: MyHoverRouteNavigator(routeName: '/privacyPolicy', text: 'politique de confidentialité', mobile: isMobile,)
+                                    child: MyHoverRouteNavigatorWidget(routeName: '/privacyPolicy', text: 'politique de confidentialité', mobile: isMobile,)
                                   ),
                                   TextSpan(
                                     text: '.',
@@ -707,7 +707,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
         ),
       ),
       floatingActionButton: _showBackToTopButton
-      ? MyBackToTopButton(controller: _pageScrollController)
+      ? MyBackToTopButtonWidget(controller: _pageScrollController)
       : null,
     );
   }

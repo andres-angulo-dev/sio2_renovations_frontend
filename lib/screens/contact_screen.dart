@@ -1,13 +1,13 @@
 // With SliderCaptcha in Success_popup_component
 import 'package:flutter/material.dart';
-import '../components/my_app_bar_component.dart';
-import '../components/drawer_component.dart';
-import '../components/my_back_to_top_button.dart';
-import '../components/customer_contact_form.dart';
-import '../components/opening_hours_component.dart';
+import '../components/my_nav_bar_component.dart';
+import '../components/my_drawer_component.dart';
+import '../components/customer_contact_form_component.dart';
 import '../components/success_popup_component.dart';
-import '../components/footer.dart';
+import '../components/footer_component.dart';
 import '../services/contact_form_service.dart';
+import '../widgets/my_back_to_top_button_widget.dart';
+import '../widgets/opening_hours_widget.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
@@ -221,13 +221,13 @@ class ContactScreenState extends State<ContactScreen> {
     });
 
     return Scaffold(
-      appBar: MyAppBarComponent(
+      appBar: MyNavBarComponent(
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
         // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable // (only for NavItem with click)
       ),
       endDrawer: mobile // && !_isDesktopMenuOpen (only for NavItem with click)
-        ? DrawerComponent(
+        ? MyDrawerComponent(
           currentItem: currentItem,
           onItemSelected: updateCurrentItem,
         ) 
@@ -383,7 +383,7 @@ class ContactScreenState extends State<ContactScreen> {
                             ),
                             const SizedBox(height: 40.0),
                             // Schedule
-                            OpeningHoursComponent(
+                            OpeningHoursWidget(
                               mobileTextSize: GlobalSize.mobileSizeText,
                               webTextSize: GlobalSize.webSizeText,
                               widthDivider: 200.0,
@@ -449,7 +449,7 @@ class ContactScreenState extends State<ContactScreen> {
                             Container(
                               constraints: BoxConstraints(maxWidth: 850.0),
                               child: Center(
-                                child: CustomerContactForm(
+                                child: CustomerContactFormComponent(
                                   formKey: _formKey, 
                                   requestTypeController: _requestTypeController,
                                   lastNameController: _lastNameController, 
@@ -503,7 +503,7 @@ class ContactScreenState extends State<ContactScreen> {
         }
       ),
       floatingActionButton: _showBackToTopButton
-      ? MyBackToTopButton(
+      ? MyBackToTopButtonWidget(
         controller: _pageScrollController
       )
       : null,
@@ -758,13 +758,13 @@ class ContactScreenState extends State<ContactScreen> {
 //     });
 
 //     return Scaffold(
-//       appBar: MyAppBarComponent(
+//       appBar: MyNavBarComponent(
 //         currentItem: currentItem,
 //         onItemSelected: updateCurrentItem,
 //         // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable // (only for NavItem with click)
 //       ),
 //       endDrawer: mobile // && !_isDesktopMenuOpen (only for NavItem with click)
-//         ? DrawerComponent(
+//         ? MyDrawerComponent(
 //           currentItem: currentItem,
 //           onItemSelected: updateCurrentItem,
 //         ) 
@@ -920,7 +920,7 @@ class ContactScreenState extends State<ContactScreen> {
 //                             ),
 //                             const SizedBox(height: 40.0),
 //                             // Schedule
-//                             OpeningHoursComponent(
+//                             OpeningHoursWidget(
 //                               mobileTextSize: GlobalSize.mobileSizeText,
 //                               webTextSize: GlobalSize.webSizeText,
 //                               widthDivider: 200.0,
@@ -986,7 +986,7 @@ class ContactScreenState extends State<ContactScreen> {
 //                             Container(
 //                               constraints: BoxConstraints(maxWidth: 850.0),
 //                               child: Center(
-//                                 child: CustomerContactForm(
+//                                 child: CustomerContactFormComponent(
 //                                   formKey: _formKey, 
 //                                   requestTypeController: _requestTypeController,
 //                                   lastNameController: _lastNameController, 
@@ -1061,7 +1061,7 @@ class ContactScreenState extends State<ContactScreen> {
 //         }
 //       ),
 //       floatingActionButton: _showBackToTopButton
-//       ? MyBackToTopButton(
+//       ? MyBackToTopButtonWidget(
 //         controller: _pageScrollController
 //       )
 //       : null,

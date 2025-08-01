@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class MyButton extends StatefulWidget {
-  const MyButton({super.key, 
-  required this.onPressed, 
-  required this.buttonPath,
-  this.buttonLabel, 
-  required this.foregroundPath,
-  this.foregroundLabel,
-  });
-
+class MyButtonWidget extends StatefulWidget {
   final VoidCallback onPressed;
   final String buttonPath;
   final String? buttonLabel;
   final String foregroundPath;
   final String? foregroundLabel;
 
+  const MyButtonWidget({
+    super.key, 
+    required this.onPressed, 
+    required this.buttonPath,
+    this.buttonLabel, 
+    required this.foregroundPath,
+    this.foregroundLabel,
+  });
 
   @override  
-  MyButtonState createState() => MyButtonState(); 
+  MyButtonWidgetState createState() => MyButtonWidgetState(); 
 }
 
-class MyButtonState extends State<MyButton> {
+class MyButtonWidgetState extends State<MyButtonWidget> {
   double _scale = 1.0;
 
   @override   

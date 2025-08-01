@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sio2_renovations_frontend/utils/global_others.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import '../utils/global_others.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_screen_sizes.dart';
 

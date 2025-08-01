@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../components/my_app_bar_component.dart';
-import '../components/drawer_component.dart';
-import '../components/my_back_to_top_button.dart';
-import '../components/professional_contact_form.dart';
+import '../components/my_nav_bar_component.dart';
+import '../components/my_drawer_component.dart';
+import '../components/professional_contact_form_componenet.dart';
 import '../components/success_popup_component.dart';
-import '../components/footer.dart';
+import '../components/footer_component.dart';
 import '../services/contact_form_service.dart';
+import '../widgets/my_back_to_top_button_widget.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
@@ -170,14 +170,14 @@ class PartnersScreenState extends State<PartnersScreen> {
     final screenWidth = GlobalScreenSizes.screenWidth(context);
 
     return Scaffold(
-      appBar: MyAppBarComponent(
+      appBar: MyNavBarComponent(
         currentItem: currentItem, 
         onItemSelected: updateCurrentItem,
         currentSubItem: currenSubItem,
         // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable // (only for NavItem with click)
       ),
       endDrawer: mobile // && !_isDesktopMenuOpen (only for NavItem with click)
-      ? DrawerComponent(
+      ? MyDrawerComponent(
         currentItem: currentItem, 
         onItemSelected: updateCurrentItem,
         currentSubItem: currenSubItem,
@@ -405,7 +405,7 @@ class PartnersScreenState extends State<PartnersScreen> {
                               Container(
                                 constraints: BoxConstraints(maxWidth: 800.0),
                                 child: Center(
-                                  child: ProfessionalContactForm(
+                                  child: ProfessionalContactFormComponent(
                                     formKey: _formKey, 
                                     firstNameController: _firstNameController, 
                                     lastNameController: _lastNameController, 
@@ -455,7 +455,7 @@ class PartnersScreenState extends State<PartnersScreen> {
         }
       ),
       floatingActionButton: _showBackToTopButton
-      ? MyBackToTopButton(
+      ? MyBackToTopButtonWidget(
         controller: _pageScrollController
       )
       : null,

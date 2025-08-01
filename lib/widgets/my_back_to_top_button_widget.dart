@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import '../utils/global_colors.dart';
 
-class MyBackToTopButton extends StatelessWidget {
-  const MyBackToTopButton({
+class MyBackToTopButtonWidget extends StatelessWidget {
+  final ScrollController controller;  
+  final Color backgroundColor; 
+  
+  const MyBackToTopButtonWidget({
     super.key,
     required this.controller,
     this.backgroundColor = GlobalColors.orangeColor,
   });
   
-  final ScrollController controller;  
-  final Color backgroundColor; 
 
   // Go to the top of the page
   void _scrollToTop() {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../components/my_app_bar_component.dart';
-import '../components/drawer_component.dart';
-import '../components/my_hover_route_navigator.dart';
-import '../components/my_hover_url_navigator.dart';
-import '../components/my_back_to_top_button.dart';
-import '../components/footer.dart';
+import '../components/my_nav_bar_component.dart';
+import '../components/my_drawer_component.dart';
+import '../components/footer_component.dart';
+import '../widgets/my_hover_route_navigator_widget.dart';
+import '../widgets/my_hover_url_navigator_widget.dart';
+import '../widgets/my_back_to_top_button_widget.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
@@ -92,13 +92,13 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
     int numberSection = 1;
 
     return Scaffold(
-      appBar: MyAppBarComponent(
+      appBar: MyNavBarComponent(
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
         // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable // (only for NavItem with click) 
       ),
       endDrawer: isMobile // && !_isDesktopMenuOpen (only for NavItem with click)
-        ? DrawerComponent(
+        ? MyDrawerComponent(
           currentItem: currentItem,
           onItemSelected: updateCurrentItem,
         ) 
@@ -156,7 +156,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                             WidgetSpan(
                               alignment: PlaceholderAlignment.baseline,
                               baseline: TextBaseline.alphabetic,
-                              child: MyHoverRouteNavigator(routeName: '/legalMontions', text: 'mentions légales', mobile: isMobile,)
+                              child: MyHoverRouteNavigatorWidget(routeName: '/legalMontions', text: 'mentions légales', mobile: isMobile,)
                             ),
                             TextSpan(
                               text: " ",
@@ -997,7 +997,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                                   WidgetSpan(
                                     alignment: PlaceholderAlignment.baseline,
                                     baseline: TextBaseline.alphabetic,
-                                    child: MyHoverUrlNavigator(url: 'https://tools.google.com/dlpage/gaoptout/', text: "https://tools.google.com/dlpage/gaoptout", color: GlobalColors.secondColor,),
+                                    child: MyHoverUrlNavigatorWidget(url: 'https://tools.google.com/dlpage/gaoptout/', text: "https://tools.google.com/dlpage/gaoptout", color: GlobalColors.secondColor,),
                                   ),
                                   TextSpan(text: "."),
                                 ]
@@ -1212,7 +1212,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                             WidgetSpan(
                               alignment: PlaceholderAlignment.baseline,
                               baseline: TextBaseline.alphabetic,
-                              child: MyHoverUrlNavigator(url: 'https://www.cnil.fr/', text: "CNIL", color: GlobalColors.secondColor,),
+                              child: MyHoverUrlNavigatorWidget(url: 'https://www.cnil.fr/', text: "CNIL", color: GlobalColors.secondColor,),
                             ),
                             TextSpan(text: "."),
                           ]
@@ -1403,7 +1403,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
         ) 
       ),
       floatingActionButton: _showBackToTopButton
-      ? MyBackToTopButton(controller: _pageScrollController)
+      ? MyBackToTopButtonWidget(controller: _pageScrollController)
       : null,  
     );
   }

@@ -2,12 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:slider_captcha/slider_captcha.dart';
-import '../components/my_captcha_component.dart';
+import '../widgets/my_captcha_widget.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_screen_sizes.dart';
 
 class SuccessPopupComponent extends StatefulWidget {
   final VoidCallback resetForm; // Callback to reset the form
+  
   const SuccessPopupComponent({
     super.key, 
     required this.resetForm,
@@ -43,7 +44,7 @@ class SuccessPopupComponentState extends State<SuccessPopupComponent> {
             children: [
               // Captcha
               if (!_isCaptchaValidated) ...[
-                MyCaptchaComponent(
+                MyCaptchaWidget(
                   captchaController: _captchaController,
                   isCaptchaValidated: _isCaptchaValidated,
                   onCaptchaValidated: (value) {  // The child returns true when the puzzle is completed and changes variables

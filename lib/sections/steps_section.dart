@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sio2_renovations_frontend/utils/global_screen_sizes.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import '../data/steps_data.dart';
+import '../widgets/my_rive_button_widget.dart';
+import '../utils/global_screen_sizes.dart';
 import '../utils/global_colors.dart';
-import '../components/my_rive_button.dart';
 import '../utils/global_others.dart';
 
 class StepsSection extends StatefulWidget {
@@ -120,26 +121,6 @@ class StepsSectionState extends State<StepsSection> {
       Color.fromARGB(255, 165, 127, 78), // Primary color
     ];
 
-    // List storing unique titles and descriptions for each step
-    final List<Map<String, String>> stepData = [
-      {
-        "title": "Décrivez votre projet", 
-        "description": "Indiquez-nous vos besoins, vos préférences et les spécificités de votre rénovation. "
-      },
-      {
-        "title": "Le devis détaillé", 
-        "description": "Nous examinons votre projet attentivement, avec un retour sous 48h."
-      },
-      {
-        "title": "Validation et planification", 
-        "description": "Après une visite des lieux, divers échanges et le devis validé, nous planifions chaque étape du chantier."
-      },
-      {
-        "title": "Début des travaux", 
-        "description": "Place à la transformation ! Votre projet prend vie sous vos yeux, étape après étape."
-      },
-    ];
-
     final bool isMobile = GlobalScreenSizes.isMobileScreen(context);
     
     return VisibilityDetector(
@@ -198,7 +179,7 @@ class StepsSectionState extends State<StepsSection> {
                         SizedBox(
                           height: 60.0,
                           child: Text(
-                            stepData[index]["title"]!,
+                            stepsData[index]["title"]!,
                             style: TextStyle(
                               fontSize: isMobile ? GlobalSize.stepsSectionMobileSubTitleCard : GlobalSize.stepsSectionWebSubTitleCard,
                               fontWeight: FontWeight.bold,
@@ -209,7 +190,7 @@ class StepsSectionState extends State<StepsSection> {
                         SizedBox(height: 10),
                         // Description
                         Text(
-                          stepData[index]["description"]!,
+                          stepsData[index]["description"]!,
                           style: TextStyle(
                             fontSize: isMobile ? GlobalSize.webSizeText : GlobalSize.webSizeText,
                             color: Colors.white70,
@@ -222,7 +203,7 @@ class StepsSectionState extends State<StepsSection> {
                           SizedBox(
                             height: 60,
                             width:  120,
-                            child: MyRiveButton(
+                            child: MyRiveButtonWidget(
                               onPressed: () => Navigator.pushNamed(context, ('/contact')), // Navigates to contact page
                               buttonPath: GlobalButtonsAndIcons.contactButtonV2,
                             )

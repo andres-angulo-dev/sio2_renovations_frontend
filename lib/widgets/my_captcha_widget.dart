@@ -4,7 +4,7 @@ import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
 
-class MyCaptchaComponent extends StatefulWidget {
+class MyCaptchaWidget extends StatefulWidget {
   final double sizeWidth;
   final SliderController captchaController;
   final ValueChanged<bool> onCaptchaValidated;
@@ -12,7 +12,7 @@ class MyCaptchaComponent extends StatefulWidget {
   final VoidCallback onCaptchaAttempted;
   final bool hasTriedCaptcha;
   
-  const MyCaptchaComponent({
+  const MyCaptchaWidget({
     super.key, 
     this.sizeWidth = 500.0,
     required this.captchaController,
@@ -23,10 +23,10 @@ class MyCaptchaComponent extends StatefulWidget {
   });
 
   @override
-  MyCaptchaComponentState createState() => MyCaptchaComponentState();
+  MyCaptchaWidgetState createState() => MyCaptchaWidgetState();
 }
 
-class MyCaptchaComponentState extends State<MyCaptchaComponent> {
+class MyCaptchaWidgetState extends State<MyCaptchaWidget> {
 
   @override
   Widget build(BuildContext context) {

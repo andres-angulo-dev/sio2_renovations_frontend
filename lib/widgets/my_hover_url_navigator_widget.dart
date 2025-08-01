@@ -1,39 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 
-class MyHoverRouteNavigator extends StatefulWidget{
-  const MyHoverRouteNavigator({super.key,
-  this.routeName,
-  required this.text,
-  this.arguments,
-  this.mobile = false,
-  this.italic = false,
-  this.hoverColor,
-  this.color,
-  this.mobileSize,
-  this.webSize,
-  this.boldText = false,
-  this.textAlign = false,
-  });
-
-  final String? routeName;
+class MyHoverUrlNavigatorWidget extends StatefulWidget{
+  final String url;
   final String text;
   final Object? arguments;
   final bool mobile;
-  final bool italic;
   final Color? hoverColor;
   final Color? color;
   final double? mobileSize;
   final double? webSize;
-  final bool boldText;
-  final bool textAlign;
+
+  const MyHoverUrlNavigatorWidget({
+    super.key,
+    required this.url,
+    required this.text,
+    this.arguments,
+    this.mobile = false,
+    this.hoverColor,
+    this.color,
+    this.mobileSize, 
+    this.webSize
+  });
 
   @override   
-  MyHoverRouteNavigatorState createState() => MyHoverRouteNavigatorState();
+  MyHoverUrlNavigatorWidgetState createState() => MyHoverUrlNavigatorWidgetState();
 }
 
-class MyHoverRouteNavigatorState extends State<MyHoverRouteNavigator>  with SingleTickerProviderStateMixin {
+class MyHoverUrlNavigatorWidgetState extends State<MyHoverUrlNavigatorWidget>  with SingleTickerProviderStateMixin {
   bool _hovering = false;
 
   @override  
@@ -47,16 +43,19 @@ class MyHoverRouteNavigatorState extends State<MyHoverRouteNavigator>  with Sing
         _hovering = false;
       }),
       child: GestureDetector(
-        onTap: () => Navigator.pushNamed(context, widget.routeName!, arguments: widget.arguments),
+        onTap: () async {
+          try {
+            await launchUrl(Uri.parse(widget.url));
+          } catch (error) {
+            throw "Could not launch $widget.url, error: $error";
+          }
+        },
         child: Text(
           widget.text,
           style: TextStyle(
             color: _hovering ? (widget.hoverColor ?? GlobalColors.hoverHyperLinkColor) : (widget.color ?? GlobalColors.hyperLinkColor),
             fontSize: widget.mobile ? (widget.mobileSize ?? GlobalSize.mobileSizeText) : (widget.webSize ?? GlobalSize.webSizeText),
-            fontWeight: widget.boldText ? FontWeight.bold : null,
-            fontStyle: widget.italic ? FontStyle.italic : null,
-          ),
-          textAlign: widget.textAlign ? TextAlign.center : null,
+          )
         )
       ),
     );

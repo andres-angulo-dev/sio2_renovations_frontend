@@ -1,7 +1,7 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../utils/global_others.dart';
 
-final List<Map<String, dynamic>> data = [
+final List<Map<String, dynamic>> googleMapData = [
   {
     "id": "1",
     "position": LatLng(48.8696, 2.3070),
@@ -31,7 +31,6 @@ final List<Map<String, dynamic>> data = [
     "image": GlobalImages.backgroundLanding,
   },
 
-  // 🏠 Focus sur le 13ème arrondissement
   {
     "id": "5",
     "position": LatLng(48.8383, 2.3488),
@@ -61,7 +60,6 @@ final List<Map<String, dynamic>> data = [
     "image": GlobalImages.backgroundLanding,
   },
   
-  // 🏠 Focus sur le 14ème arrondissement
   {
     "id": "9",
     "position": LatLng(48.8285, 2.3283),

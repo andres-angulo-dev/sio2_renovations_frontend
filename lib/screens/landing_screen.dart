@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import '../components/zoom_fade_image_carousel_component.dart';
-import '../components/my_app_bar_component.dart';
-import '../components/drawer_component.dart';
-import '../components/my_back_to_top_button.dart';
-import '../components/footer.dart';
+import '../widgets/zoom_fade_image_carousel_widget.dart';
+import '../components/my_nav_bar_component.dart';
+import '../components/my_drawer_component.dart';
+import '../components/footer_component.dart';
 import '../sections/welcome_section.dart';
 import '../sections/company_profile_section.dart';
 import '../sections/values_section.dart';
@@ -15,6 +14,7 @@ import '../sections/steps_section.dart';
 import '../sections/what_type_of_renovations_section.dart';
 import '../sections/before_after_section.dart';
 import '../sections/customer_feedback_section.dart';
+import '../widgets/my_back_to_top_button_widget.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
@@ -74,14 +74,14 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
     _mobile = GlobalScreenSizes.isMobileScreen(context);
 
     return Scaffold(
-      appBar: MyAppBarComponent(
+      appBar: MyNavBarComponent(
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
         scrollController: _scrollController,
         // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);},// receive whether the dropdown menu is open or not and update the variable // (only for NavItem with click)
       ), 
       endDrawer: _mobile // && !_isDesktopMenuOpen (only for NavItem with click)
-      ? DrawerComponent(
+      ? MyDrawerComponent(
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
       ) 
@@ -96,7 +96,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
             Stack(
               children: [
                 // Image carousel
-                ZoomFadeIamgeCarouselComponent(
+                ZoomFadeIamgeCarouselWidget(
                   imagePaths: GlobalImages.landingCarouselImages,
                   height: MediaQuery.of(context).size.height,
                 ),
@@ -149,7 +149,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
         ),
       ),
       floatingActionButton: _showBackToTopButton
-      ? MyBackToTopButton(controller: _scrollController)
+      ? MyBackToTopButtonWidget(controller: _scrollController)
       : null,
     );
   }

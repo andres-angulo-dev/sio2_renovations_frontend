@@ -1,13 +1,13 @@
 // Customer contact form with dropdown, type work options, circle progress bar inside button submit
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import '../components/my_hover_route_navigator.dart';
+import '../widgets/my_hover_route_navigator_widget.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
 
-class CustomerContactForm extends StatefulWidget {
-  const CustomerContactForm({
+class CustomerContactFormComponent extends StatefulWidget {
+  const CustomerContactFormComponent({
     super.key,
     required this.formKey,
     required this.requestTypeController,
@@ -48,10 +48,10 @@ class CustomerContactForm extends StatefulWidget {
   final VoidCallback sendEmail;
 
   @override  
-  CustomerContactFormState createState() => CustomerContactFormState();
+  CustomerContactFormComponentState createState() => CustomerContactFormComponentState();
 }
 
-class CustomerContactFormState extends State<CustomerContactForm> {
+class CustomerContactFormComponentState extends State<CustomerContactFormComponent> {
   // Triggered whenever the text in requestTypeController changes
   late final VoidCallback _updateRequestTypeOnClick;
   bool _isHovered = false;
@@ -445,7 +445,7 @@ class CustomerContactFormState extends State<CustomerContactForm> {
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                   ),
-                  child: MyHoverRouteNavigator(
+                  child: MyHoverRouteNavigatorWidget(
                     routeName: '/privacyPolicy', 
                     text: 'Politique de confidentialité',
                     mobile: mobile,
@@ -536,8 +536,8 @@ class CustomerContactFormState extends State<CustomerContactForm> {
 // import '../utils/global_others.dart';
 // import '../utils/global_screen_sizes.dart';
 
-// class CustomerContactForm extends StatefulWidget {
-//   const CustomerContactForm({
+// class CustomerContactFormComponent extends StatefulWidget {
+//   const CustomerContactFormComponent({
 //     super.key,
 //     required this.formKey,
 //     required this.requestTypeController,
@@ -589,10 +589,10 @@ class CustomerContactFormState extends State<CustomerContactForm> {
 //   final bool hasTriedCaptcha;
 
 //   @override  
-//   CustomerContactFormState createState() => CustomerContactFormState();
+//   CustomerContactFormComponentState createState() => CustomerContactFormComponentState();
 // }
 
-// class CustomerContactFormState extends State<CustomerContactForm> {
+// class CustomerContactFormComponentState extends State<CustomerContactFormComponent> {
 //   // Triggered whenever the text in requestTypeController changes
 //   late final VoidCallback _updateRequestTypeOnClick;
 //   bool _isHovered = false;
@@ -1007,7 +1007,7 @@ class CustomerContactFormState extends State<CustomerContactForm> {
 //                   style: TextStyle(
 //                     fontStyle: FontStyle.italic,
 //                   ),
-//                   child: MyHoverRouteNavigator(
+//                   child: MyHoverRouteNavigatorWidget(
 //                     routeName: '/privacyPolicy', 
 //                     text: 'Politique de confidentialité',
 //                     mobile: mobile,
@@ -1096,8 +1096,8 @@ class CustomerContactFormState extends State<CustomerContactForm> {
 // import '../utils/global_others.dart';
 // import '../utils/global_screen_sizes.dart';
 
-// class CustomerContactForm extends StatefulWidget {
-//   const CustomerContactForm({
+// class CustomerContactFormComponent extends StatefulWidget {
+//   const CustomerContactFormComponent({
 //     super.key,
 //     required this.formKey,
 //     required this.requestTypeController,
@@ -1132,10 +1132,10 @@ class CustomerContactFormState extends State<CustomerContactForm> {
 //   final VoidCallback sendEmail;
 
 //   @override  
-//   CustomerContactFormState createState() => CustomerContactFormState();
+//   CustomerContactFormComponentState createState() => CustomerContactFormComponentState();
 // }
 
-// class CustomerContactFormState extends State<CustomerContactForm> {
+// class CustomerContactFormComponentState extends State<CustomerContactFormComponent> {
 //   // Triggered whenever the text in requestTypeController changes
 //   late final VoidCallback _updateRequestTypeOnClick;
 //   bool _isHovered = false;
@@ -1427,7 +1427,7 @@ class CustomerContactFormState extends State<CustomerContactForm> {
 //                   style: TextStyle(
 //                     fontStyle: FontStyle.italic,
 //                   ),
-//                   child: MyHoverRouteNavigator(
+//                   child: MyHoverRouteNavigatorWidget(
 //                     routeName: '/privacyPolicy', 
 //                     text: 'Politique de confidentialité',
 //                     mobile: mobile,
@@ -1516,7 +1516,7 @@ class CustomerContactFormState extends State<CustomerContactForm> {
 // import '../utils/global_others.dart';
 // import '../utils/global_screen_sizes.dart';
 
-// class CustomerContactForm extends StatefulWidget {
+// class CustomerContactFormComponent extends StatefulWidget {
 //   final GlobalKey<FormState> formKey;
 //   final TextEditingController firstNameController;
 //   final TextEditingController lastNameController;
@@ -1527,7 +1527,7 @@ class CustomerContactFormState extends State<CustomerContactForm> {
 //   final bool isSending;
 //   final VoidCallback sendEmail;
 
-//   const CustomerContactForm({
+//   const CustomerContactFormComponent({
 //     super.key,
 //     required this.formKey,
 //     required this.firstNameController,
@@ -1541,10 +1541,10 @@ class CustomerContactFormState extends State<CustomerContactForm> {
 //   });
 
 //   @override  
-//   CustomerContactFormState createState() => CustomerContactFormState();
+//   CustomerContactFormComponentState createState() => CustomerContactFormComponentState();
 // }
 
-// class CustomerContactFormState extends State<CustomerContactForm> {
+// class CustomerContactFormComponentState extends State<CustomerContactFormComponent> {
 //  bool _isHovered = false;
 
 //   @override
@@ -1695,7 +1695,7 @@ class CustomerContactFormState extends State<CustomerContactForm> {
 //                   style: TextStyle(
 //                     fontStyle: FontStyle.italic,
 //                   ),
-//                   child: MyHoverRouteNavigator(
+//                   child: MyHoverRouteNavigatorWidget(
 //                     routeName: '/privacyPolicy', 
 //                     text: 'Politique de confidentialité',
 //                     mobile: mobile,

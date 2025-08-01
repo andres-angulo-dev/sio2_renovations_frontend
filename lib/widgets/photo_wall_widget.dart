@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class PhotoWallComponent extends StatelessWidget {
-  const PhotoWallComponent({
+class PhotoWallWidget extends StatelessWidget {
+  final List<String> photos;
+  
+  const PhotoWallWidget({
     super.key,
     required this.photos,  
   });
-
-  final List<String> photos;
 
   @override
   Widget build(BuildContext context) {
@@ -106,8 +106,8 @@ class PhotoGridItem extends StatelessWidget {
 // import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 // import '../utils/global_others.dart';
 
-// class PhotoWallComponent extends StatelessWidget {
-//   PhotoWallComponent({super.key});
+// class PhotoWallWidget extends StatelessWidget {
+//   PhotoWallWidget({super.key});
 
 //   // Liste list of image URLs (or asset paths)
 //   final List<String> imageUrls = [

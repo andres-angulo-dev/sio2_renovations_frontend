@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'nav_items.dart';
+import '../widgets/nav_items_widget.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
 import 'dart:ui';
 
-class MyAppBarComponent extends StatefulWidget implements PreferredSizeWidget {
-  const MyAppBarComponent({super.key,
+class MyNavBarComponent extends StatefulWidget implements PreferredSizeWidget {
+  const MyNavBarComponent({super.key,
     required this.currentItem,
     required this.onItemSelected,
     this.currentSubItem,
@@ -22,13 +22,13 @@ class MyAppBarComponent extends StatefulWidget implements PreferredSizeWidget {
   // final void Function(bool)? onDesktopMenuOpenChanged; //Captures and sends to the parent whether the dropdown menu is open or not // (only for NavItem with click)
 
   @override
-  MyAppBarComponentState createState() => MyAppBarComponentState();
+  MyNavBarComponentState createState() => MyNavBarComponentState();
 
   @override
   Size get preferredSize => const Size.fromHeight(100.0); // Heigh size of app bar
 }
 
-class MyAppBarComponentState extends State<MyAppBarComponent> {
+class MyNavBarComponentState extends State<MyNavBarComponent> {
   final ValueNotifier<Color> appBarColorNotifier = ValueNotifier<Color>(Colors.transparent);
   // bool _isDesktopMenuOpen = false;  // Check if the child (NavItem) has the dropdown menu or not (only for NavItem with click)
 
@@ -119,7 +119,7 @@ class MyAppBarComponentState extends State<MyAppBarComponent> {
                     ),
                   ),
                   // Menu
-                  NavItems(
+                  NavItemsWidget(
                     defaultColor: widget.currentItem == "Accueil" ? (color == GlobalColors.firstColor ? GlobalColors.secondColor : GlobalColors.firstColor ) : GlobalColors.secondColor, 
                     hoverColor: GlobalColors.orangeColor, 
                     currentItem: widget.currentItem, // Pass the active item

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sio2_renovations_frontend/utils/global_others.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import '../data/services_data.dart';
+import '../utils/global_others.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_screen_sizes.dart';
 
@@ -48,17 +49,6 @@ class ServicesSectionState extends State<ServicesSection> with SingleTickerProvi
     _servicesAnimationController.dispose();
     super.dispose();
   }
-
-  final List<Map<String, String>> servicesData = const [
-    {"title": "Peintre", "image": GlobalImages.backgroundLanding},
-    {"title": "Plaquiste", "image": GlobalImages.backgroundLanding},
-    {"title": "Menuisier", "image": GlobalImages.backgroundLanding},
-    {"title": "Carreleur", "image": GlobalImages.backgroundLanding},
-    {"title": "Électricien", "image": GlobalImages.backgroundLanding},
-    {"title": "Plombier", "image": GlobalImages.backgroundLanding},
-    {"title": "Chauffagiste", "image": GlobalImages.backgroundLanding},
-    {"title": "Maçon", "image": GlobalImages.backgroundLanding},
-  ];
 
   @override
   Widget build(BuildContext context) {

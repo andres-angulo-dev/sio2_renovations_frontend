@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/cookies_consent_banner_widget.dart';
-import '../widgets/my_button.dart';
+import '../widgets/my_button_widget.dart';
 import '../utils/global_others.dart';
 
 class CookiesOverlayManager extends StatefulWidget {
@@ -93,7 +93,7 @@ class CookiesOverlayManagerState extends State<CookiesOverlayManager> {
             child: AnimatedOpacity(
               opacity: _showCookiesButton ? 1.0 : 0.0,
               duration: const Duration(milliseconds: 1000),
-              child: MyButton(
+              child: MyButtonWidget(
                 onPressed: _onBannerToggle,
                 buttonPath: GlobalButtonsAndIcons.cookiesButton,
                 foregroundPath: GlobalButtonsAndIcons.iconCookieButton,

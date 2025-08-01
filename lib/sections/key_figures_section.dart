@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import '../components/my_google_map.dart';
+import '../widgets/my_google_map_widget.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
@@ -183,7 +183,7 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
                         SizedBox(
                           height: 600.0,
                           width: 600.0,
-                          child: MyGoogleMap(),
+                          child: MyGoogleMapWidget(),
                         )
                       ],
                     )

@@ -2,12 +2,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-class ZoomFadeIamgeCarouselComponent extends StatefulWidget {
+class ZoomFadeIamgeCarouselWidget extends StatefulWidget {
   final List<String> imagePaths;
   final Duration interval; // Duration each image stays before switching
   final double height;
 
-  const ZoomFadeIamgeCarouselComponent({
+  const ZoomFadeIamgeCarouselWidget({
     super.key,
     required this.imagePaths,
     this.interval = const Duration(seconds: 6),
@@ -15,10 +15,10 @@ class ZoomFadeIamgeCarouselComponent extends StatefulWidget {
   });
 
   @override
-  ZoomFadeIamgeCarouselComponentState createState() => ZoomFadeIamgeCarouselComponentState();
+  ZoomFadeIamgeCarouselWidgetState createState() => ZoomFadeIamgeCarouselWidgetState();
 }
 
-class ZoomFadeIamgeCarouselComponentState extends State<ZoomFadeIamgeCarouselComponent> with TickerProviderStateMixin {
+class ZoomFadeIamgeCarouselWidgetState extends State<ZoomFadeIamgeCarouselWidget> with TickerProviderStateMixin {
   late int _currentIndex;
   late int _previousIndex;
   late Timer _timer;

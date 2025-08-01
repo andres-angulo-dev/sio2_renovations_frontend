@@ -3,8 +3,20 @@ import '../utils/global_others.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_screen_sizes.dart';
 
-class OpeningHoursComponent extends StatelessWidget{
-  const OpeningHoursComponent({
+class OpeningHoursWidget extends StatelessWidget{
+  final MainAxisAlignment mainAxisPosition;
+  final CrossAxisAlignment crossAxisPosition;
+  final double mobileTitleSize;
+  final double webTitleSize;
+  final double mobileTextSize;
+  final double webTextSize;
+  final double widthDivider;
+  final double heightDivider;
+  final Color color;
+  final Color squareColor;
+  final double? responsiveThreshold;
+
+  const OpeningHoursWidget({
     super.key,
     this.mainAxisPosition = MainAxisAlignment.start,
     this.crossAxisPosition = CrossAxisAlignment.start,
@@ -18,18 +30,6 @@ class OpeningHoursComponent extends StatelessWidget{
     this.squareColor = GlobalColors.orangeColor,
     this.responsiveThreshold,
   });
-
-  final MainAxisAlignment mainAxisPosition;
-  final CrossAxisAlignment crossAxisPosition;
-  final double mobileTitleSize;
-  final double webTitleSize;
-  final double mobileTextSize;
-  final double webTextSize;
-  final double widthDivider;
-  final double heightDivider;
-  final Color color;
-  final Color squareColor;
-  final double? responsiveThreshold;
 
   @override   
   Widget build(BuildContext context) {

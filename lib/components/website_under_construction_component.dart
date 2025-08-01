@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
-import '../components/carousel_slider_component.dart';
+import '../widgets/carousel_slider_widget.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
 
-class WebsiteUnderConstruction extends StatefulWidget{
-  const WebsiteUnderConstruction({super.key});
+class WebsiteUnderConstructionComponent extends StatefulWidget{
+  const WebsiteUnderConstructionComponent({super.key});
 
   @override
-  WebsiteUnderConstructionState createState() => WebsiteUnderConstructionState();
+  WebsiteUnderConstructionComponentState createState() => WebsiteUnderConstructionComponentState();
 }
 
-class WebsiteUnderConstructionState extends State<WebsiteUnderConstruction> with SingleTickerProviderStateMixin {
+class WebsiteUnderConstructionComponentState extends State<WebsiteUnderConstructionComponent> with SingleTickerProviderStateMixin {
   // AnimationController: Manages the timing of the animations.
   late AnimationController _animationController;
   // Animation<Offset>: Handles the slide effect for text (moves it vertically effect).
@@ -108,7 +108,7 @@ class WebsiteUnderConstructionState extends State<WebsiteUnderConstruction> with
             child: AnimatedOpacity(
               opacity: _show ? 1.0 : 0.0, 
               duration: const Duration(seconds: 3),
-              child: CarouselSliderComponent(), // Custom carousel component. 
+              child: CarouselSliderWidget(), // Custom carousel component. 
             ),
           ),
         ],

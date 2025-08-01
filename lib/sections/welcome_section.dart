@@ -1,7 +1,7 @@
 // Animation Typewrite effect
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart'; 
-import '../components/my_rive_button.dart';
+import '../widgets/my_rive_button_widget.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
@@ -72,7 +72,7 @@ class WelcomeSection extends StatelessWidget {
                     SizedBox(
                       width: 150,
                       height: 50,
-                      child: MyRiveButton(
+                      child: MyRiveButtonWidget(
                         enableCursor: false,
                         buttonPath: GlobalButtonsAndIcons.callUsButton,
                       ),
@@ -86,7 +86,7 @@ class WelcomeSection extends StatelessWidget {
                     SizedBox(
                       width: 150,
                       height: 50,
-                      child: MyRiveButton(
+                      child: MyRiveButtonWidget(
                         onPressed: () => Navigator.pushNamed(context, '/contact'),
                         buttonPath: GlobalButtonsAndIcons.freeQuoteButton,
                       ),
@@ -226,7 +226,7 @@ class WelcomeSection extends StatelessWidget {
 //                     SizedBox(
 //                       width: 150,
 //                       height: 50,
-//                       child: MyRiveButton(
+//                       child: MyRiveButtonWidget(
 //                         enableCursor: false,
 //                         buttonPath: GlobalButtonsAndIcons.callUsButton,
 //                       ),
@@ -240,7 +240,7 @@ class WelcomeSection extends StatelessWidget {
 //                     SizedBox(
 //                       width: 150,
 //                       height: 50,
-//                       child: MyRiveButton(
+//                       child: MyRiveButtonWidget(
 //                         onPressed: () => Navigator.pushNamed(context, '/contact'),
 //                         buttonPath: GlobalButtonsAndIcons.freeQuoteButton,
 //                       ),
@@ -325,7 +325,7 @@ class WelcomeSection extends StatelessWidget {
 //                   SizedBox(
 //                     width: 150,
 //                     height: 50,
-//                     child: MyRiveButton(
+//                     child: MyRiveButtonWidget(
 //                       enableCursor: false,
 //                       buttonPath: GlobalButtonsAndIcons.callUsButton
 //                     ),
@@ -338,7 +338,7 @@ class WelcomeSection extends StatelessWidget {
 //                   SizedBox(
 //                     width: 150,
 //                     height: 50,
-//                     child: MyRiveButton(
+//                     child: MyRiveButtonWidget(
 //                       onPressed: () => Navigator.pushNamed(context, '/contact'), 
 //                       buttonPath: GlobalButtonsAndIcons.freeQuoteButton
 //                     ),

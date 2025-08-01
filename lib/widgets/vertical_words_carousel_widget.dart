@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:sio2_renovations_frontend/utils/global_others.dart';
 import 'dart:async';
 import '../utils/global_colors.dart';
 import '../utils/global_screen_sizes.dart';
+import '../utils/global_others.dart';
 
-class VerticalWordsCarouselComponent extends StatefulWidget {
-  const VerticalWordsCarouselComponent({super.key});
+class VerticalWordsCarouselWidget extends StatefulWidget {
+  const VerticalWordsCarouselWidget({super.key});
 
   @override
-  VerticalWordsCarouselComponentState createState() => VerticalWordsCarouselComponentState();
+  VerticalWordsCarouselWidgetState createState() => VerticalWordsCarouselWidgetState();
 }
 
-class VerticalWordsCarouselComponentState extends State<VerticalWordsCarouselComponent> with SingleTickerProviderStateMixin{
+class VerticalWordsCarouselWidgetState extends State<VerticalWordsCarouselWidget> with SingleTickerProviderStateMixin{
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
   late Animation<double> _fadeAnimation;
