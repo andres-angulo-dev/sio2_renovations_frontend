@@ -51,6 +51,7 @@ class ProfessionalContactFormComponentState extends State<ProfessionalContactFor
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         children: [
+          // Full name
           Row(
             children: [
               Expanded( 
@@ -73,12 +74,14 @@ class ProfessionalContactFormComponentState extends State<ProfessionalContactFor
               ),
             ],
           ),
-          _buildTextField( // Company name
+          // Company name
+          _buildTextField( 
             controller: widget.companyController,
             labelText: 'Société',
             icon: Icons.business,
             validator: (value) => null,
           ),
+          // The coordinates
           Row(
             children: [
               Expanded(
@@ -111,7 +114,8 @@ class ProfessionalContactFormComponentState extends State<ProfessionalContactFor
               ),
             ],
           ),
-          _buildTextField( // Message
+          // Message
+          _buildTextField(
             controller: widget.messageController,
             labelText: 'Message *',
             icon: Icons.message,
@@ -127,7 +131,7 @@ class ProfessionalContactFormComponentState extends State<ProfessionalContactFor
             ),
           ),
           const SizedBox(height: 24.0),
-          // Checkbox
+          // Checkbox conditions
           CheckboxListTile(
             value: widget.hasAcceptedConditions,
             onChanged: widget.isSending
@@ -157,11 +161,11 @@ class ProfessionalContactFormComponentState extends State<ProfessionalContactFor
             ),
           ),
           const SizedBox(height: 20.0),
-          // Button "ENVOYER"
+          // Button circular progress indicator + "SENDING..."
           if (widget.isSending)
           Row(
             children: [
-              Align( // Prevents the button from taking the full horizontal width of the ListView.
+              Align( // Prevents the button from taking the full horizontal width of the ListView
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -219,6 +223,7 @@ class ProfessionalContactFormComponentState extends State<ProfessionalContactFor
               )
             ],
           )
+          // Button "SEND"
           else 
           Row(
             children: [

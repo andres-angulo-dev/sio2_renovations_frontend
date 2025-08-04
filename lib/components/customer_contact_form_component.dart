@@ -7,6 +7,24 @@ import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
 
 class CustomerContactFormComponent extends StatefulWidget {
+  final GlobalKey<FormState> formKey;
+  final TextEditingController requestTypeController;
+  final TextEditingController lastNameController;
+  final TextEditingController firstNameController;
+  final TextEditingController companyController;
+  final TextEditingController emailController;
+  final TextEditingController phoneController;
+  final ValueNotifier<List<String>> typeWork; // A reactive list that holds the types of work selected by the user. Updated when they interact with the FilterChips and observed for changes during form submission.
+  final bool showTypeWorkError;
+  final TextEditingController startDateController;
+  final TextEditingController addressController;
+  final TextEditingController messageController;
+  final bool isSending;
+  final bool hasAcceptedConditions;
+  final bool showConsentError;
+  final ValueChanged<bool> onAcceptConditionsChanged;
+  final VoidCallback sendEmail;
+  
   const CustomerContactFormComponent({
     super.key,
     required this.formKey,
@@ -28,25 +46,6 @@ class CustomerContactFormComponent extends StatefulWidget {
     required this.sendEmail,
   });
   
-  final GlobalKey<FormState> formKey;
-  final TextEditingController requestTypeController;
-  final TextEditingController lastNameController;
-  final TextEditingController firstNameController;
-  final TextEditingController companyController;
-  final TextEditingController emailController;
-  final TextEditingController phoneController;
-  final ValueNotifier<List<String>> typeWork; // A reactive list that holds the types of work selected by the user. Updated when they interact with the FilterChips and observed for changes during form submission.
-  final bool showTypeWorkError;
-  final TextEditingController startDateController;
-  final TextEditingController addressController;
-  final TextEditingController messageController;
-  final bool isSending;
-  final bool hasAcceptedConditions;
-  final bool showConsentError;
-  final ValueChanged<bool> onAcceptConditionsChanged;
-
-  final VoidCallback sendEmail;
-
   @override  
   CustomerContactFormComponentState createState() => CustomerContactFormComponentState();
 }
@@ -278,13 +277,13 @@ class CustomerContactFormComponentState extends State<CustomerContactFormCompone
             ),
           ),
           const SizedBox(height: 24.0),
-          // Checkbox
+          // Checkbox conditions
           CheckboxListTile(
             value: widget.hasAcceptedConditions,
             onChanged: widget.isSending
                 ? null  // Disabled during sending
                 : (value) {
-                  widget.onAcceptConditionsChanged(value ??  false);
+                  widget.onAcceptConditionsChanged(value ??  false); // (true/false/null == false)
                 },
             controlAffinity: ListTileControlAffinity.leading,
             activeColor: GlobalColors.orangeColor,
@@ -308,11 +307,11 @@ class CustomerContactFormComponentState extends State<CustomerContactFormCompone
               ),
             ),
           const SizedBox(height: 20.0),
-          // Button "ENVOYER"
+          // Button circular progress indicator + "SENDING..."
           if (widget.isSending)
           Row(
             children: [
-              Align( // Prevents the button from taking the full horizontal width of the ListView.
+              Align( // Prevents the button from taking the full horizontal width of the ListView
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -370,6 +369,7 @@ class CustomerContactFormComponentState extends State<CustomerContactFormCompone
               )
             ],
           )
+          // Button "SEND"
           else 
           Row(
             children: [
@@ -384,7 +384,7 @@ class CustomerContactFormComponentState extends State<CustomerContactFormCompone
                       width: 200.0,
                       height: 48.0,
                       child: ElevatedButton(
-                        onPressed: widget.sendEmail,
+                        onPressed: widget.sendEmail, // Allows calling the parent function handleSubmit 
                         style: ElevatedButton.styleFrom(
                           backgroundColor: _isHovered ? GlobalColors.thirdColor : GlobalColors.firstColor ,
                           shape: RoundedRectangleBorder(

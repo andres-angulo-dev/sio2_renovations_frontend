@@ -4,7 +4,7 @@ import '../components/my_drawer_component.dart';
 import '../components/professional_contact_form_componenet.dart';
 import '../components/success_popup_component.dart';
 import '../components/footer_component.dart';
-import '../services/contact_form_service.dart';
+import '../manager/contact_form_manager.dart';
 import '../widgets/my_back_to_top_button_widget.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
@@ -32,11 +32,12 @@ class PartnersScreenState extends State<PartnersScreen> {
   final TextEditingController _messageController = TextEditingController();
   String currentItem = 'À propos';
   String currenSubItem = 'Partenaires';
-  bool _isSending = false;
-  bool _showTitleScreen = false;
-  bool _showBackToTopButton = false;
+  bool _isSending = false; // Manages the loading state in the UI (e.g. disabling the button, showing a loading indicator)
+  final ValueNotifier<bool> _isMessageSendingValidated = ValueNotifier(false); // Give the information if the message was sent (true/false) to the child. Syntax allows the variable to be reactive to any state changes for updates in the children
   bool _hasAcceptedConditions = false;
   bool _showConsentError = false;
+  bool _showTitleScreen = false;
+  bool _showBackToTopButton = false;
   bool _showTextAfterMessageSending = false;
   // bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not (only for NavItem with click)
 
@@ -70,13 +71,15 @@ class PartnersScreenState extends State<PartnersScreen> {
     }
   }
 
-    // Check the selection of typeWork before sending it to the backend
+    // Check all the input fields before sending it to the backend
   void handleSubmit() async {
     // Keep if there is an error in the forms
     bool inputInvalid = false;
+
     // Reset the variables on each click of the "Envoyer" button of the form
     setState(() {
       _showConsentError = false; 
+      _showTextAfterMessageSending = false;
     }); 
 
     // Check if checkbox is checked
@@ -93,24 +96,18 @@ class PartnersScreenState extends State<PartnersScreen> {
     // If there is an error, the message does not send
     if (inputInvalid) return; 
 
-    await ContactFormService.submitContactForm(
-      formKey: _formKey, 
-      context: context, 
-      lastNameController: _lastNameController, 
-      firstNameController: _firstNameController, 
-      companyController: _companyController, 
-      emailController: _emailController, 
-      phoneController: _phoneController, 
-      messageController: _messageController, 
-      showSuccessDialog: _showSuccessPopup, // Call SuccesPopupComponent and inside call _resetForm
-      setIsSending: (value) {
-        setState(() => _isSending = value);
-      }
-    );
+    // Open the popup to validate the captcha and send the message
+    await _showSuccessPopup();
+
+    // After Xsecondes reset the state to false after closing the popup
+    Future.delayed(const Duration(seconds: 2), () {
+      _isMessageSendingValidated.value = false;
+    });
   }
 
     // Handle popup when the message is sent
   Future<void> _showSuccessPopup() async {
+
     final result = await showGeneralDialog<bool>(
       context: context,
       barrierDismissible: false, // Prevents closing by tapping background
@@ -119,7 +116,29 @@ class PartnersScreenState extends State<PartnersScreen> {
       transitionDuration: const Duration(milliseconds: 400),
       pageBuilder: (context, animation1, animation2) {
         return SuccessPopupComponent(
-          resetForm: _resetForm,
+          resetForm: _resetForm,      
+          setIsSending: (value) {
+            setState(() => _isSending = value);
+          },
+          isMessageSendingValidated: _isMessageSendingValidated, // Inform the child if he can display the success animation
+          launchSendingMessage: () async {
+            await ContactFormService.submitContactForm(
+              formKey: _formKey,
+              context: context,
+              lastNameController: _lastNameController,
+              firstNameController: _firstNameController,
+              companyController: _companyController,
+              emailController: _emailController,
+              phoneController: _phoneController,
+              messageController: _messageController,
+              setIsSending: (value) {
+                setState(() => _isSending = value);
+              },
+              setMessageSendingValidated: (value) {
+                _isMessageSendingValidated.value = value;
+              },
+            );
+          },
         );
       },
       transitionBuilder: (context, animation, _, child) {
@@ -130,11 +149,15 @@ class PartnersScreenState extends State<PartnersScreen> {
       },
     );
 
-    // If the user clicked OK → result == true
-    if (result == true) setState(() => _showTextAfterMessageSending = true);
+    // If the user clicked "Close" in popup → result == true
+    if (result == true) {
+      setState(() => _showTextAfterMessageSending = true); // Display the text closing popup
+    } else { // If clicked "Return" in popup → result == false
+      setState(() => _isSending = false); // reset loading state
+    }
   }
 
-    // When the SuccessPopup closes
+  // When the SuccessPopup closes
   void _resetForm() {
     _formKey.currentState?.reset();  // allows the visual errors of the form to disappear (Reset the state of form)
     _lastNameController.clear();
@@ -402,13 +425,14 @@ class PartnersScreenState extends State<PartnersScreen> {
                                 width: 3.0,
                                 color: GlobalColors.orangeColor.withValues(alpha: 0.3),
                               ),
+                              // Contact Form
                               Container(
                                 constraints: BoxConstraints(maxWidth: 800.0),
                                 child: Center(
                                   child: ProfessionalContactFormComponent(
                                     formKey: _formKey, 
-                                    firstNameController: _firstNameController, 
                                     lastNameController: _lastNameController, 
+                                    firstNameController: _firstNameController, 
                                     emailController: _emailController, 
                                     phoneController: _phoneController,
                                     companyController: _companyController, 

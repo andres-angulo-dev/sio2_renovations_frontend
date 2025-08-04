@@ -11,6 +11,7 @@ class MyCaptchaWidget extends StatefulWidget {
   final bool isCaptchaValidated;
   final VoidCallback onCaptchaAttempted;
   final bool hasTriedCaptcha;
+  final Function(bool) setIsSending; // Manages the loading state in the UI (e.g. disabling the button, showing a loading indicator)
   
   const MyCaptchaWidget({
     super.key, 
@@ -20,6 +21,7 @@ class MyCaptchaWidget extends StatefulWidget {
     required this.isCaptchaValidated,
     required this.onCaptchaAttempted,
     required this.hasTriedCaptcha,
+    required this.setIsSending,
   });
 
   @override
@@ -27,6 +29,15 @@ class MyCaptchaWidget extends StatefulWidget {
 }
 
 class MyCaptchaWidgetState extends State<MyCaptchaWidget> {
+  @override 
+  void initState() {
+    super.initState();
+
+    // Show loading after the first frame the state in UI (e.g. disable button, show spinner) that continues untils the message is sent in ContactFormService.submitContactForm
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.setIsSending(true); 
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +56,7 @@ class MyCaptchaWidgetState extends State<MyCaptchaWidget> {
                 fontWeight: FontWeight.w500,
                 color: Colors.grey[800],
               ),
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 12.0),
             SliderCaptcha(
@@ -57,11 +69,11 @@ class MyCaptchaWidgetState extends State<MyCaptchaWidget> {
                 GlobalImages.imageCaptha, 
                 fit: BoxFit.fitWidth,
               ),
-              colorCaptChar: GlobalColors.thirdColor, // Puzzle
+              colorCaptChar: GlobalColors.orangeColor, // Puzzle
               colorBar: GlobalColors.fourthColor, // Slide bar
               onConfirm: (value) async {
-                widget.onCaptchaAttempted();
-                widget.onCaptchaValidated(value);
+                widget.onCaptchaAttempted(); // Inform the parent that an attempt has been made 
+                widget.onCaptchaValidated(value); // Transmit the result (true/false) of the attempt to the parent
                 // Allows to automatically recreate a new captcha puzzle right after an attempt
                 if (!value && mounted) {
                   Future.delayed(const Duration(seconds: 1)).then((_) {

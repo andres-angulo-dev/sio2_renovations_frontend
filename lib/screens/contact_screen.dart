@@ -5,7 +5,7 @@ import '../components/my_drawer_component.dart';
 import '../components/customer_contact_form_component.dart';
 import '../components/success_popup_component.dart';
 import '../components/footer_component.dart';
-import '../services/contact_form_service.dart';
+import '../manager/contact_form_manager.dart';
 import '../widgets/my_back_to_top_button_widget.dart';
 import '../widgets/opening_hours_widget.dart';
 import '../utils/global_colors.dart';
@@ -23,6 +23,7 @@ class ContactScreenState extends State<ContactScreen> {
   // Scroll controller for the left and right button in horizontal menu
   final ScrollController _scrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState 
   // Scroll controller for the back to top button and appBar 
+  
   final ScrollController _pageScrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState 
   final GlobalKey _rightBlockKey = GlobalKey();
   final _formKey = GlobalKey<FormState>();
@@ -38,7 +39,8 @@ class ContactScreenState extends State<ContactScreen> {
   final TextEditingController _messageController = TextEditingController();
   double? _rightBlockHeight;
   double? _rightBlockWidht;
-  bool _isSending = false;
+  bool _isSending = false; // Manages the loading state in the UI (e.g. disabling the button, showing a loading indicator)
+  final ValueNotifier<bool> _isMessageSendingValidated = ValueNotifier(false); // Give the information if the message was sent (true/false) to the child. Syntax allows the variable to be reactive to any state changes for updates in the children
   bool _hasAcceptedConditions = false;
   bool _showConsentError = false;
   String currentItem = 'Contact';
@@ -79,14 +81,16 @@ class ContactScreenState extends State<ContactScreen> {
     }
   }
 
-    // Check the selection of typeWork before sending it to the backend
+  // Check all the input fields before sending it to the backend
   void handleSubmit() async {
     // Keep if there is an error in the forms
     bool inputInvalid = false;
+
     // Reset the variables on each click of the "Envoyer" button of the form
     setState(() {
       _showTypeWorkError = false;
-      _showConsentError = false; 
+      _showConsentError = false;
+      _showTextAfterMessageSending = false;
     }); 
 
     // Check if checkbox is checked
@@ -109,28 +113,18 @@ class ContactScreenState extends State<ContactScreen> {
     // If there is an error, the message does not send
     if (inputInvalid) return; 
 
-    await ContactFormService.submitContactForm(
-      formKey: _formKey, 
-      context: context, 
-      requestTypeController: _requestTypeController,
-      lastNameController: _lastNameController, 
-      firstNameController: _firstNameController, 
-      companyController: _companyController, 
-      emailController: _emailController, 
-      phoneController: _phoneController, 
-      typeWork: _typeWork.value,
-      startDateController: _startDateController,
-      addressController: _addressController,
-      messageController: _messageController, 
-      showSuccessDialog: _showSuccessPopup, // Call SuccesPopupComponent and inside call _resetForm
-      setIsSending: (value) {
-        setState(() => _isSending = value);
-      }
-    );
+    // Open the popup to validate the captcha and send the message
+    await _showSuccessPopup();
+
+    // After Xsecondes reset the state to false after closing the popup
+    Future.delayed(const Duration(seconds: 2), () {
+      _isMessageSendingValidated.value = false;
+    });
   }
 
   // Handle popup when the message is sent
   Future<void> _showSuccessPopup() async {
+    
     final result = await showGeneralDialog<bool>(
       context: context,
       barrierDismissible: false, // Prevents closing by tapping background
@@ -140,6 +134,32 @@ class ContactScreenState extends State<ContactScreen> {
       pageBuilder: (context, animation1, animation2) {
         return SuccessPopupComponent(
           resetForm: _resetForm,
+          setIsSending: (value) { 
+            setState(() => _isSending = value); 
+          },
+          isMessageSendingValidated: _isMessageSendingValidated, // Inform the child if he can display the success animation
+          launchSendingMessage: () async {
+            await ContactFormService.submitContactForm(
+              formKey: _formKey,
+              context: context,
+              requestTypeController: _requestTypeController,
+              lastNameController: _lastNameController,
+              firstNameController: _firstNameController,
+              companyController: _companyController,
+              emailController: _emailController,
+              phoneController: _phoneController,
+              typeWork: _typeWork.value,
+              startDateController: _startDateController,
+              addressController: _addressController,
+              messageController: _messageController,
+              setIsSending: (value) {
+                setState(() => _isSending = value);
+              },
+              setMessageSendingValidated: (value) {
+                _isMessageSendingValidated.value = value;
+              },
+            );
+          },
         );
       },
       transitionBuilder: (context, animation, _, child) {
@@ -150,8 +170,12 @@ class ContactScreenState extends State<ContactScreen> {
       },
     );
 
-    // If the user clicked OK → result == true
-    if (result == true) setState(() => _showTextAfterMessageSending = true);
+    // If the user clicked "Close" in popup → result == true
+    if (result == true) {
+      setState(() => _showTextAfterMessageSending = true); // Display the text closing popup
+    } else { // If clicked "Return" in popup → result == false
+      setState(() => _isSending = false); // reset loading state
+    }
   }
 
   // When the SuccessPopup closes

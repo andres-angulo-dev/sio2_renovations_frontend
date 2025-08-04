@@ -1,10 +1,11 @@
+// Is called by ContactFormService
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import '../models/contact_form_request.dart';
+import '../models/contact_form_request_model.dart';
 
 class ContactFormApi {
-  static Future<bool> send(ContactFormRequest request) async {
+  static Future<bool> send(ContactFormRequestModel request) async {
     final backendUrl = dotenv.env['BACKEND_URL'];
 
     if (backendUrl == null || backendUrl.isEmpty) {

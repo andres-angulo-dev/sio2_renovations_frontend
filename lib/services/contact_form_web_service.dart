@@ -1,6 +1,7 @@
+// Is called by ContactScreen 
 import 'package:flutter/material.dart';
 import '../api/contact_form_api.dart';
-import '../models/contact_form_request.dart';
+import '../models/contact_form_request_model.dart';
 
 class ContactFormService {
   static Future<void> submitContactForm({
@@ -16,11 +17,9 @@ class ContactFormService {
     TextEditingController? startDateController,                    
     TextEditingController? addressController,                     
     required TextEditingController messageController,
-    required VoidCallback showSuccessDialog,
-    required Function(bool) setIsSending,
+    required Function(bool) setIsSending, // Manages the loading state in the UI (e.g. disabling the button, showing a loading indicator)
+    required Function(bool) setMessageSendingValidated // Give the information if the message was sent (true/false) to the parent
   }) async {
-    // Show loading state in UI (e.g. disable button, show spinner)
-    setIsSending(true);
 
     // If form fields invalid, stop sending. Reset loading state and abort
     if (!formKey.currentState!.validate()) {
@@ -28,7 +27,7 @@ class ContactFormService {
       return;
     }
 
-    final request = ContactFormRequest(
+    final request = ContactFormRequestModel(
       requestType: requestTypeController?.text.isEmpty ?? true ? null : requestTypeController!.text,
       firstName: firstNameController.text,
       lastName: lastNameController.text,
@@ -44,17 +43,18 @@ class ContactFormService {
     try {
       // Send the request to the API
       final responseData = await ContactFormApi.send(request);
-      // If the API indicates success, show the success dialog
+      
+      // If the API indicates success, send true to the parent to display the success animation in SuccessPopupComponent
       if (responseData) {
-        showSuccessDialog();
+        setMessageSendingValidated(true);
       }
     } catch (error) { // On error, show a SnackBar with the error message (ensure context is still mounted)
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erreur : ${error.toString()}')),
+        SnackBar(content: Text('Error : ${error.toString()}')),
       );
     } finally {
-      setIsSending(false); // Always reset loading state at the end
+      setIsSending(false); // Always reset loading state at the end. End the loading state in the UI that comes from the beginning of the captcha in MyCaptchaWidget
     }
   }
 }

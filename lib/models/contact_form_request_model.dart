@@ -1,5 +1,17 @@
-class ContactFormRequest {
-  ContactFormRequest({
+// Is called by ContactFormService and ContactFormApi
+class ContactFormRequestModel {
+  final String? requestType;
+  final String lastName;
+  final String firstName;
+  final String company;
+  final String email;
+  final String phone;
+  final List<String>? typeWork;
+  final String? startDate;
+  final String? address;
+  final String message;
+
+  ContactFormRequestModel({
     this.requestType,
     required this.lastName,
     required this.firstName,
@@ -11,17 +23,6 @@ class ContactFormRequest {
     this.address,
     required this.message,
   });
-
-  final String? requestType;
-  final String lastName;
-  final String firstName;
-  final String company;
-  final String email;
-  final String phone;
-  final List<String>? typeWork;
-  final String? startDate;
-  final String? address;
-  final String message;
 
   Map<String, dynamic> toJson() {
     return {
