@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:web/web.dart';
 import './screens/landing_screen.dart';
 import './screens/about_screen.dart';
 import './screens/contact_screen.dart';
@@ -15,10 +16,25 @@ import './utils/global_others.dart';
 Future<void> main() async {
   try {
     await dotenv.load(fileName: 'local.env'); // Load environment variables from the local.env file
+    injectGoogleMapsScript(); // Inject the Google Maps script
     runApp(const MyApp());
   } catch (error) {
     debugPrint('Error loading local.env file: $error');
   }
+}
+
+void injectGoogleMapsScript() {
+  final googleMapsApiKey = dotenv.env['GOOGLE_MAPS_API_KEY'];
+  if (googleMapsApiKey == null) {
+    debugPrint("Google Maps API key not found in .env");
+    return;
+  }
+  
+  final script = HTMLScriptElement()
+    ..src = 'https://maps.googleapis.com/maps/api/js?key=$googleMapsApiKey'
+    ..async = true
+    ..defer = true;
+  document.body!.append(script);
 }
 
 class MyApp extends StatelessWidget {
