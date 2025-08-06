@@ -123,7 +123,7 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 22.0),
         child: SizedBox(
-          width: 1400.0,
+          // width: 1400.0,
           child: Column(
             children: [
               Text(
@@ -136,10 +136,14 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 50.0),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+              Wrap(
+                spacing: 100.0,
+                runSpacing: 50.0,
+                alignment: WrapAlignment.center,
                 children: [
-                  Expanded(
+                  // Left block: key figures
+                  ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 600.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -164,30 +168,28 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
                           "Des surfaces transformées avec soin et professionnalisme pour des habitats modernisés et fonctionnels."
                         ),
                       ],
-                    )
+                    ),
                   ),
-                  const SizedBox(width: 50.0),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Découvrez en un coup d'oeil, nos dernières réalisations",
-                          style: TextStyle(
-                            fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                            color: GlobalColors.secondColor,
-                          ),
-                          textAlign: TextAlign.center,
+                  // Right bloc: Google Maps
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Découvrez en un coup d'oeil, nos dernières réalisations",
+                        style: TextStyle(
+                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                          color: GlobalColors.secondColor,
                         ),
-                        const SizedBox(height: 30.0),
-                        SizedBox(
-                          height: 600.0,
-                          width: 600.0,
-                          child: MyGoogleMapWidget(),
-                        )
-                      ],
-                    )
-                  )
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 30.0),
+                      SizedBox(
+                        height: 600.0,
+                        width: 600.0,
+                        child: MyGoogleMapWidget(),
+                      )
+                    ],
+                  ) 
                 ],
               )
             ],

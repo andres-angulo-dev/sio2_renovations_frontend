@@ -1,9 +1,9 @@
 // only infoWindow
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../data/google_map_data.dart';
 import '../utils/global_others.dart';
+import '../utils/global_screen_sizes.dart';
 
 class MyGoogleMapWidget extends StatefulWidget {
   const MyGoogleMapWidget({super.key});
@@ -14,8 +14,9 @@ class MyGoogleMapWidget extends StatefulWidget {
 
 class MyGoogleMapWidgetState extends State<MyGoogleMapWidget> {
   late GoogleMapController mapController;
-  final String googleMapsApiKey = dotenv.env['GOOGLE_MAPS_API_KEY'] ?? '';
+  
   final LatLng _center = const LatLng(48.8566, 2.3522); // Paris
+  LatLng? _selectedMarkerPosition;
   Set<Marker> _markers = {}; 
 
   // Variables controlling the custom InfoWindow visibility and content
@@ -29,6 +30,11 @@ class MyGoogleMapWidgetState extends State<MyGoogleMapWidget> {
   void initState() {
     super.initState();
     _initializeMarkers();
+  }
+
+  // Allows capturing the GoogleMapController to: use getScreenCoordinate() to position the info window / handle actions like animateCamera, getZoomLevel, etc.
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
   }
 
   // Converts a LatLng position into screen coordinates (pixels) 
@@ -58,11 +64,20 @@ class MyGoogleMapWidgetState extends State<MyGoogleMapWidget> {
     });
   }
 
-
   // Hides the InfoWindow when clicked
   void _hideCustomInfoWindow() {
     setState(() {
       _isInfoWindowVisible = false;
+    });
+  }
+
+  // At each movement, recalculate the Offset of the LatLng of the selected marker
+  Future<void> _updateInfoWindowPosition() async {
+    if (_selectedMarkerPosition == null) return;
+
+    final screenPosition = await mapController.getScreenCoordinate(_selectedMarkerPosition!);
+    setState(() {
+      _infoWindowOffset = Offset(screenPosition.x.toDouble(), screenPosition.y.toDouble());
     });
   }
 
@@ -73,56 +88,80 @@ class MyGoogleMapWidgetState extends State<MyGoogleMapWidget> {
     _markers = googleMapData.map((data) => Marker(
       markerId: MarkerId(data["id"]),
       position: data["position"],
-      onTap: () => _showCustomInfoWindow(
-        data["position"],
-        data["title"],
-        data["description"],
-        data["image"],
-      ),
+      onTap: () {
+        // Allows to recenter upon clicking on a marker by creating a CameraPosition from your LatLng
+        mapController.animateCamera(
+          CameraUpdate.newCameraPosition(
+            CameraPosition(
+              target: data["position"],
+              zoom: 12.0 
+            )
+          )
+        );
+        _selectedMarkerPosition = data["position"]; // On click capture the position of the marker to update the infoWindow
+        _updateInfoWindowPosition(); // function to fixe the position of the marker on the map
+        // Display the infoWindow
+        _showCustomInfoWindow(
+          data["position"],
+          data["title"],
+          data["description"],
+          data["image"],
+        );
+      },
       icon: myCustomMarker // Applies custom marker icon
     )).toSet(); 
 
     setState(() {});
   }
 
-
   @override
   Widget build(BuildContext context) {
+    bool isMobile = GlobalScreenSizes.isMobileScreen(context);
+
     return Stack(
       children: [
         // Google Map widget displaying markers
         GoogleMap(
-          onMapCreated: (controller) => mapController = controller,
-          initialCameraPosition: CameraPosition(target: _center, zoom: 12.0),
-          markers: _markers,
+          onMapCreated: _onMapCreated, // GoogleMapController
+          initialCameraPosition: CameraPosition(target: _center, zoom: 12.0), // Initially position the map on Paris
+          onCameraMove: (CameraPosition position) => _updateInfoWindowPosition(), // fixes the position of the infoWindow on the map
+          markers: _markers, // Display the markers
           mapType: MapType.normal,
+          mapToolbarEnabled: false, // Disable navigation icons on the bottom
         ),
         // Custom InfoWindow displayed dynamically near the clicked marker
-        if (_isInfoWindowVisible) Positioned(
-          top: _infoWindowOffset.dy - 250, // Adjust vertical position
-          left: _infoWindowOffset.dx - 0, // Align horizontally
+        if (_isInfoWindowVisible) Positioned(   
+          top: isMobile ? null : _infoWindowOffset.dy - 250, // Adjust vertical position for web
+          bottom: isMobile ? 10.0 : null, // Adjust vertical position for mobile
+          left: isMobile ? 10.0 : _infoWindowOffset.dx - 0, // Align horizontally mobile and web
           child: GestureDetector(
             onTap: _hideCustomInfoWindow,
             child: Container(
-              width: 200,
+              width: 200.0,
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
-                boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 4)],
+                boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 4.0)],
               ),
               child: Column(
                 children: [
                   // Displays all content inside the InfoWindow
-                  Image.asset(_infoWindowImage, width: 180, height: 100, fit: BoxFit.cover),
+                  Image.asset(_infoWindowImage, width: 180.0, height: 100.0, fit: BoxFit.cover),
                   SizedBox(height: 10.0),
                   Text(_infoWindowTitle, style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
                   SizedBox(height: 10.0),
                   Text(_infoWindowDescription, textAlign: TextAlign.justify,),
                   SizedBox(height: 10.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [TextButton(onPressed: _hideCustomInfoWindow, child: Text("Fermer")),],
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: TextButton(
+                        onPressed: _hideCustomInfoWindow, 
+                        child: Text("Fermer")
+                      ),
+                    ) 
                   )
                 ],
               ),
@@ -134,7 +173,9 @@ class MyGoogleMapWidgetState extends State<MyGoogleMapWidget> {
   }
 }
 
-//// with infoWindow + Popover 
+
+
+// // With infoWindow + Popover 
 // import 'package:flutter/material.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
