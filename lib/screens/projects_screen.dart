@@ -141,14 +141,18 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
   // The filtered list of photos that will be transmitted to the PhotoWallWidget.
   List<String> get filteredPhotos {
     if (selectedService == 'TOUT VOIR') {
-      // Combine all the photos
-      final List<String> allPhotos = [];
-      GlobalData.photosWall.forEach((service, photos) {
-        allPhotos.addAll(photos);
-      });
-      return allPhotos;
+      // Combine all the photos 
+      return GlobalData.photosWall.values.expand((list) => list).toList(); // .values → gets all the lists .expand → flattens them into a single list .toList → converts the result into a usable List<String>
+
+      // // Combine all the photos
+      // final List<String> allPhotos = [];
+      // GlobalData.photosWall.forEach((service, photos) {
+      //   allPhotos.addAll(photos);
+      // });
+      // return allPhotos;
     }
-    return GlobalData.photosWall[selectedService] ?? [];
+
+    return GlobalData.photosWall[selectedService.toLowerCase()] ?? [];
   }
 
   // Update of the service selection
@@ -180,7 +184,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
   
   @override
   Widget build(BuildContext context) {
-    final mobile = GlobalScreenSizes.isMobileScreen(context);
+    final isMobile = GlobalScreenSizes.isMobileScreen(context);
 
     return Scaffold(
       appBar: MyNavBarComponent(
@@ -188,7 +192,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
         onItemSelected: updateCurrentItem,
         // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable // (only for NavItem with click)
       ),
-      endDrawer: mobile // && !_isDesktopMenuOpen (only for NavItem with click)
+      endDrawer: isMobile // && !_isDesktopMenuOpen (only for NavItem with click)
       ? MyDrawerComponent( 
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
@@ -228,7 +232,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
                           child: VerticalWordsCarouselWidget(),
                         ),
                       ),
-                      // bottom rectangle shape 
+                      // Bottom rectangle shape 
                       Positioned(
                         bottom: 0.0,
                         height: 150.0,
@@ -240,10 +244,10 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
                       // White container centered at the bottom of the image
                       Positioned(
                         bottom: 0.0, // Align at the bottom
-                        left: mobile ? null : GlobalScreenSizes.screenWidth(context) * 0.25, // Center horizontally 
+                        left: isMobile ? null : GlobalScreenSizes.screenWidth(context) * 0.25, // Center horizontally 
                         child: Container(
                           height: 300.0,
-                          width: mobile ? GlobalScreenSizes.screenWidth(context) : GlobalScreenSizes.screenWidth(context) * 0.5,
+                          width: isMobile ? GlobalScreenSizes.screenWidth(context) : GlobalScreenSizes.screenWidth(context) * 0.5,
                           padding: GlobalScreenSizes.isCustomSize(context, 326.0) ? const EdgeInsetsDirectional.symmetric(horizontal: 20.0) : const EdgeInsets.all(60.0), // Add padding inside the container 
                           decoration: BoxDecoration(
                             color: GlobalColors.firstColor,
@@ -260,7 +264,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
                                   Text(
                                     "NOS RÉALISATIONS",
                                     style: TextStyle(
-                                      fontSize: 30.0,
+                                      fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
                                       fontWeight: FontWeight.bold,
                                       color: GlobalColors.thirdColor,
                                     ),
@@ -270,7 +274,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
                                   Text(
                                     "Une entreprise de rénovation tous corps d'état sur Paris et ses environs",
                                     style: TextStyle(
-                                      fontSize: 16.0,
+                                      fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                       color: Colors.black87,
                                     ),
                                     textAlign: TextAlign.center,
@@ -319,7 +323,10 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
                                 onHorizontalDragUpdate: (details) {
                                   _scrollController.jumpTo(_scrollController.offset - details.delta.dx);
                                 },
-                                onTap: () => updateSelectedService(service['title']!),
+                                // onTap: () => updateSelectedService(service['title']!),
+                                onTap: () { 
+                                  updateSelectedService(service['title']!);
+                                },
                                 child: Container(
                                   alignment: Alignment.center,
                                   height: 100.0,
@@ -335,7 +342,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
                                     cursor: SystemMouseCursors.click,
                                     child: Stack(
                                       children: [
-                                        Image.network(
+                                        Image.asset(
                                           service['image']!,
                                           fit: BoxFit.cover,
                                           width: double.infinity,
@@ -429,7 +436,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
                                 style: TextStyle(
                                   color: GlobalColors.firstColor,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 42.0,
+                                  fontSize: isMobile ? GlobalSize.mobileBigTitle : GlobalSize.webBigTitle,
                                 ),
                               ),
                             ), 

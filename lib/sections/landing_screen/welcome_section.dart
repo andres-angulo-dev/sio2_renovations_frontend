@@ -1,17 +1,18 @@
 // Animation Typewrite effect
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart'; 
-import '../widgets/my_rive_button_widget.dart';
-import '../utils/global_colors.dart';
-import '../utils/global_others.dart';
-import '../utils/global_screen_sizes.dart';
+import '../../widgets/my_rive_button_widget.dart';
+import '../../utils/global_colors.dart';
+import '../../utils/global_others.dart';
+import '../../utils/global_screen_sizes.dart';
 
 class WelcomeSection extends StatelessWidget {
   const WelcomeSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = GlobalScreenSizes.screenWidth(context);
+    bool isMobile = GlobalScreenSizes.isMobileScreen(context);
 
     return SizedBox(
       height: MediaQuery.of(context).size.height,
@@ -73,6 +74,7 @@ class WelcomeSection extends StatelessWidget {
                       width: 150,
                       height: 50,
                       child: MyRiveButtonWidget(
+                        onPressed: () => isMobile ? Navigator.pushNamed(context, '/contact') : null,
                         enableCursor: false,
                         buttonPath: GlobalButtonsAndIcons.callUsButton,
                       ),

@@ -1,10 +1,10 @@
 // Width Carrousel slide widget
 import 'package:flutter/material.dart';
 import 'package:carousel_slider_plus/carousel_slider_plus.dart';
-import '../widgets/my_hover_route_navigator_widget.dart';
-import '../utils/global_colors.dart';
-import '../utils/global_others.dart';
-import '../utils/global_screen_sizes.dart';
+import '../../widgets/my_hover_route_navigator_widget.dart';
+import '../../utils/global_colors.dart';
+import '../../utils/global_others.dart';
+import '../../utils/global_screen_sizes.dart';
 
 class WhatTypeOfRenovationsSection extends StatefulWidget {
   const WhatTypeOfRenovationsSection({super.key});

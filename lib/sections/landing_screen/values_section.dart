@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../utils/global_colors.dart';
-import '../utils/global_others.dart';
-import '../utils/global_screen_sizes.dart';
+import '../../utils/global_colors.dart';
+import '../../utils/global_others.dart';
+import '../../utils/global_screen_sizes.dart';
 
 class ValuesSection extends StatefulWidget {
   const ValuesSection({super.key});

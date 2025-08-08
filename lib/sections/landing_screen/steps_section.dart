@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import '../data/steps_data.dart';
-import '../widgets/my_rive_button_widget.dart';
-import '../utils/global_screen_sizes.dart';
-import '../utils/global_colors.dart';
-import '../utils/global_others.dart';
+import '../../data/steps_data.dart';
+import '../../widgets/my_rive_button_widget.dart';
+import '../../utils/global_screen_sizes.dart';
+import '../../utils/global_colors.dart';
+import '../../utils/global_others.dart';
 
 class StepsSection extends StatefulWidget {
   const StepsSection({super.key});

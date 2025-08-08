@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import '../data/services_data.dart';
-import '../utils/global_others.dart';
-import '../utils/global_colors.dart';
-import '../utils/global_screen_sizes.dart';
+import '../../data/services_data.dart';
+import '../../utils/global_others.dart';
+import '../../utils/global_colors.dart';
+import '../../utils/global_screen_sizes.dart';
 
 class ServicesSection extends StatefulWidget {
   const ServicesSection({super.key});
@@ -243,7 +243,7 @@ class ServicesSectionState extends State<ServicesSection> with SingleTickerProvi
                             'avec modernité et élégance.\n\n'
                             'Notre engagement repose sur des équipes d’artisans qualifiés, sélectionnés pour leur sérieux et leur exigence du détail. '
                             'Et pour une transparence totale, nous tenons nos clients informés des avancées des travaux grâce à des suivis réguliers et détaillés.\n\n '
-                            'Quelle que soit la complexité du chantier, avec ou sans architecte,  nous nous adaptons aux imprévus et veillons à respecter délais et budget, '
+                            'Quelle que soit la complexité du chantier, nous nous adaptons aux imprévus et veillons à respecter délais et budget, '
                             'tout en garantissant un haut niveau de qualité.',
                             style: TextStyle(
                               fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
@@ -280,7 +280,49 @@ class ServiceTitleState extends State<ServiceTitle> {
   Widget build(BuildContext context) {
   final bool isMobile = GlobalScreenSizes.isMobileScreen(context);
   
-    return MouseRegion(
+    return isMobile ? 
+    SizedBox(
+      width: 200.0,
+      height: 300.0,
+      child: ClipRRect( // Allows you to make invisible what is larger than the parent container
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(32),
+          topRight: Radius.circular(32),
+          bottomLeft: Radius.circular(32),
+        ),
+        child: Stack(
+          children: [
+            // Image with hover scale effect                
+            Image.asset(
+              widget.services["image"]!, 
+              width: 200.0,
+              height: 300.0,
+              fit: BoxFit.cover,
+            ),
+            // Bottom overlay with profession title appearing on hover
+            AnimatedPositioned(
+              width: 200.0,
+              duration: Duration(milliseconds: 300), // Smooth slide-up animation
+              bottom: 0.0, // Moves up when hovered
+              child: Container(
+                height: 30.0,
+                color: GlobalColors.fourthColor, 
+                alignment: Alignment.center, 
+                child: Text(
+                  widget.services["title"]!,
+                  style: TextStyle(
+                    color: GlobalColors.thirdColor,
+                    fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      )
+    ) 
+    : MouseRegion(
       onEnter: (_) => setState(() => isHovered = true), 
       onExit: (_) => setState(() => isHovered = false), 
       child: TweenAnimationBuilder(
@@ -302,35 +344,35 @@ class ServiceTitleState extends State<ServiceTitle> {
               bottomLeft: Radius.circular(32),
             ),
             child: Stack(
-            children: [
-              // Image with hover scale effect                
-              Image.asset(
-                widget.services["image"]!, 
-                width: 200.0,
-                height: 300.0,
-                fit: BoxFit.cover,
-              ),
-              // Bottom overlay with profession title appearing on hover
-              AnimatedPositioned(
-                width: 200.0,
-                duration: Duration(milliseconds: 300), // Smooth slide-up animation
-                bottom: isHovered ? 0.0 : -30.0, // Moves up when hovered
-                child: Container(
-                  height: 30.0,
-                  color: GlobalColors.fourthColor, 
-                  alignment: Alignment.center, 
-                  child: Text(
-                    widget.services["title"]!,
-                    style: TextStyle(
-                      color: GlobalColors.thirdColor,
-                      fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                      fontWeight: FontWeight.bold,
+              children: [
+                // Image with hover scale effect                
+                Image.asset(
+                  widget.services["image"]!, 
+                  width: 200.0,
+                  height: 300.0,
+                  fit: BoxFit.cover,
+                ),
+                // Bottom overlay with profession title appearing on hover
+                AnimatedPositioned(
+                  width: 200.0,
+                  duration: Duration(milliseconds: 300), // Smooth slide-up animation
+                  bottom: isHovered ? 0.0 : -30.0, // Moves up when hovered
+                  child: Container(
+                    height: 30.0,
+                    color: GlobalColors.fourthColor, 
+                    alignment: Alignment.center, 
+                    child: Text(
+                      widget.services["title"]!,
+                      style: TextStyle(
+                        color: GlobalColors.thirdColor,
+                        fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-              )
-            ],
-          ),
+                )
+              ],
+            ),
           )
         ) 
       ),

@@ -29,7 +29,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
   late Animation<Offset> _contactSlideController;
   late Animation<double> _contactFadeAnimation;
 
-  final bool mobile = false;
+  final bool isMobile = false;
   String currentItem = 'À propos';
   String currentSubItem = 'Qui sommes nous ?';
   bool _show = false;
@@ -136,7 +136,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
   
   @override
   Widget build(BuildContext context) {
-    final mobile = GlobalScreenSizes.isMobileScreen(context);
+    bool isMobile = GlobalScreenSizes.isMobileScreen(context);
     final screenWidth = GlobalScreenSizes.screenWidth(context);
 
     return Scaffold(
@@ -146,7 +146,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
         currentSubItem: currentSubItem,
         // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable (only for NavItem with click)
       ),
-      endDrawer: mobile // && !_isDesktopMenuOpen (only for NavItem with click)
+      endDrawer: isMobile // && !_isDesktopMenuOpen (only for NavItem with click)
         ? MyDrawerComponent(
           currentItem: currentItem,
           onItemSelected: updateCurrentItem,
@@ -160,6 +160,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
           return SingleChildScrollView(
             child: Column(
               children: [
+                // Welcome
                 SizedBox(
                   height: availableHeight,
                   width: screenWidth, // Take full width
@@ -176,9 +177,10 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                           )
                         ),
                       ),
+                      // Welcome sentence
                       Positioned(
-                        top: 200,
-                        right: 0,
+                        top: isMobile ? 100.0 : 200.0,
+                        right: 0.0,
                         child: AnimatedBuilder(
                           animation: _historyAnimationController, 
                           builder: (context, child) {
@@ -190,41 +192,41 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                               ),
                             );
                           },      
-                            child: Container(
-                              padding: EdgeInsets.all(40.0),
-                              width: mobile ? screenWidth : screenWidth *0.32,
-                              color: GlobalColors.firstColor.withValues(alpha: 0.4),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    "\"Faites de votre vie un rêve, et d’un rêve, une réalité.\"",
-                                    style: TextStyle(
-                                      fontFamily: 'DancingScript',
-                                      fontSize: 36.0,
-                                      fontWeight: FontWeight.w800,
-                                      fontStyle: FontStyle.italic,
-                                    ),
-                                    textAlign: TextAlign.end,
+                          child: Container(
+                            padding: EdgeInsets.all(40.0),
+                            width: isMobile ? screenWidth * 0.9 : screenWidth * 0.32,
+                            color: GlobalColors.firstColor.withValues(alpha: 0.4),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  "\"Faites de votre vie un rêve, et d’un rêve, une réalité.\"",
+                                  style: TextStyle(
+                                    fontFamily: 'DancingScript',
+                                    fontSize: isMobile ? GlobalSize.welcomeSectionMobileTitle : GlobalSize.welcomeSectionWebTitle,
+                                    fontWeight: FontWeight.w800,
+                                    fontStyle: FontStyle.italic,
                                   ),
-                                  SizedBox(height: 20.0),
-                                  Text(
-                                    "Antoine de Saint-Exupéry",
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      fontFamily: 'Roboto',
-                                    ),
-                                    textAlign: TextAlign.end,
+                                  textAlign: TextAlign.end,
+                                ),
+                                SizedBox(height: 20.0),
+                                Text(
+                                  "Antoine de Saint-Exupéry",
+                                  style: TextStyle(
+                                    fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
+                                    fontFamily: 'Roboto',
                                   ),
-                                ],
-                              ),
-                            )
+                                  textAlign: TextAlign.end,
+                                ),
+                              ],
+                            ),
+                          )
                         )
                       ),
-                      // bottom rectangle shape 
+                      // Bottom rectangle shape 
                       Positioned(
-                        bottom: 0,
+                        bottom: 0.0,
                         height: 150.0,
                         width: screenWidth,
                         child: Container(
@@ -233,11 +235,11 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                       ),
                       // White container centered at the bottom of the image
                       Positioned(
-                        bottom: 0, // Align at the bottom
-                        left: mobile ? null : screenWidth * 0.25 , // Center horizontally 
+                        bottom: 0.0, // Align at the bottom
+                        left: isMobile ? null : screenWidth * 0.25 , // Center horizontally 
                         child: Container(
                           constraints: BoxConstraints(minHeight: 300.0),
-                          width: mobile ? screenWidth : screenWidth * 0.5, 
+                          width: isMobile ? screenWidth : screenWidth * 0.5, 
                           padding: const EdgeInsets.all(60.0), // Add padding inside the container
                           decoration: BoxDecoration(
                             color: Colors.white, // White background
@@ -254,17 +256,17 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                                   Text(
                                     "QUI SOMMES-NOUS ?",
                                     style: TextStyle(
-                                      fontSize: 30, // Adjust font size
+                                      fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle, // Adjust font size
                                       fontWeight: FontWeight.bold,
                                       color: GlobalColors.thirdColor,
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
-                                  const SizedBox(height: 20), // Space between
+                                  const SizedBox(height: 20.0), // Space between
                                   Text(
                                     "Entreprise générale du bâtiment à Paris, tous corps d’état, spécialisée dans la rénovation partielle, complète, et la remise en état après sinistre.",
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                       color: Colors.black87,
                                     ),
                                     textAlign: TextAlign.center,
@@ -278,77 +280,132 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                     ],
                   ),
                 ),
-                const SizedBox(height: 100.0),
-                SizedBox(
-                  height: 600.0,
-                  width: screenWidth,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
+                const SizedBox(height: 50.0),
+                isMobile 
+                ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    VisibilityDetector(
+                      key: const Key('section_history'), 
+                      onVisibilityChanged: (info) {
+                        if (info.visibleFraction > 0.3) {
+                          setState(() {
+                            _showHistorySection = true;
+                          });
+                        }
+                      },
+                      child: AnimatedOpacity(
+                        opacity: _showHistorySection ? 1.0 : 0.0, 
+                        duration: const Duration(milliseconds: 1500),
                         child: Center(
                           child: Container(
-                            width: 1500.0,
-                            height: 1000.0,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage(GlobalImages.backgroundLanding),
-                                fit: BoxFit.cover,
-                              )
-                            ),
-                          )
-                        )
-                      ),
-                      Expanded(
-                        child: VisibilityDetector(
-                          key: const Key('section_history'), 
-                          onVisibilityChanged: (info) {
-                            if (info.visibleFraction > 0.3) {
-                              setState(() {
-                                _showHistorySection = true;
-                              });
-                            }
-                          },
-                          child: AnimatedOpacity(
-                            opacity: _showHistorySection ? 1.0 : 0.0, 
-                            duration: const Duration(milliseconds: 1500),
-                            child: Center(
-                              child: Container(
-                                height: 600.0,
-                                width: 1000.0,
-                                padding: EdgeInsets.all(16.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "NOTRE HISTOIRE !",
-                                      style: TextStyle(
-                                        fontSize: 30.0, // Adjust font size
-                                        fontWeight: FontWeight.bold,
-                                        color: GlobalColors.thirdColor,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    const SizedBox(height: 20.0), // Space between
-                                    Text(
-                                      "${GlobalPersonalData.companyName} est le fruit de la fusion entre deux familles partageant plus de 30 ans d’expérience dans le bâtiment.\n\nNous mettons ce savoir-faire à votre service, que ce soit pour rénover un studio, un appartement, une maison entière ou un local commercial. Capables de prendre en charge des projets de toutes tailles, nous répondons aussi bien aux petits travaux de rénovation qu’aux défis les plus ambitieux.",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.black87,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
+                            padding: EdgeInsets.all(16.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "NOTRE HISTOIRE !",
+                                  style: TextStyle(
+                                    fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle, // Adjust font size
+                                    fontWeight: FontWeight.bold,
+                                    color: GlobalColors.thirdColor,
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
-                              ),
-                            ) 
-                          ), 
-                        ), 
+                                const SizedBox(height: 20.0), // Space between
+                                Text(
+                                  "${GlobalPersonalData.companyName} est le fruit de la fusion entre deux familles partageant plus de 30 ans d’expérience dans le bâtiment.\n\nNous mettons ce savoir-faire à votre service, que ce soit pour rénover un studio, un appartement, une maison entière ou un local commercial. Capables de prendre en charge des projets de toutes tailles, nous répondons aussi bien aux petits travaux de rénovation qu’aux défis les plus ambitieux.",
+                                  style: TextStyle(
+                                    fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                    color: Colors.black87,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ) 
+                      ), 
+                    ), 
+                    const SizedBox(height: 20.0), // Space between
+                    Center(
+                      child: Container(
+                        height: 600.0,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(GlobalImages.backgroundLanding),
+                            fit: BoxFit.cover,
+                          )
+                        ),
                       )
-                    ]
-                  ),
+                    ),
+                  ]
+                )
+                : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      child: Container(
+                        height: 600.0,
+                        constraints: BoxConstraints(maxWidth: 800.0),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(GlobalImages.backgroundLanding),
+                            fit: BoxFit.cover,
+                          )
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 30.0), // Space between
+                    Flexible(
+                      child: VisibilityDetector(
+                        key: const Key('section_history'), 
+                        onVisibilityChanged: (info) {
+                          if (info.visibleFraction > 0.3) {
+                            setState(() {
+                              _showHistorySection = true;
+                            });
+                          }
+                        },
+                        child: AnimatedOpacity(
+                          opacity: _showHistorySection ? 1.0 : 0.0, 
+                          duration: const Duration(milliseconds: 1500),
+                          child: Center(
+                            child: Container(
+                              height: 600.0,
+                              constraints: BoxConstraints(maxWidth: 800.0),
+                              padding: EdgeInsets.all(16.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "NOTRE HISTOIRE !",
+                                    style: TextStyle(
+                                      fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle, // Adjust font size
+                                      fontWeight: FontWeight.bold,
+                                      color: GlobalColors.thirdColor,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 20.0), // Space between
+                                  Text(
+                                    "${GlobalPersonalData.companyName} est le fruit de la fusion entre deux familles partageant plus de 30 ans d’expérience dans le bâtiment.\n\nNous mettons ce savoir-faire à votre service, que ce soit pour rénover un studio, un appartement, une maison entière ou un local commercial. Capables de prendre en charge des projets de toutes tailles, nous répondons aussi bien aux petits travaux de rénovation qu’aux défis les plus ambitieux.",
+                                    style: TextStyle(
+                                      fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                      color: Colors.black87,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ) 
+                        ), 
+                      ), 
+                    )
+                  ]
                 ),
-                const SizedBox(height: 140.0),
+                const SizedBox(height: 150.0),
                 VisibilityDetector(
                   key: const Key('section_services'), 
                   onVisibilityChanged: (info) {
@@ -381,7 +438,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                           Text(
                             "NOS SERVICES DE RENOVATIONS",
                             style: TextStyle(
-                              fontSize: 30.0, // Adjust font size
+                              fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle, // Adjust font size
                               fontWeight: FontWeight.bold,
                               color: GlobalColors.thirdColor,
                             ),
@@ -394,7 +451,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                             "Nous mettons un point d’honneur à confier vos travaux à nos équipes sélectionnées pour leur sérieux et leur souci du détail. En restant agiles face aux imprévus de chantier, nous assurons un service au juste prix et dans le respect des délais.\n\n"
                             "Enfin, nous proposons à nos clients un compte rendu d’activité régulier pour avertir en temps réel des avancées de l’ensemble des travaux de rénovation réalisés ou en cours de réalisation.",
                             style: TextStyle(
-                              fontSize: 16.0,
+                              fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                               color: Colors.black87,
                             ),
                             textAlign: TextAlign.center,
@@ -404,7 +461,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                     ), 
                   ),  
                 ),
-                const SizedBox(height: 160.0),
+                const SizedBox(height: 150.0),
                 Container(
                   height: 600.0,
                   width: screenWidth,
@@ -415,135 +472,129 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                     )
                   ),
                 ),
-                const SizedBox(height: 160.0),
+                const SizedBox(height: 150.0),
                 Container(
                   width: 1200.0,
                   alignment: Alignment.center,
                   padding: EdgeInsets.all(24.0),
-                  // color: Colors.orange,
-                  child:  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "POURQUOI NOUS FAIRE CONFIANCE ?",
-                        style: TextStyle(
-                          fontSize: 30.0, // Adjust font size
-                          fontWeight: FontWeight.bold,
-                          color: GlobalColors.thirdColor,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: mobile ? 50.0 : 20.0), // Space between
-                      VisibilityDetector(
-                        key: const Key('engagement_section'), 
-                        onVisibilityChanged: (info) {
-                          if (info.visibleFraction > 0.3 && !_showEngagementSection) {
-                            setState(() {
-                              _showEngagementSection = true;
-                            });
-                          }
-                        },
-                        child: AnimatedOpacity(
-                          opacity: _showEngagementSection ? 1.0 : 0.0, 
-                          duration: const Duration(milliseconds: 2000),
-                          child: mobile 
-                          ? Column(
-                              children: [
-                                Text(
-                                  "Transparence",
-                                  style: TextStyle(
-                                    fontSize: 24, // Adjust font size
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                const SizedBox(height: 20), // Space between
-                                Text(
-                                  "Nous analysons minutieusement vos besoins pour vous proposer une offre chiffrée et détaillée. Nos clients bénéficient également de rapports réguliers et d’une mise à jour en temps réel sur l’avancée des travaux.",
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    color: Colors.black87,
-                                  ),
-                                  textAlign: TextAlign.justify,
-                                ),
-                                const SizedBox(height: 50.0), // Space between
-                                Text(
-                                  "Communication",
-                                  style: TextStyle(
-                                    fontSize: 24.0, // Adjust font size
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                const SizedBox(height: 20.0), // Space between
-                                Text(
-                                  "À chaque étape de votre projet, du conseil à la réalisation, nous sommes à vos côtés. Vous êtes en contact direct avec un interlocuteur unique, toujours disponible et attentif à vos demandes.",
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    color: Colors.black87,
-                                  ),
-                                  textAlign: TextAlign.justify,
-                                ),
-                                const SizedBox(height: 50.0), // Space between
-                                Text(
-                                  "Qualité",
-                                  style: TextStyle(
-                                    fontSize: 24.0, // Adjust font size
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                const SizedBox(height: 20.0), // Space between
-                                Text(
-                                  "Notre entreprise est reconnue pour son travail méticuleux, son professionnalisme et sa ponctualité Notre objectif est de fournir le plus haut niveau d’exigence et de savoir-faire à chaque projet, quelle qu’en soit sa taille.",
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    color: Colors.black87,
-                                  ),
-                                  textAlign: TextAlign.justify,
-                                ),
-                                const SizedBox(height: 50.0), // Space between
-                                Text(
-                                  "Satisfaction",
-                                  style: TextStyle(
-                                    fontSize: 24.0, // Adjust font size
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                const SizedBox(height: 20.0), // Space between
-                                Text(
-                                  "Nous accordons beaucoup d’importance à la satisfaction de nos clients dans le but d’entretenir une relation de confiance sur le long terme. En tant que petite entreprise, nous valorisons aussi les recommandations de nos clients. Nous ne voulons pas seulement vous satisfaire : nous voulons que vous partagiez votre expérience positive avec vos proches.",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black87,
-                                  ),
-                                  textAlign: TextAlign.justify,
-                                ),
-                              ],
-                            )    
-                          : SizedBox(
-                            height: 900.0,
-                            width: 900.0,
-                            child: RiveAnimation.asset(GlobalAnimations.engagementAnimation),
-                          )
-                        ) 
-                      ),
-                    ],
+                  child: VisibilityDetector(
+                    key: const Key('engagement_section'), 
+                    onVisibilityChanged: (info) {
+                      if (info.visibleFraction > 0.3 && !_showEngagementSection) {
+                        setState(() {
+                          _showEngagementSection = true;
+                        });
+                      }
+                    },
+                    child: AnimatedOpacity(
+                      opacity: _showEngagementSection ? 1.0 : 0.0, 
+                      duration: const Duration(milliseconds: 2000),
+                      child: isMobile 
+                      ? Column(
+                        children: [
+                          Text(
+                            "POURQUOI NOUS FAIRE CONFIANCE ?",
+                            style: TextStyle(
+                              fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle, // Adjust font size
+                              fontWeight: FontWeight.bold,
+                              color: GlobalColors.thirdColor,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(height: isMobile ? 50.0 : 20.0), // Space between
+                          Text(
+                            "Transparence",
+                            style: TextStyle(
+                              fontSize: GlobalSize.mobileTitle, // Adjust font size
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 20.0), // Space between
+                          Text(
+                            "Nous analysons minutieusement vos besoins pour vous proposer une offre chiffrée et détaillée. Nos clients bénéficient également de rapports réguliers et d’une mise à jour en temps réel sur l’avancée des travaux.",
+                            style: TextStyle(
+                              fontSize: GlobalSize.mobileSizeText,
+                              color: Colors.black87,
+                            ),
+                            textAlign: TextAlign.justify,
+                          ),
+                          const SizedBox(height: 50.0), // Space between
+                          Text(
+                            "Communication",
+                            style: TextStyle(
+                              fontSize: GlobalSize.mobileTitle, // Adjust font size
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 20.0), // Space between
+                          Text(
+                            "À chaque étape de votre projet, du conseil à la réalisation, nous sommes à vos côtés. Vous êtes en contact direct avec un interlocuteur unique, toujours disponible et attentif à vos demandes.",
+                            style: TextStyle(
+                              fontSize: GlobalSize.mobileSizeText,
+                              color: Colors.black87,
+                            ),
+                            textAlign: TextAlign.justify,
+                          ),
+                          const SizedBox(height: 50.0), // Space between
+                          Text(
+                            "Qualité",
+                            style: TextStyle(
+                              fontSize: GlobalSize.mobileTitle, // Adjust font size
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 20.0), // Space between
+                          Text(
+                            "Notre entreprise est reconnue pour son travail méticuleux, son professionnalisme et sa ponctualité Notre objectif est de fournir le plus haut niveau d’exigence et de savoir-faire à chaque projet, quelle qu’en soit sa taille.",
+                            style: TextStyle(
+                              fontSize: GlobalSize.mobileSizeText,
+                              color: Colors.black87,
+                            ),
+                            textAlign: TextAlign.justify,
+                          ),
+                          const SizedBox(height: 50.0), // Space between
+                          Text(
+                            "Satisfaction",
+                            style: TextStyle(
+                              fontSize: GlobalSize.mobileTitle, // Adjust font size
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 20.0), // Space between
+                          Text(
+                            "Nous accordons beaucoup d’importance à la satisfaction de nos clients dans le but d’entretenir une relation de confiance sur le long terme. En tant que petite entreprise, nous valorisons aussi les recommandations de nos clients. Nous ne voulons pas seulement vous satisfaire : nous voulons que vous partagiez votre expérience positive avec vos proches.",
+                            style: TextStyle(
+                              fontSize: GlobalSize.webSizeText,
+                              color: Colors.black87,
+                            ),
+                            textAlign: TextAlign.justify,
+                          ),
+                        ],
+                      )    
+                      : SizedBox(
+                        height: 900.0,
+                        width: 900.0,
+                        child: RiveAnimation.asset(GlobalAnimations.engagementAnimation),
+                      )
+                    ) 
                   ),
                 ),
-                const SizedBox(height: 100.0),
+                const SizedBox(height: 150.0),
                 Container(
                   width: screenWidth,
                   constraints: BoxConstraints(minHeight: 600.0),
                   child: IntrinsicHeight( // Forces the Row to adopt the height of its tallest child (the text) → and therefore your Expanded of the image will have a true vertical constraint
-                    child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    child: isMobile 
+                    ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Expanded(
                           child: Column(
@@ -577,7 +628,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                                           Text(
                                             "TRANFORMONS VOS IDÉES EN RÉALITÉ",
                                             style: TextStyle(
-                                              fontSize: 30.0, // Adjust font size
+                                              fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle, // Adjust font size
                                               fontWeight: FontWeight.bold,
                                               color: GlobalColors.thirdColor,
                                             ),
@@ -588,7 +639,100 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                                             "Vous avez un projet en tête ? Chez ${GlobalPersonalData.companyName}, nous sommes là pour vous accompagner à chaque étape, de l'idée initiale à la réalisation finale.Que ce soit pour rénover un appartement, moderniser une maison, ou redonner vie à un local commercial, notre expertise est à votre disposition.\n"
                                             "Contactez-nous dès aujourd’hui pour discuter de vos projets de rénovation et découvrir comment nous pouvons concrétiser vos idées. Situés à Paris et actifs dans toute l'Île-de-France, Nous nous engageons à comprendre vos besoins afin de concevoir un espace unique et personnalisé.\n\nEnsemble, donnons vie à vos envies et faisons de votre intérieur un lieu où il fait bon vivre.",
                                             style: TextStyle(
-                                              fontSize: 16.0,
+                                              fontSize:  isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                              color: Colors.black87,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 18,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ) 
+                                )
+                              ),
+                              VisibilityDetector(
+                                key: const Key('section_contactButton'), 
+                                onVisibilityChanged: (info) {
+                                  if (info.visibleFraction > 0.3 && !_showContactButtonSection) {
+                                    setState(() {
+                                      _showContactButtonSection = true;
+                                    });
+                                  }
+                                },
+                                child: SizedBox(
+                                  height: 100.0, // Fixed size to allow visibility detection
+                                  width: 150.0,  // Corresponds to the size of the MyButtonRive
+                                  child: _showContactButtonSection ? MyRiveButtonWidget(
+                                    onPressed: () => Navigator.pushNamed(context, ('/contact')), 
+                                    buttonPath: GlobalButtonsAndIcons.contactButtonWithReverse, 
+                                  ) 
+                                  : Container(color: Colors.transparent), // Empty widget visible
+                                ),
+                              )                          
+                            ],
+                          )
+                        ),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(GlobalImages.backgroundLanding),
+                                fit: BoxFit.cover,
+                              )
+                            ),
+                          )
+                        ),
+                      ]
+                    )
+                    : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              VisibilityDetector(
+                                key: const Key('section_contact'), 
+                                onVisibilityChanged: (info) {
+                                  if (info.visibleFraction > 0.3) {
+                                    _contactAnimationController.forward();
+                                  }
+                                },
+                                child: AnimatedBuilder(
+                                  animation: _contactAnimationController,
+                                  builder: (context, child) {
+                                    return FadeTransition(
+                                      opacity: _contactFadeAnimation,
+                                      child: SlideTransition(
+                                        position: _contactSlideController,
+                                        child: child,
+                                      ),
+                                    );
+                                  },
+                                  child: Center(
+                                    child: Container(
+                                      padding: EdgeInsets.all(16.0),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            "TRANFORMONS VOS IDÉES EN RÉALITÉ",
+                                            style: TextStyle(
+                                              fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle, // Adjust font size
+                                              fontWeight: FontWeight.bold,
+                                              color: GlobalColors.thirdColor,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          const SizedBox(height: 20.0), // Space between
+                                          Text(
+                                            "Vous avez un projet en tête ? Chez ${GlobalPersonalData.companyName}, nous sommes là pour vous accompagner à chaque étape, de l'idée initiale à la réalisation finale.Que ce soit pour rénover un appartement, moderniser une maison, ou redonner vie à un local commercial, notre expertise est à votre disposition.\n"
+                                            "Contactez-nous dès aujourd’hui pour discuter de vos projets de rénovation et découvrir comment nous pouvons concrétiser vos idées. Situés à Paris et actifs dans toute l'Île-de-France, Nous nous engageons à comprendre vos besoins afin de concevoir un espace unique et personnalisé.\n\nEnsemble, donnons vie à vos envies et faisons de votre intérieur un lieu où il fait bon vivre.",
+                                            style: TextStyle(
+                                              fontSize:  isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                               color: Colors.black87,
                                             ),
                                             textAlign: TextAlign.center,
@@ -637,7 +781,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                     )
                   ) 
                 ),
-                const SizedBox(height: 160.0),
+                const SizedBox(height: 150.0),
                 FooterComponent(),
               ],
             ),

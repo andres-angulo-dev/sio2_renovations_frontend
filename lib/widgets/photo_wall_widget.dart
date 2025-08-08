@@ -9,6 +9,7 @@ class PhotoWallWidget extends StatelessWidget {
     required this.photos,  
   });
 
+
   @override
   Widget build(BuildContext context) {
     // We center the grid and constrain it so it doesn't use the entire screen width
@@ -28,7 +29,7 @@ class PhotoWallWidget extends StatelessWidget {
               crossAxisCellCount: crossAxisCellCount,
               mainAxisCellCount: mainAxisCellCount,
               child: PhotoGridItem(
-                imageUrl: photos[index], 
+                imageAsset: photos[index], 
                 heroTag: 'photo-$index' // Unique tag by index
               ),
             );
@@ -42,11 +43,11 @@ class PhotoWallWidget extends StatelessWidget {
 class PhotoGridItem extends StatelessWidget {
   const PhotoGridItem({
     super.key,
-    required this.imageUrl,
+    required this.imageAsset,
     required this.heroTag,
   });
   
-  final String imageUrl;
+  final String imageAsset;
   final String heroTag;  
 
   void _openEnlargedImage(BuildContext context) {
@@ -66,8 +67,8 @@ class PhotoGridItem extends StatelessWidget {
                 tag: heroTag, // Matches the tag for animated transition
                 child: InteractiveViewer(
                   scaleEnabled: false, // Doesn't allow for zooming and panning of the enlarged image
-                  child: Image.network(
-                    imageUrl,
+                  child: Image.asset(
+                    imageAsset,
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -90,8 +91,8 @@ class PhotoGridItem extends StatelessWidget {
           tag: heroTag,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
-            child: Image.network(
-              imageUrl,
+            child: Image.asset(
+              imageAsset,
               fit: BoxFit.cover,
             ),
           ),
@@ -138,38 +139,38 @@ class PhotoGridItem extends StatelessWidget {
 //             StaggeredGridTile.count(
 //               crossAxisCellCount: 2,
 //               mainAxisCellCount: 2,
-//               child: PhotoGridItem(imageUrl: imageUrls[0]),
+//               child: PhotoGridItem(imageAsset: imageUrls[0]),
 //             ),
 //             StaggeredGridTile.count(
 //               crossAxisCellCount: 2,
 //               mainAxisCellCount: 1,
-//               child: PhotoGridItem(imageUrl: imageUrls[1]),
+//               child: PhotoGridItem(imageAsset: imageUrls[1]),
 //             ),
 //             StaggeredGridTile.count(
 //               crossAxisCellCount: 1,
 //               mainAxisCellCount: 1,
-//               child: PhotoGridItem(imageUrl: imageUrls[2]),
+//               child: PhotoGridItem(imageAsset: imageUrls[2]),
 //             ),
 //             StaggeredGridTile.count(
 //               crossAxisCellCount: 1,
 //               mainAxisCellCount: 1,
-//               child: PhotoGridItem(imageUrl: imageUrls[3]),
+//               child: PhotoGridItem(imageAsset: imageUrls[3]),
 //             ),
 //             StaggeredGridTile.count(
 //               crossAxisCellCount: 4,
 //               mainAxisCellCount: 2,
-//               child: PhotoGridItem(imageUrl: imageUrls[4]),
+//               child: PhotoGridItem(imageAsset: imageUrls[4]),
 //             ),
 //             StaggeredGridTile.count(
 //               crossAxisCellCount: 2,
 //               mainAxisCellCount: 2,
-//               child: PhotoGridItem(imageUrl: imageUrls[5]),
+//               child: PhotoGridItem(imageAsset: imageUrls[5]),
 //             ),
 //             if (imageUrls.length > 6)
 //               StaggeredGridTile.count(
 //                 crossAxisCellCount: 2,
 //                 mainAxisCellCount: 3,
-//                 child: PhotoGridItem(imageUrl: imageUrls[6]),
+//                 child: PhotoGridItem(imageAsset: imageUrls[6]),
 //               ),
 //           ],
 //         ),
@@ -179,9 +180,9 @@ class PhotoGridItem extends StatelessWidget {
 // }
 
 // class PhotoGridItem extends StatelessWidget {
-//   final String imageUrl;
+//   final String imageAsset;
 
-//   const PhotoGridItem({super.key, required this.imageUrl});
+//   const PhotoGridItem({super.key, required this.imageAsset});
 
 //   void _openEnlargedImage(BuildContext context) {
 //     // Show a dialog overlay with the enlarged image
@@ -198,12 +199,12 @@ class PhotoGridItem extends StatelessWidget {
 //             color: Colors.black,
 //             child: Center(
 //               child: Hero(
-//                 tag: imageUrl, // Matches the tag for animated transition
+//                 tag: imageAsset, // Matches the tag for animated transition
 //                 child: InteractiveViewer(
 //                   // Doesn't allow for zooming and panning of the enlarged image
 //                   scaleEnabled: false,
-//                   child: Image.network(
-//                     imageUrl,
+//                   child: Image.asset(
+//                     imageAsset,
 //                     fit: BoxFit.contain,
 //                   ),
 //                 ),
@@ -223,11 +224,11 @@ class PhotoGridItem extends StatelessWidget {
 //       child: GestureDetector(
 //         onTap: () => _openEnlargedImage(context), // Triggers the opening of the enlarged image on click/tap
 //         child: Hero(
-//           tag: imageUrl,
+//           tag: imageAsset,
 //           child: ClipRRect(
 //             borderRadius: BorderRadius.circular(8.0),
-//             child: Image.network(
-//               imageUrl,
+//             child: Image.asset(
+//               imageAsset,
 //               fit: BoxFit.cover,
 //             ),
 //           ),

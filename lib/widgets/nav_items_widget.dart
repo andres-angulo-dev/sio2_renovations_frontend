@@ -70,7 +70,7 @@ class NavItemsWidgetState extends State<NavItemsWidget> {
       final Widget navWidget;
       final bool isSubMenuExpanded = _openDropdownWebIndex == i;
     
-      if (hasChildren) {
+      if (hasChildren) { // If sub items
         navWidget = widget.isHorizontal 
         ? HoverSubMenuWidget( // Web version for the sub items
           label: CustomNavItem(
@@ -163,7 +163,7 @@ class NavItemsWidgetState extends State<NavItemsWidget> {
             ),
           ],
         );
-      } else {
+      } else { // Without sub items
         // Creation of the others menu items without sub items
         navWidget = MouseRegion(
           cursor: SystemMouseCursors.click,
@@ -174,6 +174,12 @@ class NavItemsWidgetState extends State<NavItemsWidget> {
             onPressed: () {
               widget.onItemSelected(item['label']);
               Navigator.pushNamed(context, item['route']);
+
+              // // Optional avoid re-navigating to the same screen
+              // String? currentRoute = ModalRoute.of(context)?.settings.name;
+              // if (currentRoute != item['route']) {
+              //   Navigator.pushNamed(context, item['route']);
+              // }
             },
             defaultColor: widget.defaultColor,
             hoverColor: widget.hoverColor,
@@ -322,6 +328,7 @@ class CustomNavItemstate extends State<CustomNavItem> with TickerProviderStateMi
   Widget build(BuildContext context) {
     bool mobile = GlobalScreenSizes.isMobileScreen(context);
     bool isSmallScreen = GlobalScreenSizes.isSmallScreen(context);
+    
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       // Work with the mobile version

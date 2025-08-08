@@ -189,7 +189,7 @@ class PartnersScreenState extends State<PartnersScreen> {
 
   @override  
   Widget build(BuildContext context) {
-    final mobile = GlobalScreenSizes.isMobileScreen(context);
+    final isMobile = GlobalScreenSizes.isMobileScreen(context);
     final screenWidth = GlobalScreenSizes.screenWidth(context);
 
     return Scaffold(
@@ -199,7 +199,7 @@ class PartnersScreenState extends State<PartnersScreen> {
         currentSubItem: currenSubItem,
         // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable // (only for NavItem with click)
       ),
-      endDrawer: mobile // && !_isDesktopMenuOpen (only for NavItem with click)
+      endDrawer: isMobile // && !_isDesktopMenuOpen (only for NavItem with click)
       ? MyDrawerComponent(
         currentItem: currentItem, 
         onItemSelected: updateCurrentItem,
@@ -244,10 +244,10 @@ class PartnersScreenState extends State<PartnersScreen> {
                       // White container centered at the bottom of the image
                       Positioned(
                         bottom: 0.0,
-                        left: mobile ? null : screenWidth * 0.25, // Center horizontally 
+                        left: isMobile ? null : screenWidth * 0.25, // Center horizontally 
                         child: Container(
                           height: 300.0,
-                          width: mobile ? screenWidth : screenWidth * 0.5,
+                          width: isMobile ? screenWidth : screenWidth * 0.5,
                           padding: GlobalScreenSizes.isCustomSize(context, 326.0) ? const EdgeInsetsDirectional.symmetric(horizontal: 20.0) : const EdgeInsets.all(60.0), // Add padding inside the container
                           decoration: BoxDecoration(
                             color: GlobalColors.firstColor,
@@ -264,7 +264,7 @@ class PartnersScreenState extends State<PartnersScreen> {
                                   Text(
                                     "PARTENAIRES",
                                     style: TextStyle(
-                                      fontSize: mobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
+                                      fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
                                       fontWeight: FontWeight.bold,
                                       color: GlobalColors.thirdColor,
                                     ),
@@ -275,7 +275,7 @@ class PartnersScreenState extends State<PartnersScreen> {
                                   Text(
                                     "Ensemble, plus forts, plus loin !",
                                     style: TextStyle(
-                                      fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                      fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                       color: GlobalColors.secondColor
                                     ),
                                     textAlign: TextAlign.center,
@@ -299,7 +299,7 @@ class PartnersScreenState extends State<PartnersScreen> {
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child: Container(
                           constraints: BoxConstraints(maxWidth: 1000.0, minHeight: 500.0),
-                          padding: EdgeInsets.symmetric(horizontal: mobile ? 16.0 : 32.0, vertical: mobile ? 28.0 : 42.0),
+                          padding: EdgeInsets.symmetric(horizontal: isMobile ? 16.0 : 32.0, vertical: isMobile ? 28.0 : 42.0),
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: GlobalColors.fiveColor,
@@ -315,7 +315,7 @@ class PartnersScreenState extends State<PartnersScreen> {
                                 Text(
                                   "REJOIGNEZ UN RESEAU OÙ LE SAVOIR-FAIRE FAIT DIFFÉRENCE",
                                   style: TextStyle(
-                                    fontSize: mobile ? GlobalSize.mobileTitle : GlobalSize.webTitle, 
+                                    fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle, 
                                     fontWeight: FontWeight.bold,
                                     color: GlobalColors.thirdColor,
                                   ),
@@ -327,7 +327,7 @@ class PartnersScreenState extends State<PartnersScreen> {
                                   textAlign: TextAlign.center,
                                   text : TextSpan(
                                     style: TextStyle(
-                                      fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                      fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                       height: 1.5, // Gap between the lines
                                       color: GlobalColors.secondColor
                                     ),
@@ -371,7 +371,7 @@ class PartnersScreenState extends State<PartnersScreen> {
                       Container(
                         width: screenWidth,
                         color: GlobalColors.fourthColor,
-                        padding: EdgeInsets.symmetric(horizontal: mobile ? 16.0 : 32.0, vertical: mobile ? 28.0 : 42.0),
+                        padding: EdgeInsets.symmetric(horizontal: isMobile ? 16.0 : 32.0, vertical: isMobile ? 28.0 : 42.0),
                         child: SizedBox(
                           width: screenWidth * 0.8,
                           child: Wrap(
@@ -390,7 +390,7 @@ class PartnersScreenState extends State<PartnersScreen> {
                                       Text(
                                         "VOUS SOUHAITEZ COLLABORER AVEC NOUS ?",
                                         style: TextStyle(
-                                          fontSize: mobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
+                                          fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
                                           fontWeight: FontWeight.bold,
                                           color: GlobalColors.thirdColor,
                                         ),
@@ -401,7 +401,7 @@ class PartnersScreenState extends State<PartnersScreen> {
                                       Text(
                                         "Si vous avez un savoir-faire et une expertise qui peut enrichir nos projets, n'hésitez pas à compléter ce formulaire",
                                         style: TextStyle(
-                                          fontSize: 24.0,
+                                          fontSize: isMobile ? GlobalSize.mobileSubTitle : GlobalSize.webSubTitle,
                                           color: GlobalColors.secondColor,
                                         ),
                                         textAlign: TextAlign.center,
@@ -411,7 +411,7 @@ class PartnersScreenState extends State<PartnersScreen> {
                                       Text(
                                         "Nous réalisons nos projets en interne, avec une maîtrise globale du chantier, de la conception à la livraison. Nous aimons collaborer avec des professionnels passionnés qui partagent notre exigence et notre sens du détail. Architectes, cuisinistes, décorateurs, fabricants spécialisés ect... Nous serions ravis d’en discuter avec vous. Remplissez le formulaire pour rejoindre notre réseau de partenaires exigeants et engagés.",
                                         style: TextStyle(
-                                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                           color: GlobalColors.secondColor,
                                         ),
                                         textAlign: TextAlign.center,
@@ -461,7 +461,7 @@ class PartnersScreenState extends State<PartnersScreen> {
                         child: Text(
                           "Dans l'attente de notre retour, prenez le temps de découvrir nos réalisations en rénovation.",
                           style: TextStyle(
-                            fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                            fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                             color: GlobalColors.secondColor,
                           ),
                           textAlign: TextAlign.center,

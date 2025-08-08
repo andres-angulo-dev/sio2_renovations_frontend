@@ -1,6 +1,6 @@
 import '../utils/global_others.dart';
 
-// List of services offered
+// List of services offered for ServicesSection
 final List<Map<String, String>> servicesData = const [
   {"title": "Peintre", "image": GlobalImages.backgroundLanding},
   {"title": "Plaquiste", "image": GlobalImages.backgroundLanding},

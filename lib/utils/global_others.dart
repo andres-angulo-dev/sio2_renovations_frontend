@@ -47,7 +47,7 @@ class GlobalPersonalData {
 
 class GlobalData {
   // Landing screen
-  // What Type Of Renovations Section extends
+    // What Type Of Renovations Section extends
   static   final List<Map<String, String?>> typeOfRenovationData =  [
     {"title": "Rénovation totale", "image": GlobalImages.backgroundLanding, "routePath": '/projects'},
     {"title": "Rénovation partielle", "image": GlobalImages.backgroundLanding, "routePath": '/projects'},
@@ -58,7 +58,7 @@ class GlobalData {
 
 
   // Projects screen 
-  // Title of menu and photos
+    // Title of menu and photos
  static final List<Map<String, String>> servicesData = [
     {"title": "TOUT VOIR", "image": GlobalImages.backgroundLanding},
     {"title": "PEINTURE", "image": GlobalImages.backgroundLanding},
@@ -102,7 +102,7 @@ class GlobalData {
         GlobalImages.backgroundLanding,
         GlobalImages.backgroundLanding,
       ],
-      'maçconnerie': [
+      'maçonnerie': [
         GlobalImages.backgroundLanding,
         GlobalImages.backgroundLanding,
         GlobalImages.backgroundLanding,
@@ -117,10 +117,8 @@ class GlobalData {
         GlobalImages.backgroundLanding,
       ],
     };
-
-    return rawData.map( // The function automatically transforms them to lowercase
-      (key, value) => MapEntry(key.toLowerCase(), value)
-    );
+    
+    return rawData.map((key, value) => MapEntry(key.toLowerCase(), value ));  // The function automatically transforms them to lowercase
   }
 }
 
@@ -190,6 +188,9 @@ class GlobalSize {
   static const double webSizeText = 16.0;
   static const double mobileItalicText = 12.0;
   static const double webItalicText = 14.0;
+  static const double mobileBigTitle = 36.0;
+  static const double webBigTitle = 42.0;
+
   // Landing screen
     // Why choose us section 
   static const double mobileWhyChooseUsSectionTitle = 18.0; 

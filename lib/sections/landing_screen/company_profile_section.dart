@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import '../utils/global_colors.dart';
-import '../utils/global_others.dart';
-import '../utils/global_screen_sizes.dart';
+import '../../utils/global_colors.dart';
+import '../../utils/global_others.dart';
+import '../../utils/global_screen_sizes.dart';
 
 class CompanyProfileSection extends StatefulWidget {
   const CompanyProfileSection({super.key});

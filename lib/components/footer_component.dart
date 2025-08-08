@@ -13,8 +13,7 @@ class FooterComponent extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    final bool mobile = GlobalScreenSizes.isMobileScreen(context);
-    // final bool mobile = MediaQuery.of(context).size.width > 768 ? false : true;
+    final bool isMobile = GlobalScreenSizes.isMobileScreen(context);
     
     return Container(
       width: double.infinity,
@@ -23,8 +22,9 @@ class FooterComponent extends StatelessWidget {
       child: Column( 
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (!mobile) const SizedBox(height: 10.0), 
-          mobile ? Column( // mobile
+          if (!isMobile) const SizedBox(height: 10.0), 
+          isMobile 
+          ? Column( // Mobile
             children: [
               SvgPicture.asset(
                 GlobalLogosAndIcons.blackCompanyLogo,
@@ -156,7 +156,7 @@ class FooterComponent extends StatelessWidget {
                   Text(
                     "•",
                     style: TextStyle(
-                      fontSize: GlobalScreenSizes.isMobileScreen(context) ? 18.0 : 24.0,
+                      fontSize: isMobile ? 18.0 : 24.0,
                       fontWeight: FontWeight.bold,
                       color: GlobalColors.firstColor,
                     ),
@@ -182,7 +182,7 @@ class FooterComponent extends StatelessWidget {
                   Text(
                     "•",
                     style: TextStyle(
-                      fontSize: GlobalScreenSizes.isMobileScreen(context) ? 18.0 : 24.0,
+                      fontSize: isMobile ? 18.0 : 24.0,
                       fontWeight: FontWeight.bold,
                       color: GlobalColors.firstColor,
                     ),
@@ -426,7 +426,7 @@ class FooterComponent extends StatelessWidget {
               ),
             ],
           ),
-          if (!mobile) const SizedBox(height: 10.0),
+          if (!isMobile) const SizedBox(height: 10.0),
           const Divider(
             color: GlobalColors.firstColor,
             thickness: 2,

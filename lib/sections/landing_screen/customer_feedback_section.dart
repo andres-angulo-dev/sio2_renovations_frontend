@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:async';
 import 'dart:math';
-import '../data/customer_feedbacks_data.dart';
-import '../utils/global_colors.dart';
-import '../utils/global_others.dart';
-import '../utils/global_screen_sizes.dart';
+import '../../data/customer_feedbacks_data.dart';
+import '../../utils/global_colors.dart';
+import '../../utils/global_others.dart';
+import '../../utils/global_screen_sizes.dart';
 
 class CustomerFeedbackSection extends StatefulWidget {
   const CustomerFeedbackSection({super.key});

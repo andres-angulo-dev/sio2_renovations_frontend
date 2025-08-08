@@ -217,7 +217,7 @@ class ContactScreenState extends State<ContactScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final mobile = GlobalScreenSizes.isMobileScreen(context);
+    final isMobile = GlobalScreenSizes.isMobileScreen(context);
     final screenWidth = GlobalScreenSizes.screenWidth(context);
 
     // Calculate automatically  the heigh of Form container 
@@ -250,7 +250,7 @@ class ContactScreenState extends State<ContactScreen> {
         onItemSelected: updateCurrentItem,
         // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable // (only for NavItem with click)
       ),
-      endDrawer: mobile // && !_isDesktopMenuOpen (only for NavItem with click)
+      endDrawer: isMobile // && !_isDesktopMenuOpen (only for NavItem with click)
         ? MyDrawerComponent(
           currentItem: currentItem,
           onItemSelected: updateCurrentItem,
@@ -294,10 +294,10 @@ class ContactScreenState extends State<ContactScreen> {
                       // White container centered at the bottom of the image
                       Positioned(
                         bottom: 0.0,
-                        left: mobile ? null : screenWidth * 0.25, // Center horizontally 
+                        left: isMobile ? null : screenWidth * 0.25, // Center horizontally 
                         child: Container(
                           height: 300.0,
-                          width: mobile ? screenWidth : screenWidth * 0.5,
+                          width: isMobile ? screenWidth : screenWidth * 0.5,
                           padding: GlobalScreenSizes.isCustomSize(context, 326.0) ? const EdgeInsetsDirectional.symmetric(horizontal: 20.0) : const EdgeInsets.all(60.0), // Add padding inside the container
                           decoration: BoxDecoration(
                             color: GlobalColors.firstColor,
@@ -314,7 +314,7 @@ class ContactScreenState extends State<ContactScreen> {
                                   Text(
                                     "CONTACT",
                                     style: TextStyle(
-                                      fontSize: mobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
+                                      fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
                                       fontWeight: FontWeight.bold,
                                       color: GlobalColors.thirdColor,
                                     ),
@@ -325,7 +325,7 @@ class ContactScreenState extends State<ContactScreen> {
                                   Text(
                                     "Une question, un projet ? ${GlobalPersonalData.companyName} est à votre écoute.",
                                     style: TextStyle(
-                                      fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                      fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                       color: GlobalColors.secondColor
                                     ),
                                     textAlign: TextAlign.center,
@@ -341,7 +341,7 @@ class ContactScreenState extends State<ContactScreen> {
                 ),
                 // Form section
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: mobile ? 16.0 : 32.0, vertical: mobile ? 28.0 : 42.0),
+                  padding: EdgeInsets.symmetric(horizontal: isMobile ? 16.0 : 32.0, vertical: isMobile ? 28.0 : 42.0),
                   child: Wrap(
                     spacing: 100.0,
                     runSpacing: 50.0,
@@ -397,7 +397,7 @@ class ContactScreenState extends State<ContactScreen> {
                                         _showNumber ? "+(33) 6 46 34 12 03" : "Afficher le numéro",
                                         style: TextStyle(
                                           color: _isHovered ? GlobalColors.hoverHyperLinkColor : GlobalColors.secondColor,
-                                          fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                          fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                         ),
                                       ),
                                     )
@@ -437,7 +437,7 @@ class ContactScreenState extends State<ContactScreen> {
                                     Text(
                                       "FORMULAIRE DE CONTACT",
                                       style: TextStyle(
-                                        fontSize: mobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
+                                        fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
                                         fontWeight: FontWeight.bold,
                                         color: GlobalColors.thirdColor,
                                       ),
@@ -459,7 +459,7 @@ class ContactScreenState extends State<ContactScreen> {
                                       "Remplissez simplement le formulaire ci-dessous, et nous vous recontacterons dans les plus brefs délais. Notre équipe est à votre écoute pour répondre à vos questions et vous accompagner à concrétiser vos projets, qu’il s’agisse d’un rafraîchissement léger ou d’une rénovation plus ambitieuse.\n" 
                                       'Faites le premier pas, on s’occupe du reste.',
                                       style: TextStyle(
-                                        fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                                        fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                         color: GlobalColors.secondColor,
                                       ),
                                       textAlign: TextAlign.center,
@@ -512,7 +512,7 @@ class ContactScreenState extends State<ContactScreen> {
                   child: Text(
                     "Dans l'attente de notre retour, prenez le temps de découvrir nos réalisations en rénovation.",
                     style: TextStyle(
-                      fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                      fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                       color: GlobalColors.secondColor,
                     ),
                     textAlign: TextAlign.center,
@@ -754,7 +754,7 @@ class ContactScreenState extends State<ContactScreen> {
 
 //   @override
 //   Widget build(BuildContext context) {
-//     final mobile = GlobalScreenSizes.isMobileScreen(context);
+//     final isMobile = GlobalScreenSizes.isMobileScreen(context);
 //     final screenWidth = GlobalScreenSizes.screenWidth(context);
 
 //     // Calculate automatically  the heigh of Form container 
@@ -787,7 +787,7 @@ class ContactScreenState extends State<ContactScreen> {
 //         onItemSelected: updateCurrentItem,
 //         // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);}, // receive whether the dropdown menu is open or not and update the variable // (only for NavItem with click)
 //       ),
-//       endDrawer: mobile // && !_isDesktopMenuOpen (only for NavItem with click)
+//       endDrawer: isMobile // && !_isDesktopMenuOpen (only for NavItem with click)
 //         ? MyDrawerComponent(
 //           currentItem: currentItem,
 //           onItemSelected: updateCurrentItem,
@@ -831,10 +831,10 @@ class ContactScreenState extends State<ContactScreen> {
 //                       // White container centered at the bottom of the image
 //                       Positioned(
 //                         bottom: 0.0,
-//                         left: mobile ? null : screenWidth * 0.25, // Center horizontally 
+//                         left: isMobile ? null : screenWidth * 0.25, // Center horizontally 
 //                         child: Container(
 //                           height: 300.0,
-//                           width: mobile ? screenWidth : screenWidth * 0.5,
+//                           width: isMobile ? screenWidth : screenWidth * 0.5,
 //                           padding: GlobalScreenSizes.isCustomSize(context, 326.0) ? const EdgeInsetsDirectional.symmetric(horizontal: 20.0) : const EdgeInsets.all(60.0), // Add padding inside the container
 //                           decoration: BoxDecoration(
 //                             color: GlobalColors.firstColor,
@@ -851,7 +851,7 @@ class ContactScreenState extends State<ContactScreen> {
 //                                   Text(
 //                                     "CONTACT",
 //                                     style: TextStyle(
-//                                       fontSize: mobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
+//                                       fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
 //                                       fontWeight: FontWeight.bold,
 //                                       color: GlobalColors.thirdColor,
 //                                     ),
@@ -862,7 +862,7 @@ class ContactScreenState extends State<ContactScreen> {
 //                                   Text(
 //                                     "Une question, un projet ? SiO2 Rénovations est à votre écoute.",
 //                                     style: TextStyle(
-//                                       fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+//                                       fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
 //                                       color: GlobalColors.secondColor
 //                                     ),
 //                                     textAlign: TextAlign.center,
@@ -878,7 +878,7 @@ class ContactScreenState extends State<ContactScreen> {
 //                 ),
 //                 // Form section
 //                 Container(
-//                   padding: EdgeInsets.symmetric(horizontal: mobile ? 16.0 : 32.0, vertical: mobile ? 28.0 : 42.0),
+//                   padding: EdgeInsets.symmetric(horizontal: isMobile ? 16.0 : 32.0, vertical: isMobile ? 28.0 : 42.0),
 //                   child: Wrap(
 //                     spacing: 100.0,
 //                     runSpacing: 50.0,
@@ -934,7 +934,7 @@ class ContactScreenState extends State<ContactScreen> {
 //                                         _showNumber ? "+(33) 6 46 34 12 03" : "Afficher le numéro",
 //                                         style: TextStyle(
 //                                           color: _isHovered ? GlobalColors.hoverHyperLinkColor : GlobalColors.secondColor,
-//                                           fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+//                                           fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
 //                                         ),
 //                                       ),
 //                                     )
@@ -974,7 +974,7 @@ class ContactScreenState extends State<ContactScreen> {
 //                                     Text(
 //                                       "FORMULAIRE DE CONTACT",
 //                                       style: TextStyle(
-//                                         fontSize: mobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
+//                                         fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
 //                                         fontWeight: FontWeight.bold,
 //                                         color: GlobalColors.thirdColor,
 //                                       ),
@@ -996,7 +996,7 @@ class ContactScreenState extends State<ContactScreen> {
 //                                       "Remplissez simplement le formulaire ci-dessous, et nous vous recontacterons dans les plus brefs délais. Notre équipe est à votre écoute pour répondre à vos questions et vous accompagner à concrétiser vos projets, qu’il s’agisse d’un rafraîchissement léger ou d’une rénovation plus ambitieuse.\n" 
 //                                       'Faites le premier pas, on s’occupe du reste.',
 //                                       style: TextStyle(
-//                                         fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+//                                         fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
 //                                         color: GlobalColors.secondColor,
 //                                       ),
 //                                       textAlign: TextAlign.center,
@@ -1070,7 +1070,7 @@ class ContactScreenState extends State<ContactScreen> {
 //                   child: Text(
 //                     "Dans l'attente de notre retour, prenez le temps de découvrir nos réalisations en rénovation.",
 //                     style: TextStyle(
-//                       fontSize: mobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+//                       fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
 //                       color: GlobalColors.secondColor,
 //                     ),
 //                     textAlign: TextAlign.center,

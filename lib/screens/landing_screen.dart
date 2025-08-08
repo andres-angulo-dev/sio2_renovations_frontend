@@ -3,17 +3,17 @@ import '../widgets/zoom_fade_image_carousel_widget.dart';
 import '../components/my_nav_bar_component.dart';
 import '../components/my_drawer_component.dart';
 import '../components/footer_component.dart';
-import '../sections/welcome_section.dart';
-import '../sections/company_profile_section.dart';
-import '../sections/values_section.dart';
-import '../sections/why_choose_us_section.dart';
-import '../sections/key_figures_section.dart';
-import '../sections/services_section.dart';
-import '../sections/work_together_section.dart';
-import '../sections/steps_section.dart';
-import '../sections/what_type_of_renovations_section.dart';
-import '../sections/before_after_section.dart';
-import '../sections/customer_feedback_section.dart';
+import '../sections/landing_screen/welcome_section.dart';
+import '../sections/landing_screen/company_profile_section.dart';
+import '../sections/landing_screen/values_section.dart';
+import '../sections/landing_screen/why_choose_us_section.dart';
+import '../sections/landing_screen/key_figures_section.dart';
+import '../sections/landing_screen/services_section.dart';
+import '../sections/landing_screen/work_together_section.dart';
+import '../sections/landing_screen/steps_section.dart';
+import '../sections/landing_screen/what_type_of_renovations_section.dart';
+import '../sections/landing_screen/before_after_section.dart';
+import '../sections/landing_screen/customer_feedback_section.dart';
 import '../widgets/my_back_to_top_button_widget.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
@@ -26,11 +26,11 @@ class LandingScreen extends StatefulWidget {
   LandingScreenState createState() => LandingScreenState();
 }
 
-class LandingScreenState extends State<LandingScreen> with TickerProviderStateMixin {
+class LandingScreenState extends State<LandingScreen> {
   // Scroll controller for the back to top button and appBar 
   final ScrollController _scrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState with _scrollController = ScrollController();
 
-  bool _mobile = false; 
+  bool isMobile = false; 
   String currentItem = "Accueil"; // Holds the currently selected menu item to change text color
   bool _showBackToTopButton = false; // Show or hide Back to top button
   // bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not (only for NavItem with click)
@@ -71,7 +71,7 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    _mobile = GlobalScreenSizes.isMobileScreen(context);
+    bool isMobile = GlobalScreenSizes.isMobileScreen(context);
 
     return Scaffold(
       appBar: MyNavBarComponent(
@@ -79,13 +79,13 @@ class LandingScreenState extends State<LandingScreen> with TickerProviderStateMi
         onItemSelected: updateCurrentItem,
         scrollController: _scrollController,
         // onDesktopMenuOpenChanged: (bool isOpen) {setState(() => _isDesktopMenuOpen = isOpen);},// receive whether the dropdown menu is open or not and update the variable // (only for NavItem with click)
-      ), 
-      endDrawer: _mobile // && !_isDesktopMenuOpen (only for NavItem with click)
+      ),       
+      endDrawer: isMobile // && !_isDesktopMenuOpen (only for NavItem with click)
       ? MyDrawerComponent(
         currentItem: currentItem,
         onItemSelected: updateCurrentItem,
       ) 
-      : null,
+      : null,         
       extendBodyBehindAppBar: true,
       backgroundColor: GlobalColors.firstColor,
       body: SingleChildScrollView(

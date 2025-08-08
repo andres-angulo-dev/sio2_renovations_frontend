@@ -49,14 +49,14 @@ class MyNavBarComponentState extends State<MyNavBarComponent> {
   
   @override
   Widget build(BuildContext context) {
-    final mobile = GlobalScreenSizes.isMobileScreen(context);
+    final isMobile = GlobalScreenSizes.isMobileScreen(context);
 
     return ValueListenableBuilder<Color>( // Rebuild the widget automatically when the color changes. (no need setState())
       valueListenable: appBarColorNotifier, 
       builder: (context, color, child) {
         return AppBar(
-          toolbarHeight: mobile ? 250 : 300,
-          leadingWidth: mobile ? 150 : 200,
+          toolbarHeight: isMobile ? 250 : 300,
+          leadingWidth: isMobile ? 150 : 200,
           elevation: 0.0, // Disables the shadow effect.
           scrolledUnderElevation: 0.0, // Disables the effect of change caused by scrolling.
           backgroundColor: color, // Change dynamiquement en fonction du scroll
@@ -66,7 +66,14 @@ class MyNavBarComponentState extends State<MyNavBarComponent> {
           ),
           flexibleSpace: widget.currentItem == "Accueil"  && color == Colors.transparent // Change the background color of the appbar
             ? ClipRect(
-              child: BackdropFilter(
+              child: 
+              isMobile ?
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.1),
+                ),
+              )
+              : BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
                 child: Container(
                   color: Colors.transparent,
@@ -74,7 +81,7 @@ class MyNavBarComponentState extends State<MyNavBarComponent> {
               ),
             )
             : null,
-          leading: mobile
+          leading: isMobile
             ? MouseRegion(
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
@@ -90,7 +97,7 @@ class MyNavBarComponentState extends State<MyNavBarComponent> {
               ),
               )
             : null,
-          title: mobile // && !_isDesktopMenuOpen // (only for NavItem with click)
+          title: isMobile // && !_isDesktopMenuOpen // (only for NavItem with click)
             ? null // Manages the center part of the appbar
             : Center(
             child: Container(
@@ -100,7 +107,7 @@ class MyNavBarComponentState extends State<MyNavBarComponent> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // Logo
-                  mobile // && _isDesktopMenuOpen // (only for NavItem with click)
+                  isMobile // && _isDesktopMenuOpen // (only for NavItem with click)
                   ? SizedBox.shrink()   
                   : MouseRegion(
                     cursor: SystemMouseCursors.click,
@@ -144,7 +151,7 @@ class MyNavBarComponentState extends State<MyNavBarComponent> {
             child: Container(
               width: double.infinity,
               height: 0.5,
-              color: color == Colors.transparent ? GlobalColors.firstColor : GlobalColors.fourthColor,
+              color: GlobalColors.firstColor,
             ),
           ),
         );
