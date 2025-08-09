@@ -12,12 +12,12 @@ class MyGoogleMapWidget extends StatefulWidget {
   MyGoogleMapWidgetState createState() => MyGoogleMapWidgetState();
 }
 
-class MyGoogleMapWidgetState extends State<MyGoogleMapWidget> {
+class MyGoogleMapWidgetState extends State<MyGoogleMapWidget> with TickerProviderStateMixin {
   late GoogleMapController mapController;
-  
   final LatLng _center = const LatLng(48.8566, 2.3522); // Paris
   LatLng? _selectedMarkerPosition;
   Set<Marker> _markers = {}; 
+  bool isAnimating = false;
 
   // Variables controlling the custom InfoWindow visibility and content
   bool _isInfoWindowVisible = false;
@@ -75,11 +75,75 @@ class MyGoogleMapWidgetState extends State<MyGoogleMapWidget> {
   Future<void> _updateInfoWindowPosition() async {
     if (_selectedMarkerPosition == null) return;
 
-    final screenPosition = await mapController.getScreenCoordinate(_selectedMarkerPosition!);
+    final screenPosition = await mapController.getScreenCoordinate(_selectedMarkerPosition!); // Converts a geographical position (LatLng) into screen coordinates (ScreenCoordinate)
+
     setState(() {
       _infoWindowOffset = Offset(screenPosition.x.toDouble(), screenPosition.y.toDouble());
     });
   }
+
+  // Returns the center point of the currently visible map area
+  Future<LatLng> _getCurrentCenter() async {
+    final bounds = await mapController.getVisibleRegion(); // Retrieve a LatLngBounds object containing two points (northeast / northeast)
+
+    final lat = (bounds.northeast.latitude + bounds.southwest.latitude) / 2;
+    final lng = (bounds.northeast.longitude + bounds.southwest.longitude) / 2;
+    return LatLng(lat, lng);
+  }
+
+
+  void smoothCenterTo(LatLng target, {double zoom = 12.0, VoidCallback? onCompleted}) async {
+    if (isAnimating) return;
+
+    isAnimating = true;
+
+    final begin = await _getCurrentCenter(); // Currently position
+
+    // Smooth animation
+    final controller = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+
+    final tween = LatLngTween(
+      begin: begin,
+      end: target,
+    );
+
+    final animation = tween.animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: Curves.easeInOut
+      ),
+    );
+
+    // Moves the camera from the map (center of map) to a new position (marker) (animation.value) with a certain zoom
+    void listener() {
+      mapController.moveCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: animation.value,
+            zoom: zoom,
+          ),
+        ),
+      );
+    }
+    
+    // Moves the camera smoothly by updating its position during the animation
+    animation.addListener(listener);
+
+    // Triggers the animation then do the rest
+    controller.forward().whenComplete(() {
+      animation.removeListener(listener);
+      controller.dispose();
+      isAnimating = false;
+
+      // Triggers the display of the InfoWindow at click on marker (_initializeMarkers)
+      if (onCompleted != null) onCompleted(); 
+    });
+  }
+
+
 
   // Initializes the markers dynamically from imported data
   void _initializeMarkers() async {
@@ -88,24 +152,28 @@ class MyGoogleMapWidgetState extends State<MyGoogleMapWidget> {
     _markers = googleMapData.map((data) => Marker(
       markerId: MarkerId(data["id"]),
       position: data["position"],
-      onTap: () {
-        // Allows to recenter upon clicking on a marker by creating a CameraPosition from your LatLng
-        mapController.animateCamera(
-          CameraUpdate.newCameraPosition(
-            CameraPosition(
-              target: data["position"],
-              zoom: 12.0 
-            )
-          )
-        );
-        _selectedMarkerPosition = data["position"]; // On click capture the position of the marker to update the infoWindow
-        _updateInfoWindowPosition(); // function to fixe the position of the marker on the map
-        // Display the infoWindow
-        _showCustomInfoWindow(
+      onTap: () async {
+        // If one is open, close the current tooltip
+        if (_isInfoWindowVisible) {
+          _hideCustomInfoWindow();
+          await Future.delayed(Duration(milliseconds: 100)); // Wait for the closure before proceeding to smoothCenterTo
+        }
+        // Allows to recenter upon clicking on a marker by creating a CameraPosition 
+        smoothCenterTo(
           data["position"],
-          data["title"],
-          data["description"],
-          data["image"],
+          onCompleted: () {
+            // On click capture the position of the marker to update the infoWindow
+            _selectedMarkerPosition = data["position"]; 
+            // function to fixe the position of the marker on the map
+            _updateInfoWindowPosition(); 
+            // Display the infoWindow
+            _showCustomInfoWindow(
+              data["position"],
+              data["title"],
+              data["description"],
+              data["image"],
+            );
+          },
         );
       },
       icon: myCustomMarker // Applies custom marker icon
@@ -124,7 +192,9 @@ class MyGoogleMapWidgetState extends State<MyGoogleMapWidget> {
         GoogleMap(
           onMapCreated: _onMapCreated, // GoogleMapController
           initialCameraPosition: CameraPosition(target: _center, zoom: 12.0), // Initially position the map on Paris
-          onCameraMove: (CameraPosition position) => _updateInfoWindowPosition(), // fixes the position of the infoWindow on the map
+          onCameraMove: (CameraPosition position) {
+            _updateInfoWindowPosition(); // Fixes the position of the infoWindow on the marker when we move the map
+          }, 
           markers: _markers, // Display the markers
           mapType: MapType.normal,
           mapToolbarEnabled: false, // Disable navigation icons on the bottom
@@ -172,6 +242,23 @@ class MyGoogleMapWidgetState extends State<MyGoogleMapWidget> {
     );
   }
 }
+
+
+// A custom Tween for interpolating between two LatLng positions.
+// Since LatLng does not support arithmetic operations directly,
+// this class provides a linear interpolation for latitude and longitude
+// values over time, enabling smooth camera transitions on Google Maps.
+class LatLngTween extends Tween<LatLng> {
+  LatLngTween({required LatLng begin, required LatLng end})
+      : super(begin: begin, end: end);
+
+  @override
+  LatLng lerp(double t) => LatLng(
+        begin!.latitude + (end!.latitude - begin!.latitude) * t,
+        begin!.longitude + (end!.longitude - begin!.longitude) * t,
+      );
+}
+
 
 
 

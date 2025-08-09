@@ -8,7 +8,7 @@ void injectGoogleMapsScript() {
   }
 
   final script = HTMLScriptElement()
-    ..src = 'https://maps.googleapis.com/maps/api/js?key=$googleMapsApiKey'
+    ..src = 'https://maps.googleapis.com/maps/api/js?key=$googleMapsApiKey&loading=async'
     ..async = true
     ..defer = true;
   document.body!.append(script);

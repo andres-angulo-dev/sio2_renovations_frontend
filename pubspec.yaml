@@ -23,7 +23,6 @@ dependencies:
   flutter_svg: ^2.0.17
   visibility_detector: ^0.4.0+2
   google_maps_flutter: ^2.12.1
-  google_maps_flutter_web: ^0.5.12
   flutter_dotenv: ^5.2.1
   http: ^1.4.0
   fade_out_particle: ^1.2.2
