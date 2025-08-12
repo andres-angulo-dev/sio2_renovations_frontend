@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
+import '../utils/global_routes.dart';
 
 class SessionCookieController {
   static bool delayShown = false;
-}
-
-class GlobalDates {
-  // Privaty policy screen
-  static const String lastUpdate = '1er août 2025'; 
 }
 
 class GlobalPersonalData {
@@ -26,6 +22,7 @@ class GlobalPersonalData {
   static const String phone = '+(33) 6 46 34 12 03';
   static const String email = 'contact@sio2renovations.com';
   static const String website = 'www.sio2renovations.com';
+  static String httpDomaine = domaine;
   static const String companyCreationDate = '15 septembre 2020';
   // Hosting
   static const String hostingProviderName = 'OVH SAS';
@@ -48,7 +45,7 @@ class GlobalPersonalData {
 class GlobalData {
   // Landing screen
     // What Type Of Renovations Section extends
-  static   final List<Map<String, String?>> typeOfRenovationData =  [
+  static final List<Map<String, String?>> typeOfRenovationData =  [
     {"title": "Rénovation totale", "image": GlobalImages.backgroundLanding, "routePath": '/projects'},
     {"title": "Rénovation partielle", "image": GlobalImages.backgroundLanding, "routePath": '/projects'},
     {"title": "Rénovation de cuisine", "image": GlobalImages.backgroundLanding, "routePath": '/projects'},
@@ -69,6 +66,7 @@ class GlobalData {
     {"title": "MAÇONNERIE", "image": GlobalImages.backgroundLanding},
     {"title": "ÉLECTRICITÉ", "image": GlobalImages.backgroundLanding},
   ];
+
 
   // Photow wall
   static final Map<String, List<String>> photosWall = _initPhotosWall();

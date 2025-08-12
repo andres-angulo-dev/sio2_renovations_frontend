@@ -7,6 +7,7 @@ import '../widgets/my_hover_url_navigator_widget.dart';
 import '../widgets/my_back_to_top_button_widget.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
+import '../utils/global_routes.dart';
 import '../utils/global_screen_sizes.dart';
 
 
@@ -1385,7 +1386,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
  
                       // Section: Last update
                       Text(
-                        "Dernière mise à jour : ${GlobalDates.lastUpdate}",
+                        "Dernière mise à jour : ${GlobalDates.lastUpdatePrivacyPolicy}",
                         style: TextStyle(
                           fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                           color: GlobalColors.secondColor,

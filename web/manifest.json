@@ -1,12 +1,13 @@
 {
-    "name": "SIO2 Rénovations | Entreprise générale du bâtiment tous coprs d'état",
-    "short_name": "SIO2 Rénovations",
+    "name": "SiO₂ Rénovations – Rénovation à Paris et Île-de-France",
+    "short_name": "SiO₂ Rénovations",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "Entreprise générale du bâtiment tous corps d'état, spécialisée dans la rénovation et l'aménagement. Faites confiance à notre expertise pour des projets de qualité adaptés à vos besoins.",
+    "background_color": "#feffff",
+    "theme_color": "#feffff",
+    "description": "SiO₂ Rénovations est une entreprise générale du bâtiment tous corps d'état, spécialisée dans la rénovation et l'aménagement à Paris et en Île-de-France. Qualité, fiabilité et savoir-faire au service de vos projets.",
     "orientation": "portrait-primary",
+    "lang" : "fr",
     "prefer_related_applications": false,
     "icons": [
         {
