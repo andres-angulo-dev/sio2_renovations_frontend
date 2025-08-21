@@ -46,25 +46,25 @@ class GlobalData {
   // Landing screen
     // What Type Of Renovations Section extends
   static final List<Map<String, String?>> typeOfRenovationData =  [
-    {"title": "Rénovation totale", "image": GlobalImages.backgroundLanding, "routePath": '/projects'},
-    {"title": "Rénovation partielle", "image": GlobalImages.backgroundLanding, "routePath": '/projects'},
-    {"title": "Rénovation de cuisine", "image": GlobalImages.backgroundLanding, "routePath": '/projects'},
-    {"title": "Rénovation de salle de bain", "image": GlobalImages.backgroundLanding, "routePath": '/projects'},
-    {"title": "Rénovation après sinistre", "image": GlobalImages.backgroundLanding, "routePath": '/projects'},
+    {"title": "Rénovation totale", "image": GlobalImages.totalRenovation, "routePath": '/projects'},
+    {"title": "Rénovation de salle de bain", "image": GlobalImages.bathroom, "routePath": '/projects'},
+    {"title": "Rénovation partielle", "image": GlobalImages.partialRenovation, "routePath": '/projects'},
+    {"title": "Rénovation après sinistre", "image": GlobalImages.renovationAfterDisaster, "routePath": '/projects'},
+    {"title": "Rénovation de cuisine", "image": GlobalImages.kitchen, "routePath": '/projects'},
   ];
 
 
   // Projects screen 
     // Title of menu and photos
  static final List<Map<String, String>> servicesData = [
-    {"title": "TOUT VOIR", "image": GlobalImages.backgroundLanding},
-    {"title": "PEINTURE", "image": GlobalImages.backgroundLanding},
-    {"title": "MENUISERIE", "image": GlobalImages.backgroundLanding},
-    {"title": "SOLS", "image": GlobalImages.backgroundLanding},
-    {"title": "PLOMBERIE", "image": GlobalImages.backgroundLanding},
-    {"title": "CHAUFFAGE", "image": GlobalImages.backgroundLanding},
-    {"title": "MAÇONNERIE", "image": GlobalImages.backgroundLanding},
-    {"title": "ÉLECTRICITÉ", "image": GlobalImages.backgroundLanding},
+    {"title": "TOUT VOIR", "image": GlobalImages.all},
+    {"title": "PEINTURE", "image": GlobalImages.painter},
+    {"title": "MENUISERIE", "image": GlobalImages.carpenter},
+    {"title": "SOLS", "image": GlobalImages.tiler},
+    {"title": "PLOMBERIE", "image": GlobalImages.plumber},
+    {"title": "PLÂTRERIE", "image": GlobalImages.drywallInstaller},
+    {"title": "MAÇONNERIE", "image": GlobalImages.mason},
+    {"title": "ÉLECTRICITÉ", "image": "assets/images/electrician.jpg"},
   ];
 
 
@@ -95,7 +95,7 @@ class GlobalData {
         GlobalImages.backgroundLanding,
         GlobalImages.backgroundLanding,
       ],
-      'chauffage': [
+      'plâtrerie': [
         GlobalImages.backgroundLanding,      
         GlobalImages.backgroundLanding,
         GlobalImages.backgroundLanding,
@@ -130,22 +130,59 @@ class GlobalImages {
   static const String image7 = 'assets/images/image7.jpeg';
   static const String image8 = 'assets/images/image8.jpeg';
   // Landing Screen
-  static const String backgroundLanding = 'assets/images/immeuble.jpeg';
-  static const String customGoogleMarker = 'assets/images/customGoogleMarker.png';
-  static const String backgroundFeedbackSection = 'assets/images/backgroundFeedbackSection.png';
-  static const String backgroundWhyChooseUsSection = 'assets/images/backgroundWhyChooseUs.png';
-  static const String backgroundWorkTogetherSection = 'assets/images/AdobeStock_544852100bis.jpg';
+    // Welcome section
   static const List<String> landingCarouselImages = [
     GlobalImages.backgroundLanding,
     GlobalImages.bakcgroundQuote,
-    GlobalImages.backgroundWorkTogetherSection,
+    GlobalImages.workTogetherSection,
   ];
+    // Welcome section 
+  static const String backgroundLanding = 'assets/images/building.webp';
+
+    // Company profile section
+  static const String imageCompanyProfileSection = 'assets/images/imageCompanyProfileSection.webp';
   
+    // What type of renovations section
+  static const String bathroom = 'assets/images/bathroom.webp';
+  static const String kitchen = 'assets/images/kitchen.webp';
+  static const String renovationAfterDisaster = 'assets/images/renovationAfterDisaster.webp';
+  static const String totalRenovation = 'assets/images/totalRenovation.webp';
+  static const String partialRenovation = 'assets/images/partialRenovation.webp';
+  
+    // Services section
+  static const String carpenter = 'assets/images/carpenter.webp';
+  static const String drywallInstaller = 'assets/images/drywallInstaller.webp';
+  static const String electrician = 'assets/images/electrician.webp';
+  static const String painter = 'assets/images/painter.webp';
+  static const String plumber = 'assets/images/plumber.webp';
+  static const String tiler = 'assets/images/tiler.webp';
+  static const String mason = 'assets/images/mason.webp';
+
+    // Work together section
+  static const String workTogetherSection = 'assets/images/workTogether.webp';
+
+    // Before - After
+  static const String before = 'assets/images/before.webp';
+  static const String after = 'assets/images/after.webp';
+
+  static const String customGoogleMarker = 'assets/images/icons/customGoogleMarker.png';
+  static const String backgroundFeedbackSection = 'assets/images/backgroundFeedbackSection.png';
+  static const String backgroundWhyChooseUsSection = 'assets/images/backgroundWhyChooseUs.png';
+  
+  // About screen
+  static const String ourHistory = 'assets/images/ourHistory.webp';
+  static const String ourServices = 'assets/images/ourServices.webp';
+  static const String contact = 'assets/images/contactAboutScreen.webp';
+
   // Projects screen
-  static const String bakcgroundQuote = 'assets/images/iStock-871105006.webp';  
+  static const String all = 'assets/images/all.webp';  
+  static const String bakcgroundQuote = 'assets/images/contactServicesScreen.webp';  
   
-  // CapchaComponent
-  static const String imageCaptha = 'assets/images/immeuble.jpeg';
+  // Succes popup componenet
+  static const String successAnimation = 'assets/animations/success.json';
+
+  // Capcha widget
+  static const String imageCaptha = 'assets/images/building.webp';
   static const String iconCaptcha = 'assets/icons/captcha.png';
 }
 

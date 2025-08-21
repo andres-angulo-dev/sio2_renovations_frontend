@@ -138,7 +138,8 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
   Widget build(BuildContext context) {
     bool isMobile = GlobalScreenSizes.isMobileScreen(context);
     final screenWidth = GlobalScreenSizes.screenWidth(context);
-
+    String ourHistoryParagraph = "${GlobalPersonalData.companyName} est le fruit de la fusion entre deux familles partageant plus de 30 ans d’expérience dans le bâtiment.\n\nNous mettons ce savoir-faire à votre service, que ce soit pour rénover un studio, un appartement, une maison entière ou un local commercial. Capables de prendre en charge des projets de toutes tailles, nous répondons aussi bien aux petits travaux de rénovation qu’aux défis les plus ambitieux.";
+ 
     return Scaffold(
       appBar: MyNavBarComponent(
         currentItem: currentItem,
@@ -314,7 +315,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                                 ),
                                 const SizedBox(height: 20.0), // Space between
                                 Text(
-                                  "${GlobalPersonalData.companyName} est le fruit de la fusion entre deux familles partageant plus de 30 ans d’expérience dans le bâtiment.\n\nNous mettons ce savoir-faire à votre service, que ce soit pour rénover un studio, un appartement, une maison entière ou un local commercial. Capables de prendre en charge des projets de toutes tailles, nous répondons aussi bien aux petits travaux de rénovation qu’aux défis les plus ambitieux.",
+                                  ourHistoryParagraph,
                                   style: TextStyle(
                                     fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                     color: Colors.black87,
@@ -333,7 +334,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                         height: 600.0,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(GlobalImages.backgroundLanding),
+                            image: AssetImage(GlobalImages.ourHistory),
                             fit: BoxFit.cover,
                           )
                         ),
@@ -350,7 +351,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                         constraints: BoxConstraints(maxWidth: 800.0),
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(GlobalImages.backgroundLanding),
+                            image: AssetImage(GlobalImages.ourHistory),
                             fit: BoxFit.cover,
                           )
                         ),
@@ -389,7 +390,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                                   ),
                                   const SizedBox(height: 20.0), // Space between
                                   Text(
-                                    "${GlobalPersonalData.companyName} est le fruit de la fusion entre deux familles partageant plus de 30 ans d’expérience dans le bâtiment.\n\nNous mettons ce savoir-faire à votre service, que ce soit pour rénover un studio, un appartement, une maison entière ou un local commercial. Capables de prendre en charge des projets de toutes tailles, nous répondons aussi bien aux petits travaux de rénovation qu’aux défis les plus ambitieux.",
+                                    ourHistoryParagraph,
                                     style: TextStyle(
                                       fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                       color: Colors.black87,
@@ -467,7 +468,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                   width: screenWidth,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(GlobalImages.backgroundLanding), // Replace with your image path
+                      image: AssetImage(GlobalImages.ourServices), // Replace with your image path
                       fit: BoxFit.cover, // Cover the entire space
                     )
                   ),
@@ -636,7 +637,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                                           ),
                                           const SizedBox(height: 20.0), // Space between
                                           Text(
-                                            "Vous avez un projet en tête ? Chez ${GlobalPersonalData.companyName}, nous sommes là pour vous accompagner à chaque étape, de l'idée initiale à la réalisation finale.Que ce soit pour rénover un appartement, moderniser une maison, ou redonner vie à un local commercial, notre expertise est à votre disposition.\n"
+                                            "Vous avez un projet en tête ? Chez ${GlobalPersonalData.companyName}, nous sommes là pour vous accompagner à chaque étape, de l'idée initiale à la réalisation finale. Que ce soit pour rénover un appartement, moderniser une maison, ou redonner vie à un local commercial, notre expertise est à votre disposition.\n"
                                             "Contactez-nous dès aujourd’hui pour discuter de vos projets de rénovation et découvrir comment nous pouvons concrétiser vos idées. Situés à Paris et actifs dans toute l'Île-de-France, Nous nous engageons à comprendre vos besoins afin de concevoir un espace unique et personnalisé.\n\nEnsemble, donnons vie à vos envies et faisons de votre intérieur un lieu où il fait bon vivre.",
                                             style: TextStyle(
                                               fontSize:  isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
@@ -678,7 +679,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                           child: Container(
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage(GlobalImages.backgroundLanding),
+                                image: AssetImage(GlobalImages.contact),
                                 fit: BoxFit.cover,
                               )
                             ),
@@ -771,7 +772,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                           child: Container(
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage(GlobalImages.backgroundLanding),
+                                image: AssetImage(GlobalImages.contact),
                                 fit: BoxFit.cover,
                               )
                             ),

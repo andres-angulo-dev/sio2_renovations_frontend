@@ -26,7 +26,7 @@ class WorkTogetherSectionState extends State<WorkTogetherSection> {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
-                GlobalImages.backgroundWorkTogetherSection,
+                GlobalImages.workTogetherSection,
               ),
               fit: BoxFit.cover
             )

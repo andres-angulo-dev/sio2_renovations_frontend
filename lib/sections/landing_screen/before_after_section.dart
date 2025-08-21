@@ -14,19 +14,20 @@ class BeforeAfterSection extends StatelessWidget {
     return Wrap(
       alignment: WrapAlignment.spaceBetween, 
       children: [
-        _builRightContent(context, isMobile, "AVANT"),
-        _buildLeftContent(context, isMobile, "APRÈS"),
+        _builLeftContent(context, isMobile, "AVANT"),
+        _buildRighttContent(context, isMobile, "APRÈS"),
       ],
     );
   }
 
-  Widget _builRightContent(BuildContext context, bool isMobile, String title) {
+  // Left block : before
+  Widget _builLeftContent(BuildContext context, bool isMobile, String title) {
     return SizedBox(
       width: 1000.0,
       height: 600.0,
       child: Stack(
         children: [
-          _buildBackgroundImage(context),
+          _buildBackgroundImage(context, GlobalImages.before),
           _buildTitle(title, isMobile, left: true),
           _buildSquares(leftAligned: true),
         ],
@@ -34,25 +35,27 @@ class BeforeAfterSection extends StatelessWidget {
     );
   }
 
-  Widget _buildLeftContent(BuildContext context, bool isMobile, String title) {
+  // Right block : after
+  Widget _buildRighttContent(BuildContext context, bool isMobile, String title) {
     return SizedBox(
       width: 1000.0,
       height: 600.0,
       child: Stack(
         children: [
-          _buildBackgroundImage(context),
+          _buildBackgroundImage(context, GlobalImages.after),
           _buildTitle(title, isMobile, left: false,),
           _buildSquares(leftAligned: false),
         ],
       ),
     );
   }
+  
 
-  Widget _buildBackgroundImage(BuildContext context) {
+  Widget _buildBackgroundImage(BuildContext context, String image) {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/images/immeuble.jpeg'),
+          image: AssetImage(image),
           fit: BoxFit.cover,
         ),
       ),

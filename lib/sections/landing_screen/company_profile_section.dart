@@ -75,7 +75,7 @@ class CompanyProfileSectionState extends State<CompanyProfileSection> {
                 height: 600.0,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/images/immeuble.jpeg'),
+                    image: AssetImage(GlobalImages.imageCompanyProfileSection),
                     fit: BoxFit.cover,
                   )
                 ),

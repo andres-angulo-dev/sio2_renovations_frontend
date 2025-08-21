@@ -5,6 +5,7 @@ import 'package:slider_captcha/slider_captcha.dart';
 import '../widgets/my_captcha_widget.dart';
 import '../widgets/my_dot_loader_widget.dart';
 import '../utils/global_colors.dart';
+import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
 
 class SuccessPopupComponent extends StatefulWidget {
@@ -119,7 +120,7 @@ class SuccessPopupComponentState extends State<SuccessPopupComponent> {
                           SizedBox(
                             height: 150.0,
                             child: Lottie.asset(
-                              'assets/success.json',
+                              GlobalImages.successAnimation,
                               repeat: false,
                               animate: true,
                             ),
