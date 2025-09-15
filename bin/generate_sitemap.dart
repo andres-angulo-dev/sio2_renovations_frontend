@@ -26,5 +26,5 @@ void main() {
   File(outputPath).createSync(recursive: true);
   File(outputPath).writeAsStringSync(buffer.toString());
 
-  print('✅ sitemap.xml généré avec domaine : $domain ✅');
+  //print('✅ sitemap.xml généré avec domaine : $domain ✅');
 }

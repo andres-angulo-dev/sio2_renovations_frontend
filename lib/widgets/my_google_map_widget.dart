@@ -176,8 +176,9 @@ class MyGoogleMapWidgetState extends State<MyGoogleMapWidget> with TickerProvide
           },
         );
       },
-      icon: myCustomMarker // Applies custom marker icon
+      icon: myCustomMarker, // Applies custom marker icon
     )).toSet(); 
+print('Markers loaded: ${googleMapData.length}');
 
     setState(() {});
   }
@@ -242,7 +243,6 @@ class MyGoogleMapWidgetState extends State<MyGoogleMapWidget> with TickerProvide
     );
   }
 }
-
 
 // A custom Tween for interpolating between two LatLng positions.
 // Since LatLng does not support arithmetic operations directly,

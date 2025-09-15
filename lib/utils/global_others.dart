@@ -48,7 +48,7 @@ class GlobalData {
   static final List<Map<String, String?>> typeOfRenovationData =  [
     {"title": "Rénovation totale", "image": GlobalImages.totalRenovation, "routePath": '/projects'},
     {"title": "Rénovation de salle de bain", "image": GlobalImages.bathroom, "routePath": '/projects'},
-    {"title": "Rénovation partielle", "image": GlobalImages.partialRenovation, "routePath": '/projects'},
+    {"title": "Plomberie", "image": GlobalImages.partialRenovation, "routePath": '/projects'},
     {"title": "Rénovation après sinistre", "image": GlobalImages.renovationAfterDisaster, "routePath": '/projects'},
     {"title": "Rénovation de cuisine", "image": GlobalImages.kitchen, "routePath": '/projects'},
   ];
@@ -64,7 +64,7 @@ class GlobalData {
     {"title": "PLOMBERIE", "image": GlobalImages.plumber},
     {"title": "PLÂTRERIE", "image": GlobalImages.drywallInstaller},
     {"title": "MAÇONNERIE", "image": GlobalImages.mason},
-    {"title": "ÉLECTRICITÉ", "image": "assets/images/electrician.jpg"},
+    {"title": "Rénovation de cuisine", "image": GlobalImages.electrician},
   ];
 
 
@@ -108,7 +108,7 @@ class GlobalData {
         GlobalImages.backgroundLanding,
         GlobalImages.backgroundLanding,
       ],
-      'électricité': [
+      'Rénovation de cuisine': [
         GlobalImages.backgroundLanding,
         GlobalImages.backgroundLanding,      
         GlobalImages.backgroundLanding,
@@ -158,17 +158,22 @@ class GlobalImages {
   static const String tiler = 'assets/images/tiler.webp';
   static const String mason = 'assets/images/mason.webp';
 
+    // Why choose us section
+  static const String backgroundWhyChooseUsSection = 'assets/images/backgroundWhyChooseUs.png';
+
     // Work together section
   static const String workTogetherSection = 'assets/images/workTogether.webp';
 
-    // Before - After
+    // Key figures section (Google Map)
+  static const String customGoogleMarker = 'assets/icons/customGoogleMarker.png';
+
+    // Before - After section
   static const String before = 'assets/images/before.webp';
   static const String after = 'assets/images/after.webp';
 
-  static const String customGoogleMarker = 'assets/images/icons/customGoogleMarker.png';
+    // Customer feedback section 
   static const String backgroundFeedbackSection = 'assets/images/backgroundFeedbackSection.png';
-  static const String backgroundWhyChooseUsSection = 'assets/images/backgroundWhyChooseUs.png';
-  
+
   // About screen
   static const String ourHistory = 'assets/images/ourHistory.webp';
   static const String ourServices = 'assets/images/ourServices.webp';
