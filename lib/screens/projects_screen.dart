@@ -243,7 +243,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
                   ),
                 ),
                 // Menu
-                MyHorizontalMenuWidget(updateSelectedService: updateSelectedService, selectedService: selectedService),
+                // MyHorizontalMenuWidget(updateSelectedService: updateSelectedService, selectedService: selectedService),
                 const SizedBox(height: 100.0),
                 // Photo wall 
                 PhotoWallWidget(photos: filteredPhotos),

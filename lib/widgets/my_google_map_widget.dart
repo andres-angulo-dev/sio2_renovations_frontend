@@ -178,7 +178,6 @@ class MyGoogleMapWidgetState extends State<MyGoogleMapWidget> with TickerProvide
       },
       icon: myCustomMarker, // Applies custom marker icon
     )).toSet(); 
-print('Markers loaded: ${googleMapData.length}');
 
     setState(() {});
   }

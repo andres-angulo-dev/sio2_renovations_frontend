@@ -64,7 +64,7 @@ class GlobalData {
     {"title": "PLOMBERIE", "image": GlobalImages.plumber},
     {"title": "PLÂTRERIE", "image": GlobalImages.drywallInstaller},
     {"title": "MAÇONNERIE", "image": GlobalImages.mason},
-    {"title": "Rénovation de cuisine", "image": GlobalImages.electrician},
+    {"title": "ÉLÉCTRICITÉ", "image": GlobalImages.electrician},
   ];
 
 
@@ -108,7 +108,7 @@ class GlobalData {
         GlobalImages.backgroundLanding,
         GlobalImages.backgroundLanding,
       ],
-      'Rénovation de cuisine': [
+      'Éléctricité': [
         GlobalImages.backgroundLanding,
         GlobalImages.backgroundLanding,      
         GlobalImages.backgroundLanding,
