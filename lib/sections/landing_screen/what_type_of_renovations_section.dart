@@ -180,6 +180,7 @@ class WhatTypeOfRenovationsSectionState extends State<WhatTypeOfRenovationsSecti
                               height: double.infinity,
                               color: Colors.black.withValues(alpha: 0.5),
                               alignment: Alignment.center,
+                              padding: EdgeInsets.symmetric(horizontal: 20.0),
                               child: ClipRect(
                                 child: SlideTransition(
                                   position: _slideAnimation[index],

@@ -48,7 +48,7 @@ class GlobalData {
   static final List<Map<String, String?>> typeOfRenovationData =  [
     {"title": "Rénovation totale", "image": GlobalImages.totalRenovation, "routePath": '/projects'},
     {"title": "Rénovation de salle de bain", "image": GlobalImages.bathroom, "routePath": '/projects'},
-    {"title": "Plomberie", "image": GlobalImages.partialRenovation, "routePath": '/projects'},
+    {"title": "Rénovation partielle", "image": GlobalImages.partialRenovation, "routePath": '/projects'},
     {"title": "Rénovation après sinistre", "image": GlobalImages.renovationAfterDisaster, "routePath": '/projects'},
     {"title": "Rénovation de cuisine", "image": GlobalImages.kitchen, "routePath": '/projects'},
   ];
@@ -73,47 +73,107 @@ class GlobalData {
   
   static Map<String, List<String>> _initPhotosWall() {  // Allows to convert to lowercase
     final rawData = {
-      'peinture': [
-        GlobalImages.backgroundLanding,
-        GlobalImages.backgroundLanding,
-        GlobalImages.backgroundLanding,
-        GlobalImages.backgroundLanding,
-      ],
-      'menuiserie': [
-        GlobalImages.backgroundLanding,
-        GlobalImages.backgroundLanding,
-        GlobalImages.backgroundLanding,
-      ],
-      'sols': [
-        GlobalImages.backgroundLanding,
-        GlobalImages.backgroundLanding,
-        GlobalImages.backgroundLanding,      
-        GlobalImages.backgroundLanding,
-        GlobalImages.backgroundLanding,
-      ],
-      'plomberie': [
-        GlobalImages.backgroundLanding,
-        GlobalImages.backgroundLanding,
-      ],
-      'plâtrerie': [
-        GlobalImages.backgroundLanding,      
-        GlobalImages.backgroundLanding,
-        GlobalImages.backgroundLanding,
-      ],
-      'maçonnerie': [
-        GlobalImages.backgroundLanding,
-        GlobalImages.backgroundLanding,
-        GlobalImages.backgroundLanding,
-        GlobalImages.backgroundLanding,
-        GlobalImages.backgroundLanding,
-        GlobalImages.backgroundLanding,
-      ],
-      'Éléctricité': [
-        GlobalImages.backgroundLanding,
-        GlobalImages.backgroundLanding,      
-        GlobalImages.backgroundLanding,
-        GlobalImages.backgroundLanding,
-      ],
+      'all': [
+        GlobalImages.image1,
+        GlobalImages.image2,
+        GlobalImages.image3,
+        GlobalImages.image4,
+        GlobalImages.image5,
+        GlobalImages.image6,
+        GlobalImages.image7,
+        GlobalImages.image8,
+        GlobalImages.image9,
+        GlobalImages.image10,
+        GlobalImages.image11,
+        GlobalImages.image12,
+        GlobalImages.image13,
+        GlobalImages.image14,
+        GlobalImages.image15,
+        GlobalImages.image16,
+        GlobalImages.image17,
+        GlobalImages.image18,
+        GlobalImages.image19,
+        GlobalImages.image20,
+        GlobalImages.image21,
+        GlobalImages.image22,
+        GlobalImages.image23,
+        GlobalImages.image24,
+        GlobalImages.image25,
+        GlobalImages.image26,
+        GlobalImages.image27,
+        GlobalImages.image28,
+        GlobalImages.image29,
+        GlobalImages.image30,
+        GlobalImages.image31,
+        GlobalImages.image32,
+        GlobalImages.image33,
+        GlobalImages.image34,
+        GlobalImages.image35,
+        GlobalImages.image36,
+        GlobalImages.image37,
+        GlobalImages.image38,
+        GlobalImages.image39,
+        GlobalImages.image40,
+        GlobalImages.image41,
+        GlobalImages.image42,
+        GlobalImages.image43,
+        GlobalImages.image44,
+        GlobalImages.image45,
+        GlobalImages.image46,
+        GlobalImages.image47,
+        GlobalImages.image48,
+        GlobalImages.image49,
+        GlobalImages.image50,
+        GlobalImages.image51,
+        GlobalImages.image52,
+        GlobalImages.image53,
+        // GlobalImages.image54,
+        // GlobalImages.image55,
+        // GlobalImages.image56,
+        // GlobalImages.image57,
+      ]
+
+      // 'peinture': [
+      //   GlobalImages.backgroundLanding,
+      //   GlobalImages.backgroundLanding,
+      //   GlobalImages.backgroundLanding,
+      //   GlobalImages.backgroundLanding,
+      // ],
+      // 'menuiserie': [
+      //   GlobalImages.backgroundLanding,
+      //   GlobalImages.backgroundLanding,
+      //   GlobalImages.backgroundLanding,
+      // ],
+      // 'sols': [
+      //   GlobalImages.backgroundLanding,
+      //   GlobalImages.backgroundLanding,
+      //   GlobalImages.backgroundLanding,      
+      //   GlobalImages.backgroundLanding,
+      //   GlobalImages.backgroundLanding,
+      // ],
+      // 'plomberie': [
+      //   GlobalImages.backgroundLanding,
+      //   GlobalImages.backgroundLanding,
+      // ],
+      // 'plâtrerie': [
+      //   GlobalImages.backgroundLanding,      
+      //   GlobalImages.backgroundLanding,
+      //   GlobalImages.backgroundLanding,
+      // ],
+      // 'maçonnerie': [
+      //   GlobalImages.backgroundLanding,
+      //   GlobalImages.backgroundLanding,
+      //   GlobalImages.backgroundLanding,
+      //   GlobalImages.backgroundLanding,
+      //   GlobalImages.backgroundLanding,
+      //   GlobalImages.backgroundLanding,
+      // ],
+      // 'Éléctricité': [
+      //   GlobalImages.backgroundLanding,
+      //   GlobalImages.backgroundLanding,      
+      //   GlobalImages.backgroundLanding,
+      //   GlobalImages.backgroundLanding,
+      // ],
     };
     
     return rawData.map((key, value) => MapEntry(key.toLowerCase(), value ));  // The function automatically transforms them to lowercase
@@ -121,14 +181,64 @@ class GlobalData {
 }
 
 class GlobalImages {
-  static const String image1 = 'assets/images/image1.jpeg';
-  static const String image2 = 'assets/images/image2.jpeg';
-  static const String image3 = 'assets/images/image3.jpeg';
-  static const String image4 = 'assets/images/image4.jpeg';
-  static const String image5 = 'assets/images/image5.jpeg';
-  static const String image6 = 'assets/images/image6.jpeg';
-  static const String image7 = 'assets/images/image7.jpeg';
-  static const String image8 = 'assets/images/image8.jpeg';
+  static const String image1 = 'assets/images/projects/image1.webp';
+  static const String image2 = 'assets/images/projects/image2.webp';
+  static const String image3 = 'assets/images/projects/image3.webp';
+  static const String image4 = 'assets/images/projects/image4.webp';
+  static const String image5 = 'assets/images/projects/image5.webp';
+  static const String image6 = 'assets/images/projects/image6.webp';
+  static const String image7 = 'assets/images/projects/image7.webp';
+  static const String image8 = 'assets/images/projects/image8.webp';
+  static const String image9 = 'assets/images/projects/image9.webp';
+  static const String image10 = 'assets/images/projects/image10.webp';
+  static const String image11 = 'assets/images/projects/image11.webp';
+  static const String image12 = 'assets/images/projects/image12.webp';
+  static const String image13 = 'assets/images/projects/image13.webp';
+  static const String image14 = 'assets/images/projects/image14.webp';
+  static const String image15 = 'assets/images/projects/image15.webp';
+  static const String image16 = 'assets/images/projects/image16.webp';
+  static const String image17 = 'assets/images/projects/image17.webp';
+  static const String image18 = 'assets/images/projects/image18.webp';
+  static const String image19 = 'assets/images/projects/image19.webp';
+  static const String image20 = 'assets/images/projects/image20.webp';
+  static const String image21 = 'assets/images/projects/image21.webp';
+  static const String image22 = 'assets/images/projects/image22.webp';
+  static const String image23 = 'assets/images/projects/image23.webp';
+  static const String image24 = 'assets/images/projects/image24.webp';
+  static const String image25 = 'assets/images/projects/image25.webp';
+  static const String image26 = 'assets/images/projects/image26.webp';
+  static const String image27 = 'assets/images/projects/image27.webp';
+  static const String image28 = 'assets/images/projects/image28.webp';
+  static const String image29 = 'assets/images/projects/image29.webp';
+  static const String image30 = 'assets/images/projects/image30.webp';
+  static const String image31 = 'assets/images/projects/image31.webp';
+  static const String image32 = 'assets/images/projects/image32.webp';
+  static const String image33 = 'assets/images/projects/image33.webp';
+  static const String image34 = 'assets/images/projects/image34.webp';
+  static const String image35 = 'assets/images/projects/image35.webp';
+  static const String image36 = 'assets/images/projects/image36.webp';
+  static const String image37 = 'assets/images/projects/image37.webp';
+  static const String image38 = 'assets/images/projects/image38.webp';
+  static const String image39 = 'assets/images/projects/image39.webp';
+  static const String image40 = 'assets/images/projects/image40.webp';
+  static const String image41 = 'assets/images/projects/image41.webp';
+  static const String image42 = 'assets/images/projects/image42.webp';
+  static const String image43 = 'assets/images/projects/image43.webp';
+  static const String image44 = 'assets/images/projects/image44.webp';
+  static const String image45 = 'assets/images/projects/image45.webp';
+  static const String image46 = 'assets/images/projects/image46.webp';
+  static const String image47 = 'assets/images/projects/image47.webp';
+  static const String image48 = 'assets/images/projects/image48.webp';
+  static const String image49 = 'assets/images/projects/image49.webp';
+  static const String image50 = 'assets/images/projects/image50.webp';
+  static const String image51 = 'assets/images/projects/image51.webp';
+  static const String image52 = 'assets/images/projects/image52.webp';
+  static const String image53 = 'assets/images/projects/image53.webp';
+  static const String image54 = 'assets/images/projects/image54.webp';
+  static const String image55 = 'assets/images/projects/image55.webp';
+  static const String image56 = 'assets/images/projects/image56.webp';
+  static const String image57 = 'assets/images/projects/image57.webp';
+
   // Landing Screen
     // Welcome section
   static const List<String> landingCarouselImages = [

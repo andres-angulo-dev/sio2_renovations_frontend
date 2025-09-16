@@ -8,7 +8,7 @@ import '../widgets/vertical_words_carousel_widget.dart';
 import '../widgets/photo_wall_widget.dart';
 import '../widgets/my_rive_button_widget.dart';
 import '../widgets/my_back_to_top_button_widget.dart';
-import '../widgets/my_horizontal_menu_widget.dart';
+// import '../widgets/my_horizontal_menu_widget.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
