@@ -157,7 +157,9 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
       backgroundColor: GlobalColors.firstColor,
       body: LayoutBuilder(
         builder: (context, contraints) {
-          final availableHeight = contraints.maxHeight;
+          final availableHeight = 800.0;
+          // final availableHeight = contraints.maxHeight;
+
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -173,7 +175,7 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                         width: screenWidth,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(GlobalImages.backgroundLanding), 
+                            image: AssetImage(GlobalImages.aboutScreenWelcomeImage), 
                             fit: BoxFit.cover, // Cover the entire space
                           )
                         ),
@@ -580,10 +582,23 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                           ),
                         ],
                       )    
-                      : SizedBox(
-                        height: 900.0,
-                        width: 900.0,
-                        child: RiveAnimation.asset(GlobalAnimations.engagementAnimation),
+                      : Column(
+                        children: [
+                          Text(
+                            "POURQUOI NOUS FAIRE CONFIANCE ?",
+                            style: TextStyle(
+                              fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle, // Adjust font size
+                              fontWeight: FontWeight.bold,
+                              color: GlobalColors.thirdColor,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(
+                            height: 900.0,
+                            width: 900.0,
+                            child: RiveAnimation.asset(GlobalAnimations.engagementAnimation),
+                          )
+                        ]
                       )
                     ) 
                   ),

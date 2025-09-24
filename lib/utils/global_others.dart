@@ -127,8 +127,8 @@ class GlobalData {
         GlobalImages.image51,
         GlobalImages.image52,
         GlobalImages.image53,
-        // GlobalImages.image54,
-        // GlobalImages.image55,
+        GlobalImages.image54,
+        GlobalImages.image55,
         // GlobalImages.image56,
         // GlobalImages.image57,
       ]
@@ -242,12 +242,21 @@ class GlobalImages {
   // Landing Screen
     // Welcome section
   static const List<String> landingCarouselImages = [
-    GlobalImages.backgroundLanding,
-    GlobalImages.bakcgroundQuote,
-    GlobalImages.workTogetherSection,
+    GlobalImages.landingScreenImage1,
+    GlobalImages.landingScreenImage2,
+    GlobalImages.landingScreenImage3,
+    GlobalImages.landingScreenImage4,
+    GlobalImages.landingScreenImage5,
+    GlobalImages.landingScreenImage6,
   ];
+
     // Welcome section 
-  static const String backgroundLanding = 'assets/images/building.webp';
+  static const String landingScreenImage1 = 'assets/images/landingScreenImage1.webp';
+  static const String landingScreenImage2 = 'assets/images/landingScreenImage2.webp';
+  static const String landingScreenImage3 = 'assets/images/landingScreenImage3.webp';
+  static const String landingScreenImage4 = 'assets/images/landingScreenImage4.webp';
+  static const String landingScreenImage5 = 'assets/images/landingScreenImage5.webp';
+  static const String landingScreenImage6 = 'assets/images/landingScreenImage6.webp';
 
     // Company profile section
   static const String imageCompanyProfileSection = 'assets/images/imageCompanyProfileSection.webp';
@@ -285,14 +294,22 @@ class GlobalImages {
   static const String backgroundFeedbackSection = 'assets/images/backgroundFeedbackSection.png';
 
   // About screen
+  static const String aboutScreenWelcomeImage= 'assets/images/aboutScreenWelcomeImage.webp';  
   static const String ourHistory = 'assets/images/ourHistory.webp';
   static const String ourServices = 'assets/images/ourServices.webp';
   static const String contact = 'assets/images/contactAboutScreen.webp';
 
   // Projects screen
+  static const String projectsScreenWelcomeImage= 'assets/images/projectsScreenWelcomeImage.webp';  
   static const String all = 'assets/images/all.webp';  
   static const String bakcgroundQuote = 'assets/images/contactServicesScreen.webp';  
-  
+
+  // Partners screen
+  static const String partnersScreenWelcomeImage= 'assets/images/partnersScreenWelcomeImage.webp';  
+
+  // Contact screen
+  static const String contactScreenWelcomeImage= 'assets/images/contactScreenWelcomeImage.webp';  
+
   // Succes popup componenet
   static const String successAnimation = 'assets/animations/success.json';
 

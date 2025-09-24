@@ -24,7 +24,7 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
 
   final List<String> imagesToPreload = [
     ...GlobalImages.landingCarouselImages,
-    GlobalImages.backgroundLanding,
+    GlobalImages.landingScreenImage1,
   ];
 
   @override
@@ -160,7 +160,7 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
 
 //   final List<String> imagesToPreload = [
 //     ...GlobalImages.landingCarouselImages,
-//     GlobalImages.backgroundLanding,
+//     GlobalImages.landingScreenImage1,
 //   ];
 
 //   @override

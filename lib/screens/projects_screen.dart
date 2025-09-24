@@ -172,7 +172,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
                         width: GlobalScreenSizes.screenWidth(context),
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(GlobalImages.backgroundLanding), 
+                            image: AssetImage(GlobalImages.projectsScreenWelcomeImage), 
                             fit: BoxFit.cover, // Cover the entire space
                           ),
                         ),
@@ -583,7 +583,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
 //                         width: GlobalScreenSizes.screenWidth(context),
 //                         decoration: const BoxDecoration(
 //                           image: DecorationImage(
-//                             image: AssetImage(GlobalImages.backgroundLanding), 
+//                             image: AssetImage(GlobalImages.landingScreenImage1), 
 //                             fit: BoxFit.cover, // Cover the entire space
 //                           ),
 //                         ),

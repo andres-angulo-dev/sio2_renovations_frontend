@@ -277,7 +277,7 @@ class ContactScreenState extends State<ContactScreen> {
                         width: screenWidth,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(GlobalImages.backgroundLanding),
+                            image: AssetImage(GlobalImages.contactScreenWelcomeImage),
                             fit: BoxFit.cover, // Cover the entire space
                           )
                         ),
@@ -814,7 +814,7 @@ class ContactScreenState extends State<ContactScreen> {
 //                         width: screenWidth,
 //                         decoration: const BoxDecoration(
 //                           image: DecorationImage(
-//                             image: AssetImage(GlobalImages.backgroundLanding),
+//                             image: AssetImage(GlobalImages.landingScreenImage1),
 //                             fit: BoxFit.cover, // Cover the entire space
 //                           )
 //                         ),

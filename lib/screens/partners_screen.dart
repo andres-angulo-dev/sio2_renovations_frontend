@@ -227,7 +227,7 @@ class PartnersScreenState extends State<PartnersScreen> {
                         width: screenWidth,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(GlobalImages.backgroundLanding),
+                            image: AssetImage(GlobalImages.partnersScreenWelcomeImage),
                             fit: BoxFit.cover, // Cover the entire space
                           )
                         ),
@@ -349,7 +349,7 @@ class PartnersScreenState extends State<PartnersScreen> {
                                       ),
                                       TextSpan(
                                         text: 
-                                          'nous croyons à la force du collectif. C’est en nous entourant de partenaires passionnés et exigeants (architectes, cuisinistes, bureaux d’études, fournisseurs spécialisés ect...) que nous donnons vie à des projets uniques, cohérents et durables.'
+                                          'nous croyons à la force du collectif. C’est en nous entourant de partenaires passionnés et exigeants (architectes, cuisinistes, bureaux d’études, fournisseurs spécialisés ect...) que nous donnons vie à des projets uniques, cohérents et durables. '
                                           'Chaque collaboration est guidée par les mêmes valeurs qui nous animent : l’écoute, l’engagement, la confiance, la précision et le savoir-faire. Ce sont elles qui font la différence sur nos chantiers, et qui transforment une rénovation en une vraie réussite partagée.\n\n'
                                       ), 
                                         TextSpan(
