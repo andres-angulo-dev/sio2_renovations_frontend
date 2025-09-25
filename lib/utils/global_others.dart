@@ -36,8 +36,8 @@ class GlobalPersonalData {
   static const String dpoEmail = 'contact@sio2-renovations.com';
   static const String dpoPhone = '+(33) 6 46 34 12 03';
   // Insurance
-  static const String insurerName = 'XXX';              
-  static const String policyNumber = 'XXX';              
+  static const String insurerName = 'APRIL ASSURANCE';              
+  static const String policyNumber = '25096293165';              
   static const String policyStartDate = 'XX/XX/XX';         
   static const String policyEndDate = 'XX/XX/XX';    
 }

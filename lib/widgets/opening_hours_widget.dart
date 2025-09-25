@@ -26,7 +26,7 @@ class OpeningHoursWidget extends StatelessWidget{
     this.webTextSize = GlobalSize.footerWebText,
     this.widthDivider = 350.0,
     this.heightDivider = 1.0,
-    this.color = GlobalColors.firstColor,
+    this.color = GlobalColors.thirdColor,
     this.squareColor = GlobalColors.orangeColor,
     this.responsiveThreshold,
   });

@@ -428,29 +428,29 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                         ),
                       ),
                       const SizedBox(height: 20.0),
-                      // Text(
-                      //   "Assurances",
-                      //   style: TextStyle(
-                      //     fontSize: isMobile 
-                      //         ? GlobalSize.mobileSizeText 
-                      //         : GlobalSize.webSizeText,
-                      //     fontWeight: FontWeight.w600,
-                      //     color: GlobalColors.secondColor,
-                      //   ),
-                      // ),
-                      // const SizedBox(height: 8.0),
-                      // Padding(
-                      //   padding: EdgeInsets.only(left: isMobile ? 16.0 : 24.0),
-                      //   child: Column(
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: [
-                      //       _buildBullet(
-                      //         "Assurance responsabilité civile professionnelle et décennale souscrite auprès de ${GlobalPersonalData.insurerName}, police n° ${GlobalPersonalData.policyNumber}, valable du ${GlobalPersonalData.policyStartDate} au ${GlobalPersonalData.policyEndDate}."
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // const SizedBox(height: 20.0),
+                      Text(
+                        "Assurances",
+                        style: TextStyle(
+                          fontSize: isMobile 
+                              ? GlobalSize.mobileSizeText 
+                              : GlobalSize.webSizeText,
+                          fontWeight: FontWeight.w600,
+                          color: GlobalColors.secondColor,
+                        ),
+                      ),
+                      const SizedBox(height: 8.0),
+                      Padding(
+                        padding: EdgeInsets.only(left: isMobile ? 16.0 : 24.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildBullet(
+                              "Assurance responsabilité civile professionnelle et décennale souscrite auprès de ${GlobalPersonalData.insurerName}, police n° ${GlobalPersonalData.policyNumber}."
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 20.0),
                       Text(
                         "Garanties",
                         style: TextStyle(

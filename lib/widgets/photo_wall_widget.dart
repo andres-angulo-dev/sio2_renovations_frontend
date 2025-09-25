@@ -19,68 +19,73 @@ class PhotoWallWidget extends StatefulWidget {
 }
 
 class _PhotoWallWidgetState extends State<PhotoWallWidget> {
+  // Number of photos to load per batch when "See more" is triggered
   static const int batchSize = 15;
+  // Current number of photos visible in the grid
   int visibleCount = batchSize;
 
+  // Loads the next batch of photos by increasing the visible count
   void _loadMore() {
     setState(() {
-      visibleCount = (visibleCount + batchSize).clamp(0, widget.photos.length);
+      // Ensure we don't exceed the total number of available photos, clamp() limits a value to stay within a defined minimum and maximum range
+      visibleCount = (visibleCount + batchSize).clamp(0, widget.photos.length); 
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final visiblePhotos = widget.photos.take(visibleCount).toList();
     final bool isMobile = GlobalScreenSizes.isMobileScreen(context);
+    // It selects the first visibleCount photos from the full list to display
+    final visiblePhotos = widget.photos.take(visibleCount).toList();
 
     return SingleChildScrollView(
-      child:     Column(
-      children: [
-        Center(
-            child: Container(
-              constraints: const BoxConstraints(maxWidth: 1600.0),
+      child: Column(
+        children: [
+          Center(
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 1600.0),
+                padding: const EdgeInsets.all(16.0),
+                child: StaggeredGrid.count(
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 4,
+                  crossAxisSpacing: 4,
+                  children: List.generate(visiblePhotos.length, (index) {
+                    int crossAxisCellCount = (index % 4 == 0) ? 2 : 1;
+                    int mainAxisCellCount = (index % 3 == 0) ? 2 : 1;
+  
+                    return StaggeredGridTile.count(
+                      crossAxisCellCount: crossAxisCellCount,
+                      mainAxisCellCount: mainAxisCellCount,
+                      child: PhotoGridItem(
+                        imageAsset: visiblePhotos[index],
+                        heroTag: 'photo-$index',
+                      ),
+                    );
+                  }),
+                ),
+              ),
+            ),
+          if (visibleCount < widget.photos.length)
+            Padding(
               padding: const EdgeInsets.all(16.0),
-              child: StaggeredGrid.count(
-                crossAxisCount: 4,
-                mainAxisSpacing: 4,
-                crossAxisSpacing: 4,
-                children: List.generate(visiblePhotos.length, (index) {
-                  int crossAxisCellCount = (index % 4 == 0) ? 2 : 1;
-                  int mainAxisCellCount = (index % 3 == 0) ? 2 : 1;
-
-                  return StaggeredGridTile.count(
-                    crossAxisCellCount: crossAxisCellCount,
-                    mainAxisCellCount: mainAxisCellCount,
-                    child: PhotoGridItem(
-                      imageAsset: visiblePhotos[index],
-                      heroTag: 'photo-$index',
-                    ),
-                  );
-                }),
+              child: TextButton(
+                onPressed: _loadMore,
+                style: TextButton.styleFrom(
+                  backgroundColor: GlobalColors.fourthColor,
+                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                ),
+                child: Text(
+                  "Voir plus",
+                  style: TextStyle(
+                    fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
+                    color: GlobalColors.thirdColor,
+                    fontWeight: FontWeight.bold,
+                  )
+                ),
               ),
             ),
-          ),
-        if (visibleCount < widget.photos.length)
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextButton(
-              onPressed: _loadMore,
-              style: TextButton.styleFrom(
-                backgroundColor: GlobalColors.fourthColor,
-                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-              ),
-              child: Text(
-                "Voir plus",
-                style: TextStyle(
-                  fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
-                  color: GlobalColors.thirdColor,
-                  fontWeight: FontWeight.bold,
-                )
-              ),
-            ),
-          ),
-      ],
-    ) 
+        ],
+      ) 
     );
   }
 }

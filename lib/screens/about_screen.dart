@@ -138,7 +138,34 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
   Widget build(BuildContext context) {
     bool isMobile = GlobalScreenSizes.isMobileScreen(context);
     final screenWidth = GlobalScreenSizes.screenWidth(context);
-    String ourHistoryParagraph = "${GlobalPersonalData.companyName} est le fruit de la fusion entre deux familles partageant plus de 30 ans d’expérience dans le bâtiment.\n\nNous mettons ce savoir-faire à votre service, que ce soit pour rénover un studio, un appartement, une maison entière ou un local commercial. Capables de prendre en charge des projets de toutes tailles, nous répondons aussi bien aux petits travaux de rénovation qu’aux défis les plus ambitieux.";
+    String ourHistoryParagraph = 
+      "${GlobalPersonalData.companyName} est bien plus qu’une entreprise de bâtiment."  
+      "C’est l’histoire de deux familles partageant plus de 30 ans d’expérience dans les travaux,"  
+      "réunies autour d’une même passion : rénover et sublimer les lieux de vie.\n\n"
+
+      "De cette alliance est né un projet commun,"  
+      "porté par la volonté de mettre à profit une richesse technique et humaine au service de tous"  
+      "particuliers comme professionnels."  
+      "Qu’il s’agisse de réhabiliter un studio,"  
+      "transformer entièrement une maison"  
+      "ou aménager des locaux commerciaux,"  
+      "nous relevons chaque défi avec la même exigence de qualité.\n\n"
+
+      "Cet amour du travail bien fait et le respect des engagements"  
+      "constituent l’héritage transmis à la nouvelle génération."  
+      "Une génération qui modernise et digitalise l’entreprise"  
+      "pour rester au plus proche de vos besoins,"  
+      "tout en conservant l’âme artisanale qui fait notre force.\n\n"
+
+      "Implantée en Île-de-France, ${GlobalPersonalData.companyName} incarne cette tradition familiale"  
+      "tout en s’inscrivant dans une dynamique résolument contemporaine."  
+      "Chaque chantier est orchestré avec une approche globale,"  
+      "alliant esthétique, rigueur et respect des normes actuelles.\n\n"
+
+      "Chez ${GlobalPersonalData.companyName}, chaque rénovation est pensée comme une collaboration.\n"  
+      "Nous écoutons, conseillons et construisons avec vous"  
+      "pour que votre projet devienne une réalité,"  
+      "fidèle à vos envies et durable dans le temps.\n";
  
     return Scaffold(
       appBar: MyNavBarComponent(
@@ -375,8 +402,8 @@ class AboutScreenState extends State<AboutScreen> with TickerProviderStateMixin 
                           duration: const Duration(milliseconds: 1500),
                           child: Center(
                             child: Container(
-                              height: 600.0,
-                              constraints: BoxConstraints(maxWidth: 800.0),
+                              // height: 600.0,
+                              constraints: BoxConstraints(maxWidth: 800.0, minHeight: 600.0),
                               padding: EdgeInsets.all(16.0),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
