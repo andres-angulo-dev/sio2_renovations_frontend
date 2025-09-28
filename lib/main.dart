@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: GlobalPersonalData.companyName,
+      title: '${GlobalPersonalData.companyName} | Travaux de rénovation à Paris et Île-de-France',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
