@@ -49,6 +49,7 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/images/projects/
+    - assets/images/projects/thumbnails/
     - assets/rive/
     - local.env
 

@@ -7,7 +7,7 @@ import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
 
 class PhotoWallWidget extends StatefulWidget {
-  final List<String> photos;
+  final List<GlobalPhotoWall> photos;
 
   const PhotoWallWidget({
     super.key, 
@@ -59,6 +59,7 @@ class _PhotoWallWidgetState extends State<PhotoWallWidget> {
                       child: PhotoGridItem(
                         imageAsset: visiblePhotos[index],
                         heroTag: 'photo-$index',
+                        isMobile: isMobile,
                       ),
                     );
                   }),
@@ -91,15 +92,17 @@ class _PhotoWallWidgetState extends State<PhotoWallWidget> {
 }
 
 class PhotoGridItem extends StatelessWidget {
+  final GlobalPhotoWall imageAsset;
+  final String heroTag;  
+  final bool isMobile;
+
   const PhotoGridItem({
     super.key,
     required this.imageAsset,
     required this.heroTag,
+    required this.isMobile
   });
   
-  final String imageAsset;
-  final String heroTag;  
-
   void _openEnlargedImage(BuildContext context) {
     // Show a dialog overlay with the enlarged image
     showDialog(
@@ -118,7 +121,7 @@ class PhotoGridItem extends StatelessWidget {
                 child: InteractiveViewer(
                   scaleEnabled: false, // Doesn't allow for zooming and panning of the enlarged image
                   child: Image.asset(
-                    imageAsset,
+                    imageAsset.fullImage,
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -142,7 +145,7 @@ class PhotoGridItem extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.asset(
-              imageAsset,
+              isMobile ? imageAsset.thumbnail : imageAsset.fullImage,
               fit: BoxFit.cover,
             ),
           ),

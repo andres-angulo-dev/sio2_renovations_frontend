@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../utils/global_routes.dart';
 
@@ -42,37 +43,17 @@ class GlobalPersonalData {
   static const String policyEndDate = 'XX/XX/XX';    
 }
 
-class GlobalData {
-  // Landing screen
-    // What Type Of Renovations Section extends
-  static final List<Map<String, String?>> typeOfRenovationData =  [
-    {"title": "Rénovation totale", "image": GlobalImages.totalRenovation, "routePath": '/projects'},
-    {"title": "Rénovation de salle de bain", "image": GlobalImages.bathroom, "routePath": '/projects'},
-    {"title": "Rénovation partielle", "image": GlobalImages.partialRenovation, "routePath": '/projects'},
-    {"title": "Rénovation après sinistre", "image": GlobalImages.renovationAfterDisaster, "routePath": '/projects'},
-    {"title": "Rénovation de cuisine", "image": GlobalImages.kitchen, "routePath": '/projects'},
-  ];
-
-
-  // Projects screen 
-    // Title of menu and photos
- static final List<Map<String, String>> servicesData = [
-    {"title": "TOUT VOIR", "image": GlobalImages.all},
-    {"title": "PEINTURE", "image": GlobalImages.painter},
-    {"title": "MENUISERIE", "image": GlobalImages.carpenter},
-    {"title": "SOLS", "image": GlobalImages.tiler},
-    {"title": "PLOMBERIE", "image": GlobalImages.plumber},
-    {"title": "PLÂTRERIE", "image": GlobalImages.drywallInstaller},
-    {"title": "MAÇONNERIE", "image": GlobalImages.mason},
-    {"title": "ÉLÉCTRICITÉ", "image": GlobalImages.electrician},
-  ];
-
-
   // Photow wall
-  static final Map<String, List<String>> photosWall = _initPhotosWall();
+class GlobalPhotoWall {
+  final String thumbnail;
+  final String fullImage;
+
+  const GlobalPhotoWall({required this.thumbnail, required this.fullImage});
+
+  static final Map<String, List<GlobalPhotoWall>> photosWall = _initPhotosWall();
   
-  static Map<String, List<String>> _initPhotosWall() {  // Allows to convert to lowercase
-    final rawData = {
+  static Map<String, List<GlobalPhotoWall>> _initPhotosWall() {  // Allows to convert to lowercase
+    final Map<String, List<String>> rawData = {
       'all': [
         GlobalImages.image1,
         GlobalImages.image2,
@@ -131,8 +112,7 @@ class GlobalData {
         GlobalImages.image55,
         // GlobalImages.image56,
         // GlobalImages.image57,
-      ]
-
+      ],
       // 'peinture': [
       //   GlobalImages.backgroundLanding,
       //   GlobalImages.backgroundLanding,
@@ -176,8 +156,44 @@ class GlobalData {
       // ],
     };
     
-    return rawData.map((key, value) => MapEntry(key.toLowerCase(), value ));  // The function automatically transforms them to lowercase
+    return rawData.map((category, fullImages) {
+      final photos = fullImages.map((fullImage) {
+        final fileName = fullImage.split('/').last;
+        final baseName = fileName.split('.').first;
+        final thumbnail = 'assets/images/projects/thumbnails/${baseName}_thumb.webp';
+
+        return GlobalPhotoWall(thumbnail: thumbnail, fullImage: fullImage);
+      }).toList();
+      
+      return MapEntry(category.toLowerCase(), photos);  // The function automatically transforms them to lowercase
+    });
   }
+}
+
+class GlobalData {
+  // Landing screen
+    // What Type Of Renovations Section extends
+  static final List<Map<String, String?>> typeOfRenovationData =  [
+    {"title": "Rénovation totale", "image": GlobalImages.totalRenovation, "routePath": '/projects'},
+    {"title": "Rénovation de salle de bain", "image": GlobalImages.bathroom, "routePath": '/projects'},
+    {"title": "Rénovation partielle", "image": GlobalImages.partialRenovation, "routePath": '/projects'},
+    {"title": "Rénovation après sinistre", "image": GlobalImages.renovationAfterDisaster, "routePath": '/projects'},
+    {"title": "Rénovation de cuisine", "image": GlobalImages.kitchen, "routePath": '/projects'},
+  ];
+
+
+  // Projects screen 
+    // Title of menu and photos
+ static final List<Map<String, String>> servicesData = [
+    {"title": "TOUT VOIR", "image": GlobalImages.all},
+    {"title": "PEINTURE", "image": GlobalImages.painter},
+    {"title": "MENUISERIE", "image": GlobalImages.carpenter},
+    {"title": "SOLS", "image": GlobalImages.tiler},
+    {"title": "PLOMBERIE", "image": GlobalImages.plumber},
+    {"title": "PLÂTRERIE", "image": GlobalImages.drywallInstaller},
+    {"title": "MAÇONNERIE", "image": GlobalImages.mason},
+    {"title": "ÉLÉCTRICITÉ", "image": GlobalImages.electrician},
+  ];
 }
 
 class GlobalImages {
