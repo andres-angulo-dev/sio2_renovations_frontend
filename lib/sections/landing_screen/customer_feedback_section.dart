@@ -256,7 +256,7 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                                             // Signing
                                             Text(
                                               "- ${customerFeedbacksData[index]["author"]}, ${customerFeedbacksData[index]["title"]}",
-                                              style: TextStyle(fontSize: GlobalSize.mobileSizeText, fontWeight: FontWeight.w600, color: GlobalColors.fiveColor),
+                                              style: TextStyle(fontSize: GlobalSize.mobileSizeText, fontWeight: FontWeight.w600, color: GlobalColors.fifthColor),
                                               textAlign: TextAlign.center,
                                               overflow: TextOverflow.ellipsis
                                             ),
@@ -365,9 +365,9 @@ class CustomerFeedbackSectionState extends State<CustomerFeedbackSection> {
                                                 // Signing
                                                 Text(
                                                   "- ${customerFeedbacksData[index]["author"]}, ${customerFeedbacksData[index]["title"]}",
-                                                  style: TextStyle(fontSize: GlobalSize.mobileSizeText, fontWeight: FontWeight.w600, color: GlobalColors.fiveColor),
+                                                  style: TextStyle(fontSize: GlobalSize.mobileSizeText, fontWeight: FontWeight.w600, color: GlobalColors.fifthColor),
                                                   textAlign: TextAlign.center,
-                                                  overflow: TextOverflow.ellipsis
+                                                  // overflow: TextOverflow.clip,
                                                 ),
                                               ],
                                             );

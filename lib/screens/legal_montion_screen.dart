@@ -138,7 +138,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                               "${GlobalPersonalData.companyName}\n"
                               "${GlobalPersonalData.legalForm} – ${GlobalPersonalData.ceo}\n"
                               "${GlobalPersonalData.headOfficeAddress}\n"
-                              "Tél. : ${GlobalPersonalData.phone}\n"
+                              "Tél. : ${GlobalPersonalData.ceoPhone}\n"
                               "E-mail : ${GlobalPersonalData.email}\n"
                               "Site Web : ${GlobalPersonalData.website}\n"
                               "Siret : ${GlobalPersonalData.siret}",
@@ -161,7 +161,7 @@ class LegalMontionScreenState extends State<LegalMontionScreen> with SingleTicke
                             Text(
                               "Le directeur de la publication du site est ${GlobalPersonalData.gender}. ${GlobalPersonalData.ceo}.\n"
                               "E-mail : ${GlobalPersonalData.email}\n"
-                              "Tél. : ${GlobalPersonalData.phone}",
+                              "Tél. : ${GlobalPersonalData.ceoPhone}",
                               style: TextStyle(
                                 fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,
                                 color: GlobalColors.secondColor,

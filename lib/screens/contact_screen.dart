@@ -350,7 +350,7 @@ class ContactScreenState extends State<ContactScreen> {
                     children: [
                       // Contact details part
                       Container(
-                        color: GlobalColors.fiveColor.withValues(alpha: 0.2),
+                        color: GlobalColors.fifthColor.withValues(alpha: 0.2),
                         width: GlobalScreenSizes.isCustomSize(context, 1935) ? _rightBlockWidht : 300.0,
                         padding: EdgeInsets.all(20.0),
                         constraints: BoxConstraints(minHeight: GlobalScreenSizes.isCustomSize(context, 1935) ? 0.0 : _rightBlockHeight ?? 600.0),
@@ -394,7 +394,7 @@ class ContactScreenState extends State<ContactScreen> {
                                     child: GestureDetector(
                                       onTap: () => setState(() => _showNumber = !_showNumber), 
                                       child: Text(
-                                        _showNumber ? "+(33) 6 46 34 12 03" : "Afficher le numéro",
+                                        _showNumber ? GlobalPersonalData.contactPhone : "Afficher le numéro",
                                         style: TextStyle(
                                           color: _isHovered ? GlobalColors.hoverHyperLinkColor : GlobalColors.secondColor,
                                           fontSize: isMobile ? GlobalSize.mobileSizeText : GlobalSize.webSizeText,

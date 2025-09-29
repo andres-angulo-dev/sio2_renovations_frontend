@@ -14,10 +14,12 @@ class FooterComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isMobile = GlobalScreenSizes.isMobileScreen(context);
+    final Color backgroundColor = GlobalColors.sixthColor;
+    final Color mainColor = GlobalColors.firstColor;
     
     return Container(
       width: double.infinity,
-      color: GlobalColors.fourthColor,
+      color: backgroundColor,
       padding: const EdgeInsets.all(16.0),
       child: Column( 
         mainAxisAlignment: MainAxisAlignment.center,
@@ -39,7 +41,7 @@ class FooterComponent extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: GlobalSize.footerWebSubTitle,
-                  color: GlobalColors.thirdColor
+                  color: mainColor,
                 ),
               ),
               const SizedBox(height: 30.0),
@@ -50,14 +52,14 @@ class FooterComponent extends StatelessWidget {
                 style: TextStyle(
                   fontSize: GlobalSize.footerWebTitle,
                   fontWeight: FontWeight.bold,
-                  color: GlobalColors.thirdColor,
+                  color: mainColor,
                 ),
               ),
               const SizedBox(height: 6.0),
               Container(
                 height: 1,
                 width: 350.0,
-                color: GlobalColors.thirdColor,
+                color: mainColor,
               ),
               const SizedBox(height: 20.0),
               Row(
@@ -73,9 +75,9 @@ class FooterComponent extends StatelessWidget {
                   const SizedBox(width: 5.0),
                   Flexible(
                     child: Text(
-                      "contact@sio2renovations.com",
-                      style: const TextStyle(
-                        color: GlobalColors.thirdColor,
+                      GlobalPersonalData.email,
+                      style: TextStyle(
+                        color: mainColor,
                         fontSize: GlobalSize.footerWebText,
                       ),
                       softWrap: true,
@@ -98,9 +100,9 @@ class FooterComponent extends StatelessWidget {
                   const SizedBox(width: 5.0),
                   Flexible(
                     child: Text(
-                      "+(33) 6 46 34 12 03",
-                      style: const TextStyle(
-                        color: GlobalColors.thirdColor,
+                      GlobalPersonalData.contactPhone,
+                      style: TextStyle(
+                        color: mainColor,
                         fontSize: GlobalSize.footerWebText,
                       ),
                       softWrap: true,
@@ -126,7 +128,7 @@ class FooterComponent extends StatelessWidget {
                       routeName: '/contact', 
                       text: 'Demande de devis',
                       hoverColor: GlobalColors.orangeColor,
-                      color: GlobalColors.thirdColor,
+                      color: mainColor,
                       webSize: GlobalSize.footerWebText,
                     ),
                   ),
@@ -138,14 +140,14 @@ class FooterComponent extends StatelessWidget {
                 style: TextStyle(
                   fontSize: GlobalSize.footerWebTitle,
                   fontWeight: FontWeight.bold,
-                  color: GlobalColors.thirdColor,
+                  color: mainColor,
                 ),
               ),
               const SizedBox(height: 6.0),
               Container(
                 height: 1,
                 width: 350,
-                color: GlobalColors.thirdColor,
+                color: mainColor,
               ),
               const SizedBox(height: 20.0),
               Row(
@@ -158,7 +160,7 @@ class FooterComponent extends StatelessWidget {
                     style: TextStyle(
                       fontSize: isMobile ? 18.0 : 24.0,
                       fontWeight: FontWeight.bold,
-                      color: GlobalColors.thirdColor,
+                      color: mainColor,
                     ),
                   ),
                   const SizedBox(width: 5.0),
@@ -166,7 +168,7 @@ class FooterComponent extends StatelessWidget {
                     child: MyHoverRouteNavigatorWidget(
                       routeName: '/legalMontions', 
                       text: "Mentions légales",
-                      color: GlobalColors.thirdColor,
+                      color: mainColor,
                       hoverColor: GlobalColors.orangeColor,
                       webSize: GlobalSize.footerWebText,
                     ),
@@ -184,7 +186,7 @@ class FooterComponent extends StatelessWidget {
                     style: TextStyle(
                       fontSize: isMobile ? 18.0 : 24.0,
                       fontWeight: FontWeight.bold,
-                      color: GlobalColors.thirdColor,
+                      color: mainColor,
                     ),
                   ),
                   const SizedBox(width: 5.0),
@@ -193,7 +195,7 @@ class FooterComponent extends StatelessWidget {
                       routeName: '/privacyPolicy', 
                       text: "Politique de confidentialité",
                       hoverColor: GlobalColors.orangeColor,
-                      color: GlobalColors.thirdColor,
+                      color: mainColor,
                       webSize: GlobalSize.footerWebText,
                     ),
                   ),
@@ -233,7 +235,7 @@ class FooterComponent extends StatelessWidget {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: GlobalSize.footerWebSubTitle,
-                                    color: GlobalColors.thirdColor,
+                                    color: mainColor,
                                   ),
                                 ),
                               ],
@@ -243,9 +245,12 @@ class FooterComponent extends StatelessWidget {
                             padding: EdgeInsets.all(10.0),
                             width: 350.0,
                             decoration: BoxDecoration(
-                              border: Border.all(color: GlobalColors.thirdColor, width: 1.0),
+                              border: Border.all(color: mainColor, width: 1.0),
                             ),
-                            child: OpeningHoursWidget(),
+                            child: OpeningHoursWidget(
+                              color: mainColor,
+                              squareColor: GlobalColors.orangeColor,
+                            ),
                           )
                         ],
                       ) 
@@ -264,7 +269,7 @@ class FooterComponent extends StatelessWidget {
                             width: 350.0,
                             height: 161.0,
                             decoration: BoxDecoration(
-                              border: Border.all(color: GlobalColors.thirdColor, width: 1.0),
+                              border: Border.all(color: mainColor, width: 1.0),
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -275,7 +280,7 @@ class FooterComponent extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: GlobalSize.footerWebTitle,
                                     fontWeight: FontWeight.bold,
-                                    color: GlobalColors.thirdColor,
+                                    color: mainColor,
                                   ),
                                 ),
                                 const SizedBox(height: 6.0),
@@ -283,7 +288,7 @@ class FooterComponent extends StatelessWidget {
                                 Container(
                                   height: 1, 
                                   width: MediaQuery.of(context).size.width * 0.5, 
-                                  color: GlobalColors.thirdColor
+                                  color: mainColor
                                 ),
                                 const SizedBox(height: 20.0),
                                 // Icon + text
@@ -298,9 +303,9 @@ class FooterComponent extends StatelessWidget {
                                     const SizedBox(width: 5.0),
                                     Flexible(
                                       child: Text(
-                                        "contact@sio2renovations.com",
-                                        style: const TextStyle(
-                                          color: GlobalColors.thirdColor,
+                                        GlobalPersonalData.email,
+                                        style: TextStyle(
+                                          color: mainColor,
                                           fontSize: GlobalSize.footerWebText,
                                         ),
                                       ),
@@ -319,9 +324,9 @@ class FooterComponent extends StatelessWidget {
                                     const SizedBox(width: 5.0),
                                     Flexible(
                                       child: Text(
-                                        "+(33) 6 46 34 12 03",
-                                        style: const TextStyle(
-                                          color: GlobalColors.thirdColor,
+                                        GlobalPersonalData.contactPhone,
+                                        style: TextStyle(
+                                          color: mainColor,
                                           fontSize: GlobalSize.footerWebText,
                                         ),
                                       ),
@@ -343,7 +348,7 @@ class FooterComponent extends StatelessWidget {
                                         routeName: '/contact', 
                                         text: 'Demande de devis',
                                         hoverColor: GlobalColors.orangeColor,
-                                        color: GlobalColors.thirdColor,
+                                        color: mainColor,
                                         webSize: GlobalSize.footerWebText,
                                       ),
                                     ),
@@ -358,7 +363,7 @@ class FooterComponent extends StatelessWidget {
                             width: 350.0,
                             height: 161.0,
                             decoration: BoxDecoration(
-                              border: Border.all(color: GlobalColors.thirdColor, width: 1.0),
+                              border: Border.all(color: mainColor, width: 1.0),
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -370,7 +375,7 @@ class FooterComponent extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: GlobalSize.footerWebTitle,
                                     fontWeight: FontWeight.bold,
-                                    color: GlobalColors.thirdColor,
+                                    color: mainColor,
                                   ),
                                 ),
                                 const SizedBox(height: 6.0),
@@ -378,7 +383,7 @@ class FooterComponent extends StatelessWidget {
                                 Container(
                                   height: 1, 
                                   width: MediaQuery.of(context).size.width * 0.5, 
-                                  color: GlobalColors.thirdColor
+                                  color: mainColor
                                 ),
                                 const SizedBox(height: 20.0),
                                 // Text
@@ -391,7 +396,7 @@ class FooterComponent extends StatelessWidget {
                                       MyHoverRouteNavigatorWidget(
                                         routeName: '/legalMontions',
                                         text: "Mentions légales",
-                                        color: GlobalColors.thirdColor,
+                                        color: mainColor,
                                         hoverColor: GlobalColors.orangeColor,
                                         webSize: GlobalSize.footerWebText,
                                       ),
@@ -409,7 +414,7 @@ class FooterComponent extends StatelessWidget {
                                         routeName: '/privacyPolicy',
                                         text: "Politique de confidentialité",
                                         hoverColor: GlobalColors.orangeColor,
-                                        color: GlobalColors.thirdColor,
+                                        color: mainColor,
                                         webSize: GlobalSize.footerWebText,
                                       ),
                                     ],
@@ -427,8 +432,8 @@ class FooterComponent extends StatelessWidget {
             ],
           ),
           if (!isMobile) const SizedBox(height: 10.0),
-          const Divider(
-            color: GlobalColors.thirdColor,
+          Divider(
+            color: mainColor,
             thickness: 2,
           ),
           const SizedBox(height: 8.0),
@@ -438,7 +443,7 @@ class FooterComponent extends StatelessWidget {
                 text: "${GlobalPersonalData.companyName} © 2025 | Tous droits réservés | Réalisé par",
                   style: TextStyle(
                   fontSize: GlobalSize.footerWebCopyright,
-                  color: GlobalColors.thirdColor,
+                  color: mainColor,
                 ),
                 children: [
                   TextSpan(text: " "),
@@ -449,7 +454,7 @@ class FooterComponent extends StatelessWidget {
                     url: 'https://www.andres-angulo.com', 
                     text: 'Andrés Angulo',
                     hoverColor: GlobalColors.orangeColor,
-                    color: GlobalColors.thirdColor,
+                    color: mainColor,
                     webSize: GlobalSize.footerWebCopyright,
                     )
                   ),

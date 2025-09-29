@@ -289,12 +289,13 @@ class PartnersScreenState extends State<PartnersScreen> {
                     ],
                   ),
                 ),
+                // Description section
                 AnimatedOpacity(
                   opacity: _showTitleScreen ? 1.0 : 0.0,
                   duration: const Duration(milliseconds: 1500),
                   child: Column(
                     children: [
-                      // Description section
+                      // Presentation
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child: Container(
@@ -302,9 +303,9 @@ class PartnersScreenState extends State<PartnersScreen> {
                           padding: EdgeInsets.symmetric(horizontal: isMobile ? 16.0 : 32.0, vertical: isMobile ? 28.0 : 42.0),
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: GlobalColors.fiveColor,
+                               color: GlobalColors.fifthColor,
                             ),
-                            color: GlobalColors.fourthColor,
+                            // color: const Color.fromARGB(255, 243, 243, 243),
                             borderRadius: BorderRadius.circular(16.0),
                           ),
                           child: Align(

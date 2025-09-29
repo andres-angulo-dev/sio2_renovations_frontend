@@ -19,7 +19,8 @@ class GlobalPersonalData {
   static const String vatNumber = 'FR';
   static const String rcs = 'RCS';
   static const String headOfficeAddress = '3 ter Avenue Théodore Rousseau, 75007 Paris, France';
-  static const String phone = '+(33) 6 46 34 12 03';
+  static const String ceoPhone = '+(33) 7 56 88 87 01';
+  static const String contactPhone = '+(33) 7 56 88 87 01';
   static const String email = 'contact@sio2renovations.com';
   static const String website = 'www.sio2renovations.com';
   static String httpDomaine = domaine;
@@ -34,7 +35,7 @@ class GlobalPersonalData {
   static const String dpoGender = 'M';
   static const String dpoName = 'Germán Holguin';
   static const String dpoEmail = 'contact@sio2-renovations.com';
-  static const String dpoPhone = '+(33) 6 46 34 12 03';
+  static const String dpoPhone = '+(33) 7 56 88 87 01';
   // Insurance
   static const String insurerName = 'APRIL ASSURANCE';              
   static const String policyNumber = '25096293165';              

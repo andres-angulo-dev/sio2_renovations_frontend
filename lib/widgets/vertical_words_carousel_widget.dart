@@ -20,7 +20,7 @@ class VerticalWordsCarouselWidgetState extends State<VerticalWordsCarouselWidget
   final double viewportFraction = 0.3; // Fraction of the viewport occupied by each page
   late final int initialPage; // A high offset to simulate infinite scrolling
   // List of words to display in the carousel
-  final List<String> words = ["TOTALES", "PARTIELLES", "DE CUISINE", "DE SALLES DE BAINS"];
+  final List<String> words = ["TOTALES", "PARTIELLES", "DE CUISINE", "DE SALLE DE BAIN"];
 
   @override
   void initState() {

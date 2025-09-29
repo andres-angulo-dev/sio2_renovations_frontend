@@ -99,7 +99,7 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
             textAlign: TextAlign.start, 
             style: TextStyle(
               fontSize: isMobile ? GlobalSize.keyFiguresSectionMobileDescription : GlobalSize.keyFiguresSectionWebDescription, 
-              color: GlobalColors.fiveColor
+              color: GlobalColors.fifthColor
             )
           ),
         ],
