@@ -14,8 +14,8 @@ class FooterComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isMobile = GlobalScreenSizes.isMobileScreen(context);
-    final Color backgroundColor = GlobalColors.sixthColor;
-    final Color mainColor = GlobalColors.firstColor;
+    final Color backgroundColor = GlobalColors.fourthColor;
+    final Color mainColor = Colors.black87;
     
     return Container(
       width: double.infinity,
@@ -218,6 +218,7 @@ class FooterComponent extends StatelessWidget {
                         spacing: 20.0,
                         runSpacing: 20.0,
                         children: [
+                          // Logo
                           SizedBox(
                             width: 350.0,
                             child: Column(
@@ -241,6 +242,7 @@ class FooterComponent extends StatelessWidget {
                               ],
                             ),
                           ),
+                          // Schedules
                           Container(
                             padding: EdgeInsets.all(10.0),
                             width: 350.0,
@@ -433,7 +435,7 @@ class FooterComponent extends StatelessWidget {
           ),
           if (!isMobile) const SizedBox(height: 10.0),
           Divider(
-            color: mainColor,
+            color: GlobalColors.firstColor,
             thickness: 2,
           ),
           const SizedBox(height: 8.0),
