@@ -330,7 +330,7 @@ class GlobalImages {
   static const String successAnimation = 'assets/animations/success.json';
 
   // Capcha widget
-  static const String imageCaptha = 'assets/images/building.webp';
+  static const String imageCaptcha = 'assets/images/building.webp';
   static const String iconCaptcha = 'assets/icons/captcha.png';
 }
 

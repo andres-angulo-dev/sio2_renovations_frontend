@@ -66,7 +66,7 @@ class MyCaptchaWidgetState extends State<MyCaptchaWidget> {
               ),
               controller: widget.captchaController,
               image: Image.asset(
-                GlobalImages.imageCaptha, 
+                GlobalImages.imageCaptcha, 
                 fit: BoxFit.fitWidth,
               ),
               colorCaptChar: GlobalColors.orangeColor, // Puzzle
