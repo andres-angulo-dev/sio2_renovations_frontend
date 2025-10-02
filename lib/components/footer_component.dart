@@ -45,7 +45,7 @@ class FooterComponent extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30.0),
-              OpeningHoursWidget(crossAxisPosition: CrossAxisAlignment.center, mainAxisPosition: MainAxisAlignment.center,),
+              OpeningHoursWidget(crossAxisPosition: CrossAxisAlignment.center, mainAxisPosition: MainAxisAlignment.center, color: mainColor),
               const SizedBox(height: 20.0),
               Text(
                 "Contact",
