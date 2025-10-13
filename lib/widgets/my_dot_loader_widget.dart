@@ -3,9 +3,15 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../utils/global_colors.dart';
+import '../utils/global_screen_sizes.dart';
 
 class DotLoaderWidget extends StatefulWidget {
-  const DotLoaderWidget({super.key});
+  final ValueNotifier<bool> hasTimeOut;
+
+  const DotLoaderWidget({
+    required this.hasTimeOut,
+    super.key,
+  });
 
   @override
   DotLoaderWidgetState createState() => DotLoaderWidgetState();
@@ -78,26 +84,49 @@ class DotLoaderWidgetState extends State<DotLoaderWidget> with SingleTickerProvi
     );
   }     
   
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(maxHeight: 350.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
+    final bool isMobile = GlobalScreenSizes.isMobileScreen(context);
+    
+    return ValueListenableBuilder<bool>(
+      valueListenable: widget.hasTimeOut, 
+      builder: (context, hasTimeout, _) {
+        return Container(
+          constraints: BoxConstraints(maxHeight: isMobile ? 450.0 : 350.0),
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(4, buildDot),
+            children: [
+              if (!hasTimeout) ...[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(4, buildDot),
+                ),
+                const SizedBox(height: 16.0),
+                Text(
+                  'Envoi du message en cours...',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.grey.shade600,
+                  ),
+                ),
+              ] else ...[
+                SizedBox(
+                  width: GlobalScreenSizes.screenWidth(context) * 0.5,
+                  child: Text(
+                    'Une erreur s’est produite...\nVeuillez tenter à nouveau dans quelques instants.',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.grey.shade600,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ]
+            ],
           ),
-          const SizedBox(height: 16.0),
-          const Text(
-            'Envoi du message en cours...',
-            style: TextStyle(fontSize: 16.0),
-          ),
-        ],
-      ),
-    ); 
+        ); 
+      }
+    );
   }
 }
 

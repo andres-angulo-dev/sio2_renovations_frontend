@@ -261,6 +261,8 @@ class CustomerContactFormComponentState extends State<CustomerContactFormCompone
             controller: widget.messageController,
             labelText: 'Message *',
             icon: Icons.message,
+            keyboardType: TextInputType.multiline,
+            keyboardAction: TextInputAction.newline,
             maxLines: 6,
             validator: (value) => value == null || value.isEmpty 
               ? 'Veuillez saisir votre message' 
@@ -469,6 +471,7 @@ class CustomerContactFormComponentState extends State<CustomerContactFormCompone
     required String labelText,
     required String? Function(String?) validator,
     TextInputType keyboardType = TextInputType.text,
+    TextInputAction keyboardAction = TextInputAction.done,
     int maxLines = 1,
     IconData? icon,
   }) {
@@ -478,6 +481,7 @@ class CustomerContactFormComponentState extends State<CustomerContactFormCompone
       child: TextFormField(
         controller: controller,
         keyboardType: keyboardType,
+        textInputAction: keyboardAction,
         maxLines: maxLines,
         validator: validator, // Validation function for the text field.
         decoration: InputDecoration(

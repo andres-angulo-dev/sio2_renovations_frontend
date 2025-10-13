@@ -1,4 +1,5 @@
 // Design : more personalized with SliderCaptcha and animation success
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:slider_captcha/slider_captcha.dart';
@@ -31,14 +32,34 @@ class SuccessPopupComponentState extends State<SuccessPopupComponent> {
   final SliderController _captchaController = SliderController(); 
   bool _isCaptchaValidated = false; // Successfully solves the puzzle
   bool _hasTriedCaptcha = false;  // Interacts with the slider (even if incorrect)
+  Timer? _autoCloseTimer;
+  final ValueNotifier<bool> _hasTimeOut = ValueNotifier(false);
 
 
+  void _startAutoCloseTimer() {
+    _autoCloseTimer = Timer(const Duration(seconds: 7), () {
+      if (!widget.isMessageSendingValidated.value) {
+        _hasTimeOut.value = true;
+        Future.delayed(const Duration(seconds: 3), () {
+          if (mounted) {
+            Navigator.of(context).pop(false);
+          }
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _autoCloseTimer?.cancel();
+    super.dispose();
+  }    
+   
   @override
   Widget build(BuildContext context) {
     final maxWidth = GlobalScreenSizes.screenWidth(context) * 0.5;
     bool isMobile = GlobalScreenSizes.isMobileScreen(context);
     
-
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
@@ -65,8 +86,12 @@ class SuccessPopupComponentState extends State<SuccessPopupComponent> {
                       // Hide error if validation succeeded
                       if (value) _hasTriedCaptcha = false; // Hide the captcha error
                     });
+
                     // When the captcha is validated it returns true and allows calling ContactFormService.submitContactForm in the parent ContactScreen
-                    if (value) widget.launchSendingMessage!(); 
+                    if (value) {
+                      widget.launchSendingMessage?.call();
+                      _startAutoCloseTimer();
+                    } 
                   },
                   onCaptchaAttempted: () { // The child returns TRUE if an attempt has been made
                     // Display the error if validation not succeeded
@@ -180,7 +205,9 @@ class SuccessPopupComponentState extends State<SuccessPopupComponent> {
                       )
                     ); 
                   } else if (_isCaptchaValidated && !validated) {
-                    return DotLoaderWidget();
+                    return DotLoaderWidget(
+                      hasTimeOut: _hasTimeOut,
+                    );
                   } else {
                     return SizedBox.shrink();
                   }
