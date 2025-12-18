@@ -43,76 +43,22 @@ class GlobalPersonalData {
   static const String policyEndDate = 'XX/XX/XX';    
 }
 
-  // Photow wall
-class GlobalPhotoWall {
-  final String thumbnail;
-  final String fullImage;
+// Photow wall
+class GlobalPhotoWallItem {
+  final String thumbnailPath;
+  final String fullImagePath;
 
-  const GlobalPhotoWall({required this.thumbnail, required this.fullImage});
+  const GlobalPhotoWallItem({required this.thumbnailPath, required this.fullImagePath});
 
-  static final Map<String, List<GlobalPhotoWall>> photosWall = _initPhotosWall();
+  static final Map<String, List<GlobalPhotoWallItem>> photosWallByCategory = _initPhotosWall(); // All photos by category (e.g., "all", "painting", "plumbing")
   
-  static Map<String, List<GlobalPhotoWall>> _initPhotosWall() {  // Allows to convert to lowercase
-    final Map<String, List<String>> rawData = {
-      'all': [
-        GlobalImages.image1,
-        GlobalImages.image2,
-        GlobalImages.image3,
-        GlobalImages.image4,
-        GlobalImages.image5,
-        GlobalImages.image6,
-        GlobalImages.image7,
-        GlobalImages.image8,
-        GlobalImages.image9,
-        GlobalImages.image10,
-        GlobalImages.image11,
-        GlobalImages.image12,
-        GlobalImages.image13,
-        GlobalImages.image14,
-        GlobalImages.image15,
-        GlobalImages.image16,
-        GlobalImages.image17,
-        GlobalImages.image18,
-        GlobalImages.image19,
-        GlobalImages.image20,
-        GlobalImages.image21,
-        GlobalImages.image22,
-        GlobalImages.image23,
-        GlobalImages.image24,
-        GlobalImages.image25,
-        GlobalImages.image26,
-        GlobalImages.image27,
-        GlobalImages.image28,
-        GlobalImages.image29,
-        GlobalImages.image30,
-        GlobalImages.image31,
-        GlobalImages.image32,
-        GlobalImages.image33,
-        GlobalImages.image34,
-        GlobalImages.image35,
-        GlobalImages.image36,
-        GlobalImages.image37,
-        GlobalImages.image38,
-        GlobalImages.image39,
-        GlobalImages.image40,
-        GlobalImages.image41,
-        GlobalImages.image42,
-        GlobalImages.image43,
-        GlobalImages.image44,
-        GlobalImages.image45,
-        GlobalImages.image46,
-        GlobalImages.image47,
-        GlobalImages.image48,
-        GlobalImages.image49,
-        GlobalImages.image50,
-        GlobalImages.image51,
-        GlobalImages.image52,
-        GlobalImages.image53,
-        GlobalImages.image54,
-        GlobalImages.image55,
-        // GlobalImages.image56,
-        // GlobalImages.image57,
-      ],
+  static Map<String, List<GlobalPhotoWallItem>> _initPhotosWall() {  // It converts raw image paths into GlobalPhotoWallItem objects
+    // Generate XXX image paths automatically
+    final List<String> allImages = List.generate(63, (index) => 'assets/images/projects/image${index + 1}.webp');
+
+    final Map<String, List<String>> rawImagePaths = {
+      'all': allImages,
+
       // 'peinture': [
       //   GlobalImages.backgroundLanding,
       //   GlobalImages.backgroundLanding,
@@ -156,16 +102,18 @@ class GlobalPhotoWall {
       // ],
     };
     
-    return rawData.map((category, fullImages) {
-      final photos = fullImages.map((fullImage) {
-        final fileName = fullImage.split('/').last;
+    // Transform raw image paths into GlobalPhotoWallItem objects
+    return rawImagePaths.map((category, imagePaths) {
+      final photos = imagePaths.map((path) {
+        final fileName = path.split('/').last;
         final baseName = fileName.split('.').first;
-        final thumbnail = 'assets/images/projects/thumbnails/${baseName}_thumb.webp';
+        final thumbnailPath = 'assets/images/projects/thumbnailPaths/${baseName}_thumb.webp';
 
-        return GlobalPhotoWall(thumbnail: thumbnail, fullImage: fullImage);
+        // Create a photo item with both thumbnail and full image paths
+        return GlobalPhotoWallItem(thumbnailPath: thumbnailPath, fullImagePath: path);
       }).toList();
       
-      return MapEntry(category.toLowerCase(), photos);  // The function automatically transforms them to lowercase
+      return MapEntry(category.toLowerCase(), photos);  // Return a new entry with the category name in lowercase and its list of photo items
     });
   }
 }
@@ -254,6 +202,12 @@ class GlobalImages {
   static const String image55 = 'assets/images/projects/image55.webp';
   static const String image56 = 'assets/images/projects/image56.webp';
   static const String image57 = 'assets/images/projects/image57.webp';
+  static const String image58 = 'assets/images/projects/image58.webp';
+  static const String image59 = 'assets/images/projects/image59.webp';
+  static const String image60 = 'assets/images/projects/image60.webp';
+  static const String image61 = 'assets/images/projects/image61.webp';
+  static const String image62 = 'assets/images/projects/image62.webp';
+  static const String image63 = 'assets/images/projects/image63.webp';
 
   // Landing Screen
     // Welcome section

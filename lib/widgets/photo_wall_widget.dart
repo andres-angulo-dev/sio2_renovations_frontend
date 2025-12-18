@@ -7,7 +7,7 @@ import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
 
 class PhotoWallWidget extends StatefulWidget {
-  final List<GlobalPhotoWall> photos;
+  final List<GlobalPhotoWallItem> photos;
 
   const PhotoWallWidget({
     super.key, 
@@ -92,7 +92,7 @@ class _PhotoWallWidgetState extends State<PhotoWallWidget> {
 }
 
 class PhotoGridItem extends StatelessWidget {
-  final GlobalPhotoWall imageAsset;
+  final GlobalPhotoWallItem imageAsset;
   final String heroTag;  
   final bool isMobile;
 
@@ -121,7 +121,7 @@ class PhotoGridItem extends StatelessWidget {
                 child: InteractiveViewer(
                   scaleEnabled: false, // Doesn't allow for zooming and panning of the enlarged image
                   child: Image.asset(
-                    imageAsset.fullImage,
+                    imageAsset.fullImagePath,
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -145,7 +145,7 @@ class PhotoGridItem extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.asset(
-              isMobile ? imageAsset.thumbnail : imageAsset.fullImage,
+              isMobile ? imageAsset.thumbnailPath : imageAsset.fullImagePath,
               fit: BoxFit.cover,
             ),
           ),

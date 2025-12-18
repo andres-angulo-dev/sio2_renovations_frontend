@@ -94,10 +94,10 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
   }
 
   // The filtered list of photos that will be transmitted to the PhotoWallWidget.
-  List<GlobalPhotoWall> get filteredPhotos {
+  List<GlobalPhotoWallItem> get filteredPhotos {
     if (selectedService == 'TOUT VOIR') {
       // Combine all the photos 
-      return GlobalPhotoWall.photosWall.values.expand((list) => list).toList(); // .values → gets all the lists .expand → flattens them into a single list .toList → converts the result into a usable List<String>
+      return GlobalPhotoWallItem.photosWallByCategory.values.expand((list) => list).toList().reversed.toList(); // .values → gets all the lists .expand → flattens them into a single list .toList → converts the result into a usable List<String>
 
       // // Combine all the photos
       // final List<String> allPhotos = [];
@@ -107,7 +107,7 @@ class ProjectsScreenState extends State<ProjectsScreen> with TickerProviderState
       // return allPhotos;
     }
 
-    return GlobalPhotoWall.photosWall[selectedService.toLowerCase()] ?? [];
+    return (GlobalPhotoWallItem.photosWallByCategory[selectedService.toLowerCase()] ?? []).reversed.toList();
   }
 
   // Update of the service selection
