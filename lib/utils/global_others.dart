@@ -43,7 +43,7 @@ class GlobalPersonalData {
   static const String policyEndDate = 'XX/XX/XX';    
 }
 
-// Photow wall
+// Photo wall
 class GlobalPhotoWallItem {
   final String thumbnailPath;
   final String fullImagePath;
@@ -107,7 +107,7 @@ class GlobalPhotoWallItem {
       final photos = imagePaths.map((path) {
         final fileName = path.split('/').last;
         final baseName = fileName.split('.').first;
-        final thumbnailPath = 'assets/images/projects/thumbnailPaths/${baseName}_thumb.webp';
+        final thumbnailPath = 'assets/images/projects/thumbnails/${baseName}_thumb.webp';
 
         // Create a photo item with both thumbnail and full image paths
         return GlobalPhotoWallItem(thumbnailPath: thumbnailPath, fullImagePath: path);

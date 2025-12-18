@@ -158,12 +158,12 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
                           "Une solide expérience en rénovation, avec des équipes formées pour intervenir efficacement sur l’ensemble de l’Île-de-France."
                         ),
                         _buildAnimatedStat(
-                          48, 
+                          51, 
                           "projets réalisés depuis le début d'année", 
                           "Chaque chantier est une nouvelle opportunité de satisfaire nos clients et d’améliorer leur espace de vie."
                         ),
                         _buildAnimatedStat(
-                          3360, 
+                          3490, 
                           "rénovés ces derniers mois", 
                           "Des surfaces transformées avec soin et professionnalisme pour des habitats modernisés et fonctionnels."
                         ),
