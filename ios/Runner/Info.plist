@@ -51,7 +51,18 @@
     <!-- Permission to use location always (if required) -->
     <key>NSLocationAlwaysUsageDescription</key>
     <string>Allow this app to track location for displaying construction sites.</string>
+	<!-- Google -->
 	<key>GMSApiKey</key>
 	<string>${GOOGLE_MAPS_API_KEY}</string>
+	<!-- Permission to use photo galery -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This application needs access to your gallery to select photos.</string>
+	<!-- Permission to use camera -->
+	<key>NSCameraUsageDescription</key>
+	<string>This application needs access to the camera to take pictures.</string>
+	<!-- Permission to use microphone -->
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This application needs access to the microphone to record videos.</string>
+
 </dict>
 </plist>
