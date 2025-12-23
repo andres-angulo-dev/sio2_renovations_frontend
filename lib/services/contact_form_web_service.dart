@@ -1,6 +1,7 @@
-// Is called by ContactScreen 
+// Is called by ContactScreen and use the model from ContactFormRequestModel and files
 import 'package:flutter/material.dart';
 import '../api/contact_form_api.dart';
+import '../widgets/files_picker_widget.dart';
 import '../models/contact_form_request_model.dart';
 
 class ContactFormService {
@@ -16,9 +17,10 @@ class ContactFormService {
     List<String>? typeWork,               
     TextEditingController? startDateController,                    
     TextEditingController? addressController,                     
+    List<PickedFile>? files,
     required TextEditingController messageController,
     required Function(bool) setIsSending, // Manages the loading state in the UI (e.g. disabling the button, showing a loading indicator)
-    required Function(bool) setMessageSendingValidated // Give the information if the message was sent (true/false) to the parent
+    required Function(bool) setMessageSendingValidated, // Give the information if the message was sent (true/false) to the parent
   }) async {
 
     // If form fields invalid, stop sending. Reset loading state and abort
@@ -38,6 +40,7 @@ class ContactFormService {
       startDate: startDateController?.text.isEmpty ?? true ? null : startDateController!.text,
       address: addressController?.text.isEmpty ?? true ? null : addressController!.text,
       message: messageController.text,
+      files: files,
     );
 
     try {

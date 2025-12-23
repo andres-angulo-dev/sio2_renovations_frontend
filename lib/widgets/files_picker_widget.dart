@@ -4,18 +4,23 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sio2_renovations_frontend/utils/global_screen_sizes.dart';
+import '../utils/global_screen_sizes.dart';
 import '../utils/global_colors.dart';
 
-class ImagePickerWidget extends StatefulWidget {
-  const ImagePickerWidget({super.key});
+class FilesPickerWidget extends StatefulWidget {
+  final Function(List<PickedFile>)? onFilesSelected;
+
+  const FilesPickerWidget({
+    super.key,
+    this.onFilesSelected,
+  });
 
   @override
-  State<ImagePickerWidget> createState() => _ImagePickerWidget();
+  State<FilesPickerWidget> createState() => FilesPickerWidgetState();
 }
 
-class _ImagePickerWidget extends State<ImagePickerWidget> {
-  final List<PickedImage> _selectedImages = [];
+class FilesPickerWidgetState extends State<FilesPickerWidget> {
+  final List<PickedFile> _selectedFiles = [];
   final ImagePicker _picker = ImagePicker();
   final double _imageSize = 90.0;
   double _currentTotalBytes = 0.0;
@@ -32,6 +37,14 @@ class _ImagePickerWidget extends State<ImagePickerWidget> {
   void dispose() {
     super.dispose();
   }
+
+  // Function for delete files in _selectedImage array by contactScreen
+  void clearFiles() {
+    setState(() {
+      _selectedFiles.clear();
+    });
+    widget.onFilesSelected!(_selectedFiles);
+  }
   
   //Function to select images for Web
   Future<void> _pickImagesWeb() async {
@@ -45,9 +58,12 @@ class _ImagePickerWidget extends State<ImagePickerWidget> {
         // Check if adding this file exceeds the limit
         if ((_currentTotalBytes + _sizeInBytes) <= 20 * (1024 * 1024)) {
           setState(() {
-            _selectedImages.add(PickedImage(img, _sizeInBytes));
+            _selectedFiles.add(PickedFile(img, _sizeInBytes));
             _currentTotalBytes += _sizeInBytes; // Update the total size
           });
+
+          // Bridge between FilesPickerWidget and ContactScreen
+          widget.onFilesSelected!(_selectedFiles);
         } else {
           if (!mounted) return;
 
@@ -67,17 +83,21 @@ class _ImagePickerWidget extends State<ImagePickerWidget> {
   //Function to select images for mobile
   Future<void> _pickImagesMobile(ImageSource source) async {
     final XFile? image = await _picker.pickImage(source: source);
-    
-    if (image != null) {
+
+    if (image != null) {      
       final sizeInBytes = await image.length(); // Calculate the file size
 
       // Check if adding this file exceeds the limit
       if ((_currentTotalBytes + sizeInBytes) <= 20 * (1024 * 1024)) {
         setState(() {
-          _selectedImages.add(PickedImage(image, sizeInBytes));
+          _selectedFiles.add(PickedFile(image, sizeInBytes));
           _currentTotalBytes += sizeInBytes; // Update the total size
         });
-      } else {
+
+        // Bridge between FilesPickerWidget and ContactScreen
+        widget.onFilesSelected!(_selectedFiles);    
+
+      } else {        
         if (!mounted) return;
 
         // Display a message if the limit is exceeded
@@ -102,7 +122,7 @@ class _ImagePickerWidget extends State<ImagePickerWidget> {
         // Save each recovered image permanently (move out of cache)
         final imageRestoredSaved = await _savePermanently(img); // XFile
         final sizeInBytes = await imageRestoredSaved.length(); // Calculate the size 
-        setState(()=> _selectedImages.add(PickedImage(imageRestoredSaved, sizeInBytes)));  
+        setState(()=> _selectedFiles.add(PickedFile(imageRestoredSaved, sizeInBytes)));  
       }
     }
   }
@@ -186,7 +206,7 @@ class _ImagePickerWidget extends State<ImagePickerWidget> {
           )
         ),
         const SizedBox(height: 15.0),
-        if (_selectedImages.isNotEmpty) ...[
+        if (_selectedFiles.isNotEmpty) ...[
           LayoutBuilder( // Automatically calculates the number of columns based on the available width
             builder: (context, constraints) {
               double width = constraints.maxWidth; // Available width
@@ -200,9 +220,9 @@ class _ImagePickerWidget extends State<ImagePickerWidget> {
                   childAspectRatio: isMobile ? _imageSize / (_imageSize + 15) : _imageSize / (_imageSize + 35),
                   mainAxisSpacing: 8.0, // Vertical spacing
                 ), 
-                itemCount: _selectedImages.length,
+                itemCount: _selectedFiles.length,
                 itemBuilder: (context, index) {
-                  final imagePicked = _selectedImages[index];
+                  final imagePicked = _selectedFiles[index];
                   bool isHovered = false;
   
                   return Center(
@@ -241,7 +261,7 @@ class _ImagePickerWidget extends State<ImagePickerWidget> {
                                         duration: const Duration(milliseconds: 200),
                                         child: GestureDetector(
                                           onTap: () => setState(() { 
-                                            _selectedImages.remove(imagePicked);
+                                            _selectedFiles.remove(imagePicked);
                                             _currentTotalBytes -= imagePicked.size; 
                                           }),
                                           child: const Icon(
@@ -286,7 +306,7 @@ class _ImagePickerWidget extends State<ImagePickerWidget> {
             }
           ),
         ],
-        if (_selectedImages.isNotEmpty) ...[
+        if (_selectedFiles.isNotEmpty) ...[
         const SizedBox(height: 15.0),
         Text('La taille total maximum autorisée est 20 Mo : ${(_currentTotalBytes / (1024 * 1024)).toStringAsFixed(2)} Mo'),
         const SizedBox(height: 24.0),
@@ -296,11 +316,15 @@ class _ImagePickerWidget extends State<ImagePickerWidget> {
   }
 }
 
-class PickedImage {
+class PickedFile{
   final XFile file;
   final int size;
-  PickedImage(this.file, this.size);
+
+  PickedFile(this.file, this.size);
 }
+
+
+
 
 // // With GridView to dislay images that automatically calculate the available space
 // import 'dart:io';
@@ -310,15 +334,15 @@ class PickedImage {
 // import 'package:path_provider/path_provider.dart';
 // import '../utils/global_colors.dart';
 
-// class ImagePickerWidget extends StatefulWidget {
-//   const ImagePickerWidget({super.key});
+// class FilesPickerWidget extends StatefulWidget {
+//   const FilesPickerWidget({super.key});
 
 //   @override
-//   State<ImagePickerWidget> createState() => _ImagePickerWidget();
+//   State<FilesPickerWidget> createState() => _FilesPickerWidget();
 // }
 
-// class _ImagePickerWidget extends State<ImagePickerWidget> {
-//   final List<XFile> _selectedImages = [];
+// class _FilesPickerWidget extends State<FilesPickerWidget> {
+//   final List<XFile> _selectedFiles = [];
 //   final ImagePicker _picker = ImagePicker();
 //   final double _imageSize = 90.0;
 //   bool _isHovered = false;
@@ -338,7 +362,7 @@ class PickedImage {
 //     final List<XFile> images = await _picker.pickMultiImage();
     
 //     if (images.isNotEmpty) {
-//       setState(() => _selectedImages.addAll(images));
+//       setState(() => _selectedFiles.addAll(images));
 //     }
 //   }
 
@@ -349,7 +373,7 @@ class PickedImage {
 //     if (!response.isEmpty && response.files != null) { // If the response is not empty and contains files, restore them
 //       for (var img in response.files!) {
 //         final saved = await _savePermanently(img); // Save each recovered image permanently (move out of cache)
-//         setState(()=> _selectedImages.add(saved));
+//         setState(()=> _selectedFiles.add(saved));
 //       }
 //     }
 //   }
@@ -399,7 +423,7 @@ class PickedImage {
 //           )
 //         ),
 //         const SizedBox(height: 15.0),
-//         if (_selectedImages.isNotEmpty) ...[
+//         if (_selectedFiles.isNotEmpty) ...[
 //           LayoutBuilder( // Automatically calculates the number of columns based on the available width
 //             builder: (context, constraints) {
 //               double width = constraints.maxWidth; // Available width
@@ -413,9 +437,9 @@ class PickedImage {
 //                   // crossAxisSpacing: 8.0,
 //                   // mainAxisSpacing: 8.0,
 //                 ), 
-//                 itemCount: _selectedImages.length,
+//                 itemCount: _selectedFiles.length,
 //                 itemBuilder: (context, index) {
-//                   final image = _selectedImages[index];
+//                   final image = _selectedFiles[index];
 //                   bool isHovered = false;
   
 //                   return Center(
@@ -452,7 +476,7 @@ class PickedImage {
 //                                     scale: isHovered ? 1.3 : 1.0,
 //                                     duration: const Duration(milliseconds: 200),
 //                                     child: GestureDetector(
-//                                       onTap: () => setState(() => _selectedImages.remove(image)),
+//                                       onTap: () => setState(() => _selectedFiles.remove(image)),
 //                                       child: const Icon(
 //                                         Icons.close,
 //                                         color: Colors.red
@@ -485,15 +509,15 @@ class PickedImage {
 // import 'package:image_picker/image_picker.dart';
 // import '../utils/global_colors.dart';
 
-// class ImagePickerWidget extends StatefulWidget {
-//   const ImagePickerWidget({super.key});
+// class FilesPickerWidget extends StatefulWidget {
+//   const FilesPickerWidget({super.key});
 
 //   @override
-//   State<ImagePickerWidget> createState() => _ImagePickerWidget();
+//   State<FilesPickerWidget> createState() => _FilesPickerWidget();
 // }
 
-// class _ImagePickerWidget extends State<ImagePickerWidget> {
-//   final List<XFile> _selectedImages = [];
+// class _FilesPickerWidget extends State<FilesPickerWidget> {
+//   final List<XFile> _selectedFiles = [];
 //   final ImagePicker _picker = ImagePicker();
 //   final double _imageSize = 90.0;
 //   bool _isHovered = false;
@@ -512,7 +536,7 @@ class PickedImage {
 //     final List<XFile> images = await _picker.pickMultiImage();
     
 //     if (images.isNotEmpty) {
-//       setState(() => _selectedImages.addAll(images));
+//       setState(() => _selectedFiles.addAll(images));
 //     }
 //   }
 
@@ -551,11 +575,11 @@ class PickedImage {
 //           )
 //         ),
 //         const SizedBox(height: 15.0),
-//         if (_selectedImages.isNotEmpty) ...[
+//         if (_selectedFiles.isNotEmpty) ...[
 //             Wrap(
 //             spacing: 8.0,
 //             runSpacing: 8.0,
-//             children: _selectedImages.map((image) {
+//             children: _selectedFiles.map((image) {
 //               bool isHovered = false;
 //               
 //               return Stack (
@@ -597,7 +621,7 @@ class PickedImage {
 //                               highlightColor: Colors.transparent,
 //                               onPressed:  () {
 //                                 setState(() {
-//                                  _selectedImages.remove(image);
+//                                  _selectedFiles.remove(image);
 //                                }); 
 //                               },
 //                               icon: Icon(

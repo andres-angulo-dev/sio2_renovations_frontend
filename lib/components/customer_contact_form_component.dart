@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import '../widgets/my_hover_route_navigator_widget.dart';
-import '../widgets/image_picker_widget.dart';
+import '../widgets/files_picker_widget.dart';
 import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 import '../utils/global_screen_sizes.dart';
@@ -20,6 +20,7 @@ class CustomerContactFormComponent extends StatefulWidget {
   final TextEditingController startDateController;
   final TextEditingController addressController;
   final TextEditingController messageController;
+  final Function(List<PickedFile>) onFilesSelected;
   final bool isSending;
   final bool hasAcceptedConditions;
   final bool showConsentError;
@@ -40,6 +41,7 @@ class CustomerContactFormComponent extends StatefulWidget {
     required this.startDateController,
     required this.addressController,
     required this.messageController,
+    required this.onFilesSelected,
     required this.isSending,
     required this.hasAcceptedConditions,
     required this.onAcceptConditionsChanged,
@@ -48,12 +50,12 @@ class CustomerContactFormComponent extends StatefulWidget {
   });
   
   @override  
-  CustomerContactFormComponentState createState() => CustomerContactFormComponentState();
+  CustomerContactFormComponentState createState() => CustomerContactFormComponentState(); 
 }
 
 class CustomerContactFormComponentState extends State<CustomerContactFormComponent> {
-  // Triggered whenever the text in requestTypeController changes
-  late final VoidCallback _updateRequestTypeOnClick;
+  final GlobalKey<FilesPickerWidgetState> _filePickerKey = GlobalKey<FilesPickerWidgetState>(); // To delete the images contained in ImagePikerWidget when ContactScreen call the function
+  late final VoidCallback _updateRequestTypeOnClick; // Triggered whenever the text in requestTypeController changes
   bool _isHovered = false;
 
   @override
@@ -67,6 +69,11 @@ class CustomerContactFormComponentState extends State<CustomerContactFormCompone
   void dispose() {
     widget.requestTypeController.removeListener(_updateRequestTypeOnClick); // Remove listener to prevent memory leaks
     super.dispose();
+  }
+
+  // A public method that ContactScreen can call for clean the visible files
+  void clearFilesFromForm() {
+    _filePickerKey.currentState?.clearFiles();
   }
 
   final List<String> _typeWorkOptions = [
@@ -281,7 +288,12 @@ class CustomerContactFormComponentState extends State<CustomerContactFormCompone
           ),
           const SizedBox(height: 30.0),
           // Image picker 
-          ImagePickerWidget(),
+          FilesPickerWidget(
+            key: _filePickerKey,
+            onFilesSelected: (files) {
+              widget.onFilesSelected(files); // Sends the files from FilePickerWidget to ContactScreen
+            },
+          ),
           // Checkbox conditions
           CheckboxListTile(
             value: widget.hasAcceptedConditions,

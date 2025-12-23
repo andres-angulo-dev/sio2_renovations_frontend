@@ -1,3 +1,5 @@
+import '../widgets/files_picker_widget.dart';
+
 // Is called by ContactFormService and ContactFormApi
 class ContactFormRequestModel {
   final String? requestType;
@@ -10,6 +12,7 @@ class ContactFormRequestModel {
   final String? startDate;
   final String? address;
   final String message;
+  final List<PickedFile>? files;
 
   ContactFormRequestModel({
     this.requestType,
@@ -22,6 +25,7 @@ class ContactFormRequestModel {
     this.startDate,
     this.address,
     required this.message,
+    this.files
   });
 
   Map<String, dynamic> toJson() {
@@ -36,6 +40,7 @@ class ContactFormRequestModel {
       if (startDate != null) 'startDate': startDate,
       if (address != null) 'address': address,
       'message': message,
+      'files': files?.map((p) => p.file.name).toList(),
     };
   }
 }

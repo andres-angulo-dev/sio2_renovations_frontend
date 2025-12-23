@@ -72,7 +72,7 @@ class PartnersScreenState extends State<PartnersScreen> {
   }
 
     // Check all the input fields before sending it to the backend
-  void handleSubmit() async {
+    void handleSubmit() async {
     // Keep if there is an error in the forms
     bool inputInvalid = false;
 

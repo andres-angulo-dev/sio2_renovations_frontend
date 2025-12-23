@@ -1,5 +1,6 @@
-// With SliderCaptcha in Success_popup_component
+// With SliderCaptcha in Success_popup_component and files_picker_widget
 import 'package:flutter/material.dart';
+import '../widgets/files_picker_widget.dart';
 import '../components/my_nav_bar_component.dart';
 import '../components/my_drawer_component.dart';
 import '../components/customer_contact_form_component.dart';
@@ -23,9 +24,9 @@ class ContactScreenState extends State<ContactScreen> {
   // Scroll controller for the left and right button in horizontal menu
   final ScrollController _scrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState 
   // Scroll controller for the back to top button and appBar 
-  
   final ScrollController _pageScrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState 
   final GlobalKey _rightBlockKey = GlobalKey();
+  final GlobalKey<CustomerContactFormComponentState> _contactFormKey = GlobalKey<CustomerContactFormComponentState>(); // To delete the images contained in ImagePikerWidget via CustomerFormComponent
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _requestTypeController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
@@ -37,6 +38,7 @@ class ContactScreenState extends State<ContactScreen> {
   final TextEditingController _startDateController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _messageController = TextEditingController();
+  final List<PickedFile> _selectedFiles = []; // Stock files from FilePickerWidget on his own array 
   double? _rightBlockHeight;
   double? _rightBlockWidht;
   bool _isSending = false; // Manages the loading state in the UI (e.g. disabling the button, showing a loading indicator)
@@ -152,12 +154,14 @@ class ContactScreenState extends State<ContactScreen> {
               startDateController: _startDateController,
               addressController: _addressController,
               messageController: _messageController,
+              files: _selectedFiles,
               setIsSending: (value) {
                 setState(() => _isSending = value);
               },
               setMessageSendingValidated: (value) {
                 _isMessageSendingValidated.value = value;
               },
+              
             );
           },
         );
@@ -169,10 +173,12 @@ class ContactScreenState extends State<ContactScreen> {
         );
       },
     );
-
     // If the user clicked "Close" in popup → result == true
     if (result == true) {
       setState(() => _showTextAfterMessageSending = true); // Display the text closing popup
+      _selectedFiles.clear(); // Clear the list of files on the ContactScreen side
+      _contactFormKey.currentState?.clearFilesFromForm(); // Clears the _selectedFiles array in ImagePickerWidget
+   
     } else { // If clicked "Return" in popup → result == false
       setState(() => _isSending = false); // reset loading state
     }
@@ -474,6 +480,7 @@ class ContactScreenState extends State<ContactScreen> {
                               constraints: BoxConstraints(maxWidth: 850.0),
                               child: Center(
                                 child: CustomerContactFormComponent(
+                                  key: _contactFormKey,
                                   formKey: _formKey, 
                                   requestTypeController: _requestTypeController,
                                   lastNameController: _lastNameController, 
@@ -488,6 +495,13 @@ class ContactScreenState extends State<ContactScreen> {
                                   messageController: _messageController, 
                                   isSending: _isSending, 
                                   hasAcceptedConditions: _hasAcceptedConditions,
+                                  onFilesSelected: (images) {
+                                    setState(() {
+                                      _selectedFiles
+                                        ..clear()
+                                        ..addAll(images);
+                                    });
+                                  },
                                   onAcceptConditionsChanged: (value) {
                                     setState(() {
                                       _hasAcceptedConditions = value;
