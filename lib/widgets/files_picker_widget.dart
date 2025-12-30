@@ -83,33 +83,34 @@ class FilesPickerWidgetState extends State<FilesPickerWidget> {
   //Function to select images for mobile
   Future<void> _pickImagesMobile(ImageSource source) async {
     final XFile? image = await _picker.pickImage(source: source);
+    
+    if (image == null) return;      
+    
+    final savedImage = await _savePermanently(image); // Save images permanently to prevent missing previews
+    final savedSize = await savedImage.length(); // Calculate the file size
 
-    if (image != null) {      
-      final sizeInBytes = await image.length(); // Calculate the file size
+    // Check if adding this file exceeds the limit
+    if ((_currentTotalBytes + savedSize) <= 20 * (1024 * 1024)) {
+      setState(() {
+        _selectedFiles.add(PickedFile(savedImage, savedSize));
+        _currentTotalBytes += savedSize; // Update the total size
+      });
+      
+      // Bridge between FilesPickerWidget and ContactScreen
+      widget.onFilesSelected!(_selectedFiles);    
+    } else {        
+      if (!mounted) return;
 
-      // Check if adding this file exceeds the limit
-      if ((_currentTotalBytes + sizeInBytes) <= 20 * (1024 * 1024)) {
-        setState(() {
-          _selectedFiles.add(PickedFile(image, sizeInBytes));
-          _currentTotalBytes += sizeInBytes; // Update the total size
-        });
-
-        // Bridge between FilesPickerWidget and ContactScreen
-        widget.onFilesSelected!(_selectedFiles);    
-
-      } else {        
-        if (!mounted) return;
-
-        // Display a message if the limit is exceeded
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              '⚠️ An error has occurred : the file ${image.name} exceeds the maximum size of 20 MB',
-            )
+      // Display a message if the limit is exceeded
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            '⚠️ An error has occurred : the file ${image.name} exceeds the maximum size of 20 MB',
           )
-        );
-      }
+        )
+      );
     }
+    
   }
 
   // Lost Data Management (Android), manage the destruction of MainActivity under high memory pressure
