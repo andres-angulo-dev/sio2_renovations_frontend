@@ -1,4 +1,4 @@
-// Is called by ContactScreen and use the model from ContactFormRequestModel and files
+// Is called by ContactScreen via the function that calls SuccessPopopComponent and use the model from ContactFormRequestModel and files
 import 'package:flutter/material.dart';
 import '../api/contact_form_api.dart';
 import '../widgets/files_picker_widget.dart';
@@ -54,7 +54,7 @@ class ContactFormService {
     } catch (error) { // On error, show a SnackBar with the error message (ensure context is still mounted)
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error : ${error.toString()}')),
+        SnackBar(content: Text('Backend connection error : ${error.toString()}')),
       );
     } finally {
       setIsSending(false); // Always reset loading state at the end. End the loading state in the UI that comes from the beginning of the captcha in MyCaptchaWidget

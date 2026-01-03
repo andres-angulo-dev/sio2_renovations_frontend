@@ -1,3 +1,4 @@
+// Is called by ContactScreen and PartnersScreen. And it allows to call the ContactFormService (API) with callback launchSendingMessage
 // Design : more personalized with SliderCaptcha and animation success
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ import '../utils/global_screen_sizes.dart';
 
 class SuccessPopupComponent extends StatefulWidget {
   final VoidCallback resetForm; // Callback to reset the form
-  final VoidCallback? launchSendingMessage;
+  final VoidCallback? launchSendingMessage; // Callback to call ContactFormService (API)
   final Function(bool) setIsSending;
   final ValueNotifier<bool> isMessageSendingValidated;
   
@@ -130,13 +131,14 @@ class SuccessPopupComponentState extends State<SuccessPopupComponent> {
                   ), 
                 )
               ],
-              // Success 
+              // Success and waiting for API connection
               ValueListenableBuilder(
                 valueListenable: widget.isMessageSendingValidated, 
                 builder: (context, validated, _) {
-                  if (_isCaptchaValidated && validated) {
+                  // Success
+                  if (_isCaptchaValidated && validated) { 
                     return Container(
-                      constraints: BoxConstraints(maxHeight: isMobile ? 450.0 : 350.0),
+                      constraints: BoxConstraints(maxHeight: isMobile ? 350.0 : 450.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -204,6 +206,7 @@ class SuccessPopupComponentState extends State<SuccessPopupComponent> {
                         ],
                       )
                     ); 
+                  // API connection (waiting/failure) 
                   } else if (_isCaptchaValidated && !validated) {
                     return DotLoaderWidget(
                       hasTimeOut: _hasTimeOut,

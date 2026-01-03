@@ -1,4 +1,5 @@
-// 4 dots version with wave + rebound effect
+// Is called by SuccessPopupComponent. It allows to wait for the connexion with the API 
+//4 dots version with wave + rebound effect
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -92,10 +93,11 @@ class DotLoaderWidgetState extends State<DotLoaderWidget> with SingleTickerProvi
       valueListenable: widget.hasTimeOut, 
       builder: (context, hasTimeout, _) {
         return Container(
-          constraints: BoxConstraints(maxHeight: isMobile ? 450.0 : 350.0),
+          constraints: BoxConstraints(maxHeight: isMobile ? 350.0 : 450.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // Waiting
               if (!hasTimeout) ...[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -109,6 +111,7 @@ class DotLoaderWidgetState extends State<DotLoaderWidget> with SingleTickerProvi
                     color: Colors.grey.shade600,
                   ),
                 ),
+              // Failure
               ] else ...[
                 SizedBox(
                   width: GlobalScreenSizes.screenWidth(context) * 0.5,
