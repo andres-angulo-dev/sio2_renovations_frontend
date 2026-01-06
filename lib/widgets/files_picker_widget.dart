@@ -25,6 +25,7 @@ class FilesPickerWidgetState extends State<FilesPickerWidget> {
   final List<PickedFile> _selectedFiles = [];
   final ImagePicker _picker = ImagePicker();
   final double _imageSize = 90.0;
+  final double limitSizeFile = 4.5; // 4.5MB size limit not to be exceeded, imposed by Vercel
   double _currentTotalBytes = 0.0;
   int _sizeInBytes = 0;
   bool _isHovered = false;
@@ -40,10 +41,11 @@ class FilesPickerWidgetState extends State<FilesPickerWidget> {
     super.dispose();
   }
 
-  // Function for delete files in _selectedImage array by contactScreen
+  // Function for delete files in _selectedFiles array by contactScreen
   void clearFiles() {
     setState(() {
       _selectedFiles.clear();
+      _currentTotalBytes = 0;
     });
     widget.onFilesSelected!(_selectedFiles);
   }
@@ -99,7 +101,7 @@ class FilesPickerWidgetState extends State<FilesPickerWidget> {
         // if (!isVideo) continue; // We're ignoring the images here
 
         // Check if adding this file exceeds the limit
-        if ((_currentTotalBytes + _sizeInBytes) <= 20 * (1024 * 1024)) {
+        if ((_currentTotalBytes + _sizeInBytes) <= limitSizeFile * (1024 * 1024)) {
           Uint8List? thumb;
 
           if (isVideo) {
@@ -118,7 +120,7 @@ class FilesPickerWidgetState extends State<FilesPickerWidget> {
 
           // Display a message if the limit is exceeded
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('⚠️ An error has occurred : the file ${media.name} exceeds the maximum size of 20 MB')),
+            SnackBar(content: Text('⚠️ An error has occurred : the file ${media.name} exceeds the maximum size of ${limitSizeFile}MB')),
           );
         }
       }
@@ -135,8 +137,8 @@ class FilesPickerWidgetState extends State<FilesPickerWidget> {
     final savedFile = await _savePermanently(media); // Save images permanently to prevent missing previews
     _sizeInBytes = await savedFile.length(); // Calculate the file size
 
-            // Check if adding this file exceeds the limit
-        if ((_currentTotalBytes + _sizeInBytes) <= 20 * (1024 * 1024)) {
+        // Check if adding this file exceeds the limit
+        if ((_currentTotalBytes + _sizeInBytes) <= 4.5 * (1024 * 1024)) {
           Uint8List? thumb;
 
           if (isVideo) {
@@ -155,7 +157,7 @@ class FilesPickerWidgetState extends State<FilesPickerWidget> {
 
           // Display a message if the limit is exceeded
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('⚠️ An error has occurred : the file ${media.name} exceeds the maximum size of 20 MB')),
+            SnackBar(content: Text('⚠️ An error has occurred : the file ${media.name} exceeds the maximum size of ${limitSizeFile}MB')),
           );
         }
 
@@ -445,7 +447,7 @@ class FilesPickerWidgetState extends State<FilesPickerWidget> {
         ],
         if (_selectedFiles.isNotEmpty) ...[
         const SizedBox(height: 15.0),
-        Text('La taille total maximum autorisée est 20Mo : actuellement ${(_currentTotalBytes / (1024 * 1024)).toStringAsFixed(2)}Mo'),
+        Text('La taille total maximum autorisée est ${limitSizeFile}Mo : actuellement ${(_currentTotalBytes / (1024 * 1024)).toStringAsFixed(2)}Mo'),
         const SizedBox(height: 24.0),
         ]
       ],

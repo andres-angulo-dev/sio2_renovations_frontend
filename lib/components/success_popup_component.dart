@@ -38,7 +38,7 @@ class SuccessPopupComponentState extends State<SuccessPopupComponent> {
 
 
   void _startAutoCloseTimer() {
-    _autoCloseTimer = Timer(const Duration(seconds: 7), () {
+    _autoCloseTimer = Timer(const Duration(seconds: 15), () {
       if (!widget.isMessageSendingValidated.value) {
         _hasTimeOut.value = true;
         Future.delayed(const Duration(seconds: 3), () {

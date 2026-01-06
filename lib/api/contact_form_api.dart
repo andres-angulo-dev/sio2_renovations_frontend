@@ -59,7 +59,7 @@ class ContactFormApi {
           );
         }
       } 
-
+      
       // Send multipart request and convert StreamedResponse to http.Response
       final streamed = await httpRequest.send();
       final body = await streamed.stream.bytesToString();

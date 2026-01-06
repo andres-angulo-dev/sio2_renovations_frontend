@@ -177,7 +177,7 @@ class ContactScreenState extends State<ContactScreen> {
     if (result == true) {
       setState(() => _showTextAfterMessageSending = true); // Display the text closing popup
       _selectedFiles.clear(); // Clear the list of files on the ContactScreen side
-      _contactFormKey.currentState?.clearFilesFromForm(); // Clears the _selectedFiles array in ImagePickerWidget
+      _contactFormKey.currentState?.clearFilesFromForm(); // Clears the _selectedFiles array in filePickerWidget
    
     } else { // If clicked "Return" in popup → result == false
       setState(() => _isSending = false); // reset loading state
@@ -495,11 +495,11 @@ class ContactScreenState extends State<ContactScreen> {
                                   messageController: _messageController, 
                                   isSending: _isSending, 
                                   hasAcceptedConditions: _hasAcceptedConditions,
-                                  onFilesSelected: (images) {
+                                  onFilesSelected: (files) {
                                     setState(() {
                                       _selectedFiles
                                         ..clear()
-                                        ..addAll(images);
+                                        ..addAll(files);
                                     });
                                   },
                                   onAcceptConditionsChanged: (value) {
