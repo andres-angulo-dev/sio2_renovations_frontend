@@ -74,9 +74,11 @@ class FilesPickerWidgetState extends State<FilesPickerWidget> {
 
   // Genertate thumbnail for video
   Future<Uint8List?> generateVideoThumbnail(String path) async {
+    final isIOSWeb = kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
+
     final uint8list = await VideoThumbnail.thumbnailData(
       video: path,
-      imageFormat: ImageFormat.WEBP,
+      imageFormat: isIOSWeb ? ImageFormat.JPEG : ImageFormat.WEBP,
       maxHeight: 300,
       maxWidth: 300,
       quality: 75,
@@ -92,10 +94,9 @@ class FilesPickerWidgetState extends State<FilesPickerWidget> {
     if (medias.isNotEmpty) {
       // Browse the new medias
       for (var media in medias) {
-        final isVideo = media.mimeType?.startsWith('video/') ?? false; // We detect if it's a video
+        final isVideo = kIsWeb ? media.name.toLowerCase().endsWith('.mp4') || media.name.toLowerCase().endsWith('.mov') || media.name.toLowerCase().endsWith('m4v') : media.mimeType?.startsWith('video/') ?? false; // We detect if it's a video
         _sizeInBytes = await media.length(); // Calculate the file size
         // if (!isVideo) continue; // We're ignoring the images here
-
 
         // Check if adding this file exceeds the limit
         if ((_currentTotalBytes + _sizeInBytes) <= 20 * (1024 * 1024)) {
@@ -286,7 +287,7 @@ class FilesPickerWidgetState extends State<FilesPickerWidget> {
             child: Icon(
               Icons.play_circle_fill,
               size: 24.0,
-              color: Colors.white.withValues(alpha: 128.0),
+              color: Colors.white.withValues(alpha: 0.8),
             ),
           ),
         ],
@@ -302,12 +303,10 @@ class FilesPickerWidgetState extends State<FilesPickerWidget> {
           height: _imageSize,
           color: Colors.black12,
         ),
-        Align(
-          child: Icon(
-            Icons.play_circle_fill,
-            size: 24.0,
-            color: Colors.white.withValues(alpha: 128.0),
-          ),
+        Icon(
+          Icons.play_circle_fill,
+          size: 24.0,
+          color: Colors.white.withValues(alpha: 0.8),
         ),
       ],
     );
@@ -341,7 +340,7 @@ class FilesPickerWidgetState extends State<FilesPickerWidget> {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'Ajouter des fichiers',
+                    'Joindre un fichier',
                     style: TextStyle(
                       color: _isHovered ? GlobalColors.firstColor : GlobalColors.secondColor ,
                       fontWeight: FontWeight.bold,
@@ -425,7 +424,7 @@ class FilesPickerWidgetState extends State<FilesPickerWidget> {
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   Text(
-                                    '(${(filePicked.size / (1024*1024)).toStringAsFixed(2)} Mo)',
+                                    '(${(filePicked.size / (1024*1024)).toStringAsFixed(2)}Mo)',
                                     style: TextStyle(
                                       color: GlobalColors.fifthColor,
                                       fontSize: 12.0,
@@ -446,7 +445,7 @@ class FilesPickerWidgetState extends State<FilesPickerWidget> {
         ],
         if (_selectedFiles.isNotEmpty) ...[
         const SizedBox(height: 15.0),
-        Text('La taille total maximum autorisée est 20 Mo : ${(_currentTotalBytes / (1024 * 1024)).toStringAsFixed(2)} Mo'),
+        Text('La taille total maximum autorisée est 20Mo : actuellement ${(_currentTotalBytes / (1024 * 1024)).toStringAsFixed(2)}Mo'),
         const SizedBox(height: 24.0),
         ]
       ],
