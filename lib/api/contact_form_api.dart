@@ -6,11 +6,11 @@ import '../models/contact_form_request_model.dart';
 
 class ContactFormApi {
   static Future<bool> send(ContactFormRequestModel request) async {
-    final backendUrl = request.requestType == null ? dotenv.env['PARTNER_URL'] : dotenv.env['CUSTOMER_URL'];
+    final backendUrl = request.requestType == null ? dotenv.env['PARTNER_BACKEND_API_URL'] : dotenv.env['CUSTOMER_BACKEND_API_URL'];
     http.Response response; // Global variable to unify handling later
 
     if (backendUrl == null || backendUrl.isEmpty) {
-      throw Exception('Missing or invalid backend URL');
+      throw Exception('Missing or invalid BACKEND API URL');
     }
 
     final uri = Uri.parse(backendUrl);

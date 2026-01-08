@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
     return route == '/';
   }
 
-  // Add cookie management at the top of each page
+  // Add cookie management on each page
   Widget routeWithCookiesOverlay(String route, Widget child) {
     return isRouteExcluded(route)
       ? child

@@ -145,7 +145,7 @@ class SuccessPopupComponentState extends State<SuccessPopupComponent> {
                           const Spacer(),
                           // Animation
                           SizedBox(
-                            height: 150.0,
+                            height: isMobile ? 100.0 : 150.0,
                             child: Lottie.asset(
                               GlobalImages.successAnimation,
                               repeat: false,
