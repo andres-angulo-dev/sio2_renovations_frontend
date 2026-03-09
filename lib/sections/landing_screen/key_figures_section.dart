@@ -14,18 +14,22 @@ class KeyFiguresSection extends StatefulWidget {
 
 class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerProviderStateMixin {
   bool _isVisible = false;
+  int professions = 10;
+  int years = 30;
+  int projects = 51;
+  int squareMeter = 3490;
 
   // Function to create animated number display
   Widget _buildAnimatedStat(int finalValue, String title, String description) {
     final bool isMobile = GlobalScreenSizes.isMobileScreen(context);
-    
+
     Map<String, String> formatStat(int counterValue, int finalValue) {
       String prefix = '';
       String suffix = '';
 
-      if (finalValue == 30) prefix = '+';
-      if (finalValue == 30) suffix = ' ans';
-      if (finalValue == 3360) suffix = ' m²';
+      if (finalValue == years) prefix = '+';
+      if (finalValue == years) suffix = ' ans';
+      if (finalValue == squareMeter) suffix = ' m²';
 
       return {
         "prefix" : prefix,
@@ -127,7 +131,8 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
           child: Column(
             children: [
               Text(
-                "${GlobalPersonalData.companyPrefixName} RÉNOVATIONS EN QUELQUES CHIFFRES",
+                // Title
+                "L'ANNÉE 2025 POUR ${GlobalPersonalData.companyPrefixName} RÉNOVATIONS EN QUELQUES CHIFFRES",
                 style: TextStyle(
                   fontSize: isMobile ? GlobalSize.mobileTitle : GlobalSize.webTitle,
                   fontWeight: FontWeight.bold,
@@ -148,23 +153,23 @@ class KeyFiguresSectionState extends State<KeyFiguresSection> with SingleTickerP
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _buildAnimatedStat(
-                          10, 
+                          professions, 
                           "corps de métier réunis", 
                           "Des artisans qualifiés : électriciens, plombiers, chauffagistes, carreleurs, plaquistes, peintres, maçons…"
                         ),
                         _buildAnimatedStat(
-                          30, 
+                          years, 
                           "d'expérience", 
                           "Une solide expérience en rénovation, avec des équipes formées pour intervenir efficacement sur l’ensemble de l’Île-de-France."
                         ),
                         _buildAnimatedStat(
-                          51, 
-                          "projets réalisés depuis le début d'année", 
+                          projects, 
+                          "projets réalisés", 
                           "Chaque chantier est une nouvelle opportunité de satisfaire nos clients et d’améliorer leur espace de vie."
                         ),
                         _buildAnimatedStat(
-                          3490, 
-                          "rénovés ces derniers mois", 
+                          squareMeter, 
+                          "rénovés", 
                           "Des surfaces transformées avec soin et professionnalisme pour des habitats modernisés et fonctionnels."
                         ),
                       ],
