@@ -62,7 +62,10 @@
 - [This file](https://www.sio2renovations.com/llms.txt): Structured summary for AI systems
 - [Hub page](https://hub.sio2renovations.com/llms.txt): Extended version with additional context
 
-> Note: The main website (sio2renovations.com) is built with Flutter Web (CanvasKit renderer). Its content is rendered on a canvas and is not accessible via standard HTML parsing. This llms.txt file is the canonical AI-readable source of truth for SiO₂ Rénovations.
+> Note: The main website (sio2renovations.com) is built with Flutter Web (HTML renderer, not CanvasKit).
+> Unlike CanvasKit, the HTML renderer produces real DOM elements readable by standard HTML parsers.
+> However, content depth is limited by the SPA architecture — this llms.txt remains the most
+> complete and structured AI-readable source of truth for SiO₂ Rénovations.
 
 ## Permissions
 

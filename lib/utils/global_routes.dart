@@ -1,82 +1,53 @@
 final domaine = 'https://www.sio2renovations.com';
 
-// Contains the last update dates for each route
+// Contains the last update dates for each route.
+// Update manually only when the content of that section actually changes.
 class GlobalDates {
-  static const String lastUpdateMain = '2026-04-13';
-  static const String lastUpdateLanding = '2026-04-13';
+  static const String lastUpdateLanding = '2026-04-14';
   static const String lastUpdateProjects = '2026-04-13';
   static const String lastUpdateContact = '2026-04-13';
   static const String lastUpdateAbout = '2026-04-13';
-  static const String lastUpdateLegalMentions = '2026-04-13';
-  static const String lastUpdatePrivacyPolicy = '2026-04-13';
   static const String lastUpdatePartners = '2026-04-13';
 }
 
-// For the sitemap
+// For the sitemap — only path and lastModified are needed.
+// changeFreq and priority are ignored by Google and removed to avoid noise.
 class RouteInfo {
   final String path;
   final String lastModified;
-  final String changeFrequency;
-  final String priority;
 
   const RouteInfo({
     required this.path,
     required this.lastModified,
-    required this.changeFrequency,
-    required this.priority,
   });
 }
 
-// Represents the routes and the information associated for the sitemap
+// Routes included in sitemap.xml.
+// Rules:
+//   - SplashScreen (/) excluded — it is a loading transition, not indexable content.
+//   - legalMentions and privacyPolicy excluded — zero SEO value.
+//   - /landing is the real homepage and must be listed first.
 class GlobalRoutes {
   static const List<RouteInfo> routes = [
     RouteInfo(
-      path: '/',
-      lastModified: GlobalDates.lastUpdateMain,
-      changeFrequency: 'daily',
-      priority: '1.0',
-    ),
-    RouteInfo(
       path: '/landing',
       lastModified: GlobalDates.lastUpdateLanding,
-      changeFrequency: 'weekly',
-      priority: '0.9',
     ),
     RouteInfo(
       path: '/projects',
       lastModified: GlobalDates.lastUpdateProjects,
-      changeFrequency: 'weekly',
-      priority: '0.9',
     ),
     RouteInfo(
       path: '/contact',
       lastModified: GlobalDates.lastUpdateContact,
-      changeFrequency: 'monthly',
-      priority: '0.8',
     ),
     RouteInfo(
       path: '/about',
       lastModified: GlobalDates.lastUpdateAbout,
-      changeFrequency: 'monthly',
-      priority: '0.8',
-    ),
-    RouteInfo(
-      path: '/legalMentions',
-      lastModified: GlobalDates.lastUpdateLegalMentions,
-      changeFrequency: 'yearly',
-      priority: '0.6',
-    ),
-    RouteInfo(
-      path: '/privacyPolicy',
-      lastModified: GlobalDates.lastUpdatePrivacyPolicy,
-      changeFrequency: 'yearly',
-      priority: '0.6',
     ),
     RouteInfo(
       path: '/partners',
       lastModified: GlobalDates.lastUpdatePartners,
-      changeFrequency: 'monthly',
-      priority: '0.7',
     ),
   ];
 }

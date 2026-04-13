@@ -14,8 +14,6 @@ void main() {
     buffer.writeln('  <url>');
     buffer.writeln('    <loc>$loc</loc>');
     buffer.writeln('    <lastmod>${route.lastModified}</lastmod>');
-    buffer.writeln('    <changefreq>${route.changeFrequency}</changefreq>');
-    buffer.writeln('    <priority>${route.priority}</priority>');
     buffer.writeln('  </url>');
   }
 
