@@ -261,7 +261,7 @@ class GlobalImages {
   static const String after = 'assets/images/after.webp';
 
     // Customer feedback section 
-  static const String backgroundFeedbackSection = 'assets/images/backgroundFeedbackSection.png';
+  static const String backgroundFeedbackSection = 'assets/images/backgroundFeedbackSection.webp';
 
   // About screen
   static const String aboutScreenWelcomeImage= 'assets/images/aboutScreenWelcomeImage.webp';  
