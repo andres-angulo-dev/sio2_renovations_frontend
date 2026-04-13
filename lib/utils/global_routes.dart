@@ -8,6 +8,8 @@ class GlobalDates {
   static const String lastUpdateContact = '2026-04-13';
   static const String lastUpdateAbout = '2026-04-13';
   static const String lastUpdatePartners = '2026-04-13';
+  // Used in privacy_policy_screen.dart to display the last update date
+  static const String lastUpdatePrivacyPolicy = '2026-04-13';
 }
 
 // For the sitemap — only path and lastModified are needed.
