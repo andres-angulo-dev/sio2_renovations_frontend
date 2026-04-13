@@ -3,7 +3,7 @@
 echo "🧹 Cleaning the project..."
 flutter clean
 
-echo "🚀 Compilation Flutter Web..."
+echo "🚀 Compilation Flutter Web (renderer HTML configuré via flutter_bootstrap.js)..."
 flutter build web --release
 
 echo "🛠️ Generating the sitemap..."
