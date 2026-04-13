@@ -18,7 +18,7 @@ class GlobalPersonalData {
   static const String socialCapital = '€';
   static const String vatNumber = 'FR';
   static const String rcs = 'RCS';
-  static const String headOfficeAddress = '3 ter Avenue Théodore Rousseau, 75007 Paris, France';
+  static const String headOfficeAddress = '3 ter Avenue Théodore Rousseau, 75016 Paris, France';
   static const String ceoPhone = '+(33) 7 56 88 87 01';
   static const String contactPhone = '+(33) 7 56 88 87 01';
   static const String email = 'contact@sio2renovations.com';

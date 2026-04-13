@@ -2,14 +2,14 @@ final domaine = 'https://www.sio2renovations.com';
 
 // Contains the last update dates for each route
 class GlobalDates {
-  static const String lastUpdateMain = '2025-08-15'; 
-  static const String lastUpdateLanding = '2025-08-15'; 
-  static const String lastUpdateProjects = '2025-08-15'; 
-  static const String lastUpdateContact = '2025-08-15'; 
-  static const String lastUpdateAbout = '2025-08-15'; 
-  static const String lastUpdateLegalMontions = '2025-08-15'; 
-  static const String lastUpdatePrivacyPolicy = '2025-08-15'; 
-  static const String lastUpdatePartners = '2025-08-15'; 
+  static const String lastUpdateMain = '2026-04-13';
+  static const String lastUpdateLanding = '2026-04-13';
+  static const String lastUpdateProjects = '2026-04-13';
+  static const String lastUpdateContact = '2026-04-13';
+  static const String lastUpdateAbout = '2026-04-13';
+  static const String lastUpdateLegalMentions = '2026-04-13';
+  static const String lastUpdatePrivacyPolicy = '2026-04-13';
+  static const String lastUpdatePartners = '2026-04-13';
 }
 
 // For the sitemap
@@ -61,8 +61,8 @@ class GlobalRoutes {
       priority: '0.8',
     ),
     RouteInfo(
-      path: '/legalMontions',
-      lastModified: GlobalDates.lastUpdateLegalMontions,
+      path: '/legalMentions',
+      lastModified: GlobalDates.lastUpdateLegalMentions,
       changeFrequency: 'yearly',
       priority: '0.6',
     ),

@@ -157,7 +157,7 @@ class PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                             WidgetSpan(
                               alignment: PlaceholderAlignment.baseline,
                               baseline: TextBaseline.alphabetic,
-                              child: MyHoverRouteNavigatorWidget(routeName: '/legalMontions', text: 'mentions légales', mobile: isMobile,)
+                              child: MyHoverRouteNavigatorWidget(routeName: '/legalMentions', text: 'mentions légales', mobile: isMobile,)
                             ),
                             TextSpan(
                               text: " ",

@@ -166,7 +166,7 @@ class FooterComponent extends StatelessWidget {
                   const SizedBox(width: 5.0),
                   Flexible(
                     child: MyHoverRouteNavigatorWidget(
-                      routeName: '/legalMontions', 
+                      routeName: '/legalMentions', 
                       text: "Mentions légales",
                       color: mainColor,
                       hoverColor: GlobalColors.orangeColor,
@@ -396,7 +396,7 @@ class FooterComponent extends StatelessWidget {
                                       Icon(Icons.arrow_forward_rounded, size: 20.0, color: GlobalColors.orangeColor,),
                                       const SizedBox(width: 5.0),
                                       MyHoverRouteNavigatorWidget(
-                                        routeName: '/legalMontions',
+                                        routeName: '/legalMentions',
                                         text: "Mentions légales",
                                         color: mainColor,
                                         hoverColor: GlobalColors.orangeColor,

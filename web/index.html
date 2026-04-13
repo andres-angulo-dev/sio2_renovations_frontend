@@ -4,30 +4,33 @@
 <head>
   <base href="$FLUTTER_BASE_HREF">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="SiO₂ Rénovations est une entreprise générale du bâtiment tous corps d'état, spécialisée dans la rénovation et l'aménagement à Paris et en Île-de-France. Qualité, fiabilité et savoir-faire au service de vos projets.">
-  <meta name="keywords" content="rénovation, entreprise générale du bâtiment, aménagement, tous corps d'état, travaux de rénovation, rénovation intérieure, rénovation extérieure, travaux d'aménagement, qualité professionnelle, bâtiment, rénovation Paris, entreprise bâtiment rénovation, design intérieur, expertise bâtiment, électricité, électricien, plomberie, plombier, maçonnerie, maçon, menuiserie, menuisier, peinture, peintre, isolation, carreleur, carrelage, chauffagiste, chauffage, climatisation, pose de sols, plaquiste, rénovation énergétique">
-  <meta name="author" content="Andrés Angulo">
 
-  <!-- Open Graph Metadata -->
-  <meta property="og:title" content="SiO₂ Rénovations | Entreprise générale du bâtiment tous corps d'état à Paris et Île-de-France"> 
-  <meta property="og:site_name" content="SiO₂ Rénovations"> 
-  <meta property="og:type" content="website"> 
-  <meta property="og:url" content="https://www.sio2renovations.com"> 
-  <meta property="og:image" content="https://raw.githubusercontent.com/andres-angulo-dev/sio2_renovations_frontend/refs/heads/main/web/icons/cover.webp"> 
-  <meta property="og:image:alt" content="Un fond de couleur marron, style papier kraft, avec en superposition sur le côté en haut-gauche le logo de l'entreprise représenté par un symbole circulaire orange avec l'écriture entremêler de'SIO2' et le texte 'SiO₂ Rénovations', écrit en majuscules et en noir. Puis en dessous du logo la mention : 'Entreprise générale du bâtiment tous corps d'état."> 
-  <meta property="og:image:width" content="1200"> 
+  <!-- SEO Primary -->
+  <title>SiO₂ Rénovations | Travaux de rénovation à Paris et Île-de-France</title>
+  <meta name="description" content="Entreprise générale du bâtiment tous corps d'état à Paris et Île-de-France. Rénovation intérieure, peinture, sol, plomberie, électricité, menuiserie. Devis gratuit.">
+  <meta name="author" content="Andrés Angulo">
+  <link rel="canonical" href="https://www.sio2renovations.com">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.sio2renovations.com">
+  <meta property="og:site_name" content="SiO₂ Rénovations">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="SiO₂ Rénovations | Entreprise générale du bâtiment à Paris et Île-de-France">
+  <meta property="og:description" content="Entreprise générale du bâtiment tous corps d'état à Paris et Île-de-France. Rénovation intérieure, peinture, sol, plomberie, électricité, menuiserie. Devis gratuit.">
+  <meta property="og:image" content="https://www.sio2renovations.com/icons/cover.webp">
+  <meta property="og:image:alt" content="SiO₂ Rénovations — Entreprise générale du bâtiment à Paris et Île-de-France">
+  <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
 
-  <!-- Preload main script -->
-  <link rel="preload" href="main.dart.js" as="script">
-
-  <!-- Twitter Metadata --> 
-  <meta name="twitter:card" content="summary_large_image"> 
-  <meta name="twitter:title" content="SiO₂ Rénovations | Entreprise générale du bâtiment tous corps d'état à Paris et Île-de-France"> 
-  <meta name="twitter:description" content="Entreprise générale du bâtiment tous corps d'état, spécialisée dans la rénovation et l'aménagement. Faites confiance à notre expertise pour des projets de qualité adaptés à vos besoins."> 
-  <meta name="twitter:image" content="https://raw.githubusercontent.com/andres-angulo-dev/sio2_renovations_frontend/refs/heads/main/web/icons/cover.png">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SiO₂ Rénovations | Entreprise générale du bâtiment à Paris">
+  <meta name="twitter:description" content="Entreprise générale du bâtiment tous corps d'état à Paris et Île-de-France. Rénovation intérieure, peinture, sol, plomberie, électricité, menuiserie. Devis gratuit.">
+  <meta name="twitter:image" content="https://www.sio2renovations.com/icons/cover.webp">
+  <meta name="twitter:image:alt" content="SiO₂ Rénovations — Entreprise générale du bâtiment Paris">
   <meta name="twitter:url" content="https://www.sio2renovations.com">
 
   <!-- iOS meta tags & icons -->
@@ -39,14 +42,109 @@
   <!-- Favicon -->
   <link rel="icon" href="/favicon.ico" sizes="any" type="icon">
 
-  <!-- Title -->
-  <title>SiO₂ Rénovations | Travaux de rénovation à Paris et Île-de-France</title>
-
-   <!-- PWA Manifest -->
+  <!-- PWA Manifest -->
   <link rel="manifest" href="manifest.json">
 
+  <!-- Preload main script -->
+  <link rel="preload" href="main.dart.js" as="script">
+
+  <!-- Schema: LocalBusiness + HomeAndConstructionBusiness -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["HomeAndConstructionBusiness", "LocalBusiness", "GeneralContractor"],
+    "@id": "https://www.sio2renovations.com/#business",
+    "name": "SiO₂ Rénovations",
+    "alternateName": "SiO2 Rénovations",
+    "description": "Entreprise générale du bâtiment tous corps d'état, spécialisée dans la rénovation intérieure et extérieure à Paris et en Île-de-France. Plâtrerie, peinture, revêtements de sol, plomberie, électricité, menuiserie, cuisine, salle de bains, ravalement de façade.",
+    "url": "https://www.sio2renovations.com",
+    "image": "https://www.sio2renovations.com/icons/cover.webp",
+    "telephone": "+33756888701",
+    "email": "contact@sio2renovations.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "3 ter Avenue Théodore Rousseau",
+      "postalCode": "75016",
+      "addressLocality": "Paris",
+      "addressRegion": "Île-de-France",
+      "addressCountry": "FR"
+    },
+    "areaServed": [
+      {"@type": "City", "name": "Paris"},
+      {"@type": "City", "name": "Boulogne-Billancourt"},
+      {"@type": "City", "name": "Neuilly-sur-Seine"},
+      {"@type": "City", "name": "Levallois-Perret"},
+      {"@type": "City", "name": "Saint-Cloud"},
+      {"@type": "City", "name": "Versailles"},
+      {"@type": "AdministrativeArea", "name": "Île-de-France"}
+    ],
+    "sameAs": [
+      "https://www.instagram.com/sio2renovations/",
+      "https://www.linkedin.com/company/sio2renovations"
+    ],
+    "priceRange": "€€",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Services de rénovation",
+      "itemListElement": [
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Rénovation intérieure complète"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Plâtrerie et enduits"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Peinture intérieure"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Revêtements de sol (parquet, carrelage)"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Plomberie et sanitaires"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Électricité"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Menuiserie et charpente"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Rénovation cuisine"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Rénovation salle de bains"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Ravalement de façade"}}
+      ]
+    }
+  }
+  </script>
+
+  <!-- Schema: Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://www.sio2renovations.com/#organization",
+    "name": "SiO₂ Rénovations",
+    "alternateName": "SiO2 Rénovations",
+    "url": "https://www.sio2renovations.com",
+    "description": "Entreprise générale du bâtiment tous corps d'état basée à Paris, spécialisée dans la rénovation résidentielle et commerciale en Île-de-France.",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+33756888701",
+      "contactType": "customer service",
+      "email": "contact@sio2renovations.com",
+      "availableLanguage": "French",
+      "areaServed": "FR"
+    },
+    "sameAs": [
+      "https://www.instagram.com/sio2renovations/",
+      "https://www.linkedin.com/company/sio2renovations"
+    ]
+  }
+  </script>
+
+  <!-- Schema: WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://www.sio2renovations.com/#website",
+    "name": "SiO₂ Rénovations",
+    "url": "https://www.sio2renovations.com",
+    "description": "Entreprise générale du bâtiment tous corps d'état à Paris et Île-de-France",
+    "inLanguage": "fr-FR",
+    "publisher": {
+      "@id": "https://www.sio2renovations.com/#organization"
+    }
+  }
+  </script>
+
 </head>
-<body>  
+<body>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

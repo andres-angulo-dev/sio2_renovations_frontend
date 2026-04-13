@@ -993,7 +993,7 @@ class CustomNavItemstate extends State<CustomNavItem> with TickerProviderStateMi
 //       {'icon': Icons.info, 'label': 'À propos', 'route': '/about'},
 //       {'icon': Icons.folder_open, 'label': 'Projets', 'route': '/projects'},
 //       {'icon': Icons.contact_mail, 'label': 'Contact', 'route': '/contact'},
-//       {'icon': Icons.article, 'label': 'Mentions légales', 'route': '/legalMontions'},
+//       {'icon': Icons.article, 'label': 'Mentions légales', 'route': '/legalMentions'},
 //     ];
 
 //     final layoutItems = List.generate(navItemsData.length * 2 - 1, (index) {

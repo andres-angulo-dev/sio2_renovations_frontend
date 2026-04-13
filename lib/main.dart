@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import './screens/landing_screen.dart';
 import './screens/about_screen.dart';
 import './screens/contact_screen.dart';
@@ -14,6 +15,7 @@ import './utils/global_colors.dart';
 import './utils/global_others.dart';
 
 Future<void> main() async {
+  usePathUrlStrategy(); // Use path-based URLs instead of hash-based (e.g. /contact instead of /#/contact)
   try {
     await dotenv.load(fileName: 'local.env'); // Load environment variables from the local.env file
     injectGoogleMapsScript(); // Inject the Google Maps script for web only
@@ -55,7 +57,7 @@ class MyApp extends StatelessWidget {
         '/projects': (context) => routeWithCookiesOverlay('/projects', ProjectsScreen()),
         '/contact': (context) => routeWithCookiesOverlay('/contact', ContactScreen()),
         '/about': (context) => routeWithCookiesOverlay('/about', AboutScreen()),
-        '/legalMontions': (context) => routeWithCookiesOverlay('/legalMontions', LegalMontionScreen()),
+        '/legalMentions': (context) => routeWithCookiesOverlay('/legalMentions', LegalMontionScreen()),
         '/privacyPolicy': (context) => routeWithCookiesOverlay('/privacyPolicy', PrivacyPolicyScreen()),
         '/partners': (context) => routeWithCookiesOverlay('/partners', PartnersScreen()),
       }
