@@ -45,3 +45,14 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 google-chrome-stable_current_amd64.deb
+
+# Claude & AI workflow
+.claude/
+.planning/
+.gstack/
+tasks/
+graphify-out/
+**/RESEARCH.md
+**/VERIFICATION.md
+**/CODEMAPS/
+docs/technical/
