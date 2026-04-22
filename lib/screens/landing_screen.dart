@@ -12,6 +12,7 @@ import '../sections/landing_screen/services_section.dart';
 import '../sections/landing_screen/work_together_section.dart';
 import '../sections/landing_screen/steps_section.dart';
 import '../sections/landing_screen/what_type_of_renovations_section.dart';
+import '../sections/landing_screen/resources_section.dart';
 import '../sections/landing_screen/before_after_section.dart';
 import '../sections/landing_screen/customer_feedback_section.dart';
 import '../widgets/my_back_to_top_button_widget.dart';
@@ -27,20 +28,52 @@ class LandingScreen extends StatefulWidget {
 }
 
 class LandingScreenState extends State<LandingScreen> {
-  // Scroll controller for the back to top button and appBar 
-  final ScrollController _scrollController = ScrollController(); // syntax to instantiate immediately otherwise declaration with late and Instantiation in initState with _scrollController = ScrollController();
+  // Scroll controller for the back to top button and appBar
+  final ScrollController _scrollController = ScrollController();
 
-  bool isMobile = false; 
-  String currentItem = "Accueil"; // Holds the currently selected menu item to change text color
-  bool _showBackToTopButton = false; // Show or hide Back to top button
+  // Key used to locate ResourcesSection in the layout for programmatic scroll
+  final GlobalKey _resourcesSectionKey = GlobalKey();
+
+  bool isMobile = false;
+  String currentItem = "Accueil";
+  bool _showBackToTopButton = false;
   // bool _isDesktopMenuOpen = false; // Check if the child (MyAppBarComment) has the dropdown menu or not (only for NavItem with click)
 
   @override
   void initState() {
     super.initState();
 
-    // Handle back to top button 
-    _scrollController.addListener(_scrollListener); // Adds an event listener that captures scrolling from parent Landing Screen using scrollController
+    _scrollController.addListener(_scrollListener);
+    _scrollToSectionIfRequested();
+  }
+
+  // Reads ?scroll= from the URL (Flutter Web) and scrolls to the matching section after first frame.
+  void _scrollToSectionIfRequested() {
+    final scrollTarget = Uri.base.queryParameters['scroll'];
+    if (scrollTarget != 'ressources') return;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Capture RenderBox synchronously (no async gap) to satisfy lint rule
+      final renderBox = _resourcesSectionKey.currentContext?.findRenderObject() as RenderBox?;
+      if (renderBox == null) return;
+
+      // Short delay lets the layout stabilise before computing the offset
+      Future.delayed(const Duration(milliseconds: 400), () {
+        if (!mounted || !_scrollController.hasClients) return;
+        final dy = renderBox.localToGlobal(Offset.zero).dy;
+        // Subtract navbar height so the section title is visible below the appbar
+        const navbarOffset = 90.0;
+        final target = (dy + _scrollController.offset - navbarOffset).clamp(
+          _scrollController.position.minScrollExtent,
+          _scrollController.position.maxScrollExtent,
+        );
+        _scrollController.animateTo(
+          target,
+          duration: const Duration(milliseconds: 800),
+          curve: Curves.easeInOut,
+        );
+      });
+    });
   }
   
   // Function to update the current item when a new one is selected to change text color
@@ -136,12 +169,15 @@ class LandingScreenState extends State<LandingScreen> {
             StepsSection(),
             SizedBox(height: 150.0),
             // section 8
-            KeyFiguresSection(),
-            SizedBox(height: 150.0),             
-            // section 9
             BeforeAfterSection(),
             SizedBox(height: 150.0),
+            // section 9
+            KeyFiguresSection(),
+            SizedBox(height: 150.0),             
             // section 10
+            ResourcesSection(key: _resourcesSectionKey),
+            SizedBox(height: 150.0),
+            // section 11
             CustomerFeedbackSection(),
             SizedBox(height: 160.0),
             FooterComponent(),

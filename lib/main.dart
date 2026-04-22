@@ -52,7 +52,13 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => routeWithCookiesOverlay('/', SplashScreen()),
+        '/': (context) {
+          final scroll = Uri.base.queryParameters['scroll'];
+          if (scroll != null && scroll.isNotEmpty) {
+            return routeWithCookiesOverlay('/', const LandingScreen());
+          }
+          return routeWithCookiesOverlay('/', const SplashScreen());
+        },
         '/landing': (context) => routeWithCookiesOverlay('/landing', LandingScreen()),
         '/projects': (context) => routeWithCookiesOverlay('/projects', ProjectsScreen()),
         '/contact': (context) => routeWithCookiesOverlay('/contact', ContactScreen()),

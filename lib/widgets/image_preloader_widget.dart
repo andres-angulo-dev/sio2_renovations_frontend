@@ -27,7 +27,14 @@ class ImagePreloaderWidgetState extends State<ImagePreloaderWidget> {
 
   void _preloadImages() async {
     for (final path in widget.imagePaths) {
-      await precacheImage(AssetImage(path), context);
+      try {
+        final ImageProvider provider = path.startsWith('http')
+            ? NetworkImage(path)
+            : AssetImage(path);
+        await precacheImage(provider, context);
+      } catch (_) {
+        // One failed image must not block the splash transition
+      }
     }
     if (mounted) {
       widget.onLoaded?.call();
