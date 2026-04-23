@@ -59,7 +59,7 @@ class ResourcesSectionState extends State<ResourcesSection> with SingleTickerPro
     final double horizontalPadding = isMobile ? 24.0 : 160.0;
     final double availableWidth = screenWidth - horizontalPadding * 2;
     final double cardWidth = isMobile ? availableWidth : (availableWidth - 32.0) / 2;
-    final double cardHeight = cardWidth * 0.55;
+    final double cardHeight = isMobile ? cardWidth * 0.75 : cardWidth * 0.55;
 
     return VisibilityDetector(
       key: const Key('resources-section'),
@@ -201,10 +201,11 @@ class ResourcesSectionState extends State<ResourcesSection> with SingleTickerPro
                         end: Alignment.bottomCenter,
                         colors: [
                           Colors.transparent,
-                          Colors.black.withValues(alpha: 0.4),
-                          Colors.black.withValues(alpha: 0.9),
+                          Colors.black.withValues(alpha: 0.25),
+                          Colors.black.withValues(alpha: 0.75),
+                          Colors.black.withValues(alpha: 0.92),
                         ],
-                        stops: const [0.0, 0.45, 1.0],
+                        stops: const [0.0, 0.25, 0.55, 1.0],
                       ),
                     ),
                   ),
@@ -253,7 +254,7 @@ class ResourcesSectionState extends State<ResourcesSection> with SingleTickerPro
                         Text(
                           item["description"]!,
                           style: TextStyle(
-                            color: _onSurfaceVariant.withValues(alpha: 0.8),
+                            color: _onSurfaceVariant,
                             fontSize: isMobile ? 13.0 : GlobalSize.webSizeText,
                             fontWeight: FontWeight.w300,
                           ),
