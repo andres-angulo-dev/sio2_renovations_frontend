@@ -1,0 +1,22 @@
+User-agent: *
+Disallow: /404.html
+Disallow: /offline.html
+Disallow: /admin
+Disallow: /debug
+Disallow: /temp
+Allow: /
+
+# AI search crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://www.sio2renovations.com/sitemap.xml

@@ -1,0 +1,74 @@
+# SiO₂ Rénovations
+
+> Full-service building renovation company specializing in all construction trades (tous corps d'état), serving Paris and the Île-de-France region. Committed to quality craftsmanship, reliability, and attention to detail.
+
+## Key Facts
+
+- **Type:** General Building Contractor (Entreprise Générale du Bâtiment)
+- **Specialty:** Full-scope interior and exterior renovation — all trades
+- **Location:** 3 ter Avenue Théodore Rousseau, 75016 Paris, France
+- **Language:** French (fr-FR)
+- **Main website:** https://www.sio2renovations.com/
+- **Hub URL:** https://hub.sio2renovations.com/
+
+## Services
+
+- Interior renovation (full scope — tous corps d'état)
+- Plastering and finishing (plâtrerie, enduits)
+- Painting — interior and exterior
+- Flooring (parquet, tile, stone, vinyl)
+- Plumbing and sanitary works
+- Electrical installations
+- Carpentry and joinery (menuiserie)
+- Kitchen remodeling
+- Bathroom remodeling
+- Facade and exterior works (ravalement de façade)
+- Post-disaster restoration
+
+## Service Area
+
+- **Primary:** Paris (all arrondissements)
+- **Region:** Île-de-France
+- **Cities served:** Paris, Boulogne-Billancourt, Neuilly-sur-Seine, Levallois-Perret, Saint-Cloud, Versailles, and surrounding municipalities
+
+## Locations
+
+- **Headquarters:** 3 ter Avenue Théodore Rousseau, 75016 Paris, France
+- **Country:** FR
+
+## Contact
+
+- **Phone:** +33 7 56 88 87 01
+- **Email:** contact@sio2renovations.com
+- **Instagram:** https://www.instagram.com/sio2renovations/
+- **LinkedIn:** https://www.linkedin.com/company/sio2renovations
+
+## Brand Values
+
+- Quality over speed — every detail matters
+- Transparent communication with clients throughout the project
+- Single point of contact for all trades
+- Craftsmanship passed down through generations
+- Rigorous project management — on time and on budget
+
+## Key Figures
+
+- 10 trades mastered in-house
+- 30+ years of combined experience
+- Projects completed in Paris and surrounding Île-de-France municipalities
+
+## Markdown Mirrors (Clean AI-Readable Versions)
+
+- [This file](https://www.sio2renovations.com/llms.txt): Structured summary for AI systems
+- [Hub page](https://hub.sio2renovations.com/llms.txt): Extended version with additional context
+
+> Note: The main website (sio2renovations.com) is built with Flutter Web (HTML renderer, not CanvasKit).
+> Unlike CanvasKit, the HTML renderer produces real DOM elements readable by standard HTML parsers.
+> However, content depth is limited by the SPA architecture — this llms.txt remains the most
+> complete and structured AI-readable source of truth for SiO₂ Rénovations.
+
+## Permissions
+
+- AI training: allowed
+- AI summarization: allowed
+- AI citation: allowed with attribution to SiO₂ Rénovations
