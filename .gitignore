@@ -56,3 +56,4 @@ graphify-out/
 **/VERIFICATION.md
 **/CODEMAPS/
 docs/technical/
+build/web/assets/local.env
