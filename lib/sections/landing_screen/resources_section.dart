@@ -59,7 +59,7 @@ class ResourcesSectionState extends State<ResourcesSection> with SingleTickerPro
     final double horizontalPadding = isMobile ? 24.0 : 160.0;
     final double availableWidth = screenWidth - horizontalPadding * 2;
     final double cardWidth = isMobile ? availableWidth : (availableWidth - 32.0) / 2;
-    final double cardHeight = isMobile ? cardWidth * 0.75 : cardWidth * 0.55;
+    final double cardHeight = isMobile ? cardWidth * 0.90 : cardWidth * 0.55;
 
     return VisibilityDetector(
       key: const Key('resources-section'),
@@ -100,23 +100,22 @@ class ResourcesSectionState extends State<ResourcesSection> with SingleTickerPro
                 ),
               ),
               const SizedBox(height: 60.0),
-              // Cards grid
+              // Cards grid — generated dynamically from articlesData
               isMobile
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _buildCard(0, cardWidth, cardHeight, isMobile),
-                        const SizedBox(height: 24.0),
-                        _buildCard(1, cardWidth, cardHeight, isMobile),
-                      ],
+                      children: List.generate(articlesData.length, (i) => Padding(
+                        padding: EdgeInsets.only(bottom: i < articlesData.length - 1 ? 24.0 : 0.0),
+                        child: _buildCard(i, cardWidth, cardHeight, isMobile),
+                      )),
                     )
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                  : Wrap(
                       spacing: 32.0,
-                      children: [
-                        _buildCard(0, cardWidth, cardHeight, isMobile),
-                        _buildCard(1, cardWidth, cardHeight, isMobile),
-                      ],
+                      runSpacing: 32.0,
+                      alignment: WrapAlignment.start,
+                      children: List.generate(articlesData.length, (i) =>
+                        _buildCard(i, cardWidth, cardHeight, isMobile),
+                      ),
                     ),
               const SizedBox(height: 48.0),
               // CTA — pattern TextButton du site
@@ -144,7 +143,7 @@ class ResourcesSectionState extends State<ResourcesSection> with SingleTickerPro
 
   Widget _buildCard(int index, double width, double height, bool isMobile) {
     final item = articlesData[index];
-    final String badge = index == 0 ? "APPARTEMENT" : "SALLE DE BAINS";
+    final String badge = item["category"]!;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
