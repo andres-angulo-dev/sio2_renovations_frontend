@@ -12,13 +12,13 @@ class GlobalPersonalData {
   static const String companyName = 'SiO₂ Rénovations';
   static const String legalForm = 'Entrepreneur individuel (EI)';
   static const String gender = 'M';
-  static const String ceo = 'Germán Holguin';
+  static const String ceo = 'Alexander Angulo Hernandez';
   static const String siren = '123 456 789';
-  static const String siret = '388 863 821 00038';
+  static const String siret = '818 481 574 00023';
   static const String socialCapital = '€';
   static const String vatNumber = 'FR';
   static const String rcs = 'RCS';
-  static const String headOfficeAddress = '3 ter Avenue Théodore Rousseau, 75016 Paris, France';
+  static const String headOfficeAddress = '31 Avenue de Ségur, 75007 Paris, France';
   static const String ceoPhone = '+(33) 7 56 88 87 01';
   static const String contactPhone = '+(33) 7 56 88 87 01';
   static const String email = 'contact@sio2renovations.com';
@@ -33,7 +33,7 @@ class GlobalPersonalData {
   static const String developerCompanyWebsite = 'www.andres-angulo.com';
   // DPO
   static const String dpoGender = 'M';
-  static const String dpoName = 'Germán Holguin';
+  static const String dpoName = 'Alexander Angulo Hernandez';
   static const String dpoEmail = 'contact@sio2-renovations.com';
   static const String dpoPhone = '+(33) 7 56 88 87 01';
   // Insurance

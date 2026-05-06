@@ -448,19 +448,7 @@ class FooterComponent extends StatelessWidget {
                   color: mainColor,
                 ),
                 children: [
-                  TextSpan(text: " "),
-                  WidgetSpan(
-                    alignment: PlaceholderAlignment.baseline,
-                    baseline: TextBaseline.alphabetic,
-                    child: MyHoverUrlNavigatorWidget(
-                    url: 'https://www.andres-angulo.com', 
-                    text: 'Andrés Angulo',
-                    hoverColor: GlobalColors.orangeColor,
-                    color: mainColor,
-                    webSize: GlobalSize.footerWebCopyright,
-                    )
-                  ),
-                  TextSpan(text: "."),
+                  TextSpan(text: " Digital Silverline."),
                 ]
               ),
               textAlign: TextAlign.center,  
