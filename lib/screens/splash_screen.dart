@@ -5,7 +5,7 @@ import 'package:rive/rive.dart';
 import '../screens/landing_screen.dart';
 import '../manager/cookies_overlay_manager.dart';
 import '../widgets/image_preloader_widget.dart';
-import '../utils/global_colors.dart';
+// import '../utils/global_colors.dart';
 import '../utils/global_others.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -111,21 +111,22 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
               ),
             ),
           ),
+          // // Spinner 
           // Animation preload 
-          Positioned(
-            bottom: 100.0,
-            left: 0.0,
-            right: 0.0,
-            child: Center(
-              child: AnimatedOpacity(
-                opacity: _imagesPreloaded ? 0.0 : 1.0,
-                duration: const Duration(milliseconds: 300),
-                child: CircularProgressIndicator(
-                color: GlobalColors.thirdColor,
-              ),
-              )
-            ),
-          ),
+          // Positioned(
+          //   bottom: 100.0,
+          //   left: 0.0,
+          //   right: 0.0,
+          //   child: Center(
+          //     child: AnimatedOpacity(
+          //       opacity: _imagesPreloaded ? 0.0 : 1.0,
+          //       duration: const Duration(milliseconds: 300),
+          //       child: CircularProgressIndicator(
+          //       color: GlobalColors.thirdColor,
+          //     ),
+          //     )
+          //   ),
+          // ),
         ],
       ),
     );

@@ -112,7 +112,7 @@ class ResourcesSectionState extends State<ResourcesSection> with SingleTickerPro
                   : Wrap(
                       spacing: 32.0,
                       runSpacing: 32.0,
-                      alignment: WrapAlignment.start,
+                      alignment: WrapAlignment.center,
                       children: List.generate(articlesData.length, (i) =>
                         _buildCard(i, cardWidth, cardHeight, isMobile),
                       ),
@@ -214,8 +214,8 @@ class ResourcesSectionState extends State<ResourcesSection> with SingleTickerPro
                   bottom: 0,
                   left: 0,
                   right: 0,
-                  child: Padding(
-                    padding: EdgeInsets.all(isMobile ? 24.0 : 32.0),
+                  child: Container(
+                    padding: EdgeInsets.all(isMobile ? 16.0 : 32.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
