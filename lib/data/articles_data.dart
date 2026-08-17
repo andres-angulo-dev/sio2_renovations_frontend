@@ -4,6 +4,13 @@
 
 const List<Map<String, String>> articlesData = [
   {
+    "category": "IMMEUBLE PARTIES COMMUNES",
+    "title": "Réfection des parties communes en copropriété : prix, vote en AG et chantier (2026)",
+    "description": "Refaire une cage d'escalier coûte de 10 000 à 30 000 € selon les prestations. Majorités de...",
+    "image": "https://hub.sio2renovations.com/images/articles/parties-communes-cage-escalier.webp",
+    "url": "https://hub.sio2renovations.com/articles/refection-parties-communes-copropriete?ref=sio2renovations",
+  },
+  {
     "category": "LOFT & ATELIER",
     "title": "Rénovation loft et atelier : guide complet des travaux",
     "description": "Rénover un atelier en loft coûte 50 000 à 125 000 € — réseaux à créer de zéro, isolation à...",
