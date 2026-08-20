@@ -4,6 +4,13 @@
 
 const List<Map<String, String>> articlesData = [
   {
+    "category": "APPARTEMENT",
+    "title": "Prix de la peinture d'un appartement à Paris : ce que change l'état de vos murs (2026)",
+    "description": "Peindre un appartement à Paris peut coûter de 25 à plus de 70 € du m² de surface peinte :...",
+    "image": "https://hub.sio2renovations.com/images/articles/peinture-appartement-etat-murs.webp",
+    "url": "https://hub.sio2renovations.com/articles/prix-peinture-appartement-paris-etat-murs?ref=sio2renovations",
+  },
+  {
     "category": "IMMEUBLE PARTIES COMMUNES",
     "title": "Réfection des parties communes en copropriété : prix, chantier et démarches (2026)",
     "description": "Refaire une cage d'escalier peut coûter de 10 000 € à plus de 30 000 € selon les...",
