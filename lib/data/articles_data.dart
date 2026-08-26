@@ -5,6 +5,13 @@
 const List<Map<String, String>> articlesData = [
   {
     "category": "APPARTEMENT",
+    "title": "Rénovation de parquet : poncer, vitrifier ou remplacer ? Prix et méthode (2026)",
+    "description": "Poncer et vitrifier un parquet coûte de 30 à 65 € du m², trois à quatre fois moins qu'un...",
+    "image": "https://hub.sio2renovations.com/images/articles/renovation-parquet-point-hongrie.webp",
+    "url": "https://hub.sio2renovations.com/articles/renovation-parquet-poncage-vitrification?ref=sio2renovations",
+  },
+  {
+    "category": "APPARTEMENT",
     "title": "Prix de la peinture d'un appartement à Paris : ce que change l'état de vos murs (2026)",
     "description": "Peindre un appartement à Paris peut coûter de 25 à plus de 70 € du m² de surface peinte :...",
     "image": "https://hub.sio2renovations.com/images/articles/peinture-appartement-etat-murs.webp",
