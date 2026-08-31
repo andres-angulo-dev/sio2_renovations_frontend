@@ -64,5 +64,34 @@ else
   echo "   size: $(du -sh "$TARGET" | cut -f1)"
 fi
 
-echo "== Done. Next step: upload '$(basename "$TARGET")' with FileZilla,"
-echo "   overwriting main.dart.js and flutter_service_worker.js on the server."
+# 6. Cache-bust main.dart.js with the build id.
+# Flutter web does NOT hash the main.dart.js filename, and visitors who cached it
+# under the old "max-age=1y, immutable" header (served until 2026-08-31) will keep
+# that stale copy — for them, only a URL change forces a fresh download.
+# Keep this step at least until those cache entries expire (~August 2027).
+# Guarded: aborts if the expected patterns are not found (e.g. after a Flutter
+# upgrade changes the generated files), so a broken patch never ships silently.
+if ! $DRY_RUN; then
+  BUILD_ID="$(cut -c1-8 "$BUILD_DIR/.last_build_id")"
+  [[ -n "$BUILD_ID" ]] || { echo "ERROR: could not read build id from $BUILD_DIR/.last_build_id" >&2; exit 1; }
+  echo "-- cache-busting main.dart.js with ?v=$BUILD_ID"
+
+  BOOTSTRAP="$TARGET/flutter_bootstrap.js"
+  INDEX="$TARGET/index.html"
+  [[ "$(grep -c '"mainJsPath":"main.dart.js"' "$BOOTSTRAP")" == "1" ]] \
+    || { echo "ERROR: mainJsPath pattern not found in flutter_bootstrap.js — Flutter output changed, update this script." >&2; exit 1; }
+  [[ "$(grep -c 'href="main.dart.js"' "$INDEX")" == "1" ]] \
+    || { echo "ERROR: preload pattern not found in index.html — update this script." >&2; exit 1; }
+
+  sed -i "s|\"mainJsPath\":\"main.dart.js\"|\"mainJsPath\":\"main.dart.js?v=$BUILD_ID\"|" "$BOOTSTRAP"
+  sed -i "s|href=\"main.dart.js\"|href=\"main.dart.js?v=$BUILD_ID\"|" "$INDEX"
+
+  # Post-patch check: both files must now reference the versioned URL
+  grep -q "main.dart.js?v=$BUILD_ID" "$BOOTSTRAP" && grep -q "main.dart.js?v=$BUILD_ID" "$INDEX" \
+    || { echo "ERROR: cache-bust verification failed." >&2; exit 1; }
+  echo "   patched: flutter_bootstrap.js + index.html"
+fi
+
+echo "== Done. Next step: upload '$(basename "$TARGET")' with FileZilla, overwriting"
+echo "   main.dart.js, flutter_service_worker.js, flutter_bootstrap.js, index.html"
+echo "   and .htaccess on the server (bootstrap/index carry the ?v= cache-bust)."
