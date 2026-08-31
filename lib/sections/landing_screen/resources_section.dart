@@ -15,6 +15,12 @@ class ResourcesSection extends StatefulWidget {
 }
 
 class ResourcesSectionState extends State<ResourcesSection> with SingleTickerProviderStateMixin {
+  // Maximum number of article cards shown in this section.
+  // articlesData is already sorted newest-first by the generator script,
+  // so taking the first N always shows the latest publications.
+  static const int _maxVisibleArticles = 6;
+  final List<Map<String, String>> _visibleArticles = articlesData.take(_maxVisibleArticles).toList();
+
   late AnimationController _fadeController;
   late Animation<double> _fadeAnimation;
   late List<bool> _isHoveredList;
@@ -26,7 +32,7 @@ class ResourcesSectionState extends State<ResourcesSection> with SingleTickerPro
   @override
   void initState() {
     super.initState();
-    _isHoveredList = List.generate(articlesData.length, (_) => false);
+    _isHoveredList = List.generate(_visibleArticles.length, (_) => false);
 
     _fadeController = AnimationController(
       vsync: this,
@@ -104,8 +110,8 @@ class ResourcesSectionState extends State<ResourcesSection> with SingleTickerPro
               isMobile
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: List.generate(articlesData.length, (i) => Padding(
-                        padding: EdgeInsets.only(bottom: i < articlesData.length - 1 ? 24.0 : 0.0),
+                      children: List.generate(_visibleArticles.length, (i) => Padding(
+                        padding: EdgeInsets.only(bottom: i < _visibleArticles.length - 1 ? 24.0 : 0.0),
                         child: _buildCard(i, cardWidth, cardHeight, isMobile),
                       )),
                     )
@@ -113,7 +119,7 @@ class ResourcesSectionState extends State<ResourcesSection> with SingleTickerPro
                       spacing: 32.0,
                       runSpacing: 32.0,
                       alignment: WrapAlignment.center,
-                      children: List.generate(articlesData.length, (i) =>
+                      children: List.generate(_visibleArticles.length, (i) =>
                         _buildCard(i, cardWidth, cardHeight, isMobile),
                       ),
                     ),
@@ -142,7 +148,7 @@ class ResourcesSectionState extends State<ResourcesSection> with SingleTickerPro
   }
 
   Widget _buildCard(int index, double width, double height, bool isMobile) {
-    final item = articlesData[index];
+    final item = _visibleArticles[index];
     final String badge = item["category"]!;
 
     return MouseRegion(
@@ -238,9 +244,11 @@ class ResourcesSectionState extends State<ResourcesSection> with SingleTickerPro
                           ),
                         ),
                         const SizedBox(height: 12.0),
-                        // Article title
+                        // Article title — capped at 2 lines, overflow truncated with an ellipsis
                         Text(
                           item["title"]!,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: _onSurface,
                             fontSize: isMobile ? 20.0 : 26.0,
