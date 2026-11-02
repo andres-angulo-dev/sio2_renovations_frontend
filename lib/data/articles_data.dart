@@ -5,6 +5,13 @@
 const List<Map<String, String>> articlesData = [
   {
     "category": "APPARTEMENT",
+    "title": "Changer ses fenêtres en appartement : copropriété, pose et prix (2026)",
+    "description": "Changer les fenêtres de son appartement en copropriété : vote en assemblée générale,...",
+    "image": "https://hub.sio2renovations.com/images/articles/fenetres-appartement-copropriete.webp",
+    "url": "https://hub.sio2renovations.com/articles/changer-fenetres-appartement-copropriete?ref=sio2renovations",
+  },
+  {
+    "category": "APPARTEMENT",
     "title": "Rénovation de parquet : poncer, vitrifier ou remplacer ? Prix et méthode (2026)",
     "description": "Poncer et vitrifier un parquet coûte de 30 à 65 € du m², trois à quatre fois moins qu'un...",
     "image": "https://hub.sio2renovations.com/images/articles/renovation-parquet-point-hongrie.webp",
